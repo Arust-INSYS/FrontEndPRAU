@@ -1,1 +1,3 @@
-export class personas {}
+export class personas {
+  /*ashddasdjuaosdio*/
+}
