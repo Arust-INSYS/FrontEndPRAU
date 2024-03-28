@@ -1,3 +1,5 @@
 export class personas {
-  /*ashddasdjuaosdio*/
+  nombre: string = '';
+  apellido: string = '';
+  email: string = '';
 }
