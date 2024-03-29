@@ -9,6 +9,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; // Importación del módulo HttpClientModule
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [{}];
 @NgModule({
   declarations: [AppComponent, GestionarPersonaComponent],
   imports: [

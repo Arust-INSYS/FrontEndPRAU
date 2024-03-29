@@ -1,25 +1,32 @@
-<div class="grid bg-primary border-round p-4">
-  <div class="col-fixed" style="width: 300px">
-    <p-sidebar [(visible)]="sidebarVisible">
-      <h3>Sidebar</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </p>
-    </p-sidebar>
-    <p-button
-      (click)="sidebarVisible = true"
-      icon="pi pi-arrow-right"
-    ></p-button>
-    <div class="bg-green-500 border-round m-3 flex flex-column">
-      <p></p>
-    </div>
+<div class="formulario">
+  <div class="flex flex-column gap-2">
+    <label for="username">Nombre</label>
+    <input
+      pInputText
+      id="username"
+      aria-describedby="username-help"
+      [(ngModel)]="value"
+    />
+    <small id="username-help">Escriba el nombre.</small>
   </div>
-  <div class="col">
-    <div class="bg-green-500 border-round m-3 flex flex-column">
-      <p></p>
-    </div>
+  <div class="flex flex-column gap-2">
+    <label for="username">Apellido</label>
+    <input
+      pInputText
+      id="username"
+      aria-describedby="username-help"
+      [(ngModel)]="value"
+    />
+    <small id="username-help">Escriba el apellido</small>
+  </div>
+  <div class="flex flex-column gap-2">
+    <label for="username">Correo</label>
+    <input
+      pInputText
+      id="username"
+      aria-describedby="username-help"
+      [(ngModel)]="value"
+    />
+    <small id="username-help">Escriba el correo</small>
   </div>
 </div>

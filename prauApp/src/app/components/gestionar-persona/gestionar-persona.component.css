@@ -1,0 +1,15 @@
+.formulario{
+    background-color: aliceblue;
+    height: 400px;
+    width: 500px;
+    margin-left: 400px;
+    margin-top:100px;
+    padding: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(30, 30, 237);
+    border-radius: 10px;
+}
+.formulario div{
+    padding-top: 20px;
+}
