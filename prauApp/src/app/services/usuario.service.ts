@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SessionStorageService } from './session-storage.service'; // Importa SessionStorageService
+import { LocalStorageService } from './local-storage.service'; // Importa localStorageService
 import { entorno } from '../env/entorno';
 import { Usuario } from '../models/usuario';
 import { Observable } from 'rxjs';
@@ -13,17 +13,17 @@ import { AuthResponse } from '../models/authResponse';
 export class UsuarioService {
   constructor(
     private http: HttpClient,
-    private sessionStorage: SessionStorageService
+    private localStorage: LocalStorageService
   ) { }
 
   private url: string = `${entorno.urlPrivada}/usuario`;
   private urlPublica: string = `${entorno.urlPublica}`;
-  // private token = this.sessionStorage.getItem('token');
+  // private token = this.localStorage.getItem('token');
 
   allUsersData(est: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -35,7 +35,7 @@ export class UsuarioService {
   getJefesByRolId(id: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -47,7 +47,7 @@ export class UsuarioService {
   searchUsersData(search: string, est: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -61,7 +61,7 @@ export class UsuarioService {
   searchUsersCI(search: string, est: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -74,7 +74,7 @@ export class UsuarioService {
   searchUsersId(id: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -86,7 +86,7 @@ export class UsuarioService {
   registrarUsuario(usuario: Usuario): Observable<Usuario> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -98,7 +98,7 @@ export class UsuarioService {
   update(id: number, usuario: Usuario): Observable<Usuario> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -110,7 +110,7 @@ export class UsuarioService {
   updateEst(id: number, est: number): Observable<void> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -124,7 +124,7 @@ export class UsuarioService {
   updateSaldo(id: number, saldo: number): Observable<void> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -158,7 +158,7 @@ export class UsuarioService {
 
   usuarioUnico(user: string) {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     return this.http.get<boolean>(`${this.url}/usuarioUnico?user=${user}`, {

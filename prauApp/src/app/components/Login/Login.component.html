@@ -1,3 +1,30 @@
-<p>
-  Login works!
-</p>
+<html lang="en">
+
+<body>
+  <div class="login-container">
+    <div class="login-info-container">
+      <h1 class="title">PRAU</h1>
+      <p>Plataforma de Reportes de Analisis de Uso</p>
+
+
+      <form class="inputs-container">
+        <p-floatLabel>
+          <input id="username" type="text" pInputText [(ngModel)]="loginRequest.usuNombreUsuario"
+            name="usuNombreUsuario" />
+          <label for="username">Username</label>
+        </p-floatLabel>
+        <span class="p-float-label">
+          <p-password [(ngModel)]="loginRequest.usuContrasena" name="usuContrasena" [toggleMask]="true"
+            [feedback]="false"></p-password>
+          <label for="password">Password</label>
+        </span>
+        <!-- <p-button label="Submit" (click)="logIn()"></p-button> -->
+        <button class="btn" (click)="logIn() ">login</button>
+      </form>
+    </div>
+    <img style="width: 800px; height: 400px;" class="image-container" src="../../../assets/LOGO-TECAZUAY.png" alt="">
+  </div>
+
+</body>
+
+</html>

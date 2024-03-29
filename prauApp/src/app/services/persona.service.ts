@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, map, of } from 'rxjs';
-import { SessionStorageService } from './session-storage.service'; // Importa SessionStorageService
+import { LocalStorageService } from './local-storage.service'; // Importa localStorageService
 import { Persona } from '../models/persona';
 import { entorno } from '../env/entorno';
 
@@ -12,17 +12,17 @@ import { entorno } from '../env/entorno';
 })
 export class PersonaService {
 
-  constructor(private http: HttpClient, private sessionStorage: SessionStorageService) { }
+  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
   private url: string = `${entorno.urlPrivada}/persona`
-  // private token = this.sessionStorage.getItem('token');
+  // private token = this.localStorage.getItem('token');
 
 
 
   registrarPersona(persona: Persona): Observable<Persona> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.sessionStorage.getItem('token')}` // Agrega el token JWT aquí
+      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -32,7 +32,7 @@ export class PersonaService {
   update(id: number, persona: Persona): Observable<Persona> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.sessionStorage.getItem('token')}` // Agrega el token JWT aquí
+      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
@@ -46,7 +46,7 @@ export class PersonaService {
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.sessionStorage.getItem('token')}` // Agrega el token JWT aquí
+      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP GET con el encabezado de autorización
@@ -57,7 +57,7 @@ export class PersonaService {
   getPersonas(): Observable<Persona[]> {
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.sessionStorage.getItem('token')}` // Agrega el token JWT aquí
+      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     return this.http.get(this.url + "/listar").pipe(map(response => response as Persona[]));
