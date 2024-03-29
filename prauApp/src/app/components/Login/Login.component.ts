@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { LoginRequest } from '../../models/loginRequest';
 import { jwtDecode } from "jwt-decode";
-
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,6 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './Login.component.html',
   styleUrls: ['./Login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
   constructor(
@@ -24,12 +24,15 @@ export class LoginComponent implements OnInit {
 
   user: string = '';
   pass: string = '';
+  loginRequest: LoginRequest = new LoginRequest();
 
   ngOnInit(): void {
     this.localStorage.clear();
+    this.loginRequest.usuContrasena = '';
+    this.loginRequest.usuContrasena = '';
   }
 
-  loginRequest: LoginRequest = new LoginRequest();
+
 
   decodeToken(token: string) {
     try {

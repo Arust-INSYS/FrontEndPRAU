@@ -5,12 +5,10 @@
     <div class="login-info-container">
       <h1 class="title">PRAU</h1>
       <p>Plataforma de Reportes de Analisis de Uso</p>
-
-
       <form class="inputs-container">
         <p-floatLabel>
-          <input id="username" type="text" pInputText [(ngModel)]="loginRequest.usuNombreUsuario"
-            name="usuNombreUsuario" />
+          <input style="min-width: 276px;" id="username" type="text" pInputText
+            [(ngModel)]="loginRequest.usuNombreUsuario" name="usuNombreUsuario" />
           <label for="username">Username</label>
         </p-floatLabel>
         <span class="p-float-label">
@@ -22,9 +20,10 @@
         <button class="btn" (click)="logIn() ">login</button>
       </form>
     </div>
-    <img style="width: 800px; height: 400px;" class="image-container" src="../../../assets/LOGO-TECAZUAY.png" alt="">
+    <div class="image-container">
+      <img class="img-prop" src="../../../assets/LOGO-TECAZUAY.png" alt="">
+    </div>
   </div>
-
 </body>
 
 </html>
