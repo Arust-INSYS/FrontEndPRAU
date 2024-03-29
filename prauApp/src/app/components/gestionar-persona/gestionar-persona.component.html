@@ -1,5 +1,5 @@
 <section class="contenedor">
-  <div class="formulario">
+  <div class="subconten1">
     <div class="flex flex-column gap-2">
       <label for="username">Nombre</label>
       <input
@@ -30,23 +30,48 @@
       />
       <small id="username-help">Escriba el correo</small>
     </div>
+    <div class="flex flex-column gap-2">
+      <label for="username">Nombre</label>
+      <input
+        pInputText
+        id="username"
+        aria-describedby="username-help"
+        [(ngModel)]="value"
+      />
+      <small id="username-help">Escriba el nombre.</small>
+    </div>
+    <div class="flex flex-column gap-2">
+      <label for="username">Nombre</label>
+      <input
+        pInputText
+        id="username"
+        aria-describedby="username-help"
+        [(ngModel)]="value"
+      />
+      <small id="username-help">Escriba el nombre.</small>
+    </div>
   </div>
-  <div>
-    <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+  <div class="subconten2">
+    <p-table [value]="personas" [scrollable]="true" scrollHeight="400px">
       <ng-template pTemplate="header">
         <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Quantity</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
-        <tr>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.quantity }}</td>
+      <ng-template pTemplate="body">
+        <tr *ngFor="let people of personas">
+          <td>{{ people.nombre }}</td>
+          <td>{{ people.apellido }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
         </tr>
       </ng-template>
     </p-table>

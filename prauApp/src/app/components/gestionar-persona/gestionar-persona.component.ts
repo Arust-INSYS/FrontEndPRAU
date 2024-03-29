@@ -6,9 +6,6 @@ import { PersonaService } from '../../services/persona.service';
   styleUrl: './gestionar-persona.component.css',
 })
 export class GestionarPersonaComponent {
-  products = [
-    { code: '001', name: 'Candy', category: 'Dulces', quantity: '6' },
-  ];
   value: any;
   sidebarVisible = false;
   personas: any;
