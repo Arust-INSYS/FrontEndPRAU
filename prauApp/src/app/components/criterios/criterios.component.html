@@ -1,77 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Registro de Criterio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
+<div class="formulario">
 
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin-top: 0;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="number"],
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
 <body>
-    <div class="container">
+   
+    
         <h2>Registro de Criterio</h2>
-        <form id="registroForm">
-           
-            <div class="form-group">
-                <label for="nombrecriterio">Nombre de Criterio:</label>
-                <input type="text" id="nombrecriterio" name="nombrecriterio">
-            </div>
-            <div class="form-group">
-                <label for="requisito">Requisito:</label>
-                <input type="text" id="requisito" name="requisito">
-            </div>
-            <button type="submit">Registrar</button>
-        </form>
-    </div>
+        <div class="flex flex-column gap-2">
+            <label for="nombre_criterio">Nombre de Criterio:</label>
+            <input pInputText type="text" id="nombre_criterio" name="nombre_criterio" placeholder="Nombre de Criterio"[(ngModel)]="criterio.nombre_criterio" />
+            <small id="nombre_criterio">Ingrese nombre de criterio.</small>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="requisito">Requisito:</label>
+            <input pInputText type="text" id="requisito" name="requisito" placeholder="requisito" [(ngModel)]="criterio.descripcion" />
+            <small id="requisito">Ingrese el requisito.</small>
+        </div>
+        <div class="button-container">
+      
+            <button type="submit" class="btn btn-primary submit-form me-2" routerLink="/criterios-listar" (click)="guardarCriterio()">Guardar</button>
+        </div>
+       
+
 </body>
-</html>
+
+</div>

@@ -1,0 +1,28 @@
+<div class="formulario">
+
+    <body>
+       
+        
+            <h2>Actulizar registro de Criterio</h2>
+            <div class="flex flex-column gap-2">
+                <label for="nombre_criterio">Nombre de Criterio:</label>
+                <input pInputText type="text" id="nombre_criterio" name="nombre_criterio" placeholder="Nombre de Criterio"[(ngModel)]="criterio.nombre_criterio" />
+                <small id="nombre_criterio">Ingrese nombre de criterio.</small>
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="requisito">Requisito:</label>
+                <input pInputText type="text" id="requisito" name="requisito" placeholder="requisito" [(ngModel)]="criterio.descripcion" />
+                <small id="requisito">Ingrese el requisito.</small>
+            </div>
+            <div class="button-container">
+          
+                <button type="submit" class="btn btn-primary submit-form me-2" routerLink="/criterios-listar">Guardar</button>
+
+                <button type="submit" class="btn btn-primary submit-form me-2"  routerLink="/criterios-listar" style="margin-left: 10px">Cancelar</button>
+                  
+            </div>
+           
+    
+    </body>
+    
+    </div>
