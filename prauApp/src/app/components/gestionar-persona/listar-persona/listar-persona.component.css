@@ -1,0 +1,27 @@
+.contenedor {
+    display: inline-block;
+    margin: 100px;
+    gap: 16px;
+    background-color: aliceblue;
+    padding: 50px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(30, 30, 237);
+    border-radius: 10px;
+    width: 100%;
+    
+  }
+  .contenedor div{
+    border-radius: 10px;
+    padding: 20px;
+    float: left;
+    border: 4px solid white;
+
+  }
+
+.subconten2{
+    
+    background-color: rgba(48, 47, 47, 0.116);
+    width: 60%;
+    min-height: 30em;
+}

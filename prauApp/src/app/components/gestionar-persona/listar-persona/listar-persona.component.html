@@ -1,0 +1,27 @@
+<section class="contenedor">
+  <div class="subconten2">
+    <p-table [value]="personas" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body">
+        <tr *ngFor="let people of personas">
+          <td>{{ people.nombre }}</td>
+          <td>{{ people.apellido }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+          <td>{{ people.email }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
