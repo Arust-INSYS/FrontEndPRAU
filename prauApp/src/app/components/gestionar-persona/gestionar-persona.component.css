@@ -13,3 +13,7 @@
 .formulario div{
     padding-top: 20px;
 }
+.contenedor {
+    display: flex;
+    gap: 16px;
+  }

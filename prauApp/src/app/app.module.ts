@@ -9,9 +9,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; // Importación del módulo HttpClientModule
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [{}];
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [AppComponent, GestionarPersonaComponent],
   imports: [
@@ -23,6 +21,7 @@ const routes: Routes = [{}];
     ButtonModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    TableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
