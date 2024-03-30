@@ -14,7 +14,6 @@ import { LoginComponent } from './components/Login/Login.component';
 import { ToastrModule } from 'ngx-toastr';
 
 import { ButtonModule } from 'primeng/button';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 // Import PrimeNG modules
 import { AccordionModule } from 'primeng/accordion';
@@ -117,7 +116,6 @@ import { MenuComponent } from './components/menu/menu.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    SidenavComponent,
     MenuComponent
   ],
   imports: [
