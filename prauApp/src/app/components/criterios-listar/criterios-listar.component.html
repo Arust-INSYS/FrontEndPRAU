@@ -26,15 +26,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let criterio of datos">
-          <td>{{ criterio.id_criterio }}</td>
-          <td>{{ criterio.nombre_criterio }}</td>
+          <td>{{ criterio.idCriterio }}</td>
+          <td>{{ criterio.nombreCriterio }}</td>
           <td>{{ criterio.descripcion }}</td>
           <td>{{ criterio.id_clasificacion_criterios }}</td>
           <td>
-            <button (click)="actualizarCriterio(criterio.id_criterio)"  class="btn btn-custom">Actualizar</button>
+            <button (click)="actualizarCriterio(criterio.idCriterio)"  class="btn btn-custom">Actualizar</button>
           </td>
           <td>
-            <button (click)="eliminarCriterio(criterio.id_criterio)" class="btn btn-custom">Eliminar</button>
+            <button (click)="eliminarCriterio(criterio.idCriterio)" class="btn btn-custom">Eliminar</button>
           </td>
         </tr>
       </tbody>

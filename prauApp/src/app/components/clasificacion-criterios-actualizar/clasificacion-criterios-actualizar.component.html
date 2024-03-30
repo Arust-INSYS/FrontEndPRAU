@@ -5,9 +5,14 @@
         
             <h2>Clasificacion de Criterios Actualizar</h2>
             <div class="flex flex-column gap-2">
-                <label for="nombre_clasificacion">nombre de clasificacion:</label>
-                <input pInputText type="text" id="nombre_clasificacion" name="nombre_clasificacion" placeholder="nombre de clasificacion"[(ngModel)]="criterio.nombre_clasificacion" />
-                <small id="nombre_clasificacion">Ingrese nombre de clasificacion.</small>
+                <label for="nombreClasificacion">nombre de clasificacion:</label>
+                <input pInputText type="text" id="nombreClasificacion" name="nombreClasificacion" placeholder="nombre de clasificacion"[(ngModel)]="criterio.nombreClasificacion" />
+                <small id="nombreClasificacion">Ingrese nombre de clasificacion.</small>
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="descripcion">Descripcion:</label>
+                <input pInputText type="text" id="descripcion" name="descripcion" placeholder="nombre de clasificacion"[(ngModel)]="criterio.descripcion" />
+                <small id="descripcion">Ingrese nombre de clasificacion.</small>
             </div>
        
             <div class="button-container">

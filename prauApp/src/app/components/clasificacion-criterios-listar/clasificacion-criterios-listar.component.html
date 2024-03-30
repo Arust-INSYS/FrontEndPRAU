@@ -18,20 +18,22 @@
         <tr>
           <th style="width:20%">ID clasificacion</th>
           <th style="width:20%">Nombre de clasificacion</th>
+          <th style="width:20%">Descripcion</th>
           <th style="width:20%">Editar</th>
           <th style="width:20%">Eliminar</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let criterio of datos">
-          <td>{{ criterio.id_clasificacion_criterio }}</td>
-          <td>{{ criterio.nombre_clasificacion }}</td>
+          <td>{{ criterio.idClasificacion }}</td>
+          <td>{{ criterio.nombreClasificacion }}</td>
+          <td>{{ criterio.descripcion }}</td>
   
           <td>
-            <button (click)="actualizarCriterio(criterio.id_clasificacion_criterio)"  class="btn btn-custom">Actualizar</button>
+            <button (click)="actualizarCriterio(criterio.idClasificacion)"  class="btn btn-custom">Actualizar</button>
           </td>
           <td>
-            <button (click)="eliminarCriterio(criterio.id_clasificacion_criterio)" class="btn btn-custom">Eliminar</button>
+            <button (click)="eliminarCriterio(criterio.idClasificacion)" class="btn btn-custom">Eliminar</button>
           </td>
         </tr>
       </tbody>

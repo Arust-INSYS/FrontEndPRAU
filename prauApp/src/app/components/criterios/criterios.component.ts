@@ -25,7 +25,7 @@ export class CriteriosComponent {
   }
   guardarCriterio() {
     console.log(this.criterio); // Verificar los valores de los campos
-    var nombre_criterio = this.criterio.nombre_criterio;
+    var nombreCriterio = this.criterio.nombreCriterio;
     var descripcion = this.criterio.descripcion;
   
     this.criteriosService.registrarcriterios(this.criterio).subscribe(dato => {
@@ -35,7 +35,7 @@ export class CriteriosComponent {
       // Manejo de errores
     });
   
-    this.criterio.nombre_criterio = '';
+    this.criterio.nombreCriterio = '';
     this.criterio.descripcion = '';
   }
   
