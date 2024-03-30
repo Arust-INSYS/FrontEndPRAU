@@ -30,7 +30,7 @@ export class CriteriosComponent {
   
     this.criteriosService.registrarcriterios(this.criterio).subscribe(dato => {
       this.obtenercriterios();
-      this.irAlaListaDeCriterios(); // Llama a la función para ir a la lista después de guardar
+      this.router.navigateByUrl('/criterios-listar'); // Llama a la función para ir a la lista después de guardar
     }, error => {
       // Manejo de errores
     });
@@ -39,9 +39,7 @@ export class CriteriosComponent {
     this.criterio.descripcion = '';
   }
   
-  irAlaListaDeCriterios() {
-    this.router.navigate(['/criterios-listar']);
-  }
+
   
   onSubmit() {
 

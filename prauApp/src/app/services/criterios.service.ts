@@ -4,62 +4,72 @@ import { Criterios } from '../models/criterios';
 import { Observable, map } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class CriteriosService {
-  /*private baseURL = "http://localhost:8080/criterios";*/
-  private url: string = `${entorno.urlPrivada}/complexivo/criterio`
+  private url = "http://localhost:8080/complexivo/criterio";
+ /* private url: string = `${entorno.urlPrivada}/complexivo/criterio`*/
   
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
 
   obtenerListacriterios(): Observable<Criterios[]> {
-Criterios
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
     });
 
-    return this.http.get(this.url + "/listar").pipe(map(response => response as Criterios[]));
-  }
+    const options = { headers: headers };
 
+    return this.http.get<Criterios[]>(this.url + '/read', options);
+  }
+  
   eliminarcriterios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
   
     // Realiza la solicitud HTTP DELETE con el encabezado de autorización
     return this.http.delete(`${this.url}/delete?id=${id}`, { headers });
   }
   
+ 
   actualizarcriterios(id: number, criterios: Criterios): Observable<Criterios> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
-    return this.http.put<Criterios>(`${this.url}/update?id=${id}`, criterios, { headers });
+    return this.http.put<Criterios>(`${this.url}/update?id=${id}`, criterios, { headers }).pipe(
+      catchError(error => {
+        console.error('Error actualizando criterios:', error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que lo manejen desde el componente
+      })
+    );
   }
-  
   registrarcriterios(criterios: Criterios): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.post<Criterios>(`${this.url}/create`, criterios, { headers });
   }
+
+ 
+
   Buscarid(id:number): Observable<Criterios>{
-    return this.http.get<Criterios>(this.url+'/listar/'+id);
+    return this.http.get<Criterios>(this.url+'/read/'+id);
   }
   
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
 
     // Realiza la solicitud HTTP GET con el encabezado de autorización

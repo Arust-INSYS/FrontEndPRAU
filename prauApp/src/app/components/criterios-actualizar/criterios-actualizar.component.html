@@ -15,12 +15,13 @@
                 <small id="descripcion">Ingrese la descripcion.</small>
             </div>
             <div class="button-container">
-          
-                <button type="submit" class="btn btn-primary submit-form me-2" routerLink="/criterios-listar">Guardar</button>
-
-                <button type="submit" class="btn btn-primary submit-form me-2"  routerLink="/criterios-listar" style="margin-left: 10px">Cancelar</button>
-                  
+                <p-button  icon="pi pi-check"  label="Guardar"[rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()" ></p-button>
+              
+                <p-button   icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger " routerLink="/criterios-listar"  ></p-button>
             </div>
+        
+           
+     
            
     
     </body>

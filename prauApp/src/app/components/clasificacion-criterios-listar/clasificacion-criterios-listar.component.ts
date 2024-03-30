@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 import { ClasificacionCriteriosService } from '../../services/clasificacion-criterios.service';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-clasificacion-criterios-listar',
@@ -10,12 +11,21 @@ import { Router } from '@angular/router';
 })
 export class ClasificacionCriteriosListarComponent {
   criterio: ClasificacionCriterios[] = [];
-  criterios = [
-    { idClasificacion: 1, nombreClasificacion: 'Criterio 1', descripcion: 'Descripción del criterio 1' },
-    { idClasificacion: 2, nombreClasificacion: 'Criterio 2', descripcion: 'Descripción del criterio 2' },
-    { idClasificacion: 3, nombreClasificacion: 'Criterio 3', descripcion: 'Descripción del criterio 3' }
-    // Puedes agregar más datos aquí si es necesario
-  ];
+  items: MenuItem[]|undefined;
+$even: any;
+$odd: any;
+Delete: string|undefined;
+products: any;
+dt: any;
+selectedProducts: any;
+showModal() {
+throw new Error('Method not implemented.');
+}
+  displayModal: boolean = false;
+
+  customers: any
+  selectedCustomers:any
+  loading:any
   constructor(private criteriosService: ClasificacionCriteriosService, private router: Router) {}
 
   ngOnInit(): void {
@@ -27,18 +37,15 @@ export class ClasificacionCriteriosListarComponent {
       this.criterio = dato;
     });
   }
+ 
 
-  /*actualizarCriterio(id: number) {
-    console.log('ID del criterio a actualizar:', id);
-    this.router.navigate(['clasificacion-criterios-actualizar', id]);
-  }*/
-  actualizarCriterio(idCriterio: string) {
-    // Realiza las operaciones necesarias con el criterio
-    // ...
+  actualizarCriterio(id: number) {
 
-    // Luego redirige a la ruta "clasificacion-criterios-actualizar"
-    this.router.navigate(['/clasificacion-criterios-actualizar']);
+    this.router.navigate(['/clasificacion-criterios-actualizar',id]);
 }
+  redirectToCriterios() {
+    this.router.navigate(['/clasificacion-criterios']);
+  }
   eliminarCriterio(id: number) {
     this.criteriosService.eliminarcriterios(id).subscribe(() => {
       this.obtenerCriterios(); 
@@ -47,11 +54,8 @@ export class ClasificacionCriteriosListarComponent {
     
     });
   }
-  redirectToCriterios() {
-    this.router.navigate(['/clasificacion-criterios']);
-  }
+  
   
 }
 
  
-

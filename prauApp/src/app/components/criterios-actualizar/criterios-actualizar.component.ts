@@ -12,41 +12,37 @@ export class CriteriosActualizarComponent {
   id!: number;
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
-  constructor( private criteriosService: CriteriosService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private criteriosService: CriteriosService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.obtenercriterio();
       this.criteriosService.Buscarid(this.id).subscribe(
         response => {
-          this.criterio = response
-
-        });
-
-    })
-
-    this.obtenercriterio();
-
-  }
-  obtenercriterio() {
-    this.criteriosService.obtenerListacriterios().subscribe(dato => {
-      this.criterios = dato;
+          this.criterio = response;
+        },
+        error => {
+          console.error('Error al buscar el criterio:', error);
+     
+        }
+      );
     });
   }
-
   onSubmit() {
-   
-    this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(dato => {
-      this.irAlaListaDecriterios();
-    }, error => console.log(error));
+    this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
+      dato => {
+        this.router.navigateByUrl('/criterios-listar');
+      },
+      error => {
+        console.error('Error al actualizar el criterio:', error);
+    
+      }
+    );
   }
-
-
-  irAlaListaDecriterios() {
-    this.router.navigate(['/criterios-listar']);
-  }
-
 }
+
 

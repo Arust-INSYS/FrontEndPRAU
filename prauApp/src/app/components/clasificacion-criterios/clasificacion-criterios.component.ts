@@ -44,7 +44,7 @@ export class ClasificacionCriteriosComponent {
 
   }
   irAlalistaDecriterios(){
-    this.router.navigate(['/criterios-listar'])
+    this.router.navigate(['/clasificacion-criterios-listar'])
   }
   onSubmit() {
 

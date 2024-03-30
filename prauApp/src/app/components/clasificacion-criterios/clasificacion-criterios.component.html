@@ -5,7 +5,7 @@
         
             <h2>Clasificacion de Criterios</h2>
             <div class="flex flex-column gap-2">
-                <label for="nombreClasificacion">nombre de clasificacion:</label>
+                <label for="nombreClasificacion">Nombre de clasificacion:</label>
                 <input pInputText type="text" id="nombreClasificacion" name="nombreClasificacion" placeholder="nombre de clasificacion"[(ngModel)]="criterio.nombreClasificacion" />
                 <small id="nombreClasificacion">Ingrese nombre de clasificacion.</small>
             </div>
@@ -17,7 +17,8 @@
             
             <div class="button-container">
           
-                <button type="submit" class="btn btn-primary submit-form me-2" routerLink="/clasificacion-criterios-listar" (click)="guardarcriterio()">Guardar</button>
+
+                <p-button  type="submit" icon="pi pi-check"  label="Guardar"[rounded]="true" [text]="true" [raised]="true" (click)="guardarcriterio()"></p-button>
             </div>
            
     

@@ -15,37 +15,45 @@
   </div>
   <div class="subconten2">
     <button pButton icon="pi pi-plus" class="mr-2" (click)="redirectToCriterios()"></button>
-    <p-table [value]="criterios" [scrollable]="true" scrollHeight="400px">
+    <h1 class="text-center">Lista de clasifiacion de criterios</h1>
+    
+    <p-table   #dt
+    [value]="products"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selectedProducts"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    [value]="criterio" [scrollable]="true" scrollHeight="400px">
+
       <ng-template pTemplate="header">
         <tr>
-          <th style="width:20%">ID Clasificacion</th>
-          <th style="width:20%">Nombre Clasificacion</th>
-          <th style="width:20%">Descripción</th>
-          <th style="width:20%">Editar</th>
-          <th style="width:20%">Eliminar</th>
+          <th>ID Criterio</th>
+          <th>Nombre Criterio</th>
+          <th>Descripción</th>
+          
+          <th>Editar</th>
+          <th>Eliminar</th>
         </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-criterio>
-        <tr *ngIf="criterios.length > 0; else noData">
+   
+        <tr *ngFor="let criterio of criterio">
           <td>{{ criterio.idClasificacion }}</td>
           <td>{{ criterio.nombreClasificacion }}</td>
           <td>{{ criterio.descripcion }}</td>
-        
-        <td>
-          <p-button (click)="actualizarCriterio(criterio.idCriterio)" icon="pi pi-check" class="btn btn-custom"></p-button>
+          <td>
+            <button pButton pRipple  icon="pi pi-pencil" class="p-button-success mr-2"  (click)="actualizarCriterio(criterio.idClasificacion)" ></button>
+          </td>
+          <td>
+            <button pButton pRipple  icon="pi pi-trash" class="p-button-danger"  *ngIf="criterio.idClasificacion" (click)="eliminarCriterio(criterio.idClasificacion)" ></button >
 
-        </td>
-        <td>
-          <p-button (click)="eliminarCriterio(criterio.idCriterio)" icon="pi pi-times" severity="danger"></p-button>
-        </td>
-        
-      </tr>
-      <ng-template #noData>
-        <tr>
-     
+          </td>
         </tr>
       </ng-template>
-    </ng-template>
-  </p-table>
-</div>
+      
+    </p-table>
+  </div>
 </section>

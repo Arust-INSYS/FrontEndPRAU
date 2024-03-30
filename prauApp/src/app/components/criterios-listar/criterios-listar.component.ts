@@ -10,15 +10,14 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './criterios-listar.component.css'
 })
 export class CriteriosListarComponent {
-  criterios = [
-    { idCriterio: 1, nombreCriterio: 'Criterio 1', descripcion: 'Descripción del criterio 1' },
-    { idCriterio: 2, nombreCriterio: 'Criterio 2', descripcion: 'Descripción del criterio 2' },
-    { idCriterio: 3, nombreCriterio: 'Criterio 3', descripcion: 'Descripción del criterio 3' }
-    // Puedes agregar más datos aquí si es necesario
-  ];
-items: MenuItem[]|undefined;
+  
+  items: MenuItem[]|undefined;
 $even: any;
 $odd: any;
+Delete: string|undefined;
+products: any;
+dt: any;
+selectedProducts: any;
 showModal() {
 throw new Error('Method not implemented.');
 }
@@ -40,15 +39,9 @@ throw new Error('Method not implemented.');
     });
   }
 
-  /*actualizarCriterio(id: number) {
-    this.router.navigate(['criterios-actualizar', id]);
-  }*/
-  actualizarCriterio(idCriterio: string) {
-    // Realiza las operaciones necesarias con el criterio
-    // ...
-
-    // Luego redirige a la ruta "clasificacion-criterios-actualizar"
-    this.router.navigate(['/clasificacion-criterios-actualizar']);
+  actualizarCriterio(id: number) {
+  
+    this.router.navigate(['/criterios-actualizar',id]);
 }
   redirectToCriterios() {
     this.router.navigate(['/criterios']);
