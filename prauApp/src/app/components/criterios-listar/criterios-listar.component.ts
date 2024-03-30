@@ -9,8 +9,28 @@ import { Router } from '@angular/router';
   styleUrl: './criterios-listar.component.css'
 })
 export class CriteriosListarComponent {
+getSeverity(arg0: any): string|undefined {
+throw new Error('Method not implemented.');
+}
+activityValues: number[] = [0, 100];
+statuses: any[] = [ // Aquí debes proporcionar la lista de opciones para el dropdown
+    { label: 'Option 1', value: 'option1' },
+    { label: 'Option 2', value: 'option2' },
+    // Agrega más opciones si es necesario
+  ];
+  representatives: any[] = [ // Aquí debes proporcionar la lista de representantes
+    { name: 'Representante 1' },
+    { name: 'Representante 2' },
+    // Agrega más representantes si es necesario
+  ];
+  filterGlobal(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    // Lógica para filtrar usando inputValue
+  }
   criterio: Criterios[] = [];
-
+  customers: any
+  selectedCustomers:any
+  loading:any
   constructor(private criteriosService: CriteriosService, private router: Router) {}
 
   ngOnInit(): void {

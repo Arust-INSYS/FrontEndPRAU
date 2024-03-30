@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -16,12 +16,13 @@ import { LoginComponent } from './components/Login/Login.component';
 import { ToastrModule } from 'ngx-toastr';
 
 import { ButtonModule } from 'primeng/button';
-
+import { DropdownModule } from 'primeng/dropdown';
 import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
-
+import { ProgressBarModule } from 'primeng/progressbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
+import { SliderModule } from 'primeng/slider';
 import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
 import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
 import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
@@ -56,8 +57,12 @@ const routes:Routes = [
     InputTextModule,
     BrowserAnimationsModule,
     FormsModule,
+    MultiSelectModule,
+    SliderModule,
     TableModule,
-    
+    ProgressBarModule,
+    TagModule,
+    DropdownModule,
     PasswordModule,
     FormsModule,
     HttpClientModule,
