@@ -3,21 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PasswordModule } from 'primeng/password';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoginComponent } from './components/Login/Login.component';
 import { ToastrModule } from 'ngx-toastr';
-
+import { GestionarPersonaComponent } from './components/gestionar-persona/gestionar-persona.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http'; // Importación del módulo HttpClientModule
+import { TableModule } from 'primeng/table';
+import { GestionarPersonaModule } from './components/gestionar-persona/gestionar-persona.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
+  declarations: [AppComponent, LoginComponent, GestionarPersonaComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,8 +28,14 @@ import { ButtonModule } from 'primeng/button';
     FloatLabelModule,
     ButtonModule,
     ToastrModule.forRoot(),
+    AppRoutingModule,
+    InputTextModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    TableModule,
+    GestionarPersonaModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
