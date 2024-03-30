@@ -6,7 +6,6 @@ import { LoginComponent } from './components/Login/Login.component';
 import { GestionarPersonaComponent } from './components/gestionar-persona/gestionar-persona.component';
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MenuComponent } from './components/menu/menu.component';
 
 const routes: Routes = [
@@ -21,7 +20,6 @@ const routes: Routes = [
       { path: 'registrar', component: RegistrarPersonaComponent },
     ],
   },
-  { path: 'sidenav', component: SidenavComponent },
   { path: 'menu', component: MenuComponent },
 ];
 
