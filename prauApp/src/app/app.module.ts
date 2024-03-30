@@ -2,11 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PasswordModule } from 'primeng/password';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CriteriosComponent } from './components/criterios/criterios.component';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
+import { PasswordModule } from 'primeng/password';
+
+import { MultiSelectModule } from 'primeng/multiselect';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoginComponent } from './components/Login/Login.component';
@@ -14,8 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { GestionarPersonaComponent } from './components/gestionar-persona/gestionar-persona.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-
-
+import { TableModule } from 'primeng/table';
+import { GestionarPersonaModule } from './components/gestionar-persona/gestionar-persona.module';
 // Import PrimeNG modules
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -62,7 +69,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import { MultiSelectModule } from 'primeng/multiselect';
+
 import { MeterGroupModule } from 'primeng/metergroup';
 import { OrderListModule } from 'primeng/orderlist';
 import { OrganizationChartModule } from 'primeng/organizationchart';
@@ -117,6 +124,121 @@ import { MenuComponent } from './components/menu/menu.component';
     MenuComponent
   ],
   imports: [
+    BrowserModule,
+    AppRoutingModule,
+    PasswordModule,
+    FormsModule,
+    HttpClientModule,
+    InputTextModule,
+    FloatLabelModule,
+    ButtonModule,
+    ToastrModule.forRoot(),
+    AppRoutingModule,
+    InputTextModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    TableModule,
+    GestionarPersonaModule,
+    AvatarModule,
+    AvatarGroupModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    AutoCompleteModule,
+    BadgeModule,
+    BreadcrumbModule,
+    BlockUIModule,
+    ButtonModule,
+    CalendarModule,
+    CarouselModule,
+    CascadeSelectModule,
+    ChartModule,
+    CheckboxModule,
+    ChipsModule,
+    ChipModule,
+    ColorPickerModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
+    ContextMenuModule,
+    VirtualScrollerModule,
+    DataViewModule,
+    DialogModule,
+    DividerModule,
+    DockModule,
+    DragDropModule,
+    DropdownModule,
+    DynamicDialogModule,
+    EditorModule,
+    FieldsetModule,
+    FileUploadModule,
+    GalleriaModule,
+    InplaceModule,
+    InputMaskModule,
+    InputSwitchModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputNumberModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    InputOtpModule,
+    ImageModule,
+    KnobModule,
+    ListboxModule,
+    MegaMenuModule,
+    MenuModule,
+    MenubarModule,
+    MessageModule,
+    MessagesModule,
+    MultiSelectModule,
+    MeterGroupModule,
+    OrganizationChartModule,
+    OrderListModule,
+    OverlayPanelModule,
+    PaginatorModule,
+    PanelModule,
+    PanelMenuModule,
+    PasswordModule,
+    PickListModule,
+    ProgressSpinnerModule,
+    ProgressBarModule,
+    RadioButtonModule,
+    RatingModule,
+    SelectButtonModule,
+    SidebarModule,
+    ScrollerModule,
+    ScrollPanelModule,
+    ScrollTopModule,
+    SkeletonModule,
+    SlideMenuModule,
+    SliderModule,
+    SpeedDialModule,
+    SpinnerModule,
+    SplitterModule,
+    StepperModule,
+    SplitButtonModule,
+    StepsModule,
+    TableModule,
+    TabMenuModule,
+    TabViewModule,
+    TagModule,
+    TerminalModule,
+    TieredMenuModule,
+    TimelineModule,
+    ToastModule,
+    ToggleButtonModule,
+    ToolbarModule,
+    TooltipModule,
+    TriStateCheckboxModule,
+    TreeModule,
+    TreeSelectModule,
+    TreeTableModule,
+    AnimateModule,
+    CardModule,
+    RippleModule,
+    StyleClassModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

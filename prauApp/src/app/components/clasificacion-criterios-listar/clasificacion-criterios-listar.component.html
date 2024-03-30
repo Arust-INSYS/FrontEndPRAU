@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabla de Criterios</title>
+<style>
+  /* Estilos para el bloque de administración */
+</style>
+</head>
+<body>
+<!-- Tabla de Criterios -->
+<div class="container">
+  <div id="fixed">
+    <button [routerLink]="['/clasificacion-criterios']" class="btn btn-custom">Crear Criterio</button>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:20%">ID clasificacion</th>
+          <th style="width:20%">Nombre de clasificacion</th>
+          <th style="width:20%">Descripcion</th>
+          <th style="width:20%">Editar</th>
+          <th style="width:20%">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let criterio of datos">
+          <td>{{ criterio.idClasificacion }}</td>
+          <td>{{ criterio.nombreClasificacion }}</td>
+          <td>{{ criterio.descripcion }}</td>
+  
+          <td>
+            <button (click)="actualizarCriterio(criterio.idClasificacion)"  class="btn btn-custom">Actualizar</button>
+          </td>
+          <td>
+            <button (click)="eliminarCriterio(criterio.idClasificacion)" class="btn btn-custom">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

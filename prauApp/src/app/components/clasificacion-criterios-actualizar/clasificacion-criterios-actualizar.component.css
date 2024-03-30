@@ -1,0 +1,54 @@
+.formulario {
+    background-color: #e0f7fa; /* Cambiado a un tono más suave de azul */
+    height: auto; /* Ajustado para que la altura se adapte al contenido */
+    width: 500px;
+    margin: 100px auto; /* Centrado horizontalmente y establecido margen superior */
+    border: 2px solid #00bcd4; /* Cambiado a un azul más claro */
+    border-radius: 10px;
+    padding: 20px; /* Añadido espacio alrededor del formulario */
+}
+
+.formulario div {
+    margin-bottom: 20px; /* Espacio entre elementos del formulario */
+}
+
+.formulario input[type="text"] {
+    border: 1px solid #00bcd4; /* Añadido borde alrededor de los campos de entrada */
+    border-radius: 5px;
+    padding: 5px; /* Añadido espacio alrededor del texto dentro del campo */
+}
+
+.formulario button[type="submit"] {
+    background-color: #00bcd4; /* Cambiado el color del botón */
+    color: white; /* Cambiado el color del texto del botón a blanco */
+    border: none;
+    padding: 10px 20px; /* Aumentado el espacio dentro del botón */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column; /* Organizar elementos en columna */
+}
+
+.gap-2 > * {
+    margin-bottom: 10px; /* Espacio entre elementos */
+}
+
+.button-container {
+    margin-top: 20px; /* Espacio entre el último campo y el botón */
+    text-align: center; /* Alinear el botón al centro */
+}
+
+.button-container button {
+    padding: 10px 20px; /* Espaciado interno del botón */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Eliminar borde del botón */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+}
+
+.button-container button:hover {
+    background-color: #0056b3; /* Cambiar color de fondo al pasar por encima */
+}

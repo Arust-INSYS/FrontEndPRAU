@@ -1,0 +1,25 @@
+<div class="formulario">
+
+<body>
+   
+    
+        <h2>Registro de Criterio</h2>
+        <div class="flex flex-column gap-2">
+            <label for="nombreCriterio">Nombre de Criterio:</label>
+            <input pInputText type="text" id="nombreCriterio" name="nombreCriterio" placeholder="Nombre de Criterio"[(ngModel)]="criterio.nombreCriterio" />
+            <small id="nombreCriterio">Ingrese nombre de criterio.</small>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="descripcion">Descripcion:</label>
+            <input pInputText type="text" id="descripcion" name="descripcion" placeholder="descripcion" [(ngModel)]="criterio.descripcion" />
+            <small id="descripcion">Ingrese la descripcion.</small>
+        </div>
+        <div class="button-container">
+      
+            <button type="submit" class="btn btn-primary submit-form me-2" routerLink="/criterios-listar" (click)="guardarCriterio()">Guardar</button>
+        </div>
+       
+
+</body>
+
+</div>
