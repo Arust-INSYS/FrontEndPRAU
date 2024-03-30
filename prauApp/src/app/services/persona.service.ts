@@ -13,15 +13,8 @@ export class PersonaService {
     private http: HttpClient,
     private localStorage: LocalStorageService
   ) {}
-  private URL_persona =
-    'https://660545ba2ca9478ea17fe45a.mockapi.io/app/pruebas/personas';
-
-  public getAllPersonas(): Observable<any> {
-    return this.http.get(this.URL_persona);
-  }
-
   private url: string = `${entorno.urlPrivada}/persona`;
-  // private token = this.localStorage.getItem('token');
+  //private token = this.localStorage.getItem('token');
 
   registrarPersona(persona: Persona): Observable<Persona> {
     // Construir el encabezado de autorización con el token JWT

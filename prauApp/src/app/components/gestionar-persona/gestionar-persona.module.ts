@@ -4,9 +4,24 @@ import { ListarPersonaComponent } from './listar-persona/listar-persona.componen
 import { RegistrarPersonaComponent } from './registrar-persona/registrar-persona.component';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [ListarPersonaComponent, RegistrarPersonaComponent],
-  imports: [CommonModule, FormsModule, TableModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    ToolbarModule,
+    SplitButtonModule,
+    InputTextModule,
+    DialogModule,
+    DropdownModule,
+  ],
 })
 export class GestionarPersonaModule {}
