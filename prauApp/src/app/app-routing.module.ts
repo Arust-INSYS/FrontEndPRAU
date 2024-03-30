@@ -10,8 +10,6 @@ import { MenuComponent } from './components/menu/menu.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  //{ path: '**', redirectTo: 'login' },
-  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'persona',
     component: GestionarPersonaComponent,
@@ -21,10 +19,16 @@ const routes: Routes = [
     ],
   },
   { path: 'menu', component: MenuComponent },
+  { path: 'persona/listar', component: ListarPersonaComponent },
+  { path: 'persona/registrar', component: RegistrarPersonaComponent },
+
+  ///AGREGAR RUTAS SOBRE ESTO
+  { path: '**', redirectTo: 'login' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
