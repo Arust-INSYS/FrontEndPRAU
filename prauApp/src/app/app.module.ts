@@ -138,7 +138,14 @@ import { MessageService } from 'primeng/api';
 import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, MenuComponent],
+  declarations: [AppComponent, LoginComponent, MenuComponent,CriteriosComponent,
+    CriteriosActualizarComponent,
+    
+    CriteriosListarComponent,
+          ClasificacionCriteriosComponent,
+          ClasificacionCriteriosActualizarComponent,
+          ClasificacionCriteriosListarComponent,
+],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -150,6 +157,7 @@ import { MenuComponent } from './components/menu/menu.component';
     MultiSelectModule,
     SliderModule,
     TableModule,
+    FormsModule,
     ProgressBarModule,
     TagModule,
     DropdownModule,

@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
 })
 export class ClasificacionCriteriosListarComponent {
   criterio: ClasificacionCriterios[] = [];
-
+  criterios = [
+    { idClasificacion: 1, nombreClasificacion: 'Criterio 1', descripcion: 'Descripción del criterio 1' },
+    { idClasificacion: 2, nombreClasificacion: 'Criterio 2', descripcion: 'Descripción del criterio 2' },
+    { idClasificacion: 3, nombreClasificacion: 'Criterio 3', descripcion: 'Descripción del criterio 3' }
+    // Puedes agregar más datos aquí si es necesario
+  ];
   constructor(private criteriosService: ClasificacionCriteriosService, private router: Router) {}
 
   ngOnInit(): void {
@@ -23,11 +28,17 @@ export class ClasificacionCriteriosListarComponent {
     });
   }
 
-  actualizarCriterio(id: number) {
+  /*actualizarCriterio(id: number) {
     console.log('ID del criterio a actualizar:', id);
     this.router.navigate(['clasificacion-criterios-actualizar', id]);
-  }
+  }*/
+  actualizarCriterio(idCriterio: string) {
+    // Realiza las operaciones necesarias con el criterio
+    // ...
 
+    // Luego redirige a la ruta "clasificacion-criterios-actualizar"
+    this.router.navigate(['/clasificacion-criterios-actualizar']);
+}
   eliminarCriterio(id: number) {
     this.criteriosService.eliminarcriterios(id).subscribe(() => {
       this.obtenerCriterios(); 
@@ -36,12 +47,10 @@ export class ClasificacionCriteriosListarComponent {
     
     });
   }
+  redirectToCriterios() {
+    this.router.navigate(['/clasificacion-criterios']);
+  }
   
-  datos: any[] = [
-    { id_criterio: 1, nombre_criterio: 'Criterio 1', descripcion: 'Descripción del criterio 1', id_clasificacion_criterios: 1 },
-    { id_criterio: 2, nombre_criterio: 'Criterio 2', descripcion: 'Descripción del criterio 2', id_clasificacion_criterios: 2 },
-    // Agrega más datos según sea necesario
-  ];
 }
 
  
