@@ -23,7 +23,14 @@ const routes: Routes = [
       { path: 'registrar', component: RegistrarPersonaComponent },
     ],
   },
+
   { path: 'menu', component: MenuComponent },
+  { path: 'persona/listar', component: ListarPersonaComponent },
+  { path: 'persona/registrar', component: RegistrarPersonaComponent },
+
+  ///AGREGAR RUTAS SOBRE ESTO
+  { path: '**', redirectTo: 'login' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({

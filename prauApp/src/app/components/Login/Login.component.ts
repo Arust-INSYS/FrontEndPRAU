@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
                   showCancelButton: false, // No mostrar el botón de cancelar
                 }).then(() => {
                   // Redirige al usuario a la página de inicio de sesión.
-                  this.router.navigate(['/']);
+                  this.router.navigate(['menu']);
 
 
                 });

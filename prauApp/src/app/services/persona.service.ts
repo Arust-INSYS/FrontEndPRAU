@@ -58,7 +58,7 @@ export class PersonaService {
     });
 
     return this.http
-      .get(this.url + '/listar')
+      .get(this.url + '/read')
       .pipe(map((response) => response as Persona[]));
   }
 }
