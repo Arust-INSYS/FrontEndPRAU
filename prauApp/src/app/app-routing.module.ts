@@ -10,14 +10,8 @@ import { MenuComponent } from './components/menu/menu.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  {
-    path: 'persona',
-    component: GestionarPersonaComponent,
-    children: [
-      { path: 'listar', component: ListarPersonaComponent },
-      { path: 'registrar', component: RegistrarPersonaComponent },
-    ],
-  },
+  { path: 'listar', component: ListarPersonaComponent },
+  { path: 'registrar', component: RegistrarPersonaComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'persona/listar', component: ListarPersonaComponent },
   { path: 'persona/registrar', component: RegistrarPersonaComponent },
@@ -31,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
