@@ -9,7 +9,7 @@ import { entorno } from '../env/entorno';
 })
 export class CriteriosService {
   /*private baseURL = "http://localhost:8080/criterios";*/
-  private url: string = `${entorno.urlPrivada}/criterios`
+  private url: string = `${entorno.urlPrivada}/complexivo/criterio`
   
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
