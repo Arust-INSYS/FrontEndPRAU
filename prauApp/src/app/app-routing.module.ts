@@ -19,7 +19,8 @@ const routes: Routes = [
     ],
   },
   { path: 'menu', component: MenuComponent },
-
+  { path: 'persona/listar', component: ListarPersonaComponent },
+  { path: 'persona/registrar', component: RegistrarPersonaComponent },
 
   ///AGREGAR RUTAS SOBRE ESTO
   { path: '**', redirectTo: 'login' },
