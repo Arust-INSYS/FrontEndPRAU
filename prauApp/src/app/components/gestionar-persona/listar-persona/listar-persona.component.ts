@@ -36,7 +36,7 @@ export class ListarPersonaComponent {
   }*/
   async listarPersona() {
     await this.personaService.getPersonas().subscribe((res) => {
-      console.log((this.personas = res));
+      console.log(res);
     });
   }
 }
