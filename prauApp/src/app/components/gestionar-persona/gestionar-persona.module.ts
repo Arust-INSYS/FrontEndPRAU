@@ -10,6 +10,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputGroupModule } from 'primeng/inputgroup';
 @NgModule({
   declarations: [ListarPersonaComponent, RegistrarPersonaComponent],
   imports: [
@@ -22,6 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     DialogModule,
     DropdownModule,
+    InputGroupModule,
   ],
 })
 export class GestionarPersonaModule {}
