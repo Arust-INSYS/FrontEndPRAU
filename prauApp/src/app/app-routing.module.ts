@@ -20,25 +20,28 @@ const routes: Routes = [
   //{ path: '**', redirectTo: 'login' },
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  {
-    path: 'persona',
-    component: GestionarPersonaComponent,
-    children: [
-      { path: 'listar', component: ListarPersonaComponent },
-      { path: 'registrar', component: RegistrarPersonaComponent },
-    ],
-  },
+  { path: 'criterios', component: CriteriosComponent },
 
   { path: 'criterios', component: CriteriosComponent },
-   
-  { path: 'criterios', component: CriteriosComponent},
-  { path: 'criterios-listar', component: CriteriosListarComponent},
-  { path: 'criterios-actualizar', component: CriteriosActualizarComponent},
-  { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent},
-  { path: 'clasificacion-criterios-actualizar', component:  ClasificacionCriteriosActualizarComponent},
-  { path: 'clasificacion-criterios-actualizar/:id', component: ClasificacionCriteriosActualizarComponent },
+  { path: 'criterios-listar', component: CriteriosListarComponent },
+  { path: 'criterios-actualizar', component: CriteriosActualizarComponent },
+  {
+    path: 'clasificacion-criterios',
+    component: ClasificacionCriteriosComponent,
+  },
+  {
+    path: 'clasificacion-criterios-actualizar',
+    component: ClasificacionCriteriosActualizarComponent,
+  },
+  {
+    path: 'clasificacion-criterios-actualizar/:id',
+    component: ClasificacionCriteriosActualizarComponent,
+  },
   { path: 'criterios-actualizar/:id', component: CriteriosActualizarComponent },
-  { path: 'clasificacion-criterios-listar', component: ClasificacionCriteriosListarComponent },
+  {
+    path: 'clasificacion-criterios-listar',
+    component: ClasificacionCriteriosListarComponent,
+  },
   { path: 'menu', component: MenuComponent },
   { path: 'persona-listar', component: ListarPersonaComponent },
   { path: 'persona-registrar', component: RegistrarPersonaComponent },
