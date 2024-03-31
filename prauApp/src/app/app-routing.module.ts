@@ -13,12 +13,7 @@ import { ClasificacionCriteriosListarComponent } from './components/clasificacio
 import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { CriteriosComponent } from './components/criterios/criterios.component';
-import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
-import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
-import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
-import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
-import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
