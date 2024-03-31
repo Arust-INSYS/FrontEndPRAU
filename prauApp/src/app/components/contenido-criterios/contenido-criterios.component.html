@@ -1,0 +1,47 @@
+<body>
+<div class="encabezado">
+    <ul class="lista-criterios">
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/criterios']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Registrar Criterios</span>
+            </a>
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/clasificacion-actualizar']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Actualizar Clasificacion de Criterio</span>
+            </a>
+        </li>
+
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/clasificacion-criterios']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Clasificacion</span>
+            </a>
+        </li>
+
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/clasificacion-listar']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Listar Clasificacion de Criterios</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/criterios-actualizar']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Actualizar Criterio</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/criterios-listar']" routerLinkActive="router-link-active">
+                <i class="pi pi-flag"></i>
+                <span class="nav-item">Listar Criterios</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
+</body>

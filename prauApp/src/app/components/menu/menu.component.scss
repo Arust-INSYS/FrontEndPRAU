@@ -30,9 +30,9 @@ body{
   top: 0;
   left: 0;
   bottom: 0;
-  width: 100px;
+  width: 50px;
   height: 100vh;
-  padding: 0 1.7rem;
+  padding: 0rem;
   color: $blanco;
   overflow: hidden;
   transition: all 0.5s linear;
@@ -40,15 +40,16 @@ body{
 }
 
 .sidebar:hover{
-  width: 240px;
+  width: 200px;
   transition: 0.5s;
 }
 
 .logo{
   height: 7rem;
-  padding: 16px;
+  padding: 1px;
+  margin-top: 1rem;
   img{
-    width: 12rem;
+    width: 10rem;
   }
 }
 
@@ -88,7 +89,7 @@ body{
 
 .logout{
   position: absolute;
-  bottom: 2rem;
+  bottom: 0.5rem;
   left: 0;
   width: 100%;
 }
@@ -170,18 +171,20 @@ body{
 //CONTENIDO
 .card-container{
   background: $blanco;
-  padding: 2rem;
+  padding: 0 2rem;
   border-radius: 10px;
   margin-bottom: 1rem;
-}
-.card-container{
-  visibility: collapse;
 }
 
 .card-wrapper{
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.contenido{
+  width: 100%;
+  padding: 0 2rem;
 }
 
 .main-title{
