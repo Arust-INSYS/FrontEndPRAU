@@ -1,24 +1,24 @@
+.formulario {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Dividir el formulario en tres columnas */
+  gap: 20px; /* Espacio entre las columnas */
+}
 
-.subconten1{
-    
-    /*margin-left: 200px;*/
-    background-color: rgba(48, 47, 47, 0.116);
-    width: 100%;
-    min-height: 30em;
-    border-radius: 10px;
-    padding: 20px;
-    display: grid;
-    grid-template-rows: repeat(auto-fit, minmax(20px, 1fr)); /* Ajusta la altura mínima y máxima de las filas */
-    grid-template-columns: repeat(2, 1fr); /* Por ejemplo, 3 columnas */
-    gap: 10px;
-    }
-.bloque{
-    background-color: rgba(133, 130, 130, 0.889);
-   padding: 20px;
-   border-radius: 10px;
+.input-group {
+  margin-bottom: 10px;
   
 }
-.bloqueTexto{
-    width: 100%;
 
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.p-dropdown {
+  width: 100%;
 }

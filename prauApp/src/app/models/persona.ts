@@ -1,17 +1,16 @@
-
 export class Persona {
   perId: number;
   perCedula: string;
-  perNombre: string;
+  perNombre1: string;
   perApellido: string;
   perDireccion: string;
   perTelefono: string;
-  perFechaNacimiento: Date;
+  perFechaNacimiento?: Date;
 
   constructor(
     perId?: number,
     perCedula?: string,
-    perNombre?: string,
+    perNombre1?: string,
     perApellido?: string,
     perDireccion?: string,
     perTelefono?: string,
@@ -19,7 +18,7 @@ export class Persona {
   ) {
     this.perId = perId || 0;
     this.perCedula = perCedula || '';
-    this.perNombre = perNombre || '';
+    this.perNombre1 = perNombre1 || '';
     this.perApellido = perApellido || '';
     this.perDireccion = perDireccion || '';
     this.perTelefono = perTelefono || '';

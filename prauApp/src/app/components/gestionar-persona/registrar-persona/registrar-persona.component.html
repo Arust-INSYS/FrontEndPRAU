@@ -1,70 +1,62 @@
-<div class="subconten1">
-  <div class="bloque">
-    <p-dropdown
-      optionLabel="name"
-      [showClear]="true"
-      placeholder="Asignatura"
-    ></p-dropdown>
-    <p-dropdown
-      optionLabel="name"
-      [showClear]="true"
-      placeholder="Carrera"
-    ></p-dropdown>
-    <p-dropdown
-      optionLabel="name"
-      [showClear]="true"
-      placeholder="Usuario"
-    ></p-dropdown>
-  </div>
-  <div class="bloque">
-    <label for="username">Nombre</label>
+<div class="formulario">
+  <div class="input-group">
+    <label for="cedula">Cedula:</label>
     <input
-      class="bloqueTexto"
+      type="text"
+      id="cedula"
+      name="cedula"
       pInputText
-      id="username"
-      aria-describedby="username-help"
-      [(ngModel)]="value"
+      [(ngModel)]="persona.perCedula"
+      required
     />
-    <small id="username-help">Escriba el nombre.</small>
   </div>
-  <div class="bloque">
-    <label for="username">Apellido</label>
+  <div class="input-group">
+    <label for="nombre">Nombre:</label>
     <input
-      class="bloqueTexto"
+      type="text"
+      id="nombre"
+      name="nombre"
       pInputText
-      aria-describedby="username-help"
-      [(ngModel)]="value"
+      [(ngModel)]="persona.perNombre1"
+      required
     />
-    <small id="username-help">Escriba el apellido</small>
   </div>
-  <div class="bloque">
-    <label for="username">Cedula</label>
-    <input
-      class="bloqueTexto"
-      pInputText
-      aria-describedby="username-help"
-      [(ngModel)]="value"
-    />
-    <small id="username-help">Escriba la cédula</small>
+  <div class="input-group">
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" pInputText />
   </div>
-  <div class="bloque">
-    <label for="username">Dirección</label>
-    <input
-      class="bloqueTexto"
-      pInputText
-      aria-describedby="username-help"
-      [(ngModel)]="value"
-    />
-    <small id="username-help">Escriba la dirección.</small>
+  <div class="input-group">
+    <label for="direccion">Direccion:</label>
+    <input type="text" id="direccion" name="direccion" pInputText />
   </div>
-  <div class="bloque">
-    <label for="username">Nombre</label>
-    <input
-      class="bloqueTexto"
-      pInputText
-      aria-describedby="username-help"
-      [(ngModel)]="value"
-    />
-    <small id="username-help">Escriba el nombre.</small>
+  <div class="input-group">
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" pInputText />
+  </div>
+  <div class="input-group">
+    <label for="fecha">Fecha Nacimiento:</label>
+    <input type="text" id="fecha" name="fecha" pInputText />
+  </div>
+
+  <div class="input-group">
+    <label for="dropdown1">Dropdown 1:</label>
+    <p-dropdown id="dropdown1" [style]="{ 'width.%': 100 }"></p-dropdown>
+  </div>
+  <div class="input-group">
+    <label for="dropdown2">Dropdown 2:</label>
+    <p-dropdown id="dropdown2" [style]="{ 'width.%': 100 }"></p-dropdown>
+  </div>
+  <div class="input-group">
+    <label for="dropdown3">Dropdown 3:</label>
+    <p-dropdown id="dropdown3" [style]="{ 'width.%': 100 }"></p-dropdown>
+  </div>
+  <div class="boton-group">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Guardar"
+      (click)="registrarPersona()"
+    ></button>
   </div>
 </div>
