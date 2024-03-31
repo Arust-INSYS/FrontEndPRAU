@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Persona } from '../../../models/persona';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-registrar-persona',
@@ -17,6 +18,12 @@ export class RegistrarPersonaComponent {
     perNombre1: '',
     perTelefono: '',
   };
+  userOptions = [
+    { label: 'Responsable', value: 'responsable' },
+    { label: 'Director', value: 'director' },
+    { label: 'Docente', value: 'docente' },
+  ];
+
   constructor(private personaService: PersonaService) {} // Inyecta tu servicio en el constructor del componente
 
   registrarPersona(): void {

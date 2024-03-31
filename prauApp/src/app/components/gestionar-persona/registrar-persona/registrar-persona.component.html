@@ -39,11 +39,16 @@
   </div>
 
   <div class="input-group">
-    <label for="dropdown1">Dropdown 1:</label>
-    <p-dropdown id="dropdown1" [style]="{ 'width.%': 100 }"></p-dropdown>
+    <label for="dropdown1">Usuario:</label>
+    <p-dropdown
+      id="dropdown1"
+      [style]="{ 'width.%': 100 }"
+      [options]="userOptions"
+    >
+    </p-dropdown>
   </div>
   <div class="input-group">
-    <label for="dropdown2">Dropdown 2:</label>
+    <label for="dropdown2">Carrera:</label>
     <p-dropdown id="dropdown2" [style]="{ 'width.%': 100 }"></p-dropdown>
   </div>
   <div class="input-group">
