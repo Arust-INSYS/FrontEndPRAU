@@ -9,6 +9,11 @@ import { RegistrarPersonaComponent } from './components/gestionar-persona/regist
 import { MenuComponent } from './components/menu/menu.component';
 import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
+import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
+import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
+import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
+import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
+import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,8 +23,19 @@ const routes: Routes = [
   {path:'menu', component: MenuComponent,
     children:[
       { path: 'registrar', component: RegistrarPersonaComponent },
-      { path: 'criterios', component: CriteriosComponent },
-      { path: 'clasificacion', component: ClasificacionCriteriosComponent },
+      { path: 'contenido-criterios', component: ContenidoCriteriosComponent,
+        children: [
+          { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent },
+          { path: 'clasificacion-actualizar', component: ClasificacionCriteriosActualizarComponent },
+          { path: 'clasificacion-listar', component: ClasificacionCriteriosListarComponent},
+          { path: 'criterios', component: CriteriosComponent },
+          { path: 'criterios-actualizar', component: CriteriosActualizarComponent },
+          { path: 'criterios-listar', component: CriteriosListarComponent },
+        ]  
+      },
+      
+      //{ path: 'criterios', component: CriteriosComponent },
+      //{ path: 'clasificacion', component: ClasificacionCriteriosComponent },
     ]
   },
   { path: 'persona/listar', component: ListarPersonaComponent },

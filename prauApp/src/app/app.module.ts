@@ -117,6 +117,10 @@ import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MessageService } from 'primeng/api';
 import { MenuComponent } from './components/menu/menu.component';
+import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
+import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
+import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
+import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +129,11 @@ import { MenuComponent } from './components/menu/menu.component';
     MenuComponent,
     CriteriosActualizarComponent,
     CriteriosComponent,
-    ClasificacionCriteriosComponent
+    ClasificacionCriteriosComponent,
+    ContenidoCriteriosComponent,
+    ClasificacionCriteriosActualizarComponent,
+    ClasificacionCriteriosListarComponent,
+    CriteriosListarComponent
   ],
   imports: [
     BrowserModule,
