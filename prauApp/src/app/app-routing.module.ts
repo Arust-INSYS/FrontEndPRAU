@@ -20,11 +20,19 @@ const routes: Routes = [
   },
   { path: 'menu', component: MenuComponent },
   { path: 'persona/listar', component: ListarPersonaComponent },
+  {
+    path: 'director',
+    loadChildren:()=>
+      import('./modules/director.module').then((m)=>m.DirectorModule)
+ 
+  },
   { path: 'persona/registrar', component: RegistrarPersonaComponent },
 
   ///AGREGAR RUTAS SOBRE ESTO
   { path: '**', redirectTo: 'login' },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  
 ];
 
 @NgModule({

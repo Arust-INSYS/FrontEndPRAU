@@ -109,18 +109,10 @@ import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MessageService } from 'primeng/api';
 import { MenuComponent } from './components/menu/menu.component';
-import { MainDirectorComponent } from './modules/main-director/main-director.component';
-import { UseDirectorComponent } from './modules/use-director/use-director.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormField, MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { HeaderDirectorComponent } from './modules/header-director/header-director.component';
-import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, MenuComponent, MainDirectorComponent, UseDirectorComponent,HeaderDirectorComponent],
+  declarations: [AppComponent, LoginComponent, MenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -237,12 +229,11 @@ import { MatSelectModule } from '@angular/material/select';
     CardModule,
     RippleModule,
     StyleClassModule,
-    MatIconModule,
-    CalendarModule,
-    MatIconModule,
-    MatFormFieldModule,
-    CalendarModule,
-    MatSelectModule,
+    //MatIconModule,
+    //CalendarModule,
+    //MatFormFieldModule,
+    //CalendarModule,
+    //MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
