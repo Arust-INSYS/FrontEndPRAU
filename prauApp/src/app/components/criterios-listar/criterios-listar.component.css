@@ -1,0 +1,9 @@
+.contenedor {
+    background: linear-gradient(4deg, #004f9f, #023b76, #fdc800, #e0ae00); /* Gradiente lineal con los colores proporcionados */
+    padding: 20px; /* Añadir un espacio interior */
+  }
+  
+  .titulo-criterios {
+    color: #007bff; /* Cambiar color del título */
+  }
+  
