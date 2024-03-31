@@ -30,6 +30,7 @@
           <th>ID Criterio</th>
           <th>Nombre Criterio</th>
           <th>Descripción</th>
+          <th>clasificacioncriterio</th>
           <th>Editar</th>
           <th>Eliminar</th>
         </tr>
@@ -39,8 +40,10 @@
           <td>{{ criterio.idCriterio }}</td>
           <td>{{ criterio.nombreCriterio }}</td>
           <td>{{ criterio.descripcion }}</td>
+          <td>{{criterios.clasificacioncriterio?.idClasificacion}}</td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-success mr-2" (click)="actualizarCriterio(criterio.idCriterio)"></button>
+
           </td>
           <td>
             <button pButton pRipple icon="pi pi-trash" class="p-button-danger" *ngIf="criterio.idCriterio" (click)="eliminarCriterio(criterio.idCriterio)"></button>

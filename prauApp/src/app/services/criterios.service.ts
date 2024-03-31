@@ -14,7 +14,6 @@ export class CriteriosService {
   
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
-
   obtenerListacriterios(): Observable<Criterios[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`
@@ -24,7 +23,6 @@ export class CriteriosService {
 
     return this.http.get<Criterios[]>(this.url + '/read', options);
   }
-  
   eliminarcriterios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -58,6 +56,12 @@ export class CriteriosService {
 
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.post<Criterios>(`${this.url}/create`, criterios, { headers });
+  }
+
+ 
+
+  obtenerCriterioPorId(id: number): Observable<Criterios> {
+    return this.http.get<Criterios>(`${this.url}/buscar?id=${id}`);
   }
 
  
