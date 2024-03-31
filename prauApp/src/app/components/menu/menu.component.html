@@ -4,29 +4,29 @@
             <img src="https://www.tecazuay.edu.ec/wp-content/uploads/2023/07/LOGO-RECTANGULAR_SIN-FONDO.png" alt="">
         </div>
         <ul class="menu">
-            <li class="active">
-                <a href="#">
+            <li>
+                <a [routerLink]="['/menu/registrar']" routerLinkActive="router-link-active" >
                     <i class="pi pi-home mr-2"></i>
-                    <span class="nav-item">Home</span>
+                    <span id="registrar" class="nav-item" >Registrar</span>
                     
                 </a>
             </li>
             <li>
-                <a href="">
+                <a [routerLink]="['/menu/criterios']" routerLinkActive="router-link-active">
                     <i class="pi pi-flag"></i>
                     <span class="nav-item">Criterios</span>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a [routerLink]="['/menu/clasificacion']" routerLinkActive="router-link-active">
                     <i class="pi pi-check"></i>
-                    <span class="nav-item">Evaluacion</span>
+                    <span class="nav-item">Clasificacion de Criterios</span>
                 </a>
             </li>
             <li>
                 <a href="">
                 <i class="pi pi-chart-line"></i>
-                <span class="nav-item">Analytics</span>
+                <span class="nav-item">Analitics</span>
                 </a>
             </li>
             <li>
@@ -70,6 +70,20 @@
         </div>
         
         <!-- CONTENT CARRERAS -->
+
+
+
+        <div class="card-container">
+            <div class="card-wrapper">
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div class="card-container">
             <h3 class="main-title">CARRERAS</h3>
             <div class="card-wrapper">
@@ -102,12 +116,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="card-container">
-            <h3 class="main-title">Informacion</h3>
-        </div>
-
-        
 
     </div>
 

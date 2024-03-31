@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { PasswordModule } from 'primeng/password';
+import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
 
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -121,7 +122,10 @@ import { MenuComponent } from './components/menu/menu.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    CriteriosActualizarComponent,
+    CriteriosComponent,
+    ClasificacionCriteriosComponent
   ],
   imports: [
     BrowserModule,
