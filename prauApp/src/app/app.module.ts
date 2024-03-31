@@ -121,6 +121,9 @@ import { ContenidoCriteriosComponent } from './components/contenido-criterios/co
 import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
 import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
 import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
+import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
+import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
+import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 
 @NgModule({
   declarations: [
@@ -133,9 +136,13 @@ import { CriteriosListarComponent } from './components/criterios-listar/criterio
     ContenidoCriteriosComponent,
     ClasificacionCriteriosActualizarComponent,
     ClasificacionCriteriosListarComponent,
-    CriteriosListarComponent
+    CriteriosListarComponent,
+    ContenidoPersonaComponent,
+    ListarPersonaComponent,
+    RegistrarPersonaComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     PasswordModule,
@@ -149,7 +156,7 @@ import { CriteriosListarComponent } from './components/criterios-listar/criterio
     InputTextModule,
     SidebarModule,
     TableModule,
-    GestionarPersonaModule,
+    //GestionarPersonaModule,
     AvatarModule,
     AvatarGroupModule,
     BrowserModule,

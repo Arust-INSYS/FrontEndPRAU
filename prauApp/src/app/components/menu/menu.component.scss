@@ -1,14 +1,5 @@
 @import "primeicons/primeicons.css";
-
-
-$azul-oscuro: rgba(45, 64, 113); 
-$blanco: #ffffff;
-$gris: #e0e0e058;
-$gris-claro: #777777;
-$gris-oscuro: rgb(229, 223, 223);
-$amarillo: rgb(215, 181, 47);
-$fondo: rgb(237, 237, 237);
-$fuente-secundaria: 'Courier New', Courier, monospace;
+@import "../../../variables.scss";
 
 *{
   margin: 0;
@@ -21,7 +12,6 @@ $fuente-secundaria: 'Courier New', Courier, monospace;
 
 body{
   display: flex;
-  
 }
 
 //SIDEBAR
@@ -126,15 +116,15 @@ body{
 }
 
 .header-img{
-    display: flex;
-    width: 15rem;
-    height: 7rem;
-    align-items: center;
-    img{
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-    }
+  display: flex;
+  width: 15rem;
+  height: 7rem;
+  align-items: center;
+  img{
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
 }
 
 .user-info{
@@ -143,15 +133,23 @@ body{
   gap: 1rem;
 }
 
+.user-data{
+  padding: 0rem 1rem;
+  .rol{
+    font-weight: 400;
+  }
+}
+
 .search-box{
-  background: $fondo;
-  border-radius: 15px;
-  color: rgba(113, 99, 186, 255);
+  background: $azul-oscuro;
+  border-radius: 25px;
+  color: $blanco;
   display: flex;
+  text-align: center;
+  flex-direction: row;
   align-items: center;
   gap: 5px;
-  padding: 4px 12px;
-
+  padding: 12 0px;
   input{
     background: transparent;
     padding: 10px;

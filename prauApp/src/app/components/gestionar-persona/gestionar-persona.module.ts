@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListarPersonaComponent } from './listar-persona/listar-persona.component';
-import { RegistrarPersonaComponent } from './registrar-persona/registrar-persona.component';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -11,7 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
-  declarations: [ListarPersonaComponent, RegistrarPersonaComponent],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     FormsModule,
