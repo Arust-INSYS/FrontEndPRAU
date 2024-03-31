@@ -3,6 +3,7 @@ import { Criterios } from '../../models/criterios';
 import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 
 @Component({
   selector: 'app-criterios-listar',
@@ -22,7 +23,8 @@ showModal() {
 throw new Error('Method not implemented.');
 }
   displayModal: boolean = false;
-
+  clasificacioncriterio:ClasificacionCriterios = new ClasificacionCriterios();
+  criterios:Criterios = new Criterios();
   criterio: Criterios[] = [];
   customers: any
   selectedCustomers:any
@@ -40,8 +42,7 @@ throw new Error('Method not implemented.');
   }
 
   actualizarCriterio(id: number) {
-  
-    this.router.navigate(['/criterios-actualizar',id]);
+    this.router.navigate(['/criterios-actualizar', id]); // Redirigir a la ruta de actualización con el ID del criterio
 }
   redirectToCriterios() {
     this.router.navigate(['/criterios']);

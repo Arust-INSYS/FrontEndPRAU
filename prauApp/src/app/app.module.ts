@@ -7,12 +7,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { PasswordModule } from 'primeng/password';
+import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
 
 import { MultiSelectModule } from 'primeng/multiselect';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
 
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -21,26 +20,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { GestionarPersonaComponent } from './components/gestionar-persona/gestionar-persona.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-
-import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
-import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
-import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
-const routes:Routes = [
-  
-  { path: 'criterios', component: CriteriosComponent},
-  { path: 'criterios-listar', component: CriteriosListarComponent},
-  { path: 'criterios-actualizar', component: CriteriosActualizarComponent},
-  { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent},
-  { path: 'clasificacion-criterios-actualizar', component:  ClasificacionCriteriosActualizarComponent},
-  { path: 'clasificacion-criterios-actualizar/:id', component: ClasificacionCriteriosActualizarComponent },
-  { path: 'criterios-actualizar/:id', component: CriteriosActualizarComponent },
-  { path: 'clasificacion-criterios-listar', component: ClasificacionCriteriosListarComponent }
-]
-
 import { TableModule } from 'primeng/table';
 import { GestionarPersonaModule } from './components/gestionar-persona/gestionar-persona.module';
 // Import PrimeNG modules
@@ -136,31 +115,27 @@ import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MessageService } from 'primeng/api';
 import { MenuComponent } from './components/menu/menu.component';
+import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
+import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
+import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
+import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, MenuComponent,CriteriosComponent,
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    MenuComponent,
     CriteriosActualizarComponent,
-    
+    CriteriosComponent,
+    ClasificacionCriteriosComponent,
+    ContenidoCriteriosComponent,
+    ClasificacionCriteriosActualizarComponent,
+    ClasificacionCriteriosListarComponent,
     CriteriosListarComponent,
-          ClasificacionCriteriosComponent,
-          ClasificacionCriteriosActualizarComponent,
-          ClasificacionCriteriosListarComponent,
-],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    InputTextModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MultiSelectModule,
-    SliderModule,
-    TableModule,
-    FormsModule,
-    ProgressBarModule,
-    TagModule,
-    DropdownModule,
     PasswordModule,
     FormsModule,
     HttpClientModule,
@@ -171,7 +146,6 @@ import { MenuComponent } from './components/menu/menu.component';
     AppRoutingModule,
     InputTextModule,
     SidebarModule,
-    BrowserAnimationsModule,
     TableModule,
     GestionarPersonaModule,
     AvatarModule,
@@ -180,7 +154,6 @@ import { MenuComponent } from './components/menu/menu.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     AccordionModule,
     AutoCompleteModule,
     BadgeModule,

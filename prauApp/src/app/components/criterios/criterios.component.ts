@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Criterios } from '../../models/criterios';
 import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-criterios',
   templateUrl: './criterios.component.html',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class CriteriosComponent {
   criterio:Criterios = new Criterios();
   criterios: Criterios[] = [];
-  constructor(private criteriosService:CriteriosService,private router:Router) { }
+  constructor(private criteriosService:CriteriosService,private router:Router,private toastr: ToastrService) { }
   ngOnInit(): void {
     this.obtenercriterios();
    
@@ -24,22 +25,30 @@ export class CriteriosComponent {
     });
   }
   guardarCriterio() {
-    console.log(this.criterio); // Verificar los valores de los campos
-    var nombreCriterio = this.criterio.nombreCriterio;
-    var descripcion = this.criterio.descripcion;
-  
-    this.criteriosService.registrarcriterios(this.criterio).subscribe(dato => {
-      this.obtenercriterios();
-      this.router.navigateByUrl('/criterios-listar'); // Llama a la función para ir a la lista después de guardar
-    }, error => {
-      // Manejo de errores
-    });
-  
-    this.criterio.nombreCriterio = '';
-    this.criterio.descripcion = '';
-  }
-  
+    if (!this.criterio.nombreCriterio || !this.criterio.descripcion) {
+        this.toastr.error('Por favor, complete ambos campos.', 'Error');
+        return;
+    }
 
+    this.criteriosService.registrarcriterios(this.criterio).subscribe(
+        () => {
+            this.obtenercriterios();
+            this.router.navigateByUrl('/criterios-listar');
+            this.toastr.success('Criterio guardado exitosamente.', 'Éxito');
+            this.criterio.nombreCriterio = ''; // Reiniciar campos después de guardar con éxito
+            this.criterio.descripcion = '';
+        },
+        error => {
+            if (error.error === 'El criterio ya ha sido registrado previamente.') {
+                this.toastr.error(error.error, 'Error');
+            } else {
+                this.toastr.error('Error al guardar el criterio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+            }
+        }
+    );
+}
+
+ 
   
   onSubmit() {
 
