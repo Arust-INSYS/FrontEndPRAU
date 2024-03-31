@@ -1,7 +1,10 @@
+import { Criterios } from "./criterios";
+
 export class ClasificacionCriterios {
     idClasificacion: number;
     nombreClasificacion: string;
     descripcion: string;
+    criterio?:Criterios;
     constructor(
     idClasificacion?: number,
     nombreClasificacion?: string,
