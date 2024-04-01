@@ -4,7 +4,8 @@ import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
-
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-criterios-listar',
   templateUrl: './criterios-listar.component.html',
@@ -29,7 +30,7 @@ throw new Error('Method not implemented.');
   customers: any
   selectedCustomers:any
   loading:any
-  constructor(private criteriosService: CriteriosService, private router: Router) {}
+  constructor(private criteriosService: CriteriosService, private router: Router,private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.obtenerCriterios();
@@ -48,11 +49,33 @@ throw new Error('Method not implemented.');
     this.router.navigate(['/criterios']);
   }
   eliminarCriterio(id: number) {
-    this.criteriosService.eliminarcriterios(id).subscribe(() => {
-      this.obtenerCriterios(); 
-    }, error => {
-      console.error('Error al eliminar el criterio:', error);
-    
+    Swal.fire({
+      title: '¿Está seguro que desea eliminar este criterio?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.criteriosService.eliminarcriterios(id).subscribe(() => {
+          this.obtenerCriterios(); 
+          Swal.fire(
+            '¡Eliminado!',
+            'El criterio ha sido eliminado correctamente.',
+            'success'
+          );
+        }, error => {
+          console.error('Error al eliminar el criterio:', error);
+          Swal.fire(
+            'Error',
+            'Ha ocurrido un error al eliminar el criterio.',
+            'error'
+          );
+        });
+      }
     });
   }
   
