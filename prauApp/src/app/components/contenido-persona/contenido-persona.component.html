@@ -1,0 +1,23 @@
+<body>
+    <div class="encabezado">
+        <ul class="lista-criterios">
+            <li>
+                <a [routerLink]="['/menu/contenido-persona/listar-persona']" routerLinkActive="router-link-active">
+                    <i class="pi pi-flag"></i>
+                    <span class="nav-item">Registrar Criterios</span>
+                </a>
+            </li>
+
+            <li>
+                <a [routerLink]="['/menu/contenido-persona/registrar-persona']" routerLinkActive="router-link-active">
+                    <i class="pi pi-flag"></i>
+                    <span class="nav-item">Registrar Persona</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+    </body>

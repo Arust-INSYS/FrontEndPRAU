@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/Login/Login.component';
 import { GestionarPersonaComponent } from './components/gestionar-persona/gestionar-persona.component';
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
-import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
 import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
@@ -14,17 +13,26 @@ import { ClasificacionCriteriosComponent } from './components/clasificacion-crit
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
+import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
+import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'listar', component: ListarPersonaComponent },
-  //{ path: 'registrar', component: RegistrarPersonaComponent },
-  //{ path: 'menu', component: MenuComponent },
+  { path: 'registrar', component: RegistrarPersonaComponent },
+
   {
     path: 'menu',
     component: MenuComponent,
     children: [
-      { path: 'registrar', component: RegistrarPersonaComponent },
+      {
+        path: 'contenido-persona',
+        component: ContenidoPersonaComponent,
+        children: [
+          { path: 'registrar-persona', component: RegistrarPersonaComponent },
+          { path: 'listar-persona', component: ListarPersonaComponent },
+        ],
+      },
+
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,
@@ -49,13 +57,10 @@ const routes: Routes = [
           { path: 'criterios-listar', component: CriteriosListarComponent },
         ],
       },
-
-      //{ path: 'criterios', component: CriteriosComponent },
-      //{ path: 'clasificacion', component: ClasificacionCriteriosComponent },
     ],
   },
-  { path: 'persona/listar', component: ListarPersonaComponent },
-  { path: 'persona/registrar', component: RegistrarPersonaComponent },
+  //{ path: 'persona/listar', component: ListarPersonaComponent },
+  //{ path: 'persona/registrar', component: RegistrarPersonaComponent },
   //{ path: '**', redirectTo: 'login' },
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
 
