@@ -39,20 +39,30 @@ export class CriteriosActualizarComponent {
     );
   }
 
-  onSubmit() {
-    this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
-      dato => {
-        this.router.navigateByUrl('/criterios-listar');
-      },
-      error => {
-        console.error('Error al actualizar el criterio:', error);
-        if (error.error === 'El nombre del criterio ya está en uso') {
-          this.toastr.error('El nombre del criterio ya está en uso, por favor ingrese otro.');
-        }
-      }
-    );
+
+
+
+onSubmit() {
+  // Verificar si los campos están llenos
+  if (!this.id || !this.criterio.nombreCriterio || !this.criterio.descripcion) {
+    this.toastr.error('Llene todos los campos antes de enviar.');
+    return; // Detener el envío si los campos no están llenos
   }
+
+  this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
+    dato => {
+      this.router.navigateByUrl('/criterios-listar');
+    },
+    error => {
+      console.error('Error al actualizar el criterio:', error);
+      if (error.error && error.error === 'El nombre de la clasificacion ya está en uso') {
+        this.toastr.error('El nombre de la clasificacion ya está en uso, por favor ingrese otro.');
+      } else {
+        this.toastr.error('Ocurrió un error al actualizar el criterio. Por favor, inténtelo de nuevo.');
+      }
+    }
+  );
 }
 
-
+}
 
