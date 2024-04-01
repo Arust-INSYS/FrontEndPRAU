@@ -24,19 +24,43 @@
   </div>
   <div class="input-group">
     <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" name="apellido" pInputText />
+    <input
+      type="text"
+      id="apellido"
+      name="apellido"
+      pInputText
+      [(ngModel)]="persona.perApellido1"
+    />
   </div>
   <div class="input-group">
     <label for="direccion">Direccion:</label>
-    <input type="text" id="direccion" name="direccion" pInputText />
+    <input
+      type="text"
+      id="direccion"
+      name="direccion"
+      pInputText
+      [(ngModel)]="persona.perDireccion"
+    />
   </div>
   <div class="input-group">
     <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono" pInputText />
+    <input
+      type="tel"
+      id="telefono"
+      name="telefono"
+      pInputText
+      [(ngModel)]="persona.perTelefono"
+    />
   </div>
   <div class="input-group">
     <label for="fecha">Fecha Nacimiento:</label>
-    <input type="text" id="fecha" name="fecha" pInputText />
+    <p-calendar
+      id="fecha"
+      name="fecha"
+      [(ngModel)]="persona.perFechaNacimiento"
+      dateFormat="dd/mm/yy"
+      [showIcon]="true"
+    ></p-calendar>
   </div>
 
   <div class="input-group">
@@ -45,16 +69,22 @@
       id="dropdown1"
       [style]="{ 'width.%': 100 }"
       [options]="userOptions"
+      [(ngModel)]="usuario.rolId.rolNombre"
+      optionLabel="label"
+      optionValue="value"
     >
     </p-dropdown>
   </div>
   <div class="input-group">
-    <label for="dropdown2">Carrera:</label>
-    <p-dropdown id="dropdown2" [style]="{ 'width.%': 100 }"></p-dropdown>
-  </div>
-  <div class="input-group">
-    <label for="dropdown3">Dropdown 3:</label>
-    <p-dropdown id="dropdown3" [style]="{ 'width.%': 100 }"></p-dropdown>
+    <p-dropdown
+      id="dropdown2"
+      [style]="{ 'width.%': 100 }"
+      [options]="userValues"
+      [(ngModel)]="usuario.rolId.rolId"
+      optionLabel="label"
+      optionValue="value"
+    >
+    </p-dropdown>
   </div>
   <div class="boton-group">
     <button

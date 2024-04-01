@@ -17,13 +17,19 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './registrar-persona.component.css',
 })
 export class RegistrarPersonaComponent {
+  public date: Date = new Date();
+  selectedUser: number = 3;
   value: any;
   userOptions = [
-    { label: 'Responsable', value: 'responsable' },
-    { label: 'Director', value: 'director' },
-    { label: 'Docente', value: 'docente' },
+    { label: 'Responsable', value: 'Responsable' },
+    { label: 'Director', value: 'Director' },
+    { label: 'Docente', value: 'Docente' },
   ];
-
+  userValues = [
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+  ];
   constructor(
     private personaService: PersonaService,
     private toastr: ToastrService,
@@ -57,7 +63,6 @@ export class RegistrarPersonaComponent {
   id: number = 0;
   //LISTAS
   listRoles: Rol[] = [];
-  listaJefes: Usuario[] = [];
   userId: number = 0;
   mode: string = '';
   validarRegistro(): boolean {
@@ -86,48 +91,42 @@ export class RegistrarPersonaComponent {
     }
     return false;
   }
+  designarRol(): boolean {
+    const rolEncontrado = this.listRoles.find(
+      (rol) => rol.rolId.toString() === this.usuario.rolId?.rolId.toString()
+    );
+
+    if (rolEncontrado) {
+      this.usuario.rolId = rolEncontrado;
+      // console.log(this.usuario.rolId)
+      return true;
+    } else {
+      // Manejar el caso en el que no se encontró un rol
+      console.log('No se encontró un rol con el ID correspondiente.');
+      return false;
+    }
+  }
+  guardarUser: any;
   registrar() {
-    this.personaService
-      .cedulaUnica(this.persona.perCedula?.trim() || '')
-      .subscribe((response) => {
-        if (response) {
-          this.usuarioService
-            .usuarioUnico(this.usuario.usuNombreUsuario?.trim() || '')
-            .subscribe((res) => {
-              const rolEncontrado: Rol | undefined = this.listRoles.find(
-                (rol) =>
-                  rol.rolId.toString() === this.usuario.rolId?.rolId.toString()
-              );
+    // REGISTRAR PERSONA
+    this.personaService.registrarPersona(this.persona).subscribe((response) => {
+      this.usuario.usuEstado = 1;
+      this.usuario.usuPerId = response;
 
-              this.usuario.rolId.rolNombre = 'admin';
-
-              // REGISTRAR PERSONA
-              this.personaService
-                .registrarPersona(this.persona)
-                .subscribe((response) => {
-                  this.usuario.usuEstado = 1;
-                  this.usuario.usuPerId = response;
-
-                  this.usuario.usuSaldoVacacional = 0;
-                  // REGISTRAR USUARIO
-                  this.usuarioService
-                    .registrarUsuario(this.usuario)
-                    .subscribe((response) => {
-                      Swal.fire({
-                        title: '¡Registro Exitoso!',
-                        text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
-                        icon: 'success',
-                        confirmButtonText: 'Confirmar',
-                        showCancelButton: false, // No mostrar el botón de cancelar
-                      }).then(() => {
-                        //this.limpiarRegistro();
-                        //this.router.navigate(['/listausu']);
-                      });
-                    });
-                });
-            });
-        }
-      });
+      // REGISTRAR USUARIO
+      this.usuarioService
+        .registrarUsuario(this.usuario)
+        .subscribe((response) => {
+          console.log('Ya llegueeee!!!');
+          console.log(response);
+        });
+    });
+  }
+  userListar: any;
+  async listarRol() {
+    await this.rolService.getAllRoles().subscribe((res) => {
+      console.log((this.userListar = res));
+    });
   }
   limpiarRegistro() {
     this.usuario = new Usuario();
