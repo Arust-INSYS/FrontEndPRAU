@@ -43,8 +43,8 @@ onSubmit() {
     },
     error => {
       console.error('Error al actualizar el criterio:', error);
-      if (error.error === 'El nombre del criterio ya está en uso') {
-        this.toastr.error('El nombre del criterio ya está en uso, por favor ingrese otro.');
+      if (error.error === 'El nombre de la clasificacion ya está en uso') {
+        this.toastr.error('El nombre de la clasificacion ya está en uso, por favor ingrese otro.');
       }
     }
   );
