@@ -37,11 +37,15 @@ export class ClasificacionCriteriosComponent {
     this.clasificacionCriteriosService.registrarcriterios(this.criterio).subscribe(dato => {
       this.obtenercriterios();
       this.irAlalistaDecriterios();
-    }, error => {
-  
     },
-
-    );
+    error => {
+      if (error.error === 'La clasifiación ya ha sido registrado previamente.') {
+        this.toastr.error(error.error, 'Error');
+      } else {
+        this.toastr.error('Error al guardar la clasifiación. Por favor, inténtelo de nuevo más tarde.', 'Error');
+      }
+    }
+  );
 
     this.criterio.nombreClasificacion = '';
     this.criterio.descripcion = '';

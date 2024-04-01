@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Criterios } from '../../models/criterios';
 import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
@@ -6,22 +6,27 @@ import { MenuItem } from 'primeng/api';
 import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { Table } from 'primeng/table';
 @Component({
   selector: 'app-criterios-listar',
   templateUrl: './criterios-listar.component.html',
   styleUrl: './criterios-listar.component.css'
 })
 export class CriteriosListarComponent {
-  
+  @ViewChild('dt', { static: true }) table!: Table; 
+  searchTerm: string = '';
   items: MenuItem[]|undefined;
 $even: any;
 $odd: any;
 Delete: string|undefined;
-products: any;
+
 dt: any;
-selectedProducts: any;
+
 showModal() {
 throw new Error('Method not implemented.');
+}
+applyFilter() {
+  this.table.filter(this.searchTerm, 'nombreCriterio', 'contains'); 
 }
   displayModal: boolean = false;
   clasificacioncriterio:ClasificacionCriterios = new ClasificacionCriterios();
