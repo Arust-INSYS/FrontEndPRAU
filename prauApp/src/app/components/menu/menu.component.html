@@ -9,7 +9,7 @@
     <ul class="menu">
       <li>
         <a
-          [routerLink]="['/menu/registrar']"
+          [routerLink]="['/menu/contenido-persona']"
           routerLinkActive="router-link-active"
         >
           <i class="pi pi-home mr-2"></i>
@@ -18,20 +18,17 @@
       </li>
       <li>
         <a
-          [routerLink]="['/menu/contenido-criterios']"
-          routerLinkActive="router-link-activecriterios"
+          [routerLink]="['/menu/contenido-criterios/criterios-listar']"
+          routerLinkActive="router-link-active"
         >
           <i class="pi pi-flag"></i>
           <span class="nav-item">Criterios</span>
         </a>
       </li>
       <li>
-        <a
-          [routerLink]="['/menu/clasificacion']"
-          routerLinkActive="router-link-active"
-        >
+        <a>
           <i class="pi pi-check"></i>
-          <span class="nav-item">Clasificacion de Criterios</span>
+          <span class="nav-item">Registrar</span>
         </a>
       </li>
       <li>
@@ -65,7 +62,6 @@
   <div class="main-content">
     <div class="header-wrapper">
       <div class="header-title">
-        <span>Administrador</span>
         <h2>Dashboard</h2>
       </div>
       <div class="header-img">
@@ -75,10 +71,10 @@
           alt=""
         />
       </div>
-      <div class="user-info">
-        <div class="search-box">
-          <i class="pi pi-search"></i>
-          <input type="text" placeholder="Search" />
+      <div class="user-info search-box">
+        <div class="user-data">
+          <h5 class="nombre">Nombre de Usuario</h5>
+          <h5 class="rol">Rol de Usuario</h5>
         </div>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVR9V1Ix26V2s_WWWryH3FU5Qkl2yR4PL3BcUybf2cUw&s"
