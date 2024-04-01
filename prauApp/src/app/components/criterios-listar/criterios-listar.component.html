@@ -40,10 +40,9 @@
           <td>{{ criterio.idCriterio }}</td>
           <td>{{ criterio.nombreCriterio }}</td>
           <td>{{ criterio.descripcion }}</td>
-          <td>{{criterios.clasificacioncriterio?.idClasificacion}}</td>
+          <td>{{ criterio.clasificacion?.nombreClasificacion }}</td> <!-- Accede correctamente a la propiedad nombreClasificacion de la clasificación criterio -->
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-success mr-2" (click)="actualizarCriterio(criterio.idCriterio)"></button>
-
           </td>
           <td>
             <button pButton pRipple icon="pi pi-trash" class="p-button-danger" *ngIf="criterio.idCriterio" (click)="eliminarCriterio(criterio.idCriterio)"></button>
