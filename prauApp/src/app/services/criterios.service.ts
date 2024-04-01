@@ -9,12 +9,12 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CriteriosService {
-  private url = "http://localhost:8080/complexivo/criterio";
- /* private url: string = `${entorno.urlPrivada}/complexivo/criterio`*/
+ /* private url = "http://localhost:8080/complexivo/criterio";*/
+  private url: string = `${entorno.urlPrivada}/criterio`
   
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
-  obtenerListacriterios(): Observable<Criterios[]> {
+  /*obtenerListacriterios(): Observable<Criterios[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`
     });
@@ -22,7 +22,22 @@ export class CriteriosService {
     const options = { headers: headers };
 
     return this.http.get<Criterios[]>(this.url + '/read', options);
+  }*/
+  obtenerListacriterios(): Observable<Criterios[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+  
+    const options = { headers: headers };
+
+    return this.http.get<Criterios[]>(this.url + '/read', options).pipe(
+      catchError(error => {
+        console.error('Error obteniendo lista de criterios:', error);
+        throw error;
+      })
+    );
   }
+
   eliminarcriterios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -64,11 +79,6 @@ export class CriteriosService {
     return this.http.get<Criterios>(`${this.url}/buscar?id=${id}`);
   }
 
- 
-
-  Buscarid(id:number): Observable<Criterios>{
-    return this.http.get<Criterios>(this.url+'/read/'+id);
-  }
   
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT

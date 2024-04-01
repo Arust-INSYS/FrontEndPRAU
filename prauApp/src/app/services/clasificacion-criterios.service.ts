@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ClasificacionCriteriosService {
-  private url = "http://localhost:8080/complexivo/ClasificacionCriterio";
+  /*private url = "http://localhost:8080/complexivo/ClasificacionCriterio";*/
+  private url: string = `${entorno.urlPrivada}/ClasificacionCriterio`
   
  /* private url: string = `${entorno.urlPrivada}/complexivo/ClasificacionCriteri`*/
   
@@ -20,12 +21,17 @@ export class ClasificacionCriteriosService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`
     });
-
+  
     const options = { headers: headers };
 
-    return this.http.get<ClasificacionCriterios[]>(this.url + '/read', options);
+    return this.http.get<ClasificacionCriterios[]>(this.url + '/read', options).pipe(
+      catchError(error => {
+        console.error('Error obteniendo lista de criterios:', error);
+        throw error;
+      })
+    );
   }
-  
+
   eliminarcriterios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -63,9 +69,10 @@ export class ClasificacionCriteriosService {
 
  
 
-  Buscarid(id:number): Observable<ClasificacionCriterios>{
-    return this.http.get<ClasificacionCriterios>(this.url+'/read/'+id);
+  obtenerCriterioPorId(id: number): Observable<ClasificacionCriterios> {
+    return this.http.get<ClasificacionCriterios>(`${this.url}/buscar?id=${id}`);
   }
+
   
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT
