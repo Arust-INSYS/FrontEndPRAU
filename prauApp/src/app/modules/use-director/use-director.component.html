@@ -67,4 +67,6 @@
     </ul>
 </div>
 
-<app-calendar-director></app-calendar-director>
+<app-calendar-director *ngIf="componentCalendar"></app-calendar-director>
+
+<app-task-complet *ngIf="componentTaskComplete"></app-task-complet>

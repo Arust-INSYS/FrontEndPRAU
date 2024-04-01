@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { HeaderDirectorModule } from "../header-director/header-director.module";
 import { UseDirectorRoutingModule } from "./use-director-routing.module";
 import { CalendarDirectorModule } from "../calendar-director/calendar-director.module";
+import { TaskCompletModule } from "../task-complet/task-complet.module";
 
 @NgModule({
     declarations:[
@@ -14,6 +15,7 @@ import { CalendarDirectorModule } from "../calendar-director/calendar-director.m
         CommonModule,
         HeaderDirectorModule,
         CalendarDirectorModule,
+        TaskCompletModule,
     ]
 })
 

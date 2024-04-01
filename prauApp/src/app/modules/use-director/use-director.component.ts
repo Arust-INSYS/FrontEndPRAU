@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class UseDirectorComponent {
-
+  componentCalendar:boolean=true;
+  componentTaskComplete:boolean=false;
+  componentTaskIncomplete:boolean=false;
 }
