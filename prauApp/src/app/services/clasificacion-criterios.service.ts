@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ClasificacionCriteriosService {
-  private url = "http://localhost:8080/complexivo/ClasificacionCriterio";
+  /*private url = "http://localhost:8080/complexivo/ClasificacionCriterio";*/
+  private url: string = `${entorno.urlPrivada}/ClasificacionCriterio`
   
  /* private url: string = `${entorno.urlPrivada}/complexivo/ClasificacionCriteri`*/
   

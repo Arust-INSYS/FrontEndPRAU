@@ -39,7 +39,7 @@ export class ClasificacionCriteriosComponent {
     );
 
     this.criterio.nombreClasificacion = '';
-    this.criterio.descripcion = '';descripcion
+    this.criterio.descripcion = '';
 
 
   }
