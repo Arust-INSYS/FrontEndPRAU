@@ -5,6 +5,7 @@ import { HeaderDirectorModule } from "../header-director/header-director.module"
 import { UseDirectorRoutingModule } from "./use-director-routing.module";
 import { CalendarDirectorModule } from "../calendar-director/calendar-director.module";
 import { TaskCompletModule } from "../task-complet/task-complet.module";
+import { TaskIncompletModule } from "../task-incomplet/task-incomplet.module";
 
 @NgModule({
     declarations:[
@@ -16,6 +17,7 @@ import { TaskCompletModule } from "../task-complet/task-complet.module";
         HeaderDirectorModule,
         CalendarDirectorModule,
         TaskCompletModule,
+        TaskIncompletModule,
     ]
 })
 

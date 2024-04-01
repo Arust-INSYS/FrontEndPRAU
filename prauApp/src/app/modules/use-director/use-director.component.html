@@ -49,17 +49,17 @@
 <div class="settings-menu-links bg-gray-100">
     <ul class="flex space-x-4">
         <li class="nav-item active">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
+            <button (click)="changeInterface('calendar')" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
                 Dias uso
               </button>
         </li>
         <li class="nav-item">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
+            <button (click)="changeInterface('completed')" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
                 Tareas completadas
               </button>
         </li>
         <li class="nav-item">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
+            <button (click)="changeInterface('incomplet')" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-2 border border-blue-700 rounded">
                 Tareas Incompletas
               </button>
         </li>
@@ -70,3 +70,4 @@
 <app-calendar-director *ngIf="componentCalendar"></app-calendar-director>
 
 <app-task-complet *ngIf="componentTaskComplete"></app-task-complet>
+<app-task-incomplet *ngIf="componentTaskIncomplete"></app-task-incomplet>
