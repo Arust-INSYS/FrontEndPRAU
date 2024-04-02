@@ -14,8 +14,10 @@
                     <mat-form-field class="h-20 w-10">
                         <mat-label>Selecciona un periodo académico</mat-label>
                         <mat-select>
-                            <mat-option *ngFor="let periodo of periodosAcademicos" [value]="periodo.fechaInicio">{{ periodo.fechaFin }}</mat-option>
-                        </mat-select>
+                            <mat-option *ngFor="let periodo of periodosAcademicos" [value]="periodo.fechaInicio">
+                                {{ periodo.fechaInicio | date: 'dd/MM/yyyy' }} - {{ periodo.fechaFin | date: 'dd/MM/yyyy' }}
+                              </mat-option>
+                                                      </mat-select>
                     </mat-form-field>
                 </div>
 
