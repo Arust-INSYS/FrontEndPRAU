@@ -122,6 +122,7 @@ import { CriteriosListarComponent } from './components/criterios-listar/criterio
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -254,6 +255,7 @@ import { RegistrarPersonaComponent } from './components/gestionar-persona/regist
     CardModule,
     RippleModule,
     StyleClassModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
