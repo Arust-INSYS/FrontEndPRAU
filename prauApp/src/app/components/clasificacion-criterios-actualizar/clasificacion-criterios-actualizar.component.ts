@@ -52,7 +52,7 @@ export class ClasificacionCriteriosActualizarComponent {
         if (error.error && error.error === 'El nombre de la clasificacion ya está en uso') {
           this.toastr.error('El nombre de la clasificacion ya está en uso, por favor ingrese otro.');
         } else {
-          this.toastr.error('Ocurrió un error al actualizar el criterio. Por favor, inténtelo de nuevo.');
+          this.toastr.error('Ese nombre ya esta en uso');
         }
       }
     );

@@ -1,21 +1,17 @@
-<!-- Tabla de Criterios -->
-<div class="container">
-  <div id="fixed">
-    <table>
-      <thead>
-        <section class="contenedor">
-          <div class="header">
-            <p-toolbar>
-              <div class="p-toolbar-group-start"></div>
-              <div class="p-toolbar-group-center">
-                <span class="p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <input pInputText placeholder="Search" />
-                </span>
-              </div>
-              <div class="p-toolbar-group-end"></div>
-            </p-toolbar>
-          </div>
+<section class="contenedor">
+  <div class="header text-center">
+    <div class="p-toolbar-group-center">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          [(ngModel)]="searchTerm"
+          placeholder="Search"
+          (input)="applyGlobalFilter()"
+        />
+      </span>
+    </div>
+  </div>
           <div class="subconten2">
             <h1 class="text-center titulo-criterios">Lista de criterios</h1>
 
@@ -78,8 +74,4 @@
               </p-table>
             </div>
           </div>
-        </section>
-      </thead>
-    </table>
-  </div>
-</div>
+</section>
