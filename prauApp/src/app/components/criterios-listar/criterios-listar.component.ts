@@ -48,10 +48,10 @@ applyFilter() {
   }
 
   actualizarCriterio(id: number) {
-    this.router.navigate(['/criterios-actualizar', id]); // Redirigir a la ruta de actualización con el ID del criterio
+    this.router.navigate(['menu/contenido-criterios/criterios-actualizar', id]); // Redirigir a la ruta de actualización con el ID del criterio
 }
   redirectToCriterios() {
-    this.router.navigate(['/criterios']);
+    this.router.navigate(['/menu/contenido-criterios/criterios']);
   }
   eliminarCriterio(id: number) {
     Swal.fire({

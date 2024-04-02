@@ -21,8 +21,9 @@ body{
   left: 0;
   bottom: 0;
   width: 50px;
+  min-width: 45px;
   height: 100vh;
-  padding: 0rem;
+  padding: 2rem 0;
   color: $blanco;
   overflow: hidden;
   transition: all 0.5s linear;
@@ -62,6 +63,7 @@ body{
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    transition: all 0.3s ease-in-out;
 
     span{
       overflow: hidden;
@@ -73,7 +75,13 @@ body{
   }
   li:hover, 
   .active{
-    background: $gris
+    background: $azul-oscuro;
+
+  }
+
+  a:hover, 
+  .active{
+    color: $blanco;
   }
 }
 
@@ -86,9 +94,10 @@ body{
 
 //HEADER
 .main-content{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url("https://scontent.fgye1-2.fna.fbcdn.net/v/t39.30808-6/312420562_1328662544545155_6701472559136946317_n.png?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEcFz5SZ7DZBrNwb-rYSwsMgQVp1O-n-iuBBWnU76f6K_3DmxssNlbjSYv2YBoEhb6GqaKtbhGGC-66PdBSGRUs&_nc_ohc=8OjG2H4Zm8kAX8v-SDm&_nc_ht=scontent.fgye1-2.fna&oh=00_AfDhFrwV74it-EPVfvOEZsey-3fSBSkYwaQ3-HYFdUSWvg&oe=660D7B60");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url("../../../assets/LOGO-RECTANGULAR.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;;
+  background-position: center;
   width: 100%;
   padding: 1rem;
 }
