@@ -1,0 +1,21 @@
+.contenedor {
+    background: #023b76; 
+    padding: 20px; /* Añadir un espacio interior */
+    border-radius: 10px;
+  }
+  
+  .titulo-criterios {
+    color: #ffffff; /* Cambiar color del título */
+  }
+  .registrar-button {
+    margin-bottom: 20px; /* Puedes ajustar el valor para separar más o menos el botón */
+  }
+  
+  .tabla-container {
+    margin-top: 20px; /* Puedes ajustar el valor para separar más o menos la tabla del botón */
+  }
+
+  table{
+    width: 100%;
+    padding-bottom: 2rem;
+  }

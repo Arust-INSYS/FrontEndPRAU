@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
-  styleUrl: './listar-persona.component.css',
+  styleUrl: './listar-persona.component.scss',
 })
 export class ListarPersonaComponent {
   value: any;

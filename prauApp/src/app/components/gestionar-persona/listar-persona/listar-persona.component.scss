@@ -1,16 +1,18 @@
+@import '../../../../variables.scss';
+
 .contenedor {
     display: inline-block;
     margin: 20px;
     margin-left: 250px;
     gap: 16px;
-    background-color: aliceblue;
+    background-color: $azul-oscuro;
     padding: 20px;
     border-width: 2px;
     border-style: solid;
-    border-color: rgb(30, 30, 237);
+    border-color: $azul-oscuro;
     border-radius: 10px;
     width: 80%;
-    max-height: 30em;
+    
   }
   .contenedor div{
     border-radius: 10px;

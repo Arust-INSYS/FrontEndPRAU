@@ -2,11 +2,17 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PasswordModule } from 'primeng/password';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CriteriosComponent } from './components/criterios/criterios.component';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
+import { PasswordModule } from 'primeng/password';
+import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
+
+import { MultiSelectModule } from 'primeng/multiselect';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoginComponent } from './components/Login/Login.component';
@@ -62,7 +68,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import { MultiSelectModule } from 'primeng/multiselect';
+
 import { MeterGroupModule } from 'primeng/metergroup';
 import { OrderListModule } from 'primeng/orderlist';
 import { OrganizationChartModule } from 'primeng/organizationchart';
@@ -109,11 +115,34 @@ import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MessageService } from 'primeng/api';
 import { MenuComponent } from './components/menu/menu.component';
+import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
+import { ClasificacionCriteriosActualizarComponent } from './components/clasificacion-criterios-actualizar/clasificacion-criterios-actualizar.component';
+import { ClasificacionCriteriosListarComponent } from './components/clasificacion-criterios-listar/clasificacion-criterios-listar.component';
+import { CriteriosListarComponent } from './components/criterios-listar/criterios-listar.component';
+import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
+import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
+import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, MenuComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    MenuComponent,
+    CriteriosActualizarComponent,
+    CriteriosComponent,
+    ClasificacionCriteriosComponent,
+    ContenidoCriteriosComponent,
+    ClasificacionCriteriosActualizarComponent,
+    ClasificacionCriteriosListarComponent,
+    CriteriosListarComponent,
+    ContenidoPersonaComponent,
+    ListarPersonaComponent,
+    RegistrarPersonaComponent,
+  ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     PasswordModule,
@@ -126,16 +155,14 @@ import { MenuComponent } from './components/menu/menu.component';
     AppRoutingModule,
     InputTextModule,
     SidebarModule,
-    BrowserAnimationsModule,
     TableModule,
-    GestionarPersonaModule,
+    //GestionarPersonaModule,
     AvatarModule,
     AvatarGroupModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     AccordionModule,
     AutoCompleteModule,
     BadgeModule,
@@ -234,6 +261,7 @@ import { MenuComponent } from './components/menu/menu.component';
     //MatFormFieldModule,
     //CalendarModule,
     //MatSelectModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

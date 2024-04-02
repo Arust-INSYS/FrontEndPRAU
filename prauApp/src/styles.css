@@ -8,14 +8,15 @@
 
 
 
+@import 'ngx-toastr/toastr';
 /* Order */
 @layer reset, primeng;
 
 /* Reset CSS */
 @layer reset {
-    button,
+    button{}
     input {
-        /* CSS to Reset */
+        min-width: 276px;
     }
 }
 html, body { height: 100%; }
