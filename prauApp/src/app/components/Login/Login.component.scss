@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400 ;600 ;700&display=swap');
+@import '../../../variables.scss';
 
 :root {
     --login-bg: #f8f3ff;
@@ -10,7 +10,7 @@
 
 body {
     height: 90vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'PT Serif';
     /* background-image: linear-gradient(to top, rgb(0, 79, 159) 0%, #023c78 100%) ; */
 }
 
@@ -78,13 +78,24 @@ body {
     /* Coloca la imagen por delante del div de fondo desenfocado */
 }
 
-.title {
-    text-transform: capitalize;
-    font-size: 2.5rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    /* color: var(--title-bg); */
+.titulo{
+    padding: 2rem 0;
+    .title {
+        text-transform: capitalize;
+        font-size: 4rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: $azul-oscuro;
+        margin: 0;
+        /* color: var(--title-bg); */
+    }
+    p{
+        color: $gris-claro;
+        margin: 0;
+    }
+    
 }
+
 
 .social-login {
     width: 100%;
@@ -153,13 +164,13 @@ body {
 }
 
 .btn {
-    width: 80%;
+    width: 40%;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgb(0, 0, 0);
+    color: $blanco;
     border: none;
     border-radius: 5px;
-    background-color: var(--button-bg);
+    background-color: $azul-oscuro;
     cursor: pointer;
 }
 

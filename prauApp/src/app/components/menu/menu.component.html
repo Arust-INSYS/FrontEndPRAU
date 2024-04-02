@@ -9,11 +9,11 @@
     <ul class="menu">
       <li>
         <a
-          [routerLink]="['/menu/contenido-persona']"
+          [routerLink]="['/menu/contenido-persona/listar-persona']"
           routerLinkActive="router-link-active"
         >
-          <i class="pi pi-home mr-2"></i>
-          <span id="registrar" class="nav-item">Registrar</span>
+          <i class="pi pi-users"></i>
+          <span id="registrar" class="nav-item">Personas</span>
         </a>
       </li>
       <li>
@@ -27,8 +27,8 @@
       </li>
       <li>
         <a>
-          <i class="pi pi-check"></i>
-          <span class="nav-item">Registrar</span>
+          <i class="pi pi-user"></i>
+          <span class="nav-item">Usuarios</span>
         </a>
       </li>
       <li>
@@ -73,8 +73,8 @@
       </div>
       <div class="user-info search-box">
         <div class="user-data">
-          <h5 class="nombre">Nombre de Usuario</h5>
-          <h5 class="rol">Rol de Usuario</h5>
+          <h5 class="nombre">{{username}}</h5>
+          <h5 class="rol">{{userId}}</h5>
         </div>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVR9V1Ix26V2s_WWWryH3FU5Qkl2yR4PL3BcUybf2cUw&s"

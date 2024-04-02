@@ -33,7 +33,7 @@ export class CriteriosComponent {
     this.criteriosService.registrarcriterios(this.criterio).subscribe(
         () => {
             this.obtenercriterios();
-            this.router.navigateByUrl('/criterios-listar');
+            this.router.navigateByUrl('/menu/contenido-criterios/criterios-listar');
             this.toastr.success('Criterio guardado exitosamente.', 'Éxito');
             this.criterio.nombreCriterio = ''; // Reiniciar campos después de guardar con éxito
             this.criterio.descripcion = '';

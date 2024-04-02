@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tabla de Criterios</title>
-    <style>
-      /* Estilos para el bloque de administración */
-    </style>
-  </head>
+
   <body>
     <!-- Tabla de Criterios -->
     <div class="container">
       <div id="fixed">
-        <button
-          [routerLink]="['/menu/contenido-criterios/criterios']"
-          routerLinkActive="router-link-active"
-          class="btn btn-custom"
-        >
-          Crear Criterio
-        </button>
 
         <table>
           <thead>
@@ -47,7 +31,7 @@
                   class="registrar-button"
                 ></p-button>
                 <div class="tabla-container">
-                  <p-table
+                  <p-table class="tabla"
                     #dt
                     [value]="products"
                     [rows]="10"
@@ -114,4 +98,3 @@
       </div>
     </div>
   </body>
-</html>

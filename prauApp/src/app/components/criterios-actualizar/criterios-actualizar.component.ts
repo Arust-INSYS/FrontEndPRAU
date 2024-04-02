@@ -42,7 +42,7 @@ export class CriteriosActualizarComponent {
   onSubmit() {
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
       dato => {
-        this.router.navigateByUrl('/criterios-listar');
+        this.router.navigateByUrl('menu/contenido-criterios/criterios-listar');
       },
       error => {
         console.error('Error al actualizar el criterio:', error);

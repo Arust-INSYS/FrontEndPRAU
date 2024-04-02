@@ -7,8 +7,8 @@
 
 /* Reset CSS */
 @layer reset {
-    button,
+    button{}
     input {
-        /* CSS to Reset */
+        min-width: 276px;
     }
 }
