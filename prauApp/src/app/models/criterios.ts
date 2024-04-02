@@ -6,7 +6,7 @@ export class Criterios {
     nombreCriterio: string;
     descripcion: string;
    
-    clasificacioncriterio?:ClasificacionCriterios;
+    clasificacion?:ClasificacionCriterios;
     
     constructor(
     idCriterio?: number,

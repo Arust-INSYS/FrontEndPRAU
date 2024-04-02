@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-criterios-actualizar',
   templateUrl: './criterios-actualizar.component.html',
-  styleUrl: './criterios-actualizar.component.css'
+  styleUrl: './criterios-actualizar.component.css',
 })
 export class CriteriosActualizarComponent {
   id!: number;
@@ -16,24 +16,23 @@ export class CriteriosActualizarComponent {
   constructor(
     private criteriosService: CriteriosService,
     private router: Router,
-    private route: ActivatedRoute,private toastr: ToastrService
-  ) { }
-
- 
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = params['id']; 
-      this.cargarCriterio(this.id); 
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      this.cargarCriterio(this.id);
     });
   }
 
   cargarCriterio(id: number) {
     this.criteriosService.obtenerCriterioPorId(id).subscribe(
-      response => {
+      (response) => {
         this.criterio = response;
       },
-      error => {
+      (error) => {
         console.error('Error al cargar el criterio:', error);
       }
     );
@@ -41,18 +40,17 @@ export class CriteriosActualizarComponent {
 
   onSubmit() {
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
-      dato => {
-        this.router.navigateByUrl('/criterios-listar');
+      (dato) => {
+        this.router.navigateByUrl('menu/contenido-criterios/criterios-listar');
       },
-      error => {
+      (error) => {
         console.error('Error al actualizar el criterio:', error);
         if (error.error === 'El nombre del criterio ya está en uso') {
-          this.toastr.error('El nombre del criterio ya está en uso, por favor ingrese otro.');
+          this.toastr.error(
+            'El nombre del criterio ya está en uso, por favor ingrese otro.'
+          );
         }
       }
     );
   }
 }
-
-
-

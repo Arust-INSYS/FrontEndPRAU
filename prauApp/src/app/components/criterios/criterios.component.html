@@ -10,8 +10,13 @@
         <input pInputText type="text" id="descripcion" name="descripcion" placeholder="descripcion" [(ngModel)]="criterio.descripcion" />
         <small id="descripcion">Ingrese la descripcion.</small>
     </div>
-    <div class="button-container">
-        <p-button  type="submit" icon="pi pi-check"  label="Guardar"[rounded]="true" [text]="true" [raised]="true" (click)="guardarCriterio()"></p-button>
+    <div class="flex flex-column gap-2">
+        <label for="clasificacion">Clasificación de Criterio:</label>
+        <select id="clasificacion" name="clasificacion" [(ngModel)]="criterio.clasificacion">
+            <option *ngFor="let clasificacion of clasificaciones" [ngValue]="clasificacion">{{ clasificacion.nombreClasificacion }}</option>
+        </select>
     </div>
-    
+    <div class="button-container">
+        <p-button  type="submit" icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="guardarCriterio()"></p-button>
+    </div>
 </div>

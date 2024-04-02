@@ -1,9 +1,9 @@
 <body>
 <div class="encabezado">
-    <ul class="lista-criterios">
-        <li>
+    <ul class="lista">
+        <!-- <li>
             <a [routerLink]="['/menu/contenido-criterios/criterios']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-flag"></i>
+                <i class="pi pi-file"></i>
                 <span class="nav-item">Nuevo Criterio</span>
             </a>
         </li>
@@ -15,14 +15,8 @@
         </li>
         <li>
             <a [routerLink]="['/menu/contenido-criterios/clasificacion-criterios']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-flag"></i>
+                <i class="pi pi-file"></i>
                 <span class="nav-item">Nueva Clasificacion</span>
-            </a>
-        </li>
-        <li>
-            <a [routerLink]="['/menu/contenido-criterios/clasificacion-listar']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-flag"></i>
-                <span class="nav-item">Listar Clasificacion</span>
             </a>
         </li>
         <li>
@@ -30,13 +24,19 @@
                 <i class="pi pi-flag"></i>
                 <span class="nav-item">Actualizar Criterio</span>
             </a>
-        </li>
-        <!-- <li>
-            <a [routerLink]="['/menu/contenido-criterios/criterios-listar']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-flag"></i>
-                <span class="nav-item">Listar Criterios</span>
-            </a>
         </li> -->
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/clasificacion-listar']" routerLinkActive="router-link-active" class="no-underline menu">
+                <i class="pi pi-list"></i>
+                <span class="nav-item">Clasificaciones</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/menu/contenido-criterios/criterios-listar']" routerLinkActive="router-link-active" class="no-underline menu">
+                <i class="pi pi-book"></i>
+                <span class="nav-item">Criterios</span>
+            </a>
+        </li>
     </ul>
 </div>
 

@@ -1,13 +1,6 @@
 <!-- Tabla de Criterios -->
 <div class="container">
   <div id="fixed">
-    <button
-      [routerLink]="['/menu/contenido-criterios/criterios']"
-      routerLinkActive="router-link-active"
-      class="btn btn-custom"
-    >
-      Crear Criterio
-    </button>
     <table>
       <thead>
         <section class="contenedor">
@@ -36,20 +29,9 @@
             <div class="tabla-container">
               <p-table
                 #dt
-                [value]="products"
                 [rows]="10"
                 [paginator]="true"
-                [globalFilterFields]="[
-                  'name',
-                  'country.name',
-                  'representative.name',
-                  'status'
-                ]"
-                [tableStyle]="{ 'min-width': '75rem' }"
-                [(selection)]="selectedProducts"
-                [rowHover]="true"
-                dataKey="id"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                currentPageReportTemplate="Del {first} al {last} de {totalRecords} los criterios"
                 [showCurrentPageReport]="true"
                 [value]="criterio"
                 [scrollable]="true"
@@ -60,7 +42,7 @@
                     <th>ID Criterio</th>
                     <th>Nombre Criterio</th>
                     <th>Descripción</th>
-                    <th>clasificacioncriterio</th>
+                    <th>Clasificación de criterio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                   </tr>
@@ -70,9 +52,7 @@
                     <td>{{ criterio.idCriterio }}</td>
                     <td>{{ criterio.nombreCriterio }}</td>
                     <td>{{ criterio.descripcion }}</td>
-                    <td>
-                      {{ criterios.clasificacioncriterio?.idClasificacion }}
-                    </td>
+                    <td>{{ criterio.clasificacion?.nombreClasificacion }}</td>
                     <td>
                       <button
                         pButton
