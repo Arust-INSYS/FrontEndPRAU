@@ -50,7 +50,7 @@ throw new Error('Method not implemented.');
     this.router.navigate(['/clasificacion-criterios-actualizar',id]);
 }
   redirectToCriterios() {
-    this.router.navigate(['/clasificacion-criterios']);
+    this.router.navigate(['/menu/contenido-criterios/clasificacion-criterios']);
   }
   eliminarCriterio(id: number) {
     // Mostrar cuadro de diálogo SweetAlert para confirmar la eliminación

@@ -45,7 +45,7 @@ export class ClasificacionCriteriosActualizarComponent {
   
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
       dato => {
-        this.router.navigateByUrl('/clasificacion-criterios-listar');
+        this.router.navigateByUrl('/menu/contenido-criterios/clasificacion-listar');
       },
       error => {
         console.error('Error al actualizar el criterio:', error);

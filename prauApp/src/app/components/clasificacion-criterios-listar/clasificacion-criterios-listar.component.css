@@ -1,15 +1,16 @@
 .contenedor {
-    background: linear-gradient(4deg,  #fdc800, #e0ae00,#004f9f, #023b76); /* Gradiente lineal con los colores proporcionados */
-    padding: 20px; /* Añadir un espacio interior */
-  }
-  
-  .titulo-criterios {
-    color: #ffffff; /* Cambiar color del título */
-  }
-  .registrar-button {
-    margin-bottom: 20px; /* Puedes ajustar el valor para separar más o menos el botón */
-  }
-  
-  .tabla-container {
-    margin-top: 20px; /* Puedes ajustar el valor para separar más o menos la tabla del botón */
-  }
+  background: linear-gradient(4deg, #fdc800, #e0ae00, #004f9f, #023b76); /* Gradiente lineal con los colores proporcionados */
+  padding: 20px; /* Añadir un espacio interior */
+}
+
+.titulo-criterios {
+  color: #ffffff; /* Cambiar color del título */
+}
+
+.registrar-button {
+  margin-bottom: 20px; /* Puedes ajustar el valor para separar más o menos el botón */
+}
+
+.tabla-container {
+  margin-top: 20px; /* Puedes ajustar el valor para separar más o menos la tabla del botón */
+}
