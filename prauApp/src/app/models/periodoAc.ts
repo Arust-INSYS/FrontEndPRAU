@@ -3,6 +3,7 @@ import { Aula } from "./aula";
 export class PeriodoAc{
     idPeriodoAc: number;
     fechaInicio?: Date;
+    fechaFin?: Date;
     nombrePeriodo: string;
     descripcion: string;
     aula?: Aula
@@ -10,6 +11,7 @@ export class PeriodoAc{
     constructor(
         idPeriodoAc?: number,
         fechaInicio?: Date,
+        fechaFin?: Date,
         nombrePeriodo?: string,
         descripcion?: string,
         aula?: Aula,

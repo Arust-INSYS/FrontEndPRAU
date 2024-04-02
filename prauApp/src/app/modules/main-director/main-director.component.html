@@ -11,7 +11,12 @@
                     <p class="text-base font-medium text-navy-700 text-gray-400">
                         Año académico
                     </p>
-                    <p-calendar class="border-b border-black border-opacity-40 w-5" [view]="'year'" [yearNavigator]="true" dateFormat="yy" [minDate]="minDate" [maxDate]="maxDate" (ngModelChange)="onYearSelect($event)"></p-calendar>
+                    <mat-form-field class="h-20 w-10">
+                        <mat-label>Selecciona un periodo académico</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let periodo of periodosAcademicos" [value]="periodo.fechaInicio">{{ periodo.fechaFin }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
                 <div class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
