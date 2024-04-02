@@ -1,97 +1,197 @@
-<body>
-  <!-- Tabla de Criterios -->
-  <div class="container">
-    <div id="fixed">
-      <table>
-        <thead>
-          <section class="contenedor">
-            <div class="header">
-              <p-toolbar>
-                <div class="p-toolbar-group-start"></div>
-                <div class="p-toolbar-group-center">
-                  <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText placeholder="Search" />
-                  </span>
-                </div>
-                <div class="p-toolbar-group-end"></div>
-              </p-toolbar>
-            </div>
-            <div class="subconten2">
-              <h1 class="text-center titulo-criterios">
-                Lista de clasificación
-              </h1>
-
-              <p-button
-                label="Registrar"
-                [rounded]="true"
-                (click)="redirectToCriterios()"
-                class="registrar-button"
-              ></p-button>
-              <div class="tabla-container">
-                <p-table
-                  class="tabla"
-                  #dt
-                  [value]="products"
-                  [rows]="10"
-                  [paginator]="true"
-                  [globalFilterFields]="[
-                    'name',
-                    'country.name',
-                    'representative.name',
-                    'status'
-                  ]"
-                  [tableStyle]="{ 'min-width': '75rem' }"
-                  [(selection)]="selectedProducts"
-                  [rowHover]="true"
-                  dataKey="id"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                  [showCurrentPageReport]="true"
-                  [value]="criterio"
-                  [scrollable]="true"
-                  scrollHeight="400px"
-                >
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th>ID Criterio</th>
-                      <th>Nombre clasificación</th>
-                      <th>Descripción</th>
-                      <th>Editar</th>
-                      <th>Eliminar</th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-criterio>
-                    <tr>
-                      <td>{{ criterio.idClasificacion }}</td>
-                      <td>{{ criterio.nombreClasificacion }}</td>
-                      <td>{{ criterio.descripcion }}</td>
-                      <td>
-                        <button
-                          pButton
-                          pRipple
-                          icon="pi pi-pencil"
-                          class="p-button-success mr-2"
-                          (click)="actualizarCriterio(criterio.idClasificacion)"
-                        ></button>
-                      </td>
-                      <td>
-                        <button
-                          pButton
-                          pRipple
-                          icon="pi pi-trash"
-                          class="p-button-danger"
-                          *ngIf="criterio.idClasificacion"
-                          (click)="eliminarCriterio(criterio.idClasificacion)"
-                        ></button>
-                      </td>
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
-            </div>
-          </section>
-        </thead>
-      </table>
+<section class="contenedor">
+  <div class="header text-center">
+    <div class="p-toolbar-group-center">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          [(ngModel)]="searchTerm"
+          placeholder="Search"
+          (input)="applyGlobalFilter()"
+        />
+      </span>
     </div>
   </div>
-</body>
+
+  <div class="subconten2">
+    <h1 class="text-center titulo-criterios">Lista de clasificación</h1>
+
+    <p-button
+      label="Registrar"
+      [rounded]="true"
+      (click)="redirectToCriterios()"
+      class="registrar-button mb-3"
+    ></p-button>
+
+    <div class="tabla-container">
+      <p-table
+        #dt
+        [rows]="10"
+        [paginator]="true"
+        currentPageReportTemplate="Del {first} al {last} de {totalRecords} los criterios"
+        [showCurrentPageReport]="true"
+        [value]="criterio"
+        [scrollable]="true"
+        scrollHeight="400px"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID Clasificación</th>
+            <th>Nombre clasificación</th>
+            <th>Descripción</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-criterio>
+          <tr>
+            <td>{{ criterio.idClasificacion }}</td>
+            <td>{{ criterio.nombreClasificacion }}</td>
+            <td>{{ criterio.descripcion }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-success mr-2"
+                (click)="actualizarCriterio(criterio.idClasificacion)"
+              ></button>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                *ngIf="criterio.idClasificacion"
+                (click)="eliminarCriterio(criterio.idClasificacion)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</section>
+
+    <!--<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tabla de Criterios</title>
+        <style>
+          /* Estilos para el bloque de administración */
+        </style>
+      </head>
+      <body>
+         Tabla de Criterios 
+        <div class="container">
+          <div id="fixed">
+            <button
+              [routerLink]="['/menu/contenido-criterios/criterios']"
+              routerLinkActive="router-link-active"
+              class="btn btn-custom"
+            >
+              Crear Criterio
+            </button>
+
+            <table>
+              <thead>
+                <section class="contenedor">
+                  <div class="header">
+                    <p-toolbar>
+                      <div class="p-toolbar-group-start"></div>
+                      <div class="p-toolbar-group-center">
+                        <span class="p-input-icon-left">
+                          <i class="pi pi-search"></i>
+                          <input pInputText placeholder="Search" />
+                        </span>
+                      </div>
+                      <div class="p-toolbar-group-end"></div>
+                    </p-toolbar>
+                  </div>
+                  <div class="subconten2">
+                    <h1 class="text-center titulo-criterios">
+                      Lista de clasificación
+                    </h1>
+
+                    <p-button
+                      label="Registrar"
+                      [rounded]="true"
+                      (click)="redirectToCriterios()"
+                      class="registrar-button"
+                    ></p-button>
+                    <div class="tabla-container">
+                      <p-table
+                        #dt
+                        [value]="products"
+                        [rows]="10"
+                        [paginator]="true"
+                        [globalFilterFields]="[
+                          'name',
+                          'country.name',
+                          'representative.name',
+                          'status'
+                        ]"
+                        [tableStyle]="{ 'min-width': '75rem' }"
+                        [(selection)]="selectedProducts"
+                        [rowHover]="true"
+                        dataKey="id"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true"
+                        [value]="criterio"
+                        [scrollable]="true"
+                        scrollHeight="400px"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>ID Criterio</th>
+                            <th>Nombre clasificación</th>
+                            <th>Descripción</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-criterio>
+                          <tr>
+                            <td>{{ criterio.idClasificacion }}</td>
+                            <td>{{ criterio.nombreClasificacion }}</td>
+                            <td>{{ criterio.descripcion }}</td>
+                            <td>
+                              <button
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-success mr-2"
+                                (click)="
+                                  actualizarCriterio(criterio.idClasificacion)
+                                "
+                              ></button>
+                            </td>
+                            <td>
+                              <button
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-danger"
+                                *ngIf="criterio.idClasificacion"
+                                (click)="
+                                  eliminarCriterio(criterio.idClasificacion)
+                                "
+                              ></button>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                  </div>
+                </section>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </body>
+    </html>
+  </div>
+</section>
