@@ -47,7 +47,7 @@ applyFilter() {
     });
   }
   applyGlobalFilter() {
-    this.table.filter(this.searchTerm, 'nombreClasificacion', 'contains'); // Aplicar el filtro global
+    this.table.filter(this.searchTerm, 'nombreCriterio', 'contains'); // Aplicar el filtro global
   }
   actualizarCriterio(id: number) {
     this.router.navigate(['menu/contenido-criterios/criterios-actualizar', id]); // Redirigir a la ruta de actualización con el ID del criterio
