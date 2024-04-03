@@ -15,6 +15,10 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { ContenidoCalificacionComponent } from './components/contenido-calificacion/contenido-calificacion.component';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
+import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,7 +36,17 @@ const routes: Routes = [
           { path: 'listar-persona', component: ListarPersonaComponent },
         ],
       },
-
+      {
+        path: 'contenido-calificacion',
+        component: ContenidoCalificacionComponent,
+        children: [
+          { path: 'calificacion-listar', component: CalificacionListarComponent },
+          { path: 'calificacion', component: CalificacionComponent },
+          { path: 'calificacion-actualizar/:id', component: CalificacionActualizarComponent },
+         
+          
+        ],
+      },
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,
