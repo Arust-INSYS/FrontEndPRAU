@@ -124,6 +124,10 @@ import { ListarPersonaComponent } from './components/gestionar-persona/listar-pe
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
+import { ListarPeriodosAcComponent } from './components/gestion-periodo-academico/listar-periodos-ac/listar-periodos-ac.component';
+import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
+import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula/registrar-aula.component';
+import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +145,10 @@ import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.com
     ListarPersonaComponent,
     RegistrarPersonaComponent,
     AnalisisUsoComponent,
+    ListarPeriodosAcComponent,
+    RegistrarPeriodoAcComponent,
+    RegistrarAulaComponent,
+    ListarAulasComponent,
   ],
   imports: [
     RouterModule,

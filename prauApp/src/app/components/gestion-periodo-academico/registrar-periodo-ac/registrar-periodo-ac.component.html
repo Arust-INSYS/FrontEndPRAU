@@ -1,0 +1,29 @@
+<<form (ngSubmit)="registrar(f)" #f="ngForm">
+    <div id="formulario">
+      <h1> Formulario Periodo Academico </h1>
+    </div>
+  
+    <div id="tabla-formulario">
+      <div class="calendar-container">
+        <div class="calendar-item">
+          <label for="fechaInicio">Fecha de Inicio</label>
+          <p-calendar [(ngModel)]="periodoAc.fechaInicio" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha de Inicio..." name="fechaInicio" type="date" id="tabla"></p-calendar>
+
+        </div>
+  
+        <div class="calendar-item">
+          <label for="fechaFin">Fecha Fin</label>
+          <p-calendar [(ngModel)]="periodoAc.fechaFin" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha Fin..." name="fechaFin" type="date" id="tabla"></p-calendar>
+
+        </div>
+      </div>
+  
+      <label for="nombrePeriodo">Nombre del Periodo</label>
+      <input [(ngModel)]="periodoAc.nombrePeriodo" type="text" class="entradas" pInputText placeholder="Nombre del periodo " name="nombrePeriodo" id="tabla" readonly  />  
+      <label for="descripcion">Descripcion</label>
+      <textarea [(ngModel)]="periodoAc.descripcion" rows="5" cols="30" class="entradas" pInputTextarea placeholder="Escriba la descripcion" name="descripcion" id="tabla" required></textarea>
+    </div>
+  
+    <button type="submit" id="button"> ¡Crear Periodo! </button>
+  </form>
+  
