@@ -123,6 +123,7 @@ import { ContenidoPersonaComponent } from './components/contenido-persona/conten
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContenidoPersonaComponent,
     ListarPersonaComponent,
     RegistrarPersonaComponent,
+    AnalisisUsoComponent,
   ],
   imports: [
     RouterModule,

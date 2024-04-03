@@ -15,6 +15,7 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -100,6 +101,8 @@ const routes: Routes = [
   // { path: 'menu', component: MenuComponent },
   // { path: 'persona-listar', component: ListarPersonaComponent },
   // { path: 'persona-registrar', component: RegistrarPersonaComponent },
+
+  { path: 'analisisUso', component: AnalisisUsoComponent },
 
   ///AGREGAR RUTAS SOBRE ESTO
   { path: '**', redirectTo: 'login' },
