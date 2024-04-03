@@ -15,6 +15,10 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { ContenidoAsignaturaComponent } from './components/contenido-asignatura/contenido-asignatura.component';
+import { AsignaturaComponent } from './components/asignatura/asignatura.component';
+import { CarreraComponent } from './components/carrera/carrera.component';
+import { ContenidoCarreraComponent } from './components/contenido-carrera/contenido-carrera.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,7 +36,22 @@ const routes: Routes = [
           { path: 'listar-persona', component: ListarPersonaComponent },
         ],
       },
-
+      {
+        path: 'contenido-asignatura',
+        component: ContenidoAsignaturaComponent,
+        children: [
+          { path: 'asignatura', component: AsignaturaComponent },
+          
+        ],
+      },
+      {
+        path: 'contenido-carrera',
+        component: ContenidoCarreraComponent,
+        children: [
+          { path: 'carrera', component: CarreraComponent },
+       
+        ],
+      },
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,

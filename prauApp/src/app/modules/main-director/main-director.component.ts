@@ -5,6 +5,7 @@ import { PeriodoAc } from '../../models/periodoAc';
 import { PeriodoAcService } from '../../services/periodoAc.service';
 import { DocenteService } from '../../services/docente.service';
 import { Usuario } from '../../models/usuario';
+import { PersonaService } from '../../services/persona.service';
 
 @Component({
   selector: 'app-main-director',
@@ -24,7 +25,7 @@ export class MainDirectorComponent {
   constructor(
     private carreraService: CarreraService,
     private periodoAcService: PeriodoAcService,
-    private docenteService: DocenteService
+    private personaService: PersonaService
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +35,8 @@ export class MainDirectorComponent {
   }
 
   cargarCarreras(): void {
-    this.carreraService.cargarCarreras().subscribe(
-      (carreras: Carrera[]) => { // Especificamos el tipo de datos como Carrera[]
+    this.carreraService.cargarCarrera().subscribe( // Cambia cargarCarreras a cargarCarrera
+      (carreras: Carrera[]) => {
         this.carreras = carreras;
         console.log('Carreras cargadas:', this.carreras);
       },
@@ -44,6 +45,7 @@ export class MainDirectorComponent {
       }
     );
   }
+  
 
  
   cargarPeriodosAcademicos(): void {
@@ -57,9 +59,10 @@ export class MainDirectorComponent {
       }
     );
   }
-
+  
+  
   cargarDocentes(): void {
-    this.docenteService.cargarDocentes()
+    this.personaService.cargarDocentes()
       .subscribe(
         docentes => {
           this.docentes = docentes;

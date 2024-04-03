@@ -123,6 +123,10 @@ import { ContenidoPersonaComponent } from './components/contenido-persona/conten
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AsignaturaComponent } from './components/asignatura/asignatura.component';
+import { ContenidoAsignaturaComponent } from './components/contenido-asignatura/contenido-asignatura.component';
+import { CarreraComponent } from './components/carrera/carrera.component';
+import { ContenidoCarreraComponent } from './components/contenido-carrera/contenido-carrera.component';
 
 
 @NgModule({
@@ -140,6 +144,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContenidoPersonaComponent,
     ListarPersonaComponent,
     RegistrarPersonaComponent,
+    AsignaturaComponent,
+    ContenidoAsignaturaComponent,
+    CarreraComponent,
+    ContenidoCarreraComponent,
   ],
   imports: [
     RouterModule,
