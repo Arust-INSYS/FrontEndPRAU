@@ -7,6 +7,11 @@ import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
+
+import * as pdfMake  from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+//(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-criterios-listar',
   templateUrl: './criterios-listar.component.html',
@@ -44,7 +49,12 @@ applyFilter() {
   obtenerCriterios() {
     this.criteriosService.obtenerListacriterios().subscribe(dato => {
       this.criterio = dato;
-    });
+      //this.generarPDF();
+    },
+    error => {
+      console.error('Error al obtener los criterios: ', error);
+    }
+    );
   }
   applyGlobalFilter() {
     this.table.filter(this.searchTerm, 'nombreCriterio', 'contains'); // Aplicar el filtro global
@@ -86,6 +96,29 @@ applyFilter() {
     });
   }
   
+// generarPDF(){
+//   const documento = {
+//     content:[
+//       {text: 'Lista de Criterios', style: 'header'},
+//       {
+//         table:{
+//           headers: ['Id', 'Nombre', 'Descripcion', 'Clasificacion'],
+//           body: this.criterio.map(c => [c.idCriterio, c.nombreCriterio, c.descripcion, c.clasificacion?.nombreClasificacion])
+//         }
+//       }
+//     ],
+//     styles: {
+//       headers:{
+//         fontSize: 18,
+//         bold: true,
+//         margin: [0,0,0,10]
+//       }
+//     }
+//   };
+
+//   pdfMake.createPdf(documento).open() ;
+// }
+
   
 }
 
