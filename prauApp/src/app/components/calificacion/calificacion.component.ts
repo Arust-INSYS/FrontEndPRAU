@@ -53,7 +53,7 @@ export class CalificacionComponent {
 
   }
   irAlalistaDecriterios(){
-    this.router.navigate(['/menu/contenido-calificacion/calificacion-listar'])
+    this.router.navigate(['/menu/contenido-criterios/listar-calificacion'])
   }
   onSubmit() {
 

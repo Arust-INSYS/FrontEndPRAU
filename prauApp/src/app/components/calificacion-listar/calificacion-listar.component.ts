@@ -48,10 +48,10 @@ throw new Error('Method not implemented.');
 
   actualizarCriterio(id: number) {
 
-    this.router.navigate(['/menu/contenido-calificacion/calificacion-actualizar',id]);
+    this.router.navigate(['/menu/contenido-criterios/calificacion-actualizar',id]);
 }
   redirectToCriterios() {
-    this.router.navigate(['/menu/contenido-calificacion/calificacion']);
+    this.router.navigate(['/menu/contenido-criterios/calificacion']);
   }
 
 

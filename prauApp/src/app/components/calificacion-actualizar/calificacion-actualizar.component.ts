@@ -43,7 +43,7 @@ export class CalificacionActualizarComponent {
         this.toastr.success('Su cambio ha sido un éxito.');
         
         // Redirigir a la página de listado de calificaciones
-        this.router.navigateByUrl('/menu/contenido-calificacion/calificacion-listar');
+        this.router.navigateByUrl('/menu/contenido-criterios/listar-calificacion');
       },
       error => {
         // Manejar errores si ocurre alguno
