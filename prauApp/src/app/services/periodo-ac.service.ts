@@ -37,6 +37,16 @@ export class PeriodoAcService {
     return this.http.post<PeriodoAc>(`${this.url}/create`, periodoAc, { headers });
   }
 
+  getPeriodoAcById(id: number): Observable<PeriodoAc> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+  
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get<PeriodoAc>(`${this.url}/find/${id}`, { headers });
+  }
+  
   update(id: number, persona: PeriodoAc): Observable<PeriodoAc> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({

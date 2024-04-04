@@ -20,6 +20,8 @@ import { ListarPeriodosAcComponent } from './components/gestion-periodo-academic
 import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
 import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula/registrar-aula.component';
 import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
+import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
+import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -113,10 +115,13 @@ const routes: Routes = [
   //periodos-academico
   { path: 'listar-periodos-acs', component: ListarPeriodosAcComponent },
   { path: 'registro-periodos-acs', component: RegistrarPeriodoAcComponent },
+  { path: 'actualizar-periodos-acs', component: ActualizarPeriodoAcComponent },
 
   //aulas
   { path: 'registro-aulas', component: RegistrarAulaComponent },
   { path: 'listar-aulas', component: ListarAulasComponent },
+  { path: 'actualizar-aula', component: ActualizarAulaComponent },
+
 
 
 

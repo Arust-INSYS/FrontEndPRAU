@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PeriodoAcService } from '../../../services/periodo-ac.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PeriodoAc } from '../../../models/PeriodoAc';
 import { NgForm } from '@angular/forms';
 
@@ -15,11 +15,13 @@ export class RegistrarPeriodoAcComponent {
   constructor(
     private periodoAcService: PeriodoAcService,
     private toastr: ToastrService,
-
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
-  
+  ngOnInit() {
+   
+  }
 
   periodoAc :PeriodoAc = new PeriodoAc();
   
