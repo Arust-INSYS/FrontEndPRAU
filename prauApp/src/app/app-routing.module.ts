@@ -25,6 +25,13 @@ import { ContenidoAsignaturaComponent } from './components/contenido-asignatura/
 import { AsignaturaComponent } from './components/asignatura/asignatura.component';
 import { CarreraComponent } from './components/carrera/carrera.component';
 import { ContenidoCarreraComponent } from './components/contenido-carrera/contenido-carrera.component';
+import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
+import { ListarPeriodosAcComponent } from './components/gestion-periodo-academico/listar-periodos-ac/listar-periodos-ac.component';
+import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
+import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula/registrar-aula.component';
+import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
+import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
+import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

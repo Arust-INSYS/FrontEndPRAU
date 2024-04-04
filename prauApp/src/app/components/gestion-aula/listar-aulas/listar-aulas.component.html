@@ -1,0 +1,43 @@
+
+<h1 > Gestion de Aulas</h1>
+<p-button icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/registro-aulas']"></p-button>
+
+<div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
+
+
+    <div class="card">
+        <p-table [value]="aulas" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 20]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:5%">ID</th>
+                    <th style="width:15%">Nombre del Aula</th>
+                    <th style="width:10%">Ciclo Pertenece</th>
+                    <th style="width:10%">Periodo Academico</th>
+                    <th style="width:25%">Observaciones</th>
+                    <th style="width:5%">Editar</th>
+                    <th style="width:5%">Borrar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-aula>
+                <tr>
+                    <td>{{ aula.aulaId }}</td>
+                    <td>{{ aula.aulaNombre }}</td>
+                    <td>{{ aula.cicloPertenece  }}</td>
+                    <td>{{ aula.periodoAc }}</td>
+                    <td>{{ aula.observaciones }}</td>
+                    <td>  <p-button icon="pi pi-pencil" severity="success"></p-button>
+                    </td>
+                    <td> <p-button icon="pi pi-times" severity="danger"></p-button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" [routerLink]="['/registro-aulas']"></p-button>
+            </ng-template>
+           
+        </p-table>
+    </div>
+
+</div>

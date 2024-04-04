@@ -1,0 +1,43 @@
+
+<h1 > Gestion de Periodos Academicos</h1>
+<p-button icon="pi pi-plus" label="Nuevo Periodo" [routerLink]="['/registro-periodos-acs']"></p-button>
+
+<div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
+
+
+    <div class="card">
+        <p-table [value]="periodos" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 20]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:5%">ID</th>
+                    <th style="width:20%">Fecha Inico</th>
+                    <th style="width:20%">Fecha fin</th>
+                    <th style="width:25%">Periodo</th>
+                    <th style="width:25%">Description</th>
+                    <th style="width:5%">Editar</th>
+                    <th style="width:5%">Borrar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-periodo>
+                <tr>
+                    <td>{{ periodo.idPeriodoAc }}</td>
+                    <td>{{ periodo.fechaInicio | date:'yyyy-MM-dd' }}</td>
+                    <td>{{ periodo.fechaFin | date:'yyyy-MM-dd' }}</td>
+                    <td>{{ periodo.nombrePeriodo }}</td>
+                    <td>{{ periodo.descripcion }}</td>
+                    <td> <p-button icon="pi pi-pencil" severity="success" (click)="selectPeriodoAc(periodo)"></p-button></td>
+
+                    <td> <p-button icon="pi pi-times" severity="danger"></p-button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" [routerLink]="['/registro-periodos-acs']"></p-button>
+            </ng-template>
+           
+        </p-table>
+    </div>
+
+</div>

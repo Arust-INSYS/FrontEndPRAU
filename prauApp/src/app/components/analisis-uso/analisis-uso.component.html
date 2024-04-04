@@ -1,0 +1,31 @@
+<h1>Analisis de Uso</h1>
+<div class="container">
+    <div class="top">
+        <div class="left">
+            <p-dropdown [options]="opcines" [(ngModel)]="selectedOpcines" [showClear]="true"
+                placeholder="Seleccione una Opcion"></p-dropdown>
+        </div>
+        <div class="left">
+            <p-dropdown [options]="opcines" [(ngModel)]="selectedOpcines" [showClear]="true"
+                placeholder="Seleccione una Opcion"></p-dropdown>
+        </div>
+        <div class="right">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText [(ngModel)]="value" />
+            </span>
+        </div>
+    </div>
+    <div class="chartst" id="chart">
+        <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+        
+    </div>
+    <div class="">
+  
+        <p-button label="Descargar" icon="pi pi-download" (click)="descargar()"></p-button>
+
+    </div>
+
+
+</div>
+
