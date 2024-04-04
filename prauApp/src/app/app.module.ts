@@ -124,6 +124,10 @@ import { ListarPersonaComponent } from './components/gestionar-persona/listar-pe
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RolDocenteComponent } from './rol-docente/rol-docente.component';
+import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
+import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
+import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
+import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +145,10 @@ import { RolDocenteComponent } from './rol-docente/rol-docente.component';
     ListarPersonaComponent,
     RegistrarPersonaComponent,
     RolDocenteComponent,
+    ContenidoRolComponent,
+    GestionarRolComponent,
+    ListarRolComponent,
+    RegistrarRolComponent,
   ],
   imports: [
     RouterModule,

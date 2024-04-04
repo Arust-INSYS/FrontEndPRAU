@@ -15,6 +15,9 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
+import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
+import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -61,6 +64,7 @@ const routes: Routes = [
             path: 'criterios-listar', 
             component: CriteriosListarComponent 
           },
+         
           // { 
           //   path: 'criterios-actualizar/:id', 
           //   component: CriteriosActualizarComponent 
@@ -69,6 +73,14 @@ const routes: Routes = [
           //   path: 'clasificacion-criterios-actualizar/:id',
           //   component: ClasificacionCriteriosActualizarComponent,
           // },
+        ],
+      },
+      {
+        path: 'contenido-rol',
+        component: ContenidoRolComponent,
+        children: [
+          { path: 'registrar-rol', component: RegistrarRolComponent},
+          { path: 'listar-rol', component: ListarRolComponent},
         ],
       },
     ],
