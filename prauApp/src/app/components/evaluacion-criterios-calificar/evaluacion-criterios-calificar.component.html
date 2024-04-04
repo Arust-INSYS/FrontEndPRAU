@@ -37,9 +37,14 @@
         <!-- Grupo 1 -->
         <div class="grupo-preguntas">
             <div class="grupo-preguntas">
-                <h2>Grupo 1</h2>
+                <div class="clasificacion-selector">
+                    <label for="clasificacion">Seleccionar Clasificación:</label>
+                    <select id="clasificacion" name="clasificacion" [(ngModel)]="clasificacionSeleccionada">
+                        <option *ngFor="let clasificacion of clasificaciones" [ngValue]="clasificacion">{{ clasificacion.nombreClasificacion }}</option>
+                    </select>
+                </div>
                 <div class="question-section">
-                    <div class="question" *ngFor="let criterio of criterios">
+                    <div class="question" *ngFor="let criterio of filtrarCriteriosPorClasificacion()">
                         <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
                         <select id="pregunta{{criterio.idCriterio}}" name="pregunta{{criterio.idCriterio}}">
                             <option *ngFor="let calificacion of calificaciones" [value]="calificacion.codCalificacion">{{ calificacion.codCalificacion }}</option>
