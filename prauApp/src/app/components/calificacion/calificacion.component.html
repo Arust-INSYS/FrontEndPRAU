@@ -1,0 +1,27 @@
+<div class="formulario">
+
+    <body>
+
+            <h2 class="text-center">Clasificacion de Criterios</h2>
+
+            <div class="flex flex-column gap-2">
+                <label for="descripcion">Código calificación:</label>
+                <input pInputText type="text" id="descripcion" name="descripcion" placeholder="nombre de clasificacion"[(ngModel)]="clasificacion.codCalificacion" />
+                <small id="descripcion">Ingrese el Código.</small>
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="descripcion">Descripcion:</label>
+                <input pInputText type="text" id="descripcion" name="descripcion" placeholder="nombre de clasificacion"[(ngModel)]="clasificacion.descripcion" />
+                <small id="descripcion">Ingrese la descripcion.</small>
+            </div>
+            
+            <div class="button-container">
+          
+
+                <p-button  type="submit" icon="pi pi-check"  label="Guardar"[rounded]="true" [text]="true" [raised]="true" (click)="guardarcriterio()"></p-button>
+            </div>
+           
+    
+    </body>
+    
+    </div>

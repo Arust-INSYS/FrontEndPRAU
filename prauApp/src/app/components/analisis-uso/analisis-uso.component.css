@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid #2a95c3; 
+    border-radius: 10px;  */
+  }
+  
+  .top {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+  
+  .left {
+    align-self: flex-start;
+  }
+  
+  .right {
+    align-self: flex-end;
+  }
+  
+  .chartst {
+    width: 100%;
+     height: 400px;
+  }

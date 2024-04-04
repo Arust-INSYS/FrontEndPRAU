@@ -1,0 +1,22 @@
+<div class="formulario">
+    <h2 class="text-center">Registro de Asignatura</h2>
+    <div class="flex flex-column gap-2">
+        <label for="nombreAsignatura">Nombre de Asignatura:</label>
+        <input pInputText type="text" id="nombreAsignatura" name="nombreAsignatura" placeholder="Nombre de Asignatura" [(ngModel)]="asignatura.nombreAsignatura" />
+        <small id="nombreAsignatura">Ingrese nombre de Asignatura.</small>
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="descripcion">Descripcion:</label>
+        <input pInputText type="text" id="descripcion" name="descripcion" placeholder="descripcion" [(ngModel)]="asignatura.descripcionAsignatura" />
+        <small id="descripcion">Ingrese la descripcion.</small>
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="carrera">Carrera:</label>
+        <select id="carrera" name="carrera" [(ngModel)]="asignatura.carrera">
+            <option *ngFor="let carrera of carrera" [ngValue]="carrera">{{ carrera.nombreCarrera }}</option>
+        </select>
+    </div>
+    <div class="button-container">
+        <p-button  type="submit" icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="guardarAsignatura()"></p-button>
+    </div>
+</div>

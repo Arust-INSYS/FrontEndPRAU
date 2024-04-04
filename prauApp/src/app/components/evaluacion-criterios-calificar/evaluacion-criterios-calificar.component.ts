@@ -12,35 +12,38 @@ import { ClasificacionCriteriosService } from '../../services/clasificacion-crit
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
   templateUrl: './evaluacion-criterios-calificar.component.html',
-  styleUrl: './evaluacion-criterios-calificar.component.css'
+  styleUrl: './evaluacion-criterios-calificar.component.css',
 })
 export class EvaluacionCriteriosCalificarComponent {
-
   criterios: Criterios[] = [];
   calificaciones: Calificacion[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
   clasificacionSeleccionada: ClasificacionCriterios | null = null;
   evaluacionDet: EvaluacionDet = new EvaluacionDet(); // Objeto para almacenar la evaluación detallada
 
-
-  
-  constructor(private evaluacionDetService: EvaluacionDetService, private criteriosService: CriteriosService, 
-    private calificacionService:CalificacionService, private clasificacionService: ClasificacionCriteriosService) { }
+  constructor(
+    private evaluacionDetService: EvaluacionDetService,
+    private criteriosService: CriteriosService,
+    private calificacionService: CalificacionService,
+    private clasificacionService: ClasificacionCriteriosService
+  ) {}
 
   ngOnInit(): void {
     this.getCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
-    this.getCalificaciones();
+    //this.getCalificaciones();
     //this.filtrarCriteriosPorClasificacion();
   }
 
   getClasificaciones(): void {
-    this.clasificacionService.obtenerListacriterios().subscribe(clasificaciones => {
-      this.clasificaciones = clasificaciones;
-    });
+    this.clasificacionService
+      .obtenerListacriterios()
+      .subscribe((clasificaciones) => {
+        this.clasificaciones = clasificaciones;
+      });
   }
 
   getCriterios(): void {
-    this.criteriosService.obtenerListacriterios().subscribe(criterios => {
+    this.criteriosService.obtenerListacriterios().subscribe((criterios) => {
       this.criterios = criterios;
     });
   }
@@ -50,11 +53,10 @@ export class EvaluacionCriteriosCalificarComponent {
     const criteriosFiltrados = this.criterios.filter(criterio => criterio.clasificacion?.idClasificacion === this.clasificacionSeleccionada.idClasificacion);
     return criteriosFiltrados;
   }*/
-
+  /*
   getCalificaciones(): void {
     this.calificacionService.listarCalificaciones().subscribe(calificaciones => {
       this.calificaciones = calificaciones;
     });
-  }
-  
+  }*/
 }

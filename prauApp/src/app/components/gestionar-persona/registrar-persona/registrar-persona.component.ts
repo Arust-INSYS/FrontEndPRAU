@@ -30,7 +30,7 @@ export class RegistrarPersonaComponent {
     { label: '3', value: 3 },
     { label: '4', value: 4 },
   ];
-  valorCedula: string="";
+  valorCedula: string = '';
   constructor(
     private personaService: PersonaService,
     private toastr: ToastrService,
@@ -58,7 +58,7 @@ export class RegistrarPersonaComponent {
   selectRol: Rol = new Rol();
   username = this.sessionStorage.getItem('username');
   rol = this.sessionStorage.getItem('rol');
-  saveUsername:any;
+  saveUsername: any;
   //VARIABLES
   timeToastr: number = 4000;
   id: number = 0;
@@ -111,17 +111,16 @@ export class RegistrarPersonaComponent {
   registrar() {
     // REGISTRAR PERSONA
     this.personaService.registrarPersona(this.persona).subscribe((response) => {
-      this.persona.perCedula = this.valorCedula;
       this.usuario.usuEstado = 1;
       this.usuario.usuPerId = response;
-      this.usuario.usuNombreUsuario = this.valorCedula;
-      
-    
+
+      this.persona.perCedula = this.valorCedula;
 
       // REGISTRAR USUARIO
       this.usuarioService
         .registrarUsuario(this.usuario)
         .subscribe((response) => {
+          this.usuario.usuNombreUsuario = this.valorCedula;
           console.log('Ya llegueeee!!!');
           console.log(response);
         });
