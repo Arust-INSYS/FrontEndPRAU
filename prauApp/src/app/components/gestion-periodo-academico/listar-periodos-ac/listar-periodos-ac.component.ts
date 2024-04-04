@@ -28,7 +28,7 @@ export class ListarPeriodosAcComponent implements OnInit {
 
   selectPeriodoAc(periodo: PeriodoAc) {
     this.selectedPeriodoAc = periodo; // Assign selected period for editing
-    this.router.navigate(['/registro-periodos-acs', periodo.idPeriodoAc]); // Redirect to edit form with ID
+    this.router.navigate(['/menu/contenido-virtual/registrar-aula', periodo.idPeriodoAc]); // Redirect to edit form with ID
     console.log('================' + this.selectedPeriodoAc.idPeriodoAc);
   }
 }

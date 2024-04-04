@@ -125,18 +125,14 @@ import { RegistrarPersonaComponent } from './components/gestionar-persona/regist
 import { CalificacionComponent } from './components/calificacion/calificacion.component';
 import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
 import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
-import { ContenidoCalificacionComponent } from './components/contenido-calificacion/contenido-calificacion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
 import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
 import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
 import { AsignaturaComponent } from './components/asignatura/asignatura.component';
-import { ContenidoAsignaturaComponent } from './components/contenido-asignatura/contenido-asignatura.component';
 import { CarreraComponent } from './components/carrera/carrera.component';
-import { ContenidoCarreraComponent } from './components/contenido-carrera/contenido-carrera.component';
 import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
 import { ListarPeriodosAcComponent } from './components/gestion-periodo-academico/listar-periodos-ac/listar-periodos-ac.component';
 import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
@@ -144,6 +140,8 @@ import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula
 import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
 import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
 import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
+import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
+import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 
 @NgModule({
   declarations: [
@@ -163,17 +161,13 @@ import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-au
     CalificacionComponent,
     CalificacionListarComponent,
     CalificacionActualizarComponent,
-    ContenidoCalificacionComponent,
-    ContenidoRolComponent,
     GestionarRolComponent,
     ListarRolComponent,
     RegistrarRolComponent,
     EvaluacionCriteriosComponent,
     EvaluacionCriteriosCalificarComponent,
     AsignaturaComponent,
-    ContenidoAsignaturaComponent,
     CarreraComponent,
-    ContenidoCarreraComponent,
     AnalisisUsoComponent,
     ListarPeriodosAcComponent,
     RegistrarPeriodoAcComponent,
@@ -181,6 +175,8 @@ import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-au
     ListarAulasComponent,
     ActualizarPeriodoAcComponent,
     ActualizarAulaComponent,
+    ContenidoVirtualComponent,
+    ContenidoAnaliticsComponent
   ],
   imports: [
     RouterModule,

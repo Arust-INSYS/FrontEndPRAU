@@ -53,7 +53,7 @@ export class CarreraComponent {
     this.CarreraService.registrarcarreras(this.carrera).subscribe(
       () => {
         this.obtenercarreras();
-        this.router.navigateByUrl('/menu/carrera/criterios-listar');
+        this.router.navigateByUrl('/menu/contenido-virtual/carrera');
         this.toastr.success('Criterio guardado exitosamente.', 'Éxito');
         this.carrera.nombreCarrera = '';
         this.carrera.descripcionCarrera = '';
