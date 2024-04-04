@@ -1,4 +1,4 @@
-import { PeriodoAc } from './PeriodoAc';
+import { PeriodoAc } from './periodoAc';
 
 export class Aula {
   aulaId: number;

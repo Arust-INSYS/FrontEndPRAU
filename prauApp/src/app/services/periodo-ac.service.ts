@@ -2,14 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
-import { PeriodoAc } from '../models/PeriodoAc';
+import { PeriodoAc } from '../models/periodoAc';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PeriodoAcService {
-
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
@@ -21,7 +20,7 @@ export class PeriodoAcService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
-  
+
     return this.http
       .get(this.url + '/read', { headers }) // Include headers in the request
       .pipe(map((response) => response as PeriodoAc[]));
@@ -34,7 +33,9 @@ export class PeriodoAcService {
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
-    return this.http.post<PeriodoAc>(`${this.url}/create`, periodoAc, { headers });
+    return this.http.post<PeriodoAc>(`${this.url}/create`, periodoAc, {
+      headers,
+    });
   }
 
   getPeriodoAcById(id: number): Observable<PeriodoAc> {
@@ -42,11 +43,11 @@ export class PeriodoAcService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
-  
+
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.get<PeriodoAc>(`${this.url}/find/${id}`, { headers });
   }
-  
+
   update(id: number, persona: PeriodoAc): Observable<PeriodoAc> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -64,12 +65,10 @@ export class PeriodoAcService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
-  
+
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.delete<void>(`${this.url}/delete?id=${id}`, {
       headers,
     });
   }
-  
-  
 }
