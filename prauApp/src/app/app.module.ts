@@ -122,6 +122,10 @@ import { CriteriosListarComponent } from './components/criterios-listar/criterio
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
+import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
+import { ContenidoCalificacionComponent } from './components/contenido-calificacion/contenido-calificacion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -139,12 +143,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContenidoPersonaComponent,
     ListarPersonaComponent,
     RegistrarPersonaComponent,
+    CalificacionComponent,
+    CalificacionListarComponent,
+    CalificacionActualizarComponent,
+    ContenidoCalificacionComponent,
   ],
   imports: [
     RouterModule,
     BrowserModule,
     AppRoutingModule,
     PasswordModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     InputTextModule,

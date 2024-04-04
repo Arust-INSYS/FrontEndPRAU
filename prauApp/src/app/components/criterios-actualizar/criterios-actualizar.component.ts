@@ -64,7 +64,7 @@ export class CriteriosActualizarComponent {
           );
         } else {
           this.toastr.error(
-            'Ocurrió un error al actualizar el criterio. Por favor, inténtelo de nuevo.'
+            'Ese nombre ya esta en uso'
           );
         }
       }

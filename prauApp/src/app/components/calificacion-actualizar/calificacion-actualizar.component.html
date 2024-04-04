@@ -1,0 +1,40 @@
+<div class="formulario">
+    <body>
+      <h2 class="text-center">Clasificacion de Criterios Actualizar</h2>
+    
+        <small id="nombreClasificacion">Ingrese la descripción.</small>
+      <div class="flex flex-column gap-2">
+        <label for="descripcion">Descripción:</label>
+        <textarea
+                pInputText
+                id="descripcion"
+                name="descripcion"
+                placeholder="nombre de clasificación"
+                [(ngModel)]="califcacion.descripcion"
+            ></textarea>
+        <small id="descripcion">Ingrese la  descripción .</small>
+      </div>
+  
+      <div class="button-container">
+        <p-button
+          icon="pi pi-check"
+          label="Guardar"
+          [rounded]="true"
+          [text]="true"
+          [raised]="true"
+          (click)="onSubmit()"
+        ></p-button>
+  
+        <p-button
+          icon="pi pi-times"
+          label="Cancelar"
+          [rounded]="true"
+          [text]="true"
+          [raised]="true"
+          severity="danger "
+          routerLink="/menu/contenido-calificacion/calificacion-listar"
+        ></p-button>
+      </div>
+    </body>
+  </div>
+  
