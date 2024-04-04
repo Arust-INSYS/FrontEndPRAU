@@ -133,6 +133,10 @@ import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
 import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
+import { AsignaturaComponent } from './components/asignatura/asignatura.component';
+import { ContenidoAsignaturaComponent } from './components/contenido-asignatura/contenido-asignatura.component';
+import { CarreraComponent } from './components/carrera/carrera.component';
+import { ContenidoCarreraComponent } from './components/contenido-carrera/contenido-carrera.component';
 
 @NgModule({
   declarations: [
@@ -159,6 +163,10 @@ import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-c
     RegistrarRolComponent,
     EvaluacionCriteriosComponent,
     EvaluacionCriteriosCalificarComponent,
+    AsignaturaComponent,
+    ContenidoAsignaturaComponent,
+    CarreraComponent,
+    ContenidoCarreraComponent,
   ],
   imports: [
     RouterModule,
@@ -276,6 +284,11 @@ import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-c
     CardModule,
     RippleModule,
     StyleClassModule,
+    //MatIconModule,
+    //CalendarModule,
+    //MatFormFieldModule,
+    //CalendarModule,
+    //MatSelectModule,
     BrowserAnimationsModule,
   ],
   providers: [],
