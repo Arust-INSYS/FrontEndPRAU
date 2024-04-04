@@ -1,0 +1,42 @@
+<div class="formulario">
+    <h1>ROLES </h1>
+   
+    <div class="input-group">
+      <label for="nombre">Nombre del rol:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        pInputText
+        required
+      />
+    </div>
+    <div class="input-group">
+      <label for="descripcion">descripcion del rol:</label>
+      <input
+        type="text"
+        id="apellido"
+        name="apellido"
+        pInputText
+      />
+  
+    <div class="input-group">
+      <label for="fecha">Fecha de registro:</label>
+      <p-calendar
+        id="fecha"
+        name="fecha"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+      ></p-calendar>
+    </div>
+    <div class="boton-group">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        label="Guardar"
+      ></button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  

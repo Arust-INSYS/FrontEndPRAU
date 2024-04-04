@@ -40,11 +40,15 @@ const routes: Routes = [
         path: 'contenido-calificacion',
         component: ContenidoCalificacionComponent,
         children: [
-          { path: 'calificacion-listar', component: CalificacionListarComponent },
+          {
+            path: 'calificacion-listar',
+            component: CalificacionListarComponent,
+          },
           { path: 'calificacion', component: CalificacionComponent },
-          { path: 'calificacion-actualizar/:id', component: CalificacionActualizarComponent },
-         
-          
+          {
+            path: 'calificacion-actualizar/:id',
+            component: CalificacionActualizarComponent,
+          },
         ],
       },
       {
@@ -63,17 +67,17 @@ const routes: Routes = [
             path: 'clasificacion-listar',
             component: ClasificacionCriteriosListarComponent,
           },
-          { 
-            path: 'criterios', 
-            component: CriteriosComponent 
+          {
+            path: 'criterios',
+            component: CriteriosComponent,
           },
           {
             path: 'criterios-actualizar/:id',
             component: CriteriosActualizarComponent,
           },
-          {  
-            path: 'criterios-listar', 
-            component: CriteriosListarComponent 
+          {
+            path: 'criterios-listar',
+            component: CriteriosListarComponent,
           },
         ],
       },

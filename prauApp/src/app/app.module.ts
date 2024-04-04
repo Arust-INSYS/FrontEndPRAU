@@ -127,6 +127,10 @@ import { CalificacionListarComponent } from './components/calificacion-listar/ca
 import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
 import { ContenidoCalificacionComponent } from './components/contenido-calificacion/contenido-calificacion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
+import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
+import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
+import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 
 @NgModule({
   declarations: [
@@ -143,10 +147,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContenidoPersonaComponent,
     ListarPersonaComponent,
     RegistrarPersonaComponent,
-    CalificacionComponent,
-    CalificacionListarComponent,
-    CalificacionActualizarComponent,
-    ContenidoCalificacionComponent,
+    ContenidoRolComponent,
+    GestionarRolComponent,
+    ListarRolComponent,
+    RegistrarRolComponent,
   ],
   imports: [
     RouterModule,

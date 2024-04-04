@@ -1,0 +1,23 @@
+
+<body>
+    <div class="encabezado">
+        <ul class="lista">
+            <li>
+                <a [routerLink]="['/menu/contenido-rol/registrar-rol']" routerLinkActive="router-link-active" class="no-underline menu">
+                    <i class="pi pi-file"></i>
+                    <span class="nav-item">Nueva rol</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['/menu/contenido-rol/listar-rol']" routerLinkActive="router-link-active" class="no-underline menu">
+                    <i class="pi pi-list"></i>
+                    <span class="nav-item">lista roles</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+    </body>
