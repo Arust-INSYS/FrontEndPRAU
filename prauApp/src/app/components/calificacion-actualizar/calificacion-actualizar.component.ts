@@ -47,9 +47,9 @@ export class CalificacionActualizarComponent {
       },
       error => {
         // Manejar errores si ocurre alguno
-        console.error('Error al actualizar el criterio:', error);
+        console.error('Error al actualizar el calificación:', error);
         // Mostrar una alerta de error en caso de que falle la actualización
-        this.toastr.error('Error al actualizar el criterio. Por favor, intente nuevamente.');
+        this.toastr.error('Error al actualizar el calificación. Por favor, intente nuevamente.');
       }
     );
 }
