@@ -28,7 +28,7 @@ export class AsignaturaService {
     );
   }
 
-  eliminarasignatura(id: number): Observable<object> {
+  eliminarAsignatura(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí

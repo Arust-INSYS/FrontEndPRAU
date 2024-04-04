@@ -33,6 +33,8 @@ import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -106,7 +108,9 @@ const routes: Routes = [
         component: ContenidoVirtualComponent,
         children: [
           { path: 'carrera', component: CarreraComponent },
+          { path: 'carrera-listar', component: CarreraListarComponent },
           { path: 'asignatura', component: AsignaturaComponent },
+          { path: 'asignatura-listar', component: AsignaturaListarComponent },
           { path: 'listar-periodo', component: ListarPeriodosAcComponent},
           { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent},
           { path: 'listar-aulas', component: ListarAulasComponent},
