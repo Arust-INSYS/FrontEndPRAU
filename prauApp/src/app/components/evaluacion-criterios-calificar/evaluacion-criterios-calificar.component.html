@@ -36,31 +36,15 @@
 
         <!-- Grupo 1 -->
         <div class="grupo-preguntas">
-            <h2>Grupo 1</h2>
-            <div class="question-section">
-                <div class="question">
-                    <label for="pregunta1">Pregunta 1:</label>
-                    <select id="pregunta1" name="pregunta1">
-                        <option value="respuesta1">Respuesta 1</option>
-                        <option value="respuesta2">Respuesta 2</option>
-                        <option value="respuesta3">Respuesta 3</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label for="pregunta2">Pregunta 2:</label>
-                    <select id="pregunta2" name="pregunta2">
-                        <option value="respuesta1">Respuesta 1</option>
-                        <option value="respuesta2">Respuesta 2</option>
-                        <option value="respuesta3">Respuesta 3</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label for="pregunta3">Pregunta 3:</label>
-                    <select id="pregunta3" name="pregunta3">
-                        <option value="respuesta1">Respuesta 1</option>
-                        <option value="respuesta2">Respuesta 2</option>
-                        <option value="respuesta3">Respuesta 3</option>
-                    </select>
+            <div class="grupo-preguntas">
+                <h2>Grupo 1</h2>
+                <div class="question-section">
+                    <div class="question" *ngFor="let criterio of criterios">
+                        <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                        <select id="pregunta{{criterio.idCriterio}}" name="pregunta{{criterio.idCriterio}}">
+                            <option *ngFor="let calificacion of calificaciones" [value]="calificacion.codCalificacion">{{ calificacion.codCalificacion }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
