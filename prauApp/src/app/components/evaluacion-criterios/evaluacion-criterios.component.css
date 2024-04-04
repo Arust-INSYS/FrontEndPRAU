@@ -1,0 +1,20 @@
+.contenedor {
+    background: linear-gradient(4deg, #fdc800, #e0ae00, #004f9f, #023b76);
+    padding: 20px;
+}
+
+.titulo-criterios {
+    color: #ffffff;
+}
+
+.filtro-input {
+    margin-right: 10px;
+}
+
+.botones-container {
+    margin-bottom: 20px;
+}
+
+.tabla-container {
+    margin-top: 20px;
+}

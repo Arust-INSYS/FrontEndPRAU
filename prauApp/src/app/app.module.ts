@@ -131,6 +131,8 @@ import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.
 import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
+import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
+import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +157,8 @@ import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/
     GestionarRolComponent,
     ListarRolComponent,
     RegistrarRolComponent,
+    EvaluacionCriteriosComponent,
+    EvaluacionCriteriosCalificarComponent,
   ],
   imports: [
     RouterModule,

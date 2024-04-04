@@ -1,21 +1,9 @@
 export class Calificacion {
-    
-    codCalificacion: string;
-    descripcion: string;
-   
-  
-    
-    constructor(
-  
-    codCalificacion?: string,
-    descripcion?: string,
+  codCalificacion: string;
+  descripcion: string;
 
-  
-    ) {
-      
-        this.codCalificacion = codCalificacion || '';
-        this.descripcion = descripcion || '';
-        
-        
-      }
+  constructor(codCalificacion?: string, descripcion?: string) {
+    this.codCalificacion = codCalificacion || '';
+    this.descripcion = descripcion || '';
+  }
 }

@@ -1,0 +1,185 @@
+<div class="formulario">
+
+    <body>
+    <header>
+        <div class="header-container">
+            <div class="search-container">
+                <label for="buscarCurso">Buscar Curso:</label>
+                <input type="text" id="buscarCurso" name="buscarCurso" placeholder="Ingrese el nombre del curso">
+            </div>
+            <div class="evaluation-details">
+                <label for="lblNumeroEvaluacion">N° Evaluación:</label>
+                <span id="lblNumeroEvaluacion">123</span>
+                
+            </div>
+            <div><label for="lblPorcentajeCumplimiento">Porcentaje de Cumplimiento:</label>
+                <span id="lblPorcentajeCumplimiento">0%</span></div>
+        </div>
+        <div class="course-details">
+            <!-- Aquí se cargarán los datos del curso y del docente -->
+            <!-- Ejemplo: -->
+            <p>Nombre del Curso: Curso de ejemplo</p>
+            <p>Docente a cargo: Nombre del Docente</p>
+
+            <div class="evaluation-progress">
+                <label for="porcentajeCumplimiento">Porcentaje de cumplimiento:</label>
+                <div class="progress-container">
+                    <progress id="porcentajeCumplimiento" max="100" value="0"></progress>
+                    <span class="progress-value">0%</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="formulario">
+
+        <!-- Grupo 1 -->
+        <div class="grupo-preguntas">
+            <div class="grupo-preguntas">
+                <h2>Grupo 1</h2>
+                <div class="question-section">
+                    <div class="question" *ngFor="let criterio of criterios">
+                        <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                        <select id="pregunta{{criterio.idCriterio}}" name="pregunta{{criterio.idCriterio}}">
+                            <option *ngFor="let calificacion of calificaciones" [value]="calificacion.codCalificacion">{{ calificacion.codCalificacion }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Grupo 2 -->
+        <div class="grupo-preguntas">
+            <h2>Grupo 2</h2>
+            <div class="question-section">
+                <div class="question">
+                    <label for="pregunta1">Pregunta 1:</label>
+                    <select id="pregunta1" name="pregunta1">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta2">Pregunta 2:</label>
+                    <select id="pregunta2" name="pregunta2">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 3:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 4:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Grupo 3 -->
+        <div class="grupo-preguntas">
+            <h2>Grupo 3</h2>
+            <div class="question-section">
+                <div class="question">
+                    <label for="pregunta1">Pregunta 1:</label>
+                    <select id="pregunta1" name="pregunta1">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta2">Pregunta 2:</label>
+                    <select id="pregunta2" name="pregunta2">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 3:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 4:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 5:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 6:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta3">Pregunta 7:</label>
+                    <select id="pregunta3" name="pregunta3">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Grupo 4 -->
+        <div class="grupo-preguntas">
+            <h2>Grupo 4</h2>
+            <div class="question-section">
+                <div class="question">
+                    <label for="pregunta1">Pregunta 1:</label>
+                    <select id="pregunta1" name="pregunta1">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label for="pregunta2">Pregunta 2:</label>
+                    <select id="pregunta2" name="pregunta2">
+                        <option value="respuesta1">Respuesta 1</option>
+                        <option value="respuesta2">Respuesta 2</option>
+                        <option value="respuesta3">Respuesta 3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="button-container">
+        <!--    <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()"></p-button>-->
+            <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger" routerLink="/evaluacion-criterios"></p-button>
+        </div>
+    </div>
+</body>
+    
+    </div>

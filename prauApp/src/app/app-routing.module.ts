@@ -15,6 +15,8 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
+import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
 import { ContenidoCalificacionComponent } from './components/contenido-calificacion/contenido-calificacion.component';
 import { CalificacionComponent } from './components/calificacion/calificacion.component';
 import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
@@ -23,7 +25,14 @@ import { CalificacionActualizarComponent } from './components/calificacion-actua
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
-
+  {
+    path: 'evaluacion-criterios',
+    component: EvaluacionCriteriosComponent,
+  },
+  {
+    path: 'evaluacion-criterios-calificar',
+    component: EvaluacionCriteriosCalificarComponent,
+  },
   {
     path: 'menu',
     component: MenuComponent,
@@ -51,6 +60,7 @@ const routes: Routes = [
           },
         ],
       },
+
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,
