@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
-import { Aula } from '../models/aula';
 import { Observable, map } from 'rxjs';
+import { Aula } from '../models/aula';
 
 @Injectable({
   providedIn: 'root',
