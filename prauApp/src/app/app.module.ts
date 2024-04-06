@@ -142,9 +142,13 @@ import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-acade
 import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 
 @NgModule({
   declarations: [
+    AsignaturaListarComponent,
+    CarreraListarComponent,
     AppComponent,
     LoginComponent,
     MenuComponent,
