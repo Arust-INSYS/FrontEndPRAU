@@ -1,6 +1,7 @@
-
-<h1 > Gestion de Periodos Academicos</h1>
-<p-button icon="pi pi-plus" label="Nuevo Periodo" [routerLink]="['/menu/contenido-virtual/registrar-periodo']"></p-button>
+<router-outlet></router-outlet>
+<section>
+    <h1 > Gestion de Periodos Academicos</h1>
+<p-button icon="pi pi-plus" label="Nuevo Periodo"   (click)="showModal()"></p-button>
 
 <div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
 
@@ -28,16 +29,37 @@
                     <td>{{ periodo.fechaFin | date:'yyyy-MM-dd' }}</td>
                     <td>{{ periodo.nombrePeriodo }}</td>
                     <td>{{ periodo.descripcion }}</td>
-                    <td> <p-button icon="pi pi-pencil" severity="success" (click)="selectPeriodoAc(periodo)"></p-button></td>
+                    <td> <p-button icon="pi pi-pencil" severity="success" (click)="showModalactualizar(periodo.idPeriodoAc)"  ></p-button></td>  
+                    <!-- [routerLink]="['/menu/contenido-virtual/actualizar-periodo']" -->
 
-                    <td> <p-button icon="pi pi-times" severity="danger"></p-button></td>
+                    <td> <p-button icon="pi pi-times" severity="danger" (click)="eliminarPeriodoAcConfirmado(periodo.idPeriodoAc)"></p-button></td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="paginatorleft">
-                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" [routerLink]="['/registro-periodos-acs']"></p-button>
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"  (click)="showModal()"></p-button>
             </ng-template>
            
         </p-table>
     </div>
 
 </div>
+
+
+
+</section>
+<p-dialog
+  [(visible)]="displayModalregsitro"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '60vw' }"
+>
+  <app-registrar-periodo-ac></app-registrar-periodo-ac>
+</p-dialog>
+<p-dialog
+  [(visible)]="displayModalactualizar"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '60vw' }"
+>
+<app-actualizar-periodo-ac [periodoId]="periodoId"></app-actualizar-periodo-ac>
+</p-dialog>
