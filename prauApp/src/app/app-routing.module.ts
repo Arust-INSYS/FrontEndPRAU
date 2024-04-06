@@ -114,8 +114,13 @@ const routes: Routes = [
           { path: 'asignatura-listar', component: AsignaturaListarComponent },
           { path: 'listar-periodo', component: ListarPeriodosAcComponent },
           { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
+          {
+            path: 'actualizar-periodo/:id',
+            component: ActualizarPeriodoAcComponent,
+          },
           { path: 'listar-aulas', component: ListarAulasComponent },
           { path: 'registrar-aula', component: RegistrarAulaComponent },
+          { path: 'actualizar-aula/:id', component: ActualizarAulaComponent },
         ],
       },
 
