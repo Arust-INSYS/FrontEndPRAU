@@ -30,28 +30,28 @@ export class CalificacionComponent {
     }
     
     console.log(this.clasificacion); // Verificar los valores de los campos
-    var nombre_clasificacion = this.clasificacion.codCalificacion
-    var descripcion = this.clasificacion.descripcion
- 
-
-    this.clasificacionService.registrarcriterios(this.clasificacion).subscribe(dato => {
-      this.obtenercriterios();
-      this.irAlalistaDecriterios();
-    },
-    error => {
-      if (error.error === 'La clasifiación ya ha sido registrado previamente.') {
-        this.toastr.error(error.error, 'Error');
-      } else {
-        this.toastr.error('Error al guardar la clasifiación. Por favor, inténtelo de nuevo más tarde.', 'Error');
+    var nombre_clasificacion = this.clasificacion.codCalificacion;
+    var descripcion = this.clasificacion.descripcion;
+  
+    this.clasificacionService.registrarcriterios(this.clasificacion).subscribe(
+      dato => {
+        this.obtenercriterios();
+        this.irAlalistaDecriterios();
+        this.toastr.success('La calificación se registró con éxito.', 'Éxito');
+      },
+      error => {
+        if (error.error === 'La calificación ya ha sido registrada previamente.') {
+          this.toastr.error(error.error, 'Error');
+        } else {
+          this.toastr.error('Error al guardar la calificación. Por favor, inténtelo de nuevo más tarde.', 'Error');
+        }
       }
-    }
-  );
-
+    );
+  
     this.clasificacion.codCalificacion = '';
     this.clasificacion.descripcion = '';
-
-
   }
+  
   irAlalistaDecriterios(){
     this.router.navigate(['/menu/contenido-criterios/listar-calificacion'])
   }
