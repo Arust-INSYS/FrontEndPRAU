@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { LocalStorageService } from './local-storage.service'; // Importa localStorageService
 import { entorno } from '../env/entorno';
 import { Rol } from '../models/rol';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -24,6 +25,13 @@ export class RolService {
 
     return this.http.get<Rol[]>(`${this.url}/read`, { headers });
 
+  }
+  createRol(rol: Rol): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    return this.http.post<any>(`${this.url}/create`, rol, { headers });
   }
 
 }
