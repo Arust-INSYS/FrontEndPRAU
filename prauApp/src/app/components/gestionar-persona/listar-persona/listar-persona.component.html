@@ -28,7 +28,7 @@
     </p-toolbar>
   </div>
   <div class="subconten2">
-    <p-table [value]="personas" [scrollable]="true" scrollHeight="400px">
+    <p-table [value]="personasList" [scrollable]="true" scrollHeight="400px">
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
@@ -37,16 +37,34 @@
           <th>Dirección</th>
           <th>F-Nacimiento</th>
           <th>Teléfono</th>
+          <th>Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body">
-        <tr *ngFor="let people of personas">
-          <td>{{ people.perNombre1 }}</td>
-          <td>{{ people.perApellido1 }}</td>
-          <td>{{ people.perCedula }}</td>
-          <td>{{ people.perDireccion }}</td>
-          <td>{{ people.perFechaNacimiento }}</td>
-          <td>{{ people.perTelefono }}</td>
+        <tr *ngFor="let per of personasList">
+          <td>{{ per.perNombre1 }}</td>
+          <td>{{ per.perApellido1 }}</td>
+          <td>{{ per.perCedula }}</td>
+          <td>{{ per.perDireccion }}</td>
+          <td>{{ per.perFechaNacimiento }}</td>
+          <td>{{ per.perTelefono }}</td>
+          <td>
+            <!-- Botón para abrir el modal -->
+            <button
+              pButton
+              type="button"
+              label="Editar"
+              (click)="showModalEditar(per)"
+            ></button>
+
+            <!-- Botón de Eliminar -->
+            <button
+              pButton
+              icon="pi pi-trash"
+              label="Eliminar"
+              (click)="eliminarPersona(per.perId)"
+            ></button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -59,4 +77,30 @@
   [style]="{ width: '50vw' }"
 >
   <app-registrar-persona></app-registrar-persona>
+</p-dialog>
+
+<!-- Modal para editar -->
+<p-dialog
+  [(visible)]="displayModalEdit"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '500px' }"
+>
+  <h2>Editar Persona</h2>
+  <form #editForm="ngForm" (ngSubmit)="guardarCambios()">
+    <div class="input-group">
+      <label for="nombre">Nombre:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        pInputText
+        [(ngModel)]="personaEditar.perNombre1"
+        required
+      />
+    </div>
+    <!-- Otros campos del formulario -->
+    <!-- Agrega los campos restantes del formulario según tus necesidades -->
+    <button type="submit" pButton label="Guardar"></button>
+  </form>
 </p-dialog>

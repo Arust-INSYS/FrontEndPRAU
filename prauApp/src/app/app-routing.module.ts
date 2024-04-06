@@ -39,6 +39,7 @@ import { AsignaturaListarComponent } from './components/asignatura-listar/asigna
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
+  { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -49,11 +50,11 @@ const routes: Routes = [
         children: [
           { path: 'registrar-persona', component: RegistrarPersonaComponent },
           { path: 'listar-persona', component: ListarPersonaComponent },
-          { path: 'listar-rol', component: ListarRolComponent},
-          { path: 'registrar-rol', component: RegistrarRolComponent},
+          { path: 'listar-rol', component: ListarRolComponent },
+          { path: 'registrar-rol', component: RegistrarRolComponent },
         ],
       },
-     
+
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,
@@ -102,7 +103,7 @@ const routes: Routes = [
           },
         ],
       },
-      
+
       {
         path: 'contenido-virtual',
         component: ContenidoVirtualComponent,
@@ -111,23 +112,18 @@ const routes: Routes = [
           { path: 'carrera-listar', component: CarreraListarComponent },
           { path: 'asignatura', component: AsignaturaComponent },
           { path: 'asignatura-listar', component: AsignaturaListarComponent },
-          { path: 'listar-periodo', component: ListarPeriodosAcComponent},
-          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent},
-          { path: 'listar-aulas', component: ListarAulasComponent},
-          { path: 'registrar-aula', component: RegistrarAulaComponent},
+          { path: 'listar-periodo', component: ListarPeriodosAcComponent },
+          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
+          { path: 'listar-aulas', component: ListarAulasComponent },
+          { path: 'registrar-aula', component: RegistrarAulaComponent },
         ],
       },
-
 
       {
         path: 'contenido-analitics',
         component: ContenidoAnaliticsComponent,
-        children: [
-          { path: 'analisis-uso', component: AnalisisUsoComponent },
-        ],
+        children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
       },
-
-
 
       // {
       //   path: 'contenido-asignatura',
@@ -139,7 +135,6 @@ const routes: Routes = [
       //   component: ContenidoCarreraComponent,
       //   children: [{ path: 'carrera', component: CarreraComponent }],
       //},
-      
     ],
   },
 

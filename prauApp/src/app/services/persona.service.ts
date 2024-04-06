@@ -41,22 +41,27 @@ export class PersonaService {
   }
   cargarDocentes(): Observable<Usuario[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
-  
+
     const options = { headers: headers };
 
-    return this.http.get<Usuario[]>(this.apiUrl + '/read?rolNombre=Docente', options)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .get<Usuario[]>(this.apiUrl + '/read?rolNombre=Docente', options)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: any): Observable<never> {
     console.error('Error en la solicitud:', error);
     return throwError(error);
   }
-  delete(id: number) {}
+  delete(id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.delete(`${this.url}/delete?id=${id}`, { headers }); // Asegúrate de cambiar la URL según tu implementación
+  }
 
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT
@@ -76,7 +81,25 @@ export class PersonaService {
     });
 
     return this.http
-      .get(this.url + '/read')
+      .get(this.url + '/read', { headers })
       .pipe(map((response) => response as Persona[]));
   }
+  /*
+  getPersonas(): Observable<Persona[]> {
+    const token = this.localStorage.getItem('token');
+    if (!token) {
+      // Manejar el caso en el que no haya un token disponible
+      // Por ejemplo, redirigir al usuario a la página de inicio de sesión
+      // o lanzar un error
+      throw new Error('No se ha encontrado un token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Agrega el token JWT aquí
+    });
+
+    return this.http
+      .get<Persona[]>(this.url + '/read', { headers }) // Modificar el tipo de retorno del GET para que coincida con el tipo de datos esperado
+      .pipe(map((response) => response));
+  }*/
 }
