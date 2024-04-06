@@ -127,6 +127,23 @@ import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.
 import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
+<<<<<<< Updated upstream
+=======
+import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
+import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
+import { AsignaturaComponent } from './components/asignatura/asignatura.component';
+import { CarreraComponent } from './components/carrera/carrera.component';
+import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
+import { ListarPeriodosAcComponent } from './components/gestion-periodo-academico/listar-periodos-ac/listar-periodos-ac.component';
+import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
+import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula/registrar-aula.component';
+import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
+import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
+import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
+import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
+import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -265,7 +282,9 @@ import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/
     StyleClassModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
