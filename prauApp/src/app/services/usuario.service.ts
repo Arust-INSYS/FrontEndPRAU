@@ -8,7 +8,6 @@ import { LoginRequest } from '../models/loginRequest';
 import { AuthResponse } from '../models/authResponse';
 import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +32,9 @@ export class UsuarioService {
       headers,
     });
   }
-
+  getAllUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.url}/read`);
+  }
   getJefesByRolId(id: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
@@ -178,14 +179,16 @@ export class UsuarioService {
     });
   }
 
-
   findUsuariosByRolId(id: number): Observable<UsuarioPorRolDTO[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
-    return this.http.get<UsuarioPorRolDTO[]>(`${this.url}/usuariosPorRol?roleId=${id}`, {
-      headers
-    });
+    return this.http.get<UsuarioPorRolDTO[]>(
+      `${this.url}/usuariosPorRol?roleId=${id}`,
+      {
+        headers,
+      }
+    );
   }
 }

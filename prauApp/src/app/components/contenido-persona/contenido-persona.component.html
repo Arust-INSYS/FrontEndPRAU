@@ -1,40 +1,88 @@
 <body>
-    <div class="encabezado">
-        <ul class="lista">
-            <li>
-                <a [routerLink]="['/menu/contenido-persona/registrar-persona']" routerLinkActive="router-link-active" class="no-underline menu">
-                    <i class="pi pi-file"></i>
-                    <span class="nav-item">Nueva Persona</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['/menu/contenido-persona/listar-persona']" routerLinkActive="router-link-active" class="no-underline menu">
-                    <i class="pi pi-list"></i>
-                    <span class="nav-item">Personas</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['/menu/contenido-persona/listar-rol']" routerLinkActive="router-link-active" class="no-underline menu">
-                    <i class="pi pi-list"></i>
-                    <span class="nav-item">Rol</span>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['/menu/contenido-persona/registrar-rol']" routerLinkActive="router-link-active" class="no-underline menu">
-                    <i class="pi pi-list"></i>
-                    <span class="nav-item">Registrar rol</span>
-                </a>
-            </li>
-            <li>
-                <a class="no-underline menu">
-                    <i class="pi pi-list"></i>
-                    <span class="nav-item">Usuario (todavia falta component)</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    
-    <div>
-        <router-outlet></router-outlet>
-    </div>
-    </body>
+  <div class="encabezado">
+    <ul class="lista">
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/registrar-persona']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-file"></i>
+          <span class="nav-item">Nueva Persona</span>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/listar-persona']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Personas</span>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/listar-rol']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Rol</span>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/registrar-rol']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Registrar rol</span>
+        </a>
+      </li>
+      <li>
+        <a class="no-underline menu">
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Usuario (todavia falta component)</span>
+        </a>
+      </li>
+      <<<<<<< Updated upstream =======
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/listar-rol']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Rol</span>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/registrar-rol']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Registrar rol</span>
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/menu/contenido-persona/listar-usuarios']"
+          routerLinkActive="router-link-active"
+          class="no-underline menu"
+        >
+          <i class="pi pi-list"></i>
+          <span class="nav-item">Usuario (todavia falta component)</span>
+        </a>
+      </li>
+      >>>>>>> Stashed changes
+    </ul>
+  </div>
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</body>

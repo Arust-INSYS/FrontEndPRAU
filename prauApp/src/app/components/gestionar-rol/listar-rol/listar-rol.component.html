@@ -6,7 +6,7 @@
         <th>ID Rol</th>
         <th>Nombre</th>
         <th>Descripción</th>
-        <th>Fecha de Registro</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -14,7 +14,37 @@
         <td>{{ rol.rolId }}</td>
         <td>{{ rol.rolNombre }}</td>
         <td>{{ rol.rolDescripcion }}</td>
+        <td>
+          <button (click)="editarRol(rol)" class="btn btn-primary">Editar</button>
+          <button (click)="eliminarRol(rol.rolId)" class="btn btn-danger">Eliminar</button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="modal" [style.display]="displayDialog ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title label-lg">Editar Rol</h5>
+        <button type="button" class="close" (click)="displayDialog = false">
+          <span aria-hidden="true" class="label-lg">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="guardarCambios()">
+          <div class="form-group">
+            <label for="rolNombre" class="label-lg">Nombre:</label>
+            <input type="text" class="form-control input-lg" id="rolNombre" name="rolNombre" [(ngModel)]="selectedRol.rolNombre" required>
+          </div>
+          <div class="form-group">
+            <label for="rolDescripcion" class="label-lg">Descripción:</label>
+            <input type="text" class="form-control input-lg" id="rolDescripcion" name="rolDescripcion" [(ngModel)]="selectedRol.rolDescripcion" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
