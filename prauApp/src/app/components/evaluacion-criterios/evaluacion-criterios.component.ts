@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { EvaluacionCab } from '../../models/evaluacionCab';
 import { EvaluacionCabService } from '../../services/evaluacionCab.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -25,7 +26,7 @@ export class EvaluacionCriteriosComponent {
   showModal() {
   throw new Error('Method not implemented.');
   }
-  constructor(private evaluacionCABService: EvaluacionCabService) { }
+  constructor(private evaluacionCABService: EvaluacionCabService, private router: Router) { }
 
   ngOnInit(): void {
     this.getEvaluacionesCAB();
@@ -41,6 +42,7 @@ export class EvaluacionCriteriosComponent {
 
   
   crearNuevoDato() {
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion']);
     
   }
 
