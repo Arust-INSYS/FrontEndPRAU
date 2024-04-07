@@ -145,8 +145,8 @@ import { CarreraListarComponent } from './components/carrera-listar/carrera-list
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 
-
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 
 @NgModule({
   declarations: [
@@ -183,7 +183,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ActualizarPeriodoAcComponent,
     ActualizarAulaComponent,
     ContenidoVirtualComponent,
-    ContenidoAnaliticsComponent
+    ContenidoAnaliticsComponent,
+    CarreraActualizarComponent,
   ],
   imports: [
     RouterModule,
@@ -308,9 +309,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     //MatSelectModule,
     BrowserAnimationsModule,
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
+  providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
