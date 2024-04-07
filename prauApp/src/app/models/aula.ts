@@ -10,7 +10,7 @@ export class Aula {
   docente: Usuario;
   asignatura: Asignatura;
   periodoAc: PeriodoAc;
-  evaluaciones: EvaluacionCab[];
+  //evaluaciones: EvaluacionCab[];
 
   constructor(
     aulaId?: number,
@@ -29,6 +29,6 @@ export class Aula {
     this.docente = docente || new Usuario();
     this.asignatura = asignatura || new Asignatura();
     this.periodoAc = periodoAc || new PeriodoAc();
-    this.evaluaciones = evaluaciones || [];
+    //this.evaluaciones = evaluaciones || [];
   }
 }
