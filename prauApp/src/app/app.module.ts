@@ -148,6 +148,7 @@ import { ContenidoAnaliticsComponent } from './components/contenido-analitics/co
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 
+
 @NgModule({
   declarations: [
     AsignaturaListarComponent,
