@@ -6,7 +6,7 @@
 
             <div class="evaluation-details">
                 <label for="lblNumeroEvaluacion">N° Evaluación:</label>
-                <span id="lblNumeroEvaluacion">123</span>
+                <span id="lblNumeroEvaluacion">{{ evaluacionCab.nroEvaluacion }}</span>
                 
             </div>
     
@@ -30,10 +30,24 @@
             <p>Docente a cargo: {{ nombreDocente }}</p>
 
             <div class="evaluation-progress">
-                <label for="porcentajeCumplimiento">Porcentaje de cumplimiento:</label>
+                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoC:</label>
                 <div class="progress-container">
-                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimiento"></progress>
-                    <span class="progress-value">{{ porcentajeCumplimiento }}%</span>
+                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
+                    <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+                </div>
+            </div>
+            <div class="evaluation-progress">
+                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoCM:</label>
+                <div class="progress-container">
+                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
+                    <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+                </div>
+            </div>
+            <div class="evaluation-progress">
+                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoNC:</label>
+                <div class="progress-container">
+                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
+                    <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
                 </div>
             </div>
 
@@ -65,7 +79,7 @@
             
         
         <div class="button-container">
-        <!--    <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()"></p-button>-->
+            <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="actualizarEvaluacionCab()" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
             <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
         </div>
     </div>
