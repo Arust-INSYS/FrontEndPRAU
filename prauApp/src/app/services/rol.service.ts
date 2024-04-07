@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';;
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rol } from '../models/rol';
-//Cambios
+import { LocalStorageService } from './local-storage.service';
+import { entorno } from '../env/entorno';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,9 +32,9 @@ export class RolService {
     return this.http.post<any>(`${this.url}/create`, rol, { headers });
   }
   actualizarRol(id: number, rol: Rol): Observable<Rol> {
-    return this.http.put<Rol>(`${this.apiUrl}/update/${id}`, rol);
+    return this.http.put<Rol>(`${this.url}/update/${id}`, rol);
   }
-}
-eliminarRol(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+  eliminarRol(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/delete/${id}`);
+  }
 }
