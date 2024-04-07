@@ -26,7 +26,7 @@ export class AulaService {
       .pipe(map((response) => response as Aula[]));
   }
 
-  registrarPeriodoAc(aula: Aula): Observable<Aula> {
+  registrarAula(aula: Aula): Observable<Aula> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
