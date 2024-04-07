@@ -1,15 +1,16 @@
 <div class="formulario">
   <h1>contenido de persona</h1>
 
-  <p-listbox
+  <p-dropdown
     [options]="personasFiltradas"
     [(ngModel)]="selectedPersona"
     optionLabel="nombreCompleto"
     [filter]="true"
-    [style]="{ width: '15rem' }"
-    [listStyle]="{ 'max-height': '220px' }"
+    [showClear]="true"
+    placeholder="Seleccione un usuario"
     (onChange)="onPersonaSelect($event)"
-  ></p-listbox>
+  >
+  </p-dropdown>
 
   <div class="input-group">
     <label for="cedula">Cedula:</label>
