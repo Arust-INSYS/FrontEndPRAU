@@ -33,10 +33,13 @@ import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
+  { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -47,11 +50,11 @@ const routes: Routes = [
         children: [
           { path: 'registrar-persona', component: RegistrarPersonaComponent },
           { path: 'listar-persona', component: ListarPersonaComponent },
-          { path: 'listar-rol', component: ListarRolComponent},
-          { path: 'registrar-rol', component: RegistrarRolComponent},
+          { path: 'listar-rol', component: ListarRolComponent },
+          { path: 'registrar-rol', component: RegistrarRolComponent },
         ],
       },
-     
+
       {
         path: 'contenido-criterios',
         component: ContenidoCriteriosComponent,
@@ -100,30 +103,32 @@ const routes: Routes = [
           },
         ],
       },
-      
+
       {
         path: 'contenido-virtual',
         component: ContenidoVirtualComponent,
         children: [
           { path: 'carrera', component: CarreraComponent },
+          { path: 'carrera-listar', component: CarreraListarComponent },
           { path: 'asignatura', component: AsignaturaComponent },
-          { path: 'listar-periodo', component: ListarPeriodosAcComponent},
-          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent},
-          { path: 'listar-aulas', component: ListarAulasComponent},
-          { path: 'registrar-aula', component: RegistrarAulaComponent},
+          { path: 'asignatura-listar', component: AsignaturaListarComponent },
+          { path: 'listar-periodo', component: ListarPeriodosAcComponent },
+          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
+          {
+            path: 'actualizar-periodo/:id',
+            component: ActualizarPeriodoAcComponent,
+          },
+          { path: 'listar-aulas', component: ListarAulasComponent },
+          { path: 'registrar-aula', component: RegistrarAulaComponent },
+          { path: 'actualizar-aula/:id', component: ActualizarAulaComponent },
         ],
       },
-
 
       {
         path: 'contenido-analitics',
         component: ContenidoAnaliticsComponent,
-        children: [
-          { path: 'analisis-uso', component: AnalisisUsoComponent },
-        ],
+        children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
       },
-
-
 
       // {
       //   path: 'contenido-asignatura',
@@ -135,7 +140,6 @@ const routes: Routes = [
       //   component: ContenidoCarreraComponent,
       //   children: [{ path: 'carrera', component: CarreraComponent }],
       //},
-      
     ],
   },
 

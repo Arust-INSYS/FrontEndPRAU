@@ -1,4 +1,4 @@
-<<form (ngSubmit)="registrar(f)" #f="ngForm">
+<form (ngSubmit)="registrar(f)" #f="ngForm">
     <div id="formulario">
       <h1> Formulario Periodo Academico </h1>
     </div>
@@ -7,13 +7,13 @@
       <div class="calendar-container">
         <div class="calendar-item">
           <label for="fechaInicio">Fecha de Inicio</label>
-          <p-calendar [(ngModel)]="periodoAc.fechaInicio" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha de Inicio..." name="fechaInicio" type="date" id="tabla"></p-calendar>
+          <p-calendar [(ngModel)]="periodoAc.fechaInicio" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha de Inicio..." name="fechaInicio" type="date" id="tabla"  [required]="true" ></p-calendar>
 
         </div>
   
         <div class="calendar-item">
           <label for="fechaFin">Fecha Fin</label>
-          <p-calendar [(ngModel)]="periodoAc.fechaFin" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha Fin..." name="fechaFin" type="date" id="tabla"></p-calendar>
+          <p-calendar [(ngModel)]="periodoAc.fechaFin" (ngModelChange)="actualizarNombrePeriodo()" [showIcon]="true" placeholder="Ingrese la  fecha Fin..." name="fechaFin" type="date" id="tabla" [required]="true"></p-calendar>
 
         </div>
       </div>
@@ -25,5 +25,9 @@
     </div>
   
     <button type="submit" id="button"> ¡Crear Periodo! </button>
+    <p-button icon="pi pi-times" severity="danger" label="Cancelar"  (click)="resetForm()"  [routerLink]="['/menu/contenido-virtual/listar-periodos-acs']"></p-button>
+
   </form>
+
+
   

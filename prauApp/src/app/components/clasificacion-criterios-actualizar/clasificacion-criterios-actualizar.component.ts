@@ -45,6 +45,7 @@ export class ClasificacionCriteriosActualizarComponent {
   
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
       dato => {
+        this.toastr.success('La clasificación se actualizó exitosamente.');
         this.router.navigateByUrl('/menu/contenido-criterios/clasificacion-listar');
       },
       error => {
@@ -57,6 +58,7 @@ export class ClasificacionCriteriosActualizarComponent {
       }
     );
   }
+  
   
 }
 

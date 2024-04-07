@@ -1,20 +1,22 @@
 import { Component, ViewChild } from '@angular/core';
-import { Table } from 'primeng/table';
-import { Calificacion } from '../../models/calificacion';
-import { MenuItem } from 'primeng/api';
-import { CalificacionService } from '../../services/calificacion.service';
+import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
+import { ClasificacionCriteriosService } from '../../services/clasificacion-criterios.service';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import Swal from 'sweetalert2';
-
+import { Table } from 'primeng/table';
+import { Carrera } from '../../models/carrera';
+import { CarreraService } from '../../services/carrera.service';
 @Component({
-  selector: 'app-calificacion-listar',
-  templateUrl: './calificacion-listar.component.html',
-  styleUrl: './calificacion-listar.component.css'
+  selector: 'app-carrera-listar',
+  templateUrl: './carrera-listar.component.html',
+  styleUrl: './carrera-listar.component.css'
 })
-export class CalificacionListarComponent {
+export class CarreraListarComponent {
+
   @ViewChild('dt', { static: true }) table!: Table;
   searchTerm: string = '';
-  calificacion: Calificacion[] = [];
+  carrera: Carrera[] = [];
   items: MenuItem[]|undefined;
 $even: any;
 $odd: any;
@@ -31,39 +33,33 @@ throw new Error('Method not implemented.');
   customers: any
   selectedCustomers:any
   loading:any
-  constructor(private calificacionService: CalificacionService, private router: Router) {}
+  constructor(private carreraService: CarreraService, private router: Router) {}
 
   ngOnInit(): void {
-    this.obtenerCriterios();
+    this.obtenerCarrera();
   }
   applyGlobalFilter() {
-    this.table.filter(this.searchTerm, 'descripcion', 'contains'); // Aplicar el filtro global
+    this.table.filter(this.searchTerm, 'nombreCarrera', 'contains'); // Aplicar el filtro global
   }
-  obtenerCriterios() {
-    this.calificacionService.obtenerListacriterios().subscribe(dato => {
-      this.calificacion = dato;
+  obtenerCarrera() {
+    this.carreraService.obtenerListaCarreras().subscribe(dato => {
+      this.carrera = dato;
     });
   }
  
 
-  actualizarCriterio(id: number) {
+  actualizarCarrera(id: number) {
 
-    this.router.navigate(['/menu/contenido-criterios/calificacion-actualizar',id]);
+    this.router.navigate(['/menu/contenido-carrera/carrera-actualizar',id]);
 }
-  redirectToCriterios() {
-    this.router.navigate(['/menu/contenido-criterios/calificacion']);
+  redirectToCarrera() {
+    this.router.navigate(['/menu/contenido-virtual/carrera']);
   }
-
-
- 
-  eliminarCriterio(codCalificacion: string) {
-    // Convertir codCalificacion de string a number
- 
-  
+  eliminarCarrera(id: number) {
     // Mostrar cuadro de diálogo SweetAlert para confirmar la eliminación
     Swal.fire({
       title: '¿Estás seguro?',
-      text: '¿Desea eliminar la calificación?',
+      text: '¿Desea eliminar la carrera?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -73,21 +69,21 @@ throw new Error('Method not implemented.');
     }).then((result) => {
       if (result.isConfirmed) {
         // Si el usuario confirma la eliminación, procede con la eliminación
-        this.calificacionService.eliminarcriterios(codCalificacion).subscribe(() => {
+        this.carreraService.eliminarcarrera(id).subscribe(() => {
           // Actualiza la lista de criterios después de la eliminación
-          this.obtenerCriterios(); 
+          this.obtenerCarrera(); 
           // Muestra un cuadro de diálogo SweetAlert para informar al usuario que se eliminó correctamente
           Swal.fire(
             '¡Eliminado!',
-            'La calificación ha sido eliminada.',
+            'La carrera ha sido eliminada.',
             'success'
           );
         }, error => {
-          console.error('Error al eliminar el criterio:', error);
+          console.error('Error al eliminar el carrera:', error);
           // Muestra un cuadro de diálogo SweetAlert para informar al usuario sobre el error
           Swal.fire(
             'Error',
-            'Hubo un error al intentar eliminar la calificación.',
+            'Hubo un error al intentar eliminar la carrera.',
             'error'
           );
         });
@@ -95,7 +91,4 @@ throw new Error('Method not implemented.');
     });
   }
   
-  
 }
-
- 
