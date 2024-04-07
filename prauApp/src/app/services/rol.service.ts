@@ -1,30 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';;
 import { Observable } from 'rxjs';
 import { Rol } from '../models/rol';
-
+//Cambios
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RolService {
+  constructor(
+    private http: HttpClient,
+    private localStorage: LocalStorageService
+  ) {}
 
-  private apiUrl = 'http://localhost:8080/complexivo/rol';
+  private url: string = `${entorno.urlPrivada}/rol`;
+  // private token = this.localStorage.getItem('token');
 
-  constructor(private http: HttpClient) { }
+  getAllRoles() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    // alert("GESTION= " + this.localStorage.getItem('token'))
 
-  getAllRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(`${this.apiUrl}/read`);
+    return this.http.get<Rol[]>(`${this.url}/read`, { headers });
   }
+  createRol(rol: Rol): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
 
-  createRol(rol: Rol): Observable<Rol> {
-    return this.http.post<Rol>(`${this.apiUrl}/create`, rol);
+    return this.http.post<any>(`${this.url}/create`, rol, { headers });
   }
-
   actualizarRol(id: number, rol: Rol): Observable<Rol> {
     return this.http.put<Rol>(`${this.apiUrl}/update/${id}`, rol);
   }
-
-  eliminarRol(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
-  }
+}
+eliminarRol(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
 }
