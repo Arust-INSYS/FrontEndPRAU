@@ -51,13 +51,8 @@ export class EvaluacionCabService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
-    const options = { headers: headers };
-
-    return this.http.get<EvaluacionCab[]>(this.url + '/read').pipe(catchError(error => {
-        console.error('Error obteniendo lista de criterios:', error);
-        throw error;
-      })
-    );
-  }
+    return this.http.get<EvaluacionCab[]>(this.url + '/read', { headers })
+    .pipe(map((response) => response as EvaluacionCab[]));
+}
 
 }
