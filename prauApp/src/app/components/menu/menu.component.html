@@ -19,17 +19,6 @@
 
       <li>
         <a
-          [routerLink]="['/menu/contenido-rol']"
-          routerLinkActive="router-link-active"
-        >
-          <i class="pi pi-users"></i>
-          <span id="registrar" class="nav-item">roles</span>
-        </a>
-      </li>
-
-
-      <li>
-        <a
           [routerLink]="['/menu/contenido-criterios']"
           routerLinkActive="router-link-active"
         >
@@ -38,26 +27,26 @@
         </a>
       </li>
       <li>
-        <a>
-          <i class="pi pi-user"></i>
-          <span class="nav-item">Usuarios</span>
+        <a
+          [routerLink]="['/menu/contenido-virtual']"
+          routerLinkActive="router-link-active"
+        >
+          <i class="pi pi-flag"></i>
+          <span class="nav-item">Aula Virtual</span>
         </a>
       </li>
+
       <li>
-        <a href="">
+        <a [routerLink]="['/menu/contenido-analitics']"
+        routerLinkActive="router-link-active">
           <i class="pi pi-chart-line"></i>
           <span class="nav-item">Analitics</span>
         </a>
       </li>
+
       <li>
         <a href="">
           <i class="pi pi-book"></i>
-          <span class="nav-item">cursos</span>
-        </a>
-      </li>
-      <li>
-        <a href="">
-          <i class="pi pi-check-square"></i>
           <span class="nav-item">Reportes</span>
         </a>
       </li>

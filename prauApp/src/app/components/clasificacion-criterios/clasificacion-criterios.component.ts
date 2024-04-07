@@ -37,6 +37,7 @@ export class ClasificacionCriteriosComponent {
     this.clasificacionCriteriosService.registrarcriterios(this.criterio).subscribe(dato => {
       this.obtenercriterios();
       this.irAlalistaDecriterios();
+      this.toastr.success('La clasificación se registró con éxito.', 'Éxito');
     },
     error => {
       if (error.error === 'La clasifiación ya ha sido registrado previamente.') {

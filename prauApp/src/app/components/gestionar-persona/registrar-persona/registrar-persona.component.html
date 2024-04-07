@@ -1,16 +1,28 @@
 <div class="formulario">
   <h1>contenido de persona</h1>
+
+  <p-dropdown
+    [options]="personasFiltradas"
+    [(ngModel)]="selectedPersona"
+    optionLabel="nombreCompleto"
+    [filter]="true"
+    [showClear]="true"
+    placeholder="Seleccione un usuario"
+    (onChange)="onPersonaSelect($event)"
+  >
+  </p-dropdown>
+
   <div class="input-group">
     <label for="cedula">Cedula:</label>
-    
+
     <input
-    type="text"
-    id="cedula"
-    name="perCedula"
-    pInputText
-    [(ngModel)]="persona.perCedula"
-    required
-  />
+      type="text"
+      id="cedula"
+      name="perCedula"
+      pInputText
+      [(ngModel)]="persona.perCedula"
+      required
+    />
   </div>
   <div class="input-group">
     <label for="nombre">Nombre:</label>
@@ -69,24 +81,24 @@
     <p-dropdown
       id="dropdown1"
       [style]="{ 'width.%': 100 }"
-      [options]="userOptions"
-      [(ngModel)]="usuario.rolId.rolNombre"
+      [options]="roles"
       optionLabel="label"
       optionValue="value"
+      (onChange)="onRolChange($event.value)"
     >
     </p-dropdown>
   </div>
   <div class="input-group">
-    <p-dropdown
-      id="dropdown2"
-      [style]="{ 'width.%': 100 }"
-      [options]="userValues"
-      [(ngModel)]="usuario.rolId.rolId"
-      optionLabel="label"
-      optionValue="value"
-    >
-    </p-dropdown>
+    <label for="apellido">Contraseña:</label>
+    <input
+      type="text"
+      id="password"
+      name="password"
+      pInputText
+      [(ngModel)]="usuario.usuContrasena"
+    />
   </div>
+
   <div class="boton-group">
     <button
       type="button"

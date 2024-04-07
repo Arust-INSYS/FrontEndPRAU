@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContenidoRolComponent } from './contenido-rol.component';
+import { ListarAulasComponent } from './listar-aulas.component';
 
-describe('ContenidoRolComponent', () => {
-  let component: ContenidoRolComponent;
-  let fixture: ComponentFixture<ContenidoRolComponent>;
+describe('ListarAulasComponent', () => {
+  let component: ListarAulasComponent;
+  let fixture: ComponentFixture<ListarAulasComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ContenidoRolComponent]
+      declarations: [ListarAulasComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ContenidoRolComponent);
+    fixture = TestBed.createComponent(ListarAulasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

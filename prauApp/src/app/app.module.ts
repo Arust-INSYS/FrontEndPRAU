@@ -122,13 +122,13 @@ import { CriteriosListarComponent } from './components/criterios-listar/criterio
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { ListarPersonaComponent } from './components/gestionar-persona/listar-persona/listar-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
+import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
 import { GestionarRolComponent } from './components/gestionar-rol/gestionar-rol.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
-<<<<<<< Updated upstream
-=======
 import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
 import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
 import { AsignaturaComponent } from './components/asignatura/asignatura.component';
@@ -140,17 +140,19 @@ import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula
 import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
 import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
 import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
->>>>>>> Stashed changes
+import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
+
 
 @NgModule({
   declarations: [
+    AsignaturaListarComponent,
+    CarreraListarComponent,
     AppComponent,
     LoginComponent,
     MenuComponent,
@@ -164,12 +166,12 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
     ContenidoPersonaComponent,
     ListarPersonaComponent,
     RegistrarPersonaComponent,
-    ContenidoRolComponent,
+    CalificacionComponent,
+    CalificacionListarComponent,
+    CalificacionActualizarComponent,
     GestionarRolComponent,
     ListarRolComponent,
     RegistrarRolComponent,
-<<<<<<< Updated upstream
-=======
     EvaluacionCriteriosComponent,
     EvaluacionCriteriosCalificarComponent,
     AsignaturaComponent,
@@ -183,14 +185,14 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
     ActualizarAulaComponent,
     ContenidoVirtualComponent,
     ContenidoAnaliticsComponent,
-    ListarUsuarioComponent
->>>>>>> Stashed changes
+    CarreraActualizarComponent,
   ],
   imports: [
     RouterModule,
     BrowserModule,
     AppRoutingModule,
     PasswordModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     InputTextModule,
@@ -301,11 +303,14 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
     CardModule,
     RippleModule,
     StyleClassModule,
+    //MatIconModule,
+    //CalendarModule,
+    //MatFormFieldModule,
+    //CalendarModule,
+    //MatSelectModule,
     BrowserAnimationsModule,
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
+  providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

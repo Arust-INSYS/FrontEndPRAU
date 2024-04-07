@@ -51,20 +51,21 @@ export class CriteriosActualizarComponent {
 
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
       (dato) => {
+        this.toastr.success('El criterio se actualizó exitosamente.');
         this.router.navigateByUrl('/menu/contenido-criterios/criterios-listar');
       },
       (error) => {
         console.error('Error al actualizar el criterio:', error);
         if (
           error.error &&
-          error.error === 'El nombre de la clasificacion ya está en uso'
+          error.error === 'El nombre del criterio ya está en uso'
         ) {
           this.toastr.error(
-            'El nombre de la clasificacion ya está en uso, por favor ingrese otro.'
+            'El nombre del criterio ya está en uso, por favor ingrese otro.'
           );
         } else {
           this.toastr.error(
-            'Ocurrió un error al actualizar el criterio. Por favor, inténtelo de nuevo.'
+            'Ese nombre ya esta en uso'
           );
         }
       }

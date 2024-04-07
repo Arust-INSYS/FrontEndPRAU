@@ -15,22 +15,31 @@ import { CriteriosComponent } from './components/criterios/criterios.component';
 import { ContenidoCriteriosComponent } from './components/contenido-criterios/contenido-criterios.component';
 import { ContenidoPersonaComponent } from './components/contenido-persona/contenido-persona.component';
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
-import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
-import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
-<<<<<<< Updated upstream
+import { EvaluacionCriteriosComponent } from './components/evaluacion-criterios/evaluacion-criterios.component';
+import { EvaluacionCriteriosCalificarComponent } from './components/evaluacion-criterios-calificar/evaluacion-criterios-calificar.component';
+import { CalificacionComponent } from './components/calificacion/calificacion.component';
+import { CalificacionListarComponent } from './components/calificacion-listar/calificacion-listar.component';
+import { CalificacionActualizarComponent } from './components/calificacion-actualizar/calificacion-actualizar.component';
+import { AsignaturaComponent } from './components/asignatura/asignatura.component';
+import { CarreraComponent } from './components/carrera/carrera.component';
+import { AnalisisUsoComponent } from './components/analisis-uso/analisis-uso.component';
+import { ListarPeriodosAcComponent } from './components/gestion-periodo-academico/listar-periodos-ac/listar-periodos-ac.component';
+import { RegistrarPeriodoAcComponent } from './components/gestion-periodo-academico/registrar-periodo-ac/registrar-periodo-ac.component';
+import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula/registrar-aula.component';
+import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
+import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
+import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
-=======
+import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
-import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
->>>>>>> Stashed changes
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
-
+  { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -41,12 +50,8 @@ const routes: Routes = [
         children: [
           { path: 'registrar-persona', component: RegistrarPersonaComponent },
           { path: 'listar-persona', component: ListarPersonaComponent },
-<<<<<<< Updated upstream
-=======
           { path: 'listar-rol', component: ListarRolComponent },
           { path: 'registrar-rol', component: RegistrarRolComponent },
-          { path: 'listar-usuarios', component: ListarUsuarioComponent },
->>>>>>> Stashed changes
         ],
       },
 
@@ -66,46 +71,64 @@ const routes: Routes = [
             path: 'clasificacion-listar',
             component: ClasificacionCriteriosListarComponent,
           },
-          { 
-            path: 'criterios', 
-            component: CriteriosComponent 
+          {
+            path: 'criterios',
+            component: CriteriosComponent,
           },
           {
             path: 'criterios-actualizar/:id',
             component: CriteriosActualizarComponent,
           },
-          {  
-            path: 'criterios-listar', 
-            component: CriteriosListarComponent 
+          {
+            path: 'criterios-listar',
+            component: CriteriosListarComponent,
           },
-         
-          // { 
-          //   path: 'criterios-actualizar/:id', 
-          //   component: CriteriosActualizarComponent 
-          // },
-          // {
-          //   path: 'clasificacion-criterios-actualizar/:id',
-          //   component: ClasificacionCriteriosActualizarComponent,
-          // },
+          {
+            path: 'criterios-evaluacion',
+            component: EvaluacionCriteriosComponent,
+          },
+          {
+            path: 'criterios-evaluacion-calificacion',
+            component: EvaluacionCriteriosCalificarComponent,
+          },
+
+          {
+            path: 'listar-calificacion',
+            component: CalificacionListarComponent,
+          },
+          { path: 'calificacion', component: CalificacionComponent },
+          {
+            path: 'calificacion-actualizar/:id',
+            component: CalificacionActualizarComponent,
+          },
         ],
       },
+
       {
-        path: 'contenido-rol',
-        component: ContenidoRolComponent,
+        path: 'contenido-virtual',
+        component: ContenidoVirtualComponent,
         children: [
-          { path: 'registrar-rol', component: RegistrarRolComponent},
-          { path: 'listar-rol', component: ListarRolComponent},
+          { path: 'carrera', component: CarreraComponent },
+          { path: 'carrera-listar', component: CarreraListarComponent },
+          { path: 'asignatura', component: AsignaturaComponent },
+          { path: 'asignatura-listar', component: AsignaturaListarComponent },
+          { path: 'listar-periodo', component: ListarPeriodosAcComponent },
+          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
+          {
+            path: 'actualizar-periodo/:id',
+            component: ActualizarPeriodoAcComponent,
+          },
+          { path: 'listar-aulas', component: ListarAulasComponent },
+          { path: 'registrar-aula', component: RegistrarAulaComponent },
+          { path: 'actualizar-aula/:id', component: ActualizarAulaComponent },
         ],
       },
-<<<<<<< Updated upstream
-=======
 
       {
         path: 'contenido-analitics',
         component: ContenidoAnaliticsComponent,
         children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
       },
-
 
       // {
       //   path: 'contenido-asignatura',
@@ -117,36 +140,8 @@ const routes: Routes = [
       //   component: ContenidoCarreraComponent,
       //   children: [{ path: 'carrera', component: CarreraComponent }],
       //},
->>>>>>> Stashed changes
     ],
   },
-  //{ path: 'persona/listar', component: ListarPersonaComponent },
-  //{ path: 'persona/registrar', component: RegistrarPersonaComponent },
-  //{ path: '**', redirectTo: 'login' },
-  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  //{ path: 'criterios', component: CriteriosComponent },
-
-  //{ path: 'criterios', component: CriteriosComponent },
-  //{ path: 'criterios-listar', component: CriteriosListarComponent },
-  //{ path: 'criterios-actualizar', component: CriteriosActualizarComponent },
-  //{
-    //path: 'clasificacion-criterios',
-    //component: ClasificacionCriteriosComponent,
-  //},
-  // {
-  //   path: 'clasificacion-criterios-actualizar',
-  //   component: ClasificacionCriteriosActualizarComponent,
-  // },
-
-
-  // {
-  //   path: 'clasificacion-criterios-listar',
-  //   component: ClasificacionCriteriosListarComponent,
-  // },
-  // { path: 'menu', component: MenuComponent },
-  // { path: 'persona-listar', component: ListarPersonaComponent },
-  // { path: 'persona-registrar', component: RegistrarPersonaComponent },
 
   ///AGREGAR RUTAS SOBRE ESTO
   { path: '**', redirectTo: 'login' },
