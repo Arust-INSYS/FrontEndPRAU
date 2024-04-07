@@ -144,6 +144,7 @@ import { ContenidoVirtualComponent } from './components/contenido-virtual/conten
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
 import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
+import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 
 @NgModule({
   declarations: [
@@ -180,7 +181,8 @@ import { CarreraListarComponent } from './components/carrera-listar/carrera-list
     ActualizarPeriodoAcComponent,
     ActualizarAulaComponent,
     ContenidoVirtualComponent,
-    ContenidoAnaliticsComponent
+    ContenidoAnaliticsComponent,
+    CarreraActualizarComponent
   ],
   imports: [
     RouterModule,
