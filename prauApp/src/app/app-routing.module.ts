@@ -31,11 +31,11 @@ import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-acade
 import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
+import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
-import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
-
+import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
@@ -52,6 +52,7 @@ const routes: Routes = [
           { path: 'listar-persona', component: ListarPersonaComponent },
           { path: 'listar-rol', component: ListarRolComponent },
           { path: 'registrar-rol', component: RegistrarRolComponent },
+          { path: 'listar-usuarios', component: ListarUsuarioComponent },
         ],
       },
 
@@ -152,4 +153,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
