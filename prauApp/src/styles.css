@@ -1,14 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
-@import 'tailwindcss/base';
+/*@import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import 'ngx-toastr/toastr';
+*/
 
-
-@import 'ngx-toastr/toastr';
 
 /* Order */
 @layer reset, primeng;
@@ -20,5 +19,6 @@
         min-width: 276px;
     }
 }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

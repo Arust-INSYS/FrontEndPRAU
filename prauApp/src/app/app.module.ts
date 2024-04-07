@@ -140,11 +140,19 @@ import { RegistrarAulaComponent } from './components/gestion-aula/registrar-aula
 import { ListarAulasComponent } from './components/gestion-aula/listar-aulas/listar-aulas.component';
 import { ActualizarPeriodoAcComponent } from './components/gestion-periodo-academico/actualizar-periodo-ac/actualizar-periodo-ac.component';
 import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-aula/actualizar-aula.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
+import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
+
 @NgModule({
   declarations: [
+    AsignaturaListarComponent,
+    CarreraListarComponent,
     AppComponent,
     LoginComponent,
     MenuComponent,
@@ -176,7 +184,9 @@ import { ContenidoAnaliticsComponent } from './components/contenido-analitics/co
     ActualizarPeriodoAcComponent,
     ActualizarAulaComponent,
     ContenidoVirtualComponent,
-    ContenidoAnaliticsComponent
+    ContenidoAnaliticsComponent,
+    CarreraActualizarComponent,
+    ListarUsuarioComponent,
   ],
   imports: [
     RouterModule,
@@ -299,9 +309,8 @@ import { ContenidoAnaliticsComponent } from './components/contenido-analitics/co
     //MatFormFieldModule,
     //CalendarModule,
     //MatSelectModule,
-    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

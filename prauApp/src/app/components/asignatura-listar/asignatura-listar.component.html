@@ -1,0 +1,77 @@
+<section class="contenedor">
+    <div class="header text-center">
+      <div class="p-toolbar-group-center">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            [(ngModel)]="searchTerm"
+            placeholder="Buscar"
+            (input)="applyGlobalFilter()"
+          />
+        </span>
+      </div>
+    </div>
+  
+    <div class="subconten2">
+      <h1 class="text-center titulo-criterios">Lista de Asignaturas</h1>
+  
+      <p-button
+        label="Registrar"
+        [rounded]="true"
+        (click)="redirectToAsignatura()"
+        class="registrar-button mb-3"
+      ></p-button>
+  
+      <div class="tabla-container">
+        <p-table
+          #dt
+          [rows]="10"
+          [paginator]="true"
+          currentPageReportTemplate="Del {first} al {last} de {totalRecords} las asignaturas"
+          [showCurrentPageReport]="true"
+          [value]="asignaturas"
+          [scrollable]="true"
+          scrollHeight="400px"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Código Asignatura</th>
+              <th>Nombre Asignatura</th>
+              <th>Descripción</th>
+              <th>Carrera</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-asignatura>
+            <tr>
+              <td>{{ asignatura.idAsignatura }}</td>
+              <td>{{ asignatura.nombreAsignatura }}</td>
+              <td>{{ asignatura.descripcionAsignatura }}</td>
+              <td>{{ asignatura.carrera?.nombreCarrera }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-success mr-2"
+                  (click)="actualizarAsignatura(asignatura.idAsignatura)"
+                ></button>
+              </td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-danger"
+                  (click)="eliminarAsignatura(asignatura.idAsignatura)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </section>
+  

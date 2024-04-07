@@ -10,6 +10,7 @@ import { Usuario } from '../../../models/usuario';
 import { RolService } from '../../../services/rol.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataMoodleService } from '../../../services/dataMoodle.service';
 
 @Component({
   selector: 'app-registrar-persona',
@@ -20,16 +21,7 @@ export class RegistrarPersonaComponent {
   public date: Date = new Date();
   selectedUser: number = 3;
   value: any;
-  userOptions = [
-    { label: 'Responsable', value: 'Responsable' },
-    { label: 'Director', value: 'Director' },
-    { label: 'Docente', value: 'Docente' },
-  ];
-  userValues = [
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-  ];
+
   valorCedula: string = '';
   constructor(
     private personaService: PersonaService,
@@ -37,8 +29,12 @@ export class RegistrarPersonaComponent {
     private sessionStorage: LocalStorageService,
     private rolService: RolService,
     private usuarioService: UsuarioService,
-    private router: Router
-  ) {} // Inyecta tu servicio en el constructor del componente
+    private router: Router,
+    private dataMoodleService: DataMoodleService
+  ) {
+    this.listarRol();
+    this.getData();
+  } // Inyecta tu servicio en el constructor del componente
   /*
   registrarPersona(): void {
     this.personaService.registrarPersona(this.persona).subscribe(
@@ -107,33 +103,82 @@ export class RegistrarPersonaComponent {
       return false;
     }
   }
-  guardarUser: any;
   registrar() {
     // REGISTRAR PERSONA
     this.personaService.registrarPersona(this.persona).subscribe((response) => {
       this.usuario.usuEstado = 1;
       this.usuario.usuPerId = response;
-
-      this.persona.perCedula = this.valorCedula;
+      this.usuario.usuNombreUsuario = this.persona.perCedula;
+      //this.usuario.rolId.rolNombre = 'Docente';
+      //this.usuario.rolId.rolId = 4;
 
       // REGISTRAR USUARIO
       this.usuarioService
         .registrarUsuario(this.usuario)
         .subscribe((response) => {
-          this.usuario.usuNombreUsuario = this.valorCedula;
-          console.log('Ya llegueeee!!!');
-          console.log(response);
+          Swal.fire({
+            title: '¡Registro Exitoso!',
+            text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
+            icon: 'success',
+            confirmButtonText: 'Confirmar',
+            showCancelButton: false, // No mostrar el botón de cancelar
+          }).then(() => {
+            this.recargarPagina();
+            this.limpiarRegistro();
+            //this.router.navigate(['/listausu']);
+          });
         });
     });
   }
+
   userListar: any;
+  roles: any[] = [];
   async listarRol() {
-    await this.rolService.getAllRoles().subscribe((res) => {
-      console.log((this.userListar = res));
+    await this.rolService.getAllRoles().subscribe((res: any[]) => {
+      this.roles = res.map((role) => ({
+        label: role.rolNombre,
+        value: role.rolId,
+      }));
     });
+  }
+  onRolChange(selectedRoleId: number) {
+    const selectedRole = this.roles.find(
+      (role) => role.value === selectedRoleId
+    );
+    if (selectedRole) {
+      this.usuario.rolId.rolNombre = selectedRole.label;
+      this.usuario.rolId.rolId = selectedRole.value;
+      console.log('Rol seleccionado:', this.usuario.rolId.rolId);
+    }
   }
   limpiarRegistro() {
     this.usuario = new Usuario();
     this.persona = new Persona();
+  }
+  selectedPersona: any;
+  filtro: string = '';
+  personas: any[] = [];
+  personasFiltradas: any[] = [];
+  getData() {
+    this.dataMoodleService.getAllData().subscribe((data) => {
+      this.personas = data.map((persona) => ({
+        ...persona,
+        nombreCompleto: `${persona.perNombre1} ${persona.perApellido1}`,
+      }));
+      this.personasFiltradas = this.personas; // Inicialmente, las personas filtradas serán iguales a todas las personas
+    });
+  }
+  filtrar() {
+    this.personasFiltradas = this.personas.filter((persona) =>
+      persona.nombreCompleto.toLowerCase().includes(this.filtro.toLowerCase())
+    );
+  }
+  onPersonaSelect(event: any) {
+    // Actualizar los datos de la persona seleccionada en el formulario
+    this.persona = event.value;
+    console.log('Persona seleccionada:', this.persona);
+  }
+  recargarPagina() {
+    window.location.reload();
   }
 }

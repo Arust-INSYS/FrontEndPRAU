@@ -11,6 +11,8 @@ import { NgForm } from '@angular/forms';
   styleUrl: './registrar-periodo-ac.component.css',
 })
 export class RegistrarPeriodoAcComponent {
+
+  f!: NgForm;
   constructor(
     private periodoAcService: PeriodoAcService,
     private toastr: ToastrService,
@@ -62,8 +64,10 @@ export class RegistrarPeriodoAcComponent {
         this.periodoAcService.registrarPeriodoAc(this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa
-            this.router.navigate(['/listar-periodos-acs']);
+            this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
             this.toastr.success('Se guardó correctamente');
+            this.resetForm(); 
+
           },
           (error) => {
             if (error.status === 409) {
@@ -79,4 +83,10 @@ export class RegistrarPeriodoAcComponent {
       }
     }
   }
+  resetForm() {
+    this.periodoAc = new PeriodoAc();
+    this.f.form.markAsPristine();
+    this.f.form.markAsUntouched();
+  }
+
 }

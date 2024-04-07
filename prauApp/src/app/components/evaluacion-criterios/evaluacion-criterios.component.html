@@ -5,7 +5,7 @@
     </div>
     <div class="subconten2">
 
-        <h1 class="text-center titulo-criterios">Evaluación</h1>
+        <h1 class="text-center titulo-criterios">Evaluación</h1> 
 
         <!-- Botón "+" y botón para filtrar -->
         <div class="botones-container">
@@ -15,11 +15,17 @@
         </div>
 
         <div class="tabla-container">
-            <p-table #dt [value]="products" [rows]="10" [paginator]="true"
-            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-            [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-            [value]="evaluacionCab" [scrollable]="true" scrollHeight="400px">
+            <p-table
+                #dt
+                [rows]="10"
+                [paginator]="true"
+                currentPageReportTemplate="Del {first} al {last} de {totalRecords} los evaluacionCab"
+                [showCurrentPageReport]="true"
+                [value]="evaluacionCab"
+                [scrollable]="true"
+                scrollHeight="400px"
+                [responsive]="true"
+            >
        <ng-template pTemplate="header">
                     <tr>
                         <th>n° Criterio</th>
@@ -35,7 +41,7 @@
                     <tr>
                         <td>{{ evaluacionCab.nroEvaluacion }}</td> 
                         <td>{{ evaluacionCab.aula?.aulaNombre }}</td> 
-                        <td>{{ evaluacionCab.usuario?.perNombre }}</td> 
+                        <td>{{ evaluacionCab.usuario?.usuNombreUsuario }}</td> 
                         <td>{{ evaluacionCab.observaciones }}</td>
                         <td>{{ evaluacionCab.porcTotalC }}</td>
                         <td>

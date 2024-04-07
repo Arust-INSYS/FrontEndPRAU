@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { LocalStorageService } from './local-storage.service'; // Importa localStorageService
 import { EvaluacionCab } from '../models/evaluacionCab';
 import { entorno } from '../env/entorno';
@@ -51,6 +51,8 @@ export class EvaluacionCabService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
-    return this.http.get(this.url + '/read').pipe(map((response) => response as EvaluacionCab[]));
-  }
+    return this.http.get<EvaluacionCab[]>(this.url + '/read', { headers })
+    .pipe(map((response) => response as EvaluacionCab[]));
+}
+
 }

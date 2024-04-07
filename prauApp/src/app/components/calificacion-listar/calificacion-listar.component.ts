@@ -48,10 +48,10 @@ throw new Error('Method not implemented.');
 
   actualizarCriterio(id: number) {
 
-    this.router.navigate(['/menu/contenido-calificacion/calificacion-actualizar',id]);
+    this.router.navigate(['/menu/contenido-criterios/calificacion-actualizar',id]);
 }
   redirectToCriterios() {
-    this.router.navigate(['/menu/contenido-calificacion/calificacion']);
+    this.router.navigate(['/menu/contenido-criterios/calificacion']);
   }
 
 
@@ -63,7 +63,7 @@ throw new Error('Method not implemented.');
     // Mostrar cuadro de diálogo SweetAlert para confirmar la eliminación
     Swal.fire({
       title: '¿Estás seguro?',
-      text: '¿Desea eliminar la clasificación?',
+      text: '¿Desea eliminar la calificación?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -79,7 +79,7 @@ throw new Error('Method not implemented.');
           // Muestra un cuadro de diálogo SweetAlert para informar al usuario que se eliminó correctamente
           Swal.fire(
             '¡Eliminado!',
-            'La clasificación ha sido eliminada.',
+            'La calificación ha sido eliminada.',
             'success'
           );
         }, error => {
@@ -87,7 +87,7 @@ throw new Error('Method not implemented.');
           // Muestra un cuadro de diálogo SweetAlert para informar al usuario sobre el error
           Swal.fire(
             'Error',
-            'Hubo un error al intentar eliminar la clasificación.',
+            'Hubo un error al intentar eliminar la calificación.',
             'error'
           );
         });
