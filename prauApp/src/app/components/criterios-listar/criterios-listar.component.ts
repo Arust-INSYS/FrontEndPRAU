@@ -8,16 +8,19 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
 
-import * as pdfMake  from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-//(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { PDFDocument, rgb } from 'pdf-lib';
+import { saveAs } from 'file-saver';
+import { DataSource } from '@angular/cdk/collections';
+
 
 @Component({
   selector: 'app-criterios-listar',
   templateUrl: './criterios-listar.component.html',
   styleUrl: './criterios-listar.component.css'
 })
+
 export class CriteriosListarComponent {
+
   @ViewChild('dt', { static: true }) table!: Table; 
   searchTerm: string = '';
   items: MenuItem[]|undefined;
@@ -49,7 +52,6 @@ applyFilter() {
   obtenerCriterios() {
     this.criteriosService.obtenerListacriterios().subscribe(dato => {
       this.criterio = dato;
-      //this.generarPDF();
     },
     error => {
       console.error('Error al obtener los criterios: ', error);
@@ -95,31 +97,177 @@ applyFilter() {
       }
     });
   }
+
+
+  async generarPDF() {
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([400, 600]);
   
-// generarPDF(){
-//   const documento = {
-//     content:[
-//       {text: 'Lista de Criterios', style: 'header'},
-//       {
-//         table:{
-//           headers: ['Id', 'Nombre', 'Descripcion', 'Clasificacion'],
-//           body: this.criterio.map(c => [c.idCriterio, c.nombreCriterio, c.descripcion, c.clasificacion?.nombreClasificacion])
-//         }
-//       }
-//     ],
-//     styles: {
-//       headers:{
-//         fontSize: 18,
-//         bold: true,
-//         margin: [0,0,0,10]
-//       }
-//     }
-//   };
+    page.drawText('Lista de Criterios:', {
+      x: 50,
+      y: 500,
+      size: 20,
+      color: rgb(0, 0, 0),
+    });
+  
+    let yPosition = 450;
+    this.criterio.forEach((dato: any) => {
+      page.drawLine({ start: { x: 50, y: yPosition+20 }, end: { x: 250, y: yPosition+20 }, color: rgb(0, 0, 0) });
+      const keys = Object.keys(dato);
+      keys.forEach(key => {
+        const value = dato[key];
+        if (key === 'clasificacion' && typeof value === 'object') {
+          //nombre de la clasificación
+          const clasificacionNombre = value.nombreClasificacion || 'Sin clasificación';
+          page.drawText(`Clasificación: \t${clasificacionNombre}`, {
+            x: 50,
+            y: yPosition,
+            size: 10,
+            color: rgb(0, 0, 0),
+          });
+          yPosition -= 20;
+        } else {
+          const keyMap: { [key: string]: string } = {
+            idCriterio: 'ID',
+            nombreCriterio: 'Nombre',
+            descripcion: 'Descripción'
+          };
+          const displayedKey = keyMap[key] || key;
+          
+          page.drawText(`${displayedKey}:\t ${value}`, {
+            x: 50,
+            y: yPosition,
+            size: 10,
+            color: rgb(0, 0, 0),
+          });
+          yPosition -= 20;
+        }
+      });
+      yPosition -= 20;
+    });
+  
+    const pdfBytes = await pdfDoc.save();
+  
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+  
+    window.open(url, '_blank');
+  }
+  
+  
+  // async generarPDF() {
+  //   const pdfDoc = await PDFDocument.create();
+  //   const page = pdfDoc.addPage([400, 600]);
 
-//   pdfMake.createPdf(documento).open() ;
-// }
+  //   page.drawText('Lista de Criterios:', {
+  //     x: 50,
+  //     y: 500,
+  //     size: 24,
+  //     color: rgb(0, 0, 0),
+  //   });
 
+  //   let yPosition = 450;
+  //   this.criterio.forEach((dato: any) => {
+  //     const keys = Object.keys(dato);
+  //     page.drawLine({ start: { x: 50, y: yPosition-5 }, end: { x: 250, y: yPosition-5 }, color: rgb(0, 0, 0) });
+  //     keys.forEach(key => {
+  //       const value = dato[key];
+  //       if (key === 'clasificacion' && typeof value === 'object') {
+  //         //propiedades de clasificacion
+  //         const clasificacionKeys = Object.keys(value);
+  //         clasificacionKeys.forEach(clave => {
+  //           const clasificacionValue = value[clave];
+  //           page.drawText(`${key}.${clave}: ${clasificacionValue}`, {
+  //             x: 50,
+  //             y: yPosition,
+  //             size: 12,
+  //             color: rgb(0, 0, 0),
+  //           });
+  //           yPosition -= 20;
+  //         });
+  //       } else {
+  //         page.drawText(`${key}: ${value}`, {
+  //           x: 50,
+  //           y: yPosition,
+  //           size: 12,
+  //           color: rgb(0, 0, 0),
+  //         });
+  //         yPosition -= 20;
+  //       }
+  //     });
+  //   });
+
+  //   const pdfBytes = await pdfDoc.save();
+
+  //   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  //   const url = URL.createObjectURL(blob);
+
+  //   window.open(url, '_blank');
+  // }
+
+
+  async generarPDFtable() {
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([400, 600]);
+  
+    // Título de la tabla
+    page.drawText('Lista de Criterios:', {
+      x: 100,
+      y: 540,
+      size: 20,
+      color: rgb(0, 0, 0),
+    });
+  
+    // Definir el tamaño y la posición de la tabla
+    const startX = 50;
+    const startY = 450;
+    const cellPadding = -10;
+    const rowHeight = 20;
+    const tableWidth = 300;
+    const tableHeight = this.criterio.length * rowHeight + rowHeight;
+  
+    // Definir las propiedades de las celdas
+    const fontSize = 9;
+    const cellWidth = tableWidth / 4;
+  
+    // Encabezados de la tabla
+    const headers = ['ID', 'Nombre', 'Descripción', 'Clasificación'];
+    for (let i = 0; i < headers.length; i++) {
+      page.drawText(headers[i], {
+        x: startX + i * cellWidth + cellPadding,
+        y: startY + tableHeight - rowHeight + cellPadding,
+        size: fontSize,
+        color: rgb(0, 0, 0)
+      });
+    }
+  
+    // Llenar la tabla con los datos
+    for (let i = 0; i < this.criterio.length; i++) {
+      const dato = this.criterio[i];
+      const clasificacionNombre = dato.clasificacion ? dato.clasificacion.nombreClasificacion : '';
+      const rowData = [
+        dato.idCriterio.toString(),
+        dato.nombreCriterio,
+        dato.descripcion,
+        clasificacionNombre
+      ];
+  
+      for (let j = 0; j < rowData.length; j++) {
+        page.drawText(rowData[j], {
+          x: startX + j * cellWidth + cellPadding,
+          y: startY + tableHeight - (i + 2) * rowHeight + cellPadding,
+          size: 8,
+          color: rgb(0, 0, 0)
+        });
+      }
+    }
+  
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+  
+    window.open(url, '_blank');
+  }
   
 }
 
- 
