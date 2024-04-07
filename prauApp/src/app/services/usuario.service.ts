@@ -33,7 +33,10 @@ export class UsuarioService {
     });
   }
   getAllUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.url}/read`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.get<Usuario[]>(`${this.url}/read`, { headers });
   }
   getJefesByRolId(id: number) {
     // Construir el encabezado de autorización

@@ -32,9 +32,15 @@ export class RolService {
     return this.http.post<any>(`${this.url}/create`, rol, { headers });
   }
   actualizarRol(id: number, rol: Rol): Observable<Rol> {
-    return this.http.put<Rol>(`${this.url}/update/${id}`, rol);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.put<Rol>(`${this.url}/update/${id}`, rol, { headers });
   }
   eliminarRol(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/delete/${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.delete<void>(`${this.url}/delete/${id}`, { headers });
   }
 }
