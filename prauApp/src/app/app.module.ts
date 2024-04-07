@@ -146,6 +146,7 @@ import { AsignaturaListarComponent } from './components/asignatura-listar/asigna
 import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 
+
 @NgModule({
   declarations: [
     AsignaturaListarComponent,
