@@ -6,6 +6,8 @@ import { Usuario } from '../models/usuario';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/loginRequest';
 import { AuthResponse } from '../models/authResponse';
+import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
+
 
 @Injectable({
   providedIn: 'root',
@@ -173,6 +175,17 @@ export class UsuarioService {
 
     return this.http.get<boolean>(`${this.url}/usuarioUnico?user=${user}`, {
       headers,
+    });
+  }
+
+
+  findUsuariosByRolId(id: number): Observable<UsuarioPorRolDTO[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    return this.http.get<UsuarioPorRolDTO[]>(`${this.url}/usuariosPorRol?roleId=${id}`, {
+      headers
     });
   }
 }

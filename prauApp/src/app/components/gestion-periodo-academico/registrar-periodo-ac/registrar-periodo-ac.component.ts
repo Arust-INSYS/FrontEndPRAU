@@ -64,7 +64,7 @@ export class RegistrarPeriodoAcComponent {
         this.periodoAcService.registrarPeriodoAc(this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa
-            this.router.navigate(['/listar-periodos-acs']);
+            this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
             this.toastr.success('Se guardó correctamente');
             this.resetForm(); 
 
