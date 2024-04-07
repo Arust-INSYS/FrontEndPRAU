@@ -31,7 +31,9 @@ export class UsuarioService {
       headers,
     });
   }
-
+  getAllUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.url}/read`);
+  }
   getJefesByRolId(id: number) {
     // Construir el encabezado de autorización
     const headers = new HttpHeaders({
@@ -175,4 +177,5 @@ export class UsuarioService {
       headers,
     });
   }
+ 
 }

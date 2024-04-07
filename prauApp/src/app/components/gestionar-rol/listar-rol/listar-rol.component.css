@@ -29,4 +29,25 @@
     background-color: #ddd;
   }
 
-  
+  /* Estilos personalizados para los campos de texto */
+.input-lg {
+  font-size: 1.25rem; /* Tamaño de fuente más grande */
+  padding: 0.5rem; /* Espaciado interno */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  border: 1px solid #ced4da; /* Borde del campo */
+}
+
+/* Estilos para resaltar los campos de texto en el formulario */
+.input-lg:focus {
+  border-color: #80bdff; /* Cambia el color del borde al enfocar */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Agrega una sombra al enfocar */
+}
+.label-lg {
+  font-size: 1.5rem; /* Tamaño de fuente más grande */
+}
+
+/* Estilos para los botones en el modal */
+.btn-lg {
+  font-size: 1.25rem; /* Tamaño de fuente más grande */
+  padding: 0.5rem 1rem; /* Espaciado interno */
+}

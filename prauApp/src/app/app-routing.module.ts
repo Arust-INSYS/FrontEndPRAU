@@ -17,7 +17,15 @@ import { ContenidoPersonaComponent } from './components/contenido-persona/conten
 import { RegistrarPersonaComponent } from './components/gestionar-persona/registrar-persona/registrar-persona.component';
 import { ContenidoRolComponent } from './components/contenido-rol/contenido-rol.component';
 import { RegistrarRolComponent } from './components/gestionar-rol/registrar-rol/registrar-rol.component';
+<<<<<<< Updated upstream
 import { ListarRolComponent } from './components/gestionar-rol/listar-rol/listar-rol.component';
+=======
+import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
+import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
+import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
+import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
+>>>>>>> Stashed changes
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,6 +41,12 @@ const routes: Routes = [
         children: [
           { path: 'registrar-persona', component: RegistrarPersonaComponent },
           { path: 'listar-persona', component: ListarPersonaComponent },
+<<<<<<< Updated upstream
+=======
+          { path: 'listar-rol', component: ListarRolComponent },
+          { path: 'registrar-rol', component: RegistrarRolComponent },
+          { path: 'listar-usuarios', component: ListarUsuarioComponent },
+>>>>>>> Stashed changes
         ],
       },
 
@@ -83,6 +97,27 @@ const routes: Routes = [
           { path: 'listar-rol', component: ListarRolComponent},
         ],
       },
+<<<<<<< Updated upstream
+=======
+
+      {
+        path: 'contenido-analitics',
+        component: ContenidoAnaliticsComponent,
+        children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
+      },
+
+
+      // {
+      //   path: 'contenido-asignatura',
+      //   component: ContenidoAsignaturaComponent,
+      //   children: [{ path: 'asignatura', component: AsignaturaComponent }],
+      // },
+      // {
+      //   path: 'contenido-carrera',
+      //   component: ContenidoCarreraComponent,
+      //   children: [{ path: 'carrera', component: CarreraComponent }],
+      //},
+>>>>>>> Stashed changes
     ],
   },
   //{ path: 'persona/listar', component: ListarPersonaComponent },
@@ -122,4 +157,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -143,6 +143,10 @@ import { ActualizarAulaComponent } from './components/gestion-aula/actualizar-au
 import { ContenidoVirtualComponent } from './components/contenido-virtual/contenido-virtual.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
 >>>>>>> Stashed changes
 
 @NgModule({
@@ -164,6 +168,23 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     GestionarRolComponent,
     ListarRolComponent,
     RegistrarRolComponent,
+<<<<<<< Updated upstream
+=======
+    EvaluacionCriteriosComponent,
+    EvaluacionCriteriosCalificarComponent,
+    AsignaturaComponent,
+    CarreraComponent,
+    AnalisisUsoComponent,
+    ListarPeriodosAcComponent,
+    RegistrarPeriodoAcComponent,
+    RegistrarAulaComponent,
+    ListarAulasComponent,
+    ActualizarPeriodoAcComponent,
+    ActualizarAulaComponent,
+    ContenidoVirtualComponent,
+    ContenidoAnaliticsComponent,
+    ListarUsuarioComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     RouterModule,
