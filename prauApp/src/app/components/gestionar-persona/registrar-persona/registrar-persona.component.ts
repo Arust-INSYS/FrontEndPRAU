@@ -103,32 +103,59 @@ export class RegistrarPersonaComponent {
       return false;
     }
   }
-  registrar() {
+  registrar(validaRol: boolean) {
     // REGISTRAR PERSONA
-    this.personaService.registrarPersona(this.persona).subscribe((response) => {
-      this.usuario.usuEstado = 1;
-      this.usuario.usuPerId = response;
-      this.usuario.usuNombreUsuario = this.persona.perCedula;
-      //this.usuario.rolId.rolNombre = 'Docente';
-      //this.usuario.rolId.rolId = 4;
+    if (
+      this.persona.perCedula &&
+      this.persona.perNombre1 &&
+      this.persona.perApellido1 &&
+      this.persona.perDireccion &&
+      this.persona.perFechaNacimiento &&
+      this.persona.perTelefono
+    ) {
+      if (validaRol) {
+        this.personaService
+          .registrarPersona(this.persona)
+          .subscribe((response) => {
+            this.usuario.usuEstado = 1;
+            this.usuario.usuPerId = response;
+            this.usuario.usuNombreUsuario = this.persona.perCedula;
 
-      // REGISTRAR USUARIO
-      this.usuarioService
-        .registrarUsuario(this.usuario)
-        .subscribe((response) => {
-          Swal.fire({
-            title: '¡Registro Exitoso!',
-            text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
-            icon: 'success',
-            confirmButtonText: 'Confirmar',
-            showCancelButton: false, // No mostrar el botón de cancelar
-          }).then(() => {
-            this.recargarPagina();
-            this.limpiarRegistro();
-            //this.router.navigate(['/listausu']);
+            // REGISTRAR USUARIO
+            this.usuarioService
+              .registrarUsuario(this.usuario)
+              .subscribe((response) => {
+                Swal.fire({
+                  title: '¡Registro Exitoso!',
+                  text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
+                  icon: 'success',
+                  confirmButtonText: 'Confirmar',
+                  showCancelButton: false, // No mostrar el botón de cancelar
+                }).then(() => {
+                  this.recargarPagina();
+                  this.limpiarRegistro();
+                  //this.router.navigate(['/listausu']);
+                });
+              });
           });
+      } else {
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Por favor seleccione el rol para guardar el dato',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          showCancelButton: false,
         });
-    });
+      }
+    } else {
+      Swal.fire({
+        title: '¡Error!',
+        text: 'Campos Vacíos',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        showCancelButton: false,
+      });
+    }
   }
 
   userListar: any;
@@ -141,6 +168,7 @@ export class RegistrarPersonaComponent {
       }));
     });
   }
+  habilitar: boolean = false;
   onRolChange(selectedRoleId: number) {
     const selectedRole = this.roles.find(
       (role) => role.value === selectedRoleId
@@ -149,7 +177,9 @@ export class RegistrarPersonaComponent {
       this.usuario.rolId.rolNombre = selectedRole.label;
       this.usuario.rolId.rolId = selectedRole.value;
       console.log('Rol seleccionado:', this.usuario.rolId.rolId);
+      this.habilitar = true;
     }
+    return this.habilitar;
   }
   limpiarRegistro() {
     this.usuario = new Usuario();
