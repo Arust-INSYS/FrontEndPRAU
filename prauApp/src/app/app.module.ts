@@ -147,7 +147,7 @@ import { ContenidoAnaliticsComponent } from './components/contenido-analitics/co
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
-
+import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -186,6 +186,7 @@ import { CarreraActualizarComponent } from './components/carrera-actualizar/carr
     ContenidoVirtualComponent,
     ContenidoAnaliticsComponent,
     CarreraActualizarComponent,
+    ListarUsuarioComponent,
   ],
   imports: [
     RouterModule,
@@ -308,7 +309,6 @@ import { CarreraActualizarComponent } from './components/carrera-actualizar/carr
     //MatFormFieldModule,
     //CalendarModule,
     //MatSelectModule,
-    BrowserAnimationsModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],

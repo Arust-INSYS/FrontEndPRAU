@@ -18,12 +18,12 @@
     margin:10px;
     margin:0 auto;
     border-radius:19px;
-    width: 70%;
+    width: 100%;
     /* SECUENCIA: para centrar formulario */
-    position: absolute;
+    /* position: absolute;
     top: 50%; 
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     border-bottom: 5px solid #205ab4;
     margin-bottom:5px; 
     border: 1px solid #000;

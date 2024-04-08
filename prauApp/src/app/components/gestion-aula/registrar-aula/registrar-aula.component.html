@@ -1,45 +1,43 @@
 <!-- ENVIA A LA BASE DE DATOS -->
-<form>
+<form (ngSubmit)="registrar(f)" #f="ngForm">
     <div id="formulario">
         <h1> Formulario Nueva Aula</h1>
     </div>
 
     <div id="tabla-formulario">
         <label for="nombre">Nombre </label>
-        <input placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla">
+        <input [(ngModel)]="nuevaAula.aulaNombre"  placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla">
 
         <label for="apellido">Ciclo que Pertenece</label>
-        <input placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla">
-
-
-
+        <input [(ngModel)]="nuevaAula.cicloPertenece" placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla">
 
         <label for="docente">Docente:</label>
-        <select name="docente" id="docente"
-            style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
+        <select [(ngModel)]="nuevaAula.docente" name="docente" id="docente" (change)="onDocenteChange($event)"
+        style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
             <option value="">Seleccione un docente...</option>
-            <!-- Aquí puedes llenar con los nombres de los docentes -->
-            <option value="docente1">Docente 1</option>
-            <option value="docente2">Docente 2</option>
-            <!-- ... más opciones ... -->
-        </select>
+            <option *ngFor="let docente of docentes" [value]="docente.usuId">{{docente.perNombre1}} {{docente.perApellido1}}</option>
+          </select>
+          
 
         <label for="asignatura">Asignatura:</label>
-        <select name="asignatura" id="asignatura"
+        <select  [(ngModel)]="nuevaAula.asignatura"name="asignatura" id="asignatura" (change)="onAsignaturaChange($event)"
             style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
             <option value="">Seleccione una asignatura...</option>
-            <!-- Aquí puedes llenar con los nombres de las asignaturas -->
-            <option value="asignatura1">Asignatura 1</option>
-            <option value="asignatura2">Asignatura 2</option>
-            <!-- ... más opciones ... -->
+
+            <option *ngFor="let asignatura of asignaturas" [value]="asignatura.idAsignatura">{{asignatura.nombreAsignatura}}</option>
+           
+     
         </select>
 
         <label for="periodo">Periodo Académico:</label>
-        <select name="periodo" id="periodo" (change)="onPeriodoChange($event)"
+        <select [(ngModel)]="nuevaAula.periodoAc" name="periodo" id="periodo" (change)="onPeriodoChange($event)"
             style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
             <option value="">Seleccione un periodo...</option>
             <option *ngFor="let periodo of periodos" [value]="periodo.idPeriodoAc">{{periodo.nombrePeriodo}}</option>
         </select>
+
+        <label for="descripcion">Observaciones</label>
+        <textarea [(ngModel)]="nuevaAula.observaciones" rows="5" cols="70" class="entradas" pInputTextarea placeholder="Escriba una Observacio" name="descripcion" id="tabla" ></textarea>
         
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-actualizar-aula',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './actualizar-aula.component.css'
 })
 export class ActualizarAulaComponent {
+
+  @Input() aulaId!: number;
 
 }
