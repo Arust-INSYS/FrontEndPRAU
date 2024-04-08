@@ -1,8 +1,8 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
 
-<section>
+
     <h1 > Gestion de Aulas</h1>
-<p-button icon="pi pi-plus" label="Nueva Aula" (click)="showModal()"></p-button>
+<p-button icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
 
 <div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
 
@@ -34,13 +34,13 @@
                     <td>{{ aula.docente.usuPerId.perNombre1 }} {{ aula.docente.usuPerId.perApellido1 }}</td>
                     <td>{{ aula.asignatura.nombreAsignatura }}</td>
                     <td>{{ aula.observaciones }}</td>
-                    <td>  <p-button icon="pi pi-pencil" severity="success"></p-button>
+                    <td>  <p-button icon="pi pi-pencil" severity="success" (click)="selectAula(aula)"></p-button>
                     </td>
-                    <td> <p-button icon="pi pi-times" severity="danger"></p-button></td>
+                    <td> <p-button icon="pi pi-trash" severity="danger" (click)="eliminarAulaConfirmado(aula.aulaId)"></p-button></td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="paginatorleft">
-                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"  [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
             </ng-template>
            
         </p-table>
@@ -49,8 +49,8 @@
 </div>
 
 
-</section>
-<p-dialog
+
+<!-- <p-dialog
   [(visible)]="displayModalregsitro"
   [modal]="true"
   [responsive]="true"
@@ -62,7 +62,7 @@
   [(visible)]="displayModalactualizar"
   [modal]="true"
   [responsive]="true"
-  [style]="{ width: '60vw' }"
+  [style]="{ width: '50vw' }"
 >
 <app-actualizar-aula [aulaId]="aulaId"></app-actualizar-aula>
-</p-dialog>
+</p-dialog> -->
