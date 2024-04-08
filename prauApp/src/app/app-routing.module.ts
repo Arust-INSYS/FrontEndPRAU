@@ -36,10 +36,17 @@ import { ContenidoVirtualComponent } from './components/contenido-virtual/conten
 import { CarreraListarComponent } from './components/carrera-listar/carrera-listar.component';
 import { AsignaturaListarComponent } from './components/asignatura-listar/asignatura-listar.component';
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
+import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
+import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
+import { MainDirectorComponent } from './modules/main-director/main-director.component';
+import { UseDirectorComponent } from './modules/use-director/use-director.component';
+import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
-  { path: 'listar-persona', component: ListarPersonaComponent },
+  { path: 'main-director', component: MainDirectorComponent},
+  { path: 'use-director', component: UseDirectorComponent },
+   { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -111,8 +118,10 @@ const routes: Routes = [
         children: [
           { path: 'carrera', component: CarreraComponent },
           { path: 'carrera-listar', component: CarreraListarComponent },
+          { path: 'carrera-actualizar/:id', component: CarreraActualizarComponent },
           { path: 'asignatura', component: AsignaturaComponent },
           { path: 'asignatura-listar', component: AsignaturaListarComponent },
+          { path: 'asignatura-actualizar/:id', component: AsignaturaActualizarComponent },
           { path: 'listar-periodo', component: ListarPeriodosAcComponent },
           { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
           {
@@ -120,6 +129,7 @@ const routes: Routes = [
             component: ActualizarPeriodoAcComponent,
           },
           { path: 'listar-aulas', component: ListarAulasComponent },
+          { path: 'principal-director', component: PrincipalDirectorComponent },
           { path: 'registrar-aula', component: RegistrarAulaComponent },
           { path: 'actualizar-aula/:id', component: ActualizarAulaComponent },
         ],

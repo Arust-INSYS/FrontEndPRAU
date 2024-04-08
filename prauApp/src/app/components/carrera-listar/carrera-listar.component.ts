@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
-import { ClasificacionCriteriosService } from '../../services/clasificacion-criterios.service';
+
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
 import { Carrera } from '../../models/carrera';
 import { CarreraService } from '../../services/carrera.service';
+import { PDFDocument, rgb } from 'pdf-lib';
 @Component({
   selector: 'app-carrera-listar',
   templateUrl: './carrera-listar.component.html',
@@ -50,7 +50,7 @@ throw new Error('Method not implemented.');
 
   actualizarCarrera(id: number) {
 
-    this.router.navigate(['/menu/contenido-carrera/carrera-actualizar',id]);
+    this.router.navigate(['/menu/contenido-virtual/carrera-actualizar',id]);
 }
   redirectToCarrera() {
     this.router.navigate(['/menu/contenido-virtual/carrera']);
@@ -89,6 +89,63 @@ throw new Error('Method not implemented.');
         });
       }
     });
+  }
+
+  
+  async generarPDF() {
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([400, 600]);
+    const color = 'rgb(255, 0, 0)';
+
+    page.drawText('Lista de Criterios:', {
+      x: 50,
+      y: 500,
+      size: 20,
+      color: rgb(0, 0, 0),
+    });
+  
+    let yPosition = 450;
+    this.carrera.forEach((dato: any) => {
+      page.drawLine({ start: { x: 50, y: yPosition+20 }, end: { x: 250, y: yPosition+20 }, color: rgb(0, 0, 0) });
+      const keys = Object.keys(dato);
+      keys.forEach(key => {
+        const value = dato[key];
+        if (key === 'clasificacion' && typeof value === 'object') {
+          //nombre de la clasificación
+          const clasificacionNombre = value.nombreClasificacion || 'Sin clasificación';
+          page.drawText(`Clasificación: \t${clasificacionNombre}`, {
+            x: 50,
+            y: yPosition,
+            size: 10,
+            color: rgb(0, 0, 0),
+          });
+          yPosition -= 20;
+        } else {
+          const keyMap: { [key: string]: string } = {
+            idCarrera: 'ID',
+            nombreCarrera: 'Nombre',
+            descripcionCarrera: 'Descripción'
+          };
+          const displayedKey = keyMap[key] || key;
+          
+          page.drawText(`${displayedKey}:\t ${value}`, {
+            x: 50,
+            y: yPosition,
+            size: 10,
+            color: rgb(0, 0, 0),
+          });
+          yPosition -= 20;
+        }
+      });
+      yPosition -= 20;
+    });
+  
+    const pdfBytes = await pdfDoc.save();
+  
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+  
+    window.open(url, '_blank');
   }
   
 }

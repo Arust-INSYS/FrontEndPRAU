@@ -3,6 +3,8 @@ import { Carrera } from '../../models/carrera';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarreraService } from '../../services/carrera.service';
 import { ToastrService } from 'ngx-toastr';
+import { Usuario } from '../../models/usuario';
+import { ClasificacionUsuariosService } from '../../services/clasificacion-usuarios.service';
 
 @Component({
   selector: 'app-carrera-actualizar',
@@ -13,14 +15,24 @@ export class CarreraActualizarComponent {
   id!: number;
   carrera: Carrera = new Carrera();
   carreras: Carrera[] = [];
+  usuarios: Usuario[] = [];
+  
   constructor(
     private carreraService: CarreraService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private clasificacionUsuariosService: ClasificacionUsuariosService
   ) {}
-
+  obtenerUsuarios() {
+    this.clasificacionUsuariosService
+      .obtenerListausuarios()
+      .subscribe((dato) => {
+        this.usuarios = dato;
+      });
+  }
   ngOnInit(): void {
+    this.obtenerUsuarios();
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.cargarCarrera(this.id);

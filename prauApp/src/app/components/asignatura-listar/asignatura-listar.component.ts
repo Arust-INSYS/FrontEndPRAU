@@ -35,7 +35,7 @@ export class AsignaturaListarComponent {
   }
 
   actualizarAsignatura(id: number) {
-    this.router.navigate(['/menu/contenido-asignatura/asignatura-actualizar', id]);
+    this.router.navigate(['/menu/contenido-virtual/asignatura-actualizar', id]);
   }
 
   redirectToAsignatura() {
