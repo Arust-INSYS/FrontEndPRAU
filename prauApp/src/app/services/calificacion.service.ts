@@ -81,9 +81,9 @@ export class CalificacionService {
     });
   }
 
-  obtenerCriterioPorId(id: number): Observable<Calificacion> {
-    return this.http.get<Calificacion>(`${this.url}/buscar?id=${id}`);
-  }
+  obtenerCriterioPorId(calificacionId: string): Observable<Calificacion> {
+    return this.http.get<Calificacion>(`${this.url}/buscar?id=${calificacionId}`);
+}
 
   cedulaUnica(ci: string) {
     // Construir el encabezado de autorización con el token JWT

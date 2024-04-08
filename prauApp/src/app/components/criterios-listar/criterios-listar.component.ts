@@ -117,7 +117,7 @@ applyFilter() {
       keys.forEach(key => {
         const value = dato[key];
         if (key === 'clasificacion' && typeof value === 'object') {
-          //nombre de la clasificación
+ 
           const clasificacionNombre = value.nombreClasificacion || 'Sin clasificación';
           page.drawText(`Clasificación: \t${clasificacionNombre}`, {
             x: 50,
