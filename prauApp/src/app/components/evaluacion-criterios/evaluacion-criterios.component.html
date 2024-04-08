@@ -47,8 +47,8 @@
                 <ng-template pTemplate="body" let-evaluacionCab>
                     <tr>
                         <td>{{ evaluacionCab.nroEvaluacion }}</td>
-                        <td>{{ evaluacionCab.aula?.aulaNombre }}</td>
-                        <td>{{ evaluacionCab.usuario?.usuNombreUsuario }}</td>
+                        <td>{{ evaluacionCab.aulaEva?.aulaNombre }}</td>
+                        <td>{{ evaluacionCab.evaluador?.usuPerId.perNombre1 }}</td>
                         <td>{{ evaluacionCab.observaciones }}</td>
                         <td>{{ evaluacionCab.porcTotalC }}</td>
                         <td>
