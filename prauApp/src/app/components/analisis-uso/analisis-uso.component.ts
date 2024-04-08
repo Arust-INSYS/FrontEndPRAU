@@ -10,6 +10,14 @@ import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
 import { ClasificacionCriteriosService } from '../../services/clasificacion-criterios.service';
 import { Criterios } from '../../models/criterios';
+import { AsignaturaService } from '../../services/asignatura.service';
+import { Asignatura } from '../../models/asignatura';
+import { UsuarioService } from '../../services/usuario.service';
+import { UsuarioPorRolDTO } from '../../models/UsuarioPorRolDTO';
+import { Carrera } from '../../models/carrera';
+import { CarreraService } from '../../services/carrera.service';
+import { PeriodoAcService } from '../../services/periodo-ac.service';
+import { PeriodoAc } from '../../models/periodoAc';
 
 
 @Component({
@@ -28,25 +36,74 @@ export class AnalisisUsoComponent implements OnInit{
   value: string | undefined; 
   value2: string | undefined;
 
+  //
+
+  docentes: UsuarioPorRolDTO[] = [];
+  carrera: Carrera[] = [];
+  periodos: PeriodoAc[] = [];
+
   constructor(
     private criteriosService: CriteriosService,
     private router: Router,
-    private clasificacionCriteriosService: ClasificacionCriteriosService
+    private clasificacionCriteriosService: ClasificacionCriteriosService,
+    private carreraService: CarreraService,
+    private usuarioService: UsuarioService,
+    private periodoAcService: PeriodoAcService,
+
   ) {}
 
-  obtenerCriterios() {
-    this.criteriosService.obtenerListacriterios().subscribe(dato => {
-      this.criterio = dato;
+  // obtenerCriterios() {
+  //   this.criteriosService.obtenerListacriterios().subscribe(dato => {
+  //     this.criterio = dato;
+  //   });
+  // }
+
+
+  obtenereDocentes(){
+
+    this.usuarioService.findUsuariosByRolId(4).subscribe((usuariosPorRol) => {
+      this.docentes = usuariosPorRol;
+      console.log(this.docentes);
     });
   }
+  obtenerCarrera() {
+    this.carreraService.obtenerListaCarreras().subscribe(dato => {
+      this.carrera = dato;
+      console.log(this.carrera);
+    });
+  }
+  obtenerPerodosAc(){
+    this.periodoAcService.getPeriodosAcs().subscribe((periodos) => {
+      this.periodos = periodos;
+       console.log(this.periodos)
+    });
+  }
+
+  onOpcionSeleccionada(opcion: string) {
+    switch(opcion) {
+        case 'Periodo Academico':
+            this.obtenerPerodosAc();
+            break;
+        case 'Docente':
+            this.obtenereDocentes();
+            break;
+        case 'Carrera':
+            this.obtenerCarrera();
+            break;
+        default:
+            console.log('Opción no reconocida');
+            break;
+    }
+}
+
 
   formGroup: FormGroup = new FormGroup({});
 
  
 
     ngOnInit() {
-      this.obtenerCriterios();
-      console.log(this.obtenerCriterios);
+      // this.obtenerCriterios();
+      // console.log(this.obtenerCriterios);
 
       this.formGroup = new FormGroup({
         selectedCountry: new FormControl<object | null>(null)

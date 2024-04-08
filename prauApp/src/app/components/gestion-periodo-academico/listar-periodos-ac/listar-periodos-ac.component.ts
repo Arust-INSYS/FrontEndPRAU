@@ -14,8 +14,8 @@ export class ListarPeriodosAcComponent implements OnInit {
 
   periodoId: number =0
   selectedPeriodoAc: PeriodoAc | null = null;
-    displayModalregsitro: boolean = false;
-    displayModalactualizar: boolean = false;
+   // displayModalregsitro: boolean = false;
+   // displayModalactualizar: boolean = false;
 
 
   constructor(
@@ -23,15 +23,15 @@ export class ListarPeriodosAcComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService
   ) {}
-  showModal() {
-    this.displayModalregsitro = true;
-  }
+  // showModal() {
+  //   this.displayModalregsitro = true;
+  // }
  
-  showModalactualizar(id: number) {
-    this.displayModalactualizar = true;
-    this.periodoId = id;
-    console.log('ID del registro a actualizar: ',this.periodoId);
-  }
+  // showModalactualizar(id: number) {
+  //   this.displayModalactualizar = true;
+  //   this.periodoId = id;
+  //   console.log('ID del registro a actualizar: ',this.periodoId);
+  // }
   
 
   ngOnInit() {
@@ -41,11 +41,11 @@ export class ListarPeriodosAcComponent implements OnInit {
     });
   }
 
-  // selectPeriodoAc(periodo: PeriodoAc) {
-  //   this.displayModalactualizar = true;
-  //   console.log(periodo)
-  //   this.router.navigate(['/menu/contenido-virtual/actualizar-periodo', periodo.idPeriodoAc]);
-  // }
+  selectPeriodoAc(periodo: PeriodoAc) {
+    //this.displayModalactualizar = true;
+    console.log(periodo)
+    this.router.navigate(['/menu/contenido-virtual/actualizar-periodo', periodo.idPeriodoAc]);
+  }
 
  
 
@@ -79,7 +79,7 @@ export class ListarPeriodosAcComponent implements OnInit {
           );
         });
       }
-      this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
+      this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
     });
   }
 
