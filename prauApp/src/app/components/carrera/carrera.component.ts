@@ -54,7 +54,7 @@ export class CarreraComponent {
       () => {
         this.obtenercarreras();
         this.router.navigateByUrl('/menu/contenido-virtual/carrera');
-        this.toastr.success('Criterio guardado exitosamente.', 'Éxito');
+        this.toastr.success('Carrera guardada exitosamente.', 'Éxito');
         this.carrera.nombreCarrera = '';
         this.carrera.descripcionCarrera = '';
         this.carrera.director = clasificacionSeleccionada;

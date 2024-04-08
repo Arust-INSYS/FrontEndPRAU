@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
 import { PeriodoAc } from '../models/periodoAc';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +59,20 @@ export class PeriodoAcService {
       headers,
     });
   }
+  obtenerListaPeriodoAc(): Observable<PeriodoAc[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+  
+    const options = { headers: headers };
 
+    return this.http.get<PeriodoAc[]>(this.url + '/read', options).pipe(
+      catchError(error => {
+        console.error('Error obteniendo periodo Ac:', error);
+        throw error;
+      })
+    );
+  }
   eliminarPeriodoAc(id: number): Observable<void> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
