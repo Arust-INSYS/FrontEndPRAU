@@ -10,6 +10,7 @@ import { Usuario } from '../../models/usuario';
 import { Aula } from '../../models/aula';
 import { AulaService } from '../../services/aula.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { CarreraService } from '../../services/carrera.service';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -38,6 +39,7 @@ throw new Error('Method not implemented.');
   usuario: Usuario[] = [];
   docentes: any[] = [];
   cursos: any[] = [];
+  carrera:any[] =[];
   docenteSeleccionado: number | null = null; // Almacenará el ID del docente seleccionado
   cursoSeleccionado: number=0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
@@ -53,7 +55,8 @@ throw new Error('Method not implemented.');
     private aulaService: AulaService,
     private router: Router,
     private toastr: ToastrService,
-    private sharedDataService: SharedDataService) {}
+    private sharedDataService: SharedDataService,
+    private carreraService:CarreraService) {}
 
 
   ngOnInit(): void {
@@ -68,6 +71,20 @@ throw new Error('Method not implemented.');
   //    console.log(this.docentes);
   //  });
   //}
+
+  obtenerCarrera() {
+    this.carreraService.obtenerListaCarreras().subscribe(dato => {
+      this.carrera = dato;
+    });
+  }
+  async listarcarrer() {
+    await this.carreraService.obtenerListaCarreras().subscribe((res: any[]) => {
+      this.docentes = res.map((doc) => ({
+        label: doc.perNombre1,
+        value: doc.usuId,
+      }));
+    });
+  } 
 
   async listarevalu() {
     await this.usuarioService.getUsersByRoleId(4).subscribe((res: any[]) => {
