@@ -37,6 +37,10 @@ export class ActualizarPeriodoAcComponent implements OnInit{
     const periodoId = this.route.snapshot.params['id']; // Obtener el ID del periodo de la URL
     this.periodoAcService.getPeriodoAcById(periodoId).subscribe(
       (periodo) => {
+        // Convertir las fechas a objetos Date
+        periodo.fechaInicio = new Date(periodo.fechaInicio);
+        periodo.fechaFin = new Date(periodo.fechaFin);
+  
         this.periodoAc = periodo; 
         console.log('El periodos es ', this.periodoAc);
       },
@@ -46,6 +50,7 @@ export class ActualizarPeriodoAcComponent implements OnInit{
       }
     );
   }
+  
 
 
 
