@@ -100,7 +100,7 @@ export class RegistrarAulaComponent implements OnInit{
   
 
      
-        this.aulaServie.registrarAula(this.nuevaAula).subscribe(
+        this.aulaServie.registrarPeriodoAc(this.nuevaAula).subscribe(
           (response) => {
             // Si la respuesta es exitosa
             this.router.navigate(['/menu/contenido-virtual/listar-aulas']);
