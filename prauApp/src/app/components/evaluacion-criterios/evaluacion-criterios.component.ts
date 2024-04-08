@@ -42,6 +42,7 @@ throw new Error('Method not implemented.');
   cursoSeleccionado: number=0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
 
+
   
   customers: any
   selectedCustomers:any
@@ -83,23 +84,10 @@ throw new Error('Method not implemented.');
   onDocenteSeleccionado(selectedDocente: any) {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
     console.log('Docente seleccionado:', selectedDocente);
-    this.getCursosPorDocente(selectedDocente);
+    this.listarcursos(selectedDocente);
+    this.evaluacionCa.evaluador!.usuId=selectedDocente;
 }
 
-  getCursosPorDocente(docenteId: number){
-    if (docenteId) {
-      // Obtener las aulas asociadas al docente específico utilizando su ID
-      this.aulaService.getAulasPorUsuario(docenteId).subscribe(aulas => {
-          // Mapear la respuesta para almacenar solo el nombre y el ID de cada aula
-          this.cursos = aulas.map(aula => ({ id: aula.aulaId, nombre: aula.aulaNombre }));
-      });
-      console.log('Aula Seleccionada', this.cursos[0]);
-  } else {
-    
-      // Si no se proporciona ningún ID de docente, reiniciar la lista de cursos
-      this.cursos = [];
-  }
-}
 async listarcursos(docenteId: number) {
   await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
     this.cursos = aulas.map((doc) => ({
@@ -111,7 +99,8 @@ async listarcursos(docenteId: number) {
 onCursoSeleccionado(selectedCurso: any) {
   // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
   console.log('Docente seleccionado:', selectedCurso);
-  
+  this.evaluacionCa.aulaEva!.aulaId=selectedCurso;
+  //console.log('Este es el mensaje',this.evaluacionCa.aula)
 }
 
   cargarInformacionCurso(): void {
@@ -140,39 +129,21 @@ onCursoSeleccionado(selectedCurso: any) {
   filtrar() {
   }
 
-  crearNuevoDato(): void {
-    if (this.docenteSeleccionado && this.cursoSeleccionado !== null) {
-      // Obtener el objeto Usuario completo usando el ID del docente seleccionado
-      this.usuarioService.getUsersByRoleId(this.docenteSeleccionado).subscribe((usuarios: Usuario[]) => {
-          if (usuarios && usuarios.length > 0) {
-            const usuario = usuarios[0]; // Obtener el primer usuario
-            // Obtener el objeto Aula completo usando el ID del curso seleccionado
-            this.aulaService.getAulasPorUsuario(this.cursoSeleccionado).subscribe((aulas: Aula[]) => {
-                if (aulas && aulas.length > 0) {
-                  const aula = aulas[0]; // Obtener la primera aula
-                  // Crear un nuevo objeto EvaluacionCab con todos los datos inicializados en 0
-                  const nuevaEvaluacionCab: EvaluacionCab = {
-                      nroEvaluacion: 0,
-                      totalC: 0,
-                      totalCm: 0,
-                      totalNc: 0,
-                      porcTotalC: 0,
-                      porcTotalCm: 0,
-                      porcTotalNc: 0,
-                      observaciones: '', // Aquí podrías agregar las observaciones predeterminadas
-                      aula: aula, // Asignar el objeto Aula obtenido
-                      usuario: usuario // Asignar el objeto Usuario obtenido
-                  };
-                  // Ahora puedes usar nuevaEvaluacionCab para lo que necesites
-                } else {
-                  console.error('No se encontraron aulas para el usuario seleccionado.');
-                }
-            });
-          } else {
-            console.error('No se encontraron usuarios para el rol seleccionado.');
-          }
+  crearNuevoDato(){
+    
+    this.evaluacionCa.totalC=0;
+    this.evaluacionCa.totalCm=0;
+    this.evaluacionCa.totalNc=0;
+    this.evaluacionCa.porcTotalC=0;
+    this.evaluacionCa.porcTotalCm=0;
+    this.evaluacionCa.porcTotalNc=0;
+    this.evaluacionCa.observaciones="";
+    //this.evaluacionCa.aulaEva!.aulaId=1;
+    //this.evaluacionCa.evaluador!.usuId=4;
+      this.evaluacionCABService.CrearEvaluacionCab(this.evaluacionCa).subscribe(() => {
+        // La EvaluacionCab se ha actualizado correctamente
+        console.log('EvaluacionCab actualizada correctamente.');
       });
-    }
 }
  
 

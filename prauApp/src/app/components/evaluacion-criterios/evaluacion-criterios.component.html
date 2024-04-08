@@ -18,12 +18,12 @@
                 optionValue="value" (onChange)="onDocenteSeleccionado($event.value)">
             </p-dropdown></div>
 
-        <div class="search-container">
+        <!--<div class="search-container">
             <label for="cursoSeleccionado">Seleccionar Curso:</label>
             <select id="cursoSeleccionado" name="cursoSeleccionado" [(ngModel)]="cursoSeleccionado">
                 <option *ngFor="let curso of cursos">{{ curso.nombre }}</option>
             </select>
-        </div>
+        </div>-->
         <div><p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="cursos" optionLabel="label"
             optionValue="value" (onChange)="onCursoSeleccionado($event.value)">
         </p-dropdown></div>
