@@ -11,14 +11,6 @@
             </div>
     
         <div class="header-container">
-            <div class="search-container">
-                <label for="cursoSeleccionado">Seleccionar Curso:</label>
-                <select id="cursoSeleccionado" name="cursoSeleccionado" [(ngModel)]="cursoSeleccionado" (change)="cargarInformacionCurso()">
-                    
-                    <option *ngFor="let curso of cursos" [ngValue]="curso">{{ curso.aulaNombre }}</option>
-                </select>
-            </div>
-            
             <div><label for="lblPorcentajeCumplimiento"></label>
                 <span id="lblPorcentajeCumplimiento"></span></div>
         </div>

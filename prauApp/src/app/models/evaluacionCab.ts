@@ -11,8 +11,8 @@ export class EvaluacionCab {
     porcTotalCm: number;
     porcTotalNc: number;
     observaciones: string;
-    aula?:Aula;
-    usuario?:Usuario;
+    aulaEva?:Aula;
+    evaluador?:Usuario;
     
     constructor(
     nroEvaluacion?: number,
@@ -23,8 +23,8 @@ export class EvaluacionCab {
     porcTotalCm?: number,
     porcTotalNc?: number,
     observaciones?: string,
-    aula?:Aula,
-    usuario?:Usuario,
+    aulaEva?:Aula,
+    evaluador?:Usuario,
   
     ) {
         this.nroEvaluacion = nroEvaluacion || 0;
@@ -35,7 +35,7 @@ export class EvaluacionCab {
         this.porcTotalCm = porcTotalCm || 0;
         this.porcTotalNc = porcTotalNc || 0;
         this.observaciones = observaciones || '';
-        this.aula = aula || new Aula();
-        this.usuario = usuario || new Usuario();
+        this.aulaEva = aulaEva || new Aula();
+        this.evaluador = evaluador || new Usuario();
       }
 }

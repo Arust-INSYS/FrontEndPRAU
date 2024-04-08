@@ -32,6 +32,17 @@ export class UsuarioService {
       headers,
     });
   }
+
+  getUsersByRoleId(roleId: number): Observable<Usuario[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`,{
+      headers,
+    });
+  }
+
   getAllUsuarios(): Observable<Usuario[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
