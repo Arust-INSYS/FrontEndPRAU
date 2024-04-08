@@ -145,9 +145,9 @@ export class EvaluacionCriteriosCalificarComponent {
       }));
     });
   } 
-  onCalificacionSeleccionado(selectedCurso: any) {
+  onCalificacionSeleccionado(selectedCurso: any, cri:number) {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
-    console.log('Calificacion seleccionado:', selectedCurso);
+    console.log('Calificacion seleccionado:', selectedCurso, cri);
   }
 
   cargarInformacionCurso(): void {
