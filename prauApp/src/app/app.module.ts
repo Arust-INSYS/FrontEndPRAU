@@ -149,14 +149,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
 import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
-import { MainDirectorComponent } from './modules/main-director/main-director.component';
-import { UseDirectorComponent } from './modules/use-director/use-director.component';
+import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 
 
 @NgModule({
   declarations: [
-    MainDirectorComponent,
-    UseDirectorComponent,
+    PrincipalDirectorComponent,
     AsignaturaListarComponent,
     CarreraListarComponent,
     CarreraActualizarComponent,
@@ -195,6 +193,7 @@ import { UseDirectorComponent } from './modules/use-director/use-director.compon
     ContenidoAnaliticsComponent,
     CarreraActualizarComponent,
     ListarUsuarioComponent,
+    PrincipalDirectorComponent,
   ],
   imports: [
     RouterModule,

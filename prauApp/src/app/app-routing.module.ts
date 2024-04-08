@@ -40,6 +40,7 @@ import { CarreraActualizarComponent } from './components/carrera-actualizar/carr
 import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
 import { MainDirectorComponent } from './modules/main-director/main-director.component';
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
+import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
@@ -128,6 +129,7 @@ const routes: Routes = [
             component: ActualizarPeriodoAcComponent,
           },
           { path: 'listar-aulas', component: ListarAulasComponent },
+          { path: 'principal-director', component: PrincipalDirectorComponent },
           { path: 'registrar-aula', component: RegistrarAulaComponent },
           { path: 'actualizar-aula/:id', component: ActualizarAulaComponent },
         ],
