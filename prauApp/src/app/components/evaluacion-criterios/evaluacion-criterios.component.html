@@ -14,7 +14,8 @@
                 (click)="crearNuevoDato()"></button>
         </div>
         
-        <div><p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="docentes" optionLabel="label"
+        <div><label for="cursoSeleccionado" class="titulo-criterios" >Seleccionar Docente: </label>
+            <p-dropdown id="dropdown1" [style]="{ 'width.%': 25 }" [options]="docentes" optionLabel="label"
                 optionValue="value" (onChange)="onDocenteSeleccionado($event.value)">
             </p-dropdown></div>
 
@@ -24,7 +25,8 @@
                 <option *ngFor="let curso of cursos">{{ curso.nombre }}</option>
             </select>
         </div>-->
-        <div><p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="cursos" optionLabel="label"
+        <div><label for="cursoSeleccionado" class="titulo-criterios">Seleccionar Curso:   </label>
+            <p-dropdown id="dropdown1" [style]="{ 'width.%': 25 }" [options]="cursos" optionLabel="label"
             optionValue="value" (onChange)="onCursoSeleccionado($event.value)">
         </p-dropdown></div>
 

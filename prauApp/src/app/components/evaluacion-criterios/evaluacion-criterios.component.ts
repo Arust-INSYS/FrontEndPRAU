@@ -76,7 +76,7 @@ throw new Error('Method not implemented.');
         value: doc.usuId,
       }));
     });
-  }
+  } 
 
   recibirID(numero: number){
     console.log(numero,'Id Recibido')

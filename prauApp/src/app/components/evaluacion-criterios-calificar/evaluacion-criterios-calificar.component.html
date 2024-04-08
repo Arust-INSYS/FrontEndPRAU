@@ -57,10 +57,12 @@
                         <h2>{{ clasificacion.nombreClasificacion }}</h2>
                         <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
                             <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
-                            <select id="pregunta{{criterio.idCriterio}}" name="pregunta{{criterio.idCriterio}}"(change)="actualizarCalificacion($event)">
-                                <option value="" selected disabled>Seleccione la calificacion</option>
-                                <option *ngFor="let calificacion of calificaciones" [value]="calificacion.codCalificacion">{{ calificacion.codCalificacion }}</option>
-                            </select>
+                            
+                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 15 }" [options]="calificacion" optionLabel="label"
+                                optionValue="value" (onChange)="onCalificacionSeleccionado($event.value)">
+                                
+                            </p-dropdown>
+                            
                         </div>
                         <hr>
                     </div>

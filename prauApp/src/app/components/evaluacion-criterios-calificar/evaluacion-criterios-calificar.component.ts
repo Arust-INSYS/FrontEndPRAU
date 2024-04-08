@@ -15,6 +15,7 @@ import { EvaluacionCabService } from '../../services/evaluacionCab.service';
 import { EvaluacionDetService } from '../../services/evaluacionDet.service';
 import { SharedDataService } from '../../services/sharedData.service';
 import { HttpClient } from '@angular/common/http';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -27,14 +28,18 @@ export class EvaluacionCriteriosCalificarComponent {
   
   calificaciones: Calificacion[] = [];
   
-  criterios: Criterios[] = [];
   criterio: Criterios[] = [];
   
   clasificaciones: ClasificacionCriterios[] = [];
   evaluacionDets: EvaluacionDet[] = [];
-  cursos: Aula[] = [];
+
   
   usuario: Usuario[] = [];
+  docentes: any[] = [];
+  cursos: any[] = [];
+  criterios: any[] =[];
+  calificacion: any[] = [];
+
   cursoSeleccionado: Aula | null = null;
   profesorSeleccionado: Usuario | null = null;
   clasificacionSeleccionada: ClasificacionCriterios | null = null;
@@ -68,7 +73,8 @@ export class EvaluacionCriteriosCalificarComponent {
     private calificacionService: CalificacionService,
     private clasificacionService: ClasificacionCriteriosService,
     private aulaService: AulaService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private usuarioService: UsuarioService
 
   ) { }
 
@@ -78,8 +84,10 @@ export class EvaluacionCriteriosCalificarComponent {
         this.evaluacionCab.nroEvaluacion = id;
       }
     });
-    this.getCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
+    this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
     this.getCalificaciones();
+    this.listarcalifi();
+    this.getCriterios();
     this.getClasificaciones();
     this.obtenerCursos();
     this.crearEvaluacionesDetVacias();
@@ -90,12 +98,14 @@ export class EvaluacionCriteriosCalificarComponent {
       this.cursos = cursos;
     });
   }
+  
 
   getClasificaciones(): void {
     this.clasificacionService
       .obtenerListacriterios()
       .subscribe((clasificaciones) => {
         this.clasificaciones = clasificaciones;
+        
       });
   }
 
@@ -108,14 +118,36 @@ export class EvaluacionCriteriosCalificarComponent {
     });
   }
 
+  async listarCriterios() {
+    await this.criteriosService.obtenerListacriterios().subscribe((res: any[]) => {
+      this.criterios = res.map((doc) => ({
+        label: doc.descripcion,
+        value: doc.idCriterio,
+      }));
+    });
+  }
+
   criteriosPorClasificacion(idClasificacion: number): Criterios[] {
     return this.criterios.filter(criterio => criterio.clasificacion?.idClasificacion === idClasificacion);
   }
 
-  getCalificaciones(): void {
+  getCalificaciones(){
     this.calificacionService.obtenerListacriterios().subscribe(calificaciones => {
       this.calificaciones = calificaciones;
     });
+  }
+
+  async listarcalifi() {
+    await this.calificacionService.obtenerListacriterios().subscribe((res: any[]) => {
+      this.calificacion = res.map((doc) => ({
+        label: doc.codCalificacion,
+        value: doc.codCalificacion,
+      }));
+    });
+  } 
+  onCalificacionSeleccionado(selectedCurso: any) {
+    // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
+    console.log('Calificacion seleccionado:', selectedCurso);
   }
 
   cargarInformacionCurso(): void {
