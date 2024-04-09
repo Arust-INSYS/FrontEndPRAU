@@ -37,10 +37,10 @@ export class ClasificacionCriteriosActualizarComponent {
   }
  
   onSubmit() {
-    // Verificar si los campos están llenos
+   
     if (!this.id || !this.criterio.nombreClasificacion || !this.criterio.descripcion) {
       this.toastr.error('Llene todos los campos antes de enviar.');
-      return; // Detener el envío si los campos no están llenos
+      return; 
     }
   
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
