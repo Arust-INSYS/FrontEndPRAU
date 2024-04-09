@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Persona } from '../../../models/persona';
 import { ToastrService } from 'ngx-toastr';
@@ -11,13 +11,17 @@ import { RolService } from '../../../services/rol.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataMoodleService } from '../../../services/dataMoodle.service';
+import { ListarPersonaComponent } from '../listar-persona/listar-persona.component';
 
 @Component({
   selector: 'app-registrar-persona',
   templateUrl: './registrar-persona.component.html',
   styleUrl: './registrar-persona.component.css',
+  
 })
 export class RegistrarPersonaComponent {
+  @ViewChild(ListarPersonaComponent) listarPersonaComponent: ListarPersonaComponent | undefined;
+  
   public date: Date = new Date();
   selectedUser: number = 3;
   value: any;
@@ -34,7 +38,12 @@ export class RegistrarPersonaComponent {
   ) {
     this.listarRol();
     this.getData();
-  } // Inyecta tu servicio en el constructor del componente
+    
+    
+    ;
+  } 
+  
+  // Inyecta tu servicio en el constructor del componente
   /*
   registrarPersona(): void {
     this.personaService.registrarPersona(this.persona).subscribe(
@@ -185,6 +194,7 @@ export class RegistrarPersonaComponent {
     this.usuario = new Usuario();
     this.persona = new Persona();
   }
+  //FILTRAR DROPDOW CON BUSCAR
   selectedPersona: any;
   filtro: string = '';
   personas: any[] = [];
@@ -211,4 +221,5 @@ export class RegistrarPersonaComponent {
   recargarPagina() {
     window.location.reload();
   }
+ 
 }
