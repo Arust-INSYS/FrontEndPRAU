@@ -82,7 +82,12 @@ export class CalificacionService {
   }
 
   obtenerCriterioPorId(calificacionId: string): Observable<Calificacion> {
-    return this.http.get<Calificacion>(`${this.url}/buscar?id=${calificacionId}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Calificacion>(`${this.url}/buscar?id=${calificacionId}`,{
+      headers,
+    });
 }
 
   cedulaUnica(ci: string) {
