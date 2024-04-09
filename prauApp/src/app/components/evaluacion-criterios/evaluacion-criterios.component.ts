@@ -142,27 +142,15 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   crearNuevoDato() {
-
-    //this.evaluacionCa.aulaEva!.aulaId=1;
-    //this.evaluacionCa.evaluador!.usuId=4;
-    this.evaluacionCABService.CrearEvaluacionCab(this.evaluacionCa).subscribe(() => {
-      // La EvaluacionCab se ha actualizado correctamente
-      console.log('EvaluacionCab actualizada correctamente.');
-    });
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion']);
   }
 
-
-
-
   actualizarCriterio(id: number) {
-
 
   }
 
   // Método para eliminar un criterio
   eliminarCriterio(id: number) {
-
 
   }
 }

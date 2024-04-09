@@ -26,6 +26,14 @@ export class EvaluacionDetService {
     return this.http.post<EvaluacionDet>(`${this.url}/create`, evaluacionDet, { headers });
   }
 
+  createList(detalle: EvaluacionDet[]): Observable<EvaluacionDet[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+
+    return this.http.post<EvaluacionDet[]>(`${this.url}/detalleEva`, detalle, { headers });
+  }
+
   update(id: number, evaluacionDet: EvaluacionDet): Observable<EvaluacionDet> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
