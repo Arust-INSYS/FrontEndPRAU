@@ -4,6 +4,17 @@ body {
   padding: 0;
 }
 
+.layout {
+  width: 100%;
+
+  display: flex;
+  gap: 16px;
+}
+
+.grow1 {
+  flex-grow: 1;
+}
+
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -90,8 +101,12 @@ select:focus {
   outline: none;
   border-color: #007bff;
 }
+
 .grupo-preguntas {
-  border: 1px solid #ccc; /* Borde sólido de 1px de grosor y color gris claro */
-  margin-bottom: 20px; /* Espacio entre cada grupo de preguntas */
-  padding: 10px; /* Espacio interno dentro de cada grupo de preguntas */
+  border: 1px solid #ccc;
+  /* Borde sólido de 1px de grosor y color gris claro */
+  margin-bottom: 20px;
+  /* Espacio entre cada grupo de preguntas */
+  padding: 10px;
+  /* Espacio interno dentro de cada grupo de preguntas */
 }

@@ -23,21 +23,21 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrl: './evaluacion-criterios-calificar.component.css',
 })
 export class EvaluacionCriteriosCalificarComponent {
-  
+
   criteriosIds: number[] = [];
-  
+
   calificaciones: Calificacion[] = [];
-  
+
   criterio: Criterios[] = [];
-  
+
   clasificaciones: ClasificacionCriterios[] = [];
   evaluacionDets: EvaluacionDet[] = [];
 
-  
+
   usuario: Usuario[] = [];
   docentes: any[] = [];
   cursos: any[] = [];
-  criterios: any[] =[];
+  criterios: any[] = [];
   calificacion: any[] = [];
 
   cursoSeleccionado: Aula | null = null;
@@ -46,7 +46,7 @@ export class EvaluacionCriteriosCalificarComponent {
 
   nombreCurso: string = ''; // Variable para almacenar el nombre del curso seleccionado
   nombreDocente: string = ''; // Variable para almacenar el nombre del docente asociado al curso seleccionado
-  
+
   calificacionesHechasC: number = 0; // Variable para contar las calificaciones hechas
   calificacionesHechasCM: number = 0; // Variable para contar las calificaciones hechas
   calificacionesHechasNC: number = 0; // Variable para contar las calificaciones hechas
@@ -55,7 +55,7 @@ export class EvaluacionCriteriosCalificarComponent {
   contarCM: number = 0; // Variable para contar las calificaciones hechas
   contarNC: number = 0; // Variable para contar las calificaciones hechas
 
-  TotalCMCNC: number =0;
+  TotalCMCNC: number = 0;
 
   evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación general
 
@@ -64,6 +64,9 @@ export class EvaluacionCriteriosCalificarComponent {
   porcentajeCumplimientoC: number = 0;
   porcentajeCumplimientoM: number = 0;
   porcentajeCumplimientoN: number = 0;
+
+  //
+  nroEvaluacion: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -79,11 +82,12 @@ export class EvaluacionCriteriosCalificarComponent {
   ) { }
 
   ngOnInit(): void {
-    this.sharedDataService.idEvaluacionCabecera$.subscribe((id) => {
-      if (id !== null) {
-        this.evaluacionCab.nroEvaluacion = id;
-      }
-    });
+    this.obtenerNroEva();
+    // this.sharedDataService.idEvaluacionCabecera$.subscribe((id) => {
+    //   if (id !== null) {
+    //     this.evaluacionCab.nroEvaluacion = id;
+    //   }
+    // });
     this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
     this.getCalificaciones();
     this.listarcalifi();
@@ -93,19 +97,25 @@ export class EvaluacionCriteriosCalificarComponent {
     this.crearEvaluacionesDetVacias();
   }
 
+  obtenerNroEva(): void {
+    this.evaluacionCabService.nroEvaluacionNew().subscribe(eva => {
+      this.nroEvaluacion = eva;
+    })
+  }
+
   obtenerCursos(): void {
     this.aulaService.getAulas().subscribe(cursos => {
       this.cursos = cursos;
     });
   }
-  
+
 
   getClasificaciones(): void {
     this.clasificacionService
       .obtenerListacriterios()
       .subscribe((clasificaciones) => {
         this.clasificaciones = clasificaciones;
-        
+
       });
   }
 
@@ -131,7 +141,7 @@ export class EvaluacionCriteriosCalificarComponent {
     return this.criterios.filter(criterio => criterio.clasificacion?.idClasificacion === idClasificacion);
   }
 
-  getCalificaciones(){
+  getCalificaciones() {
     this.calificacionService.obtenerListacriterios().subscribe(calificaciones => {
       this.calificaciones = calificaciones;
     });
@@ -144,8 +154,8 @@ export class EvaluacionCriteriosCalificarComponent {
         value: doc.codCalificacion,
       }));
     });
-  } 
-  onCalificacionSeleccionado(selectedCurso: any, cri:number) {
+  }
+  onCalificacionSeleccionado(selectedCurso: any, cri: number) {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
     console.log('Calificacion seleccionado:', selectedCurso, cri);
   }
@@ -160,38 +170,38 @@ export class EvaluacionCriteriosCalificarComponent {
     }
   }
 
-  actualizarCalificacion(event: any){
+  actualizarCalificacion(event: any) {
     // Obtener la nueva calificación del evento
     const nuevaCalificacion = event.target.value;
-    
+
     // Verificar si la calificación es una opción válida (C, CM o NC)
     if (nuevaCalificacion === 'C' || nuevaCalificacion === 'CM' || nuevaCalificacion === 'NC') {
 
-      this.calificaciones=nuevaCalificacion;
+      this.calificaciones = nuevaCalificacion;
 
       this.actualizarContadores(nuevaCalificacion);
-    // Llamar al método para contar las calificaciones hechas
+      // Llamar al método para contar las calificaciones hechas
       this.contarCalificaciones();
     } else {
       // Si la calificación no es válida, no hacer nada
     }
   }
-  
-  actualizarContadores(nuevaCalificacion: string){
-  // Incrementar el contador correspondiente según la nueva calificación
-  if (nuevaCalificacion === 'C') {
-    this.contarC++;
-  } else if (nuevaCalificacion === 'CM') {
-    this.contarCM++;
-  } else if (nuevaCalificacion === 'NC') {
-    this.contarNC++;
+
+  actualizarContadores(nuevaCalificacion: string) {
+    // Incrementar el contador correspondiente según la nueva calificación
+    if (nuevaCalificacion === 'C') {
+      this.contarC++;
+    } else if (nuevaCalificacion === 'CM') {
+      this.contarCM++;
+    } else if (nuevaCalificacion === 'NC') {
+      this.contarNC++;
+    }
+
   }
-  
-}
-  
-  contarCalificaciones(){
+
+  contarCalificaciones() {
     const totalCriterios = this.criterios.length;
-  
+
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
     this.porcentajeCumplimientoC = (this.contarC / totalCriterios) * 100;
     this.porcentajeCumplimientoM = (this.contarCM / totalCriterios) * 100;
