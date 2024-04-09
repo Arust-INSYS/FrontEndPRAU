@@ -127,7 +127,7 @@ export class AnalisisUsoComponent implements OnInit {
 
 ////
 
-
+///grafica
 
 
 
