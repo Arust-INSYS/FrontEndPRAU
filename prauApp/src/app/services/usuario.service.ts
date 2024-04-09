@@ -194,4 +194,7 @@ export class UsuarioService {
       }
     );
   }
+  obtenerUsuariosPorRolId(rolId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/usuariosPorRol?roleId=${rolId}`);
+  }
 }

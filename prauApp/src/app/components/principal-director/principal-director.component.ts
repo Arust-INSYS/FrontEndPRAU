@@ -24,7 +24,8 @@ export class PrincipalDirectorComponent {
   aula: Aula = new  Aula();
   aulas:  Aula[] = [];
   persona: Usuario = new  Usuario();
-  personas:  Usuario[] = [];
+  personas: Persona[] = [];
+
   constructor(
     private router: Router,
     private toastr: ToastrService,
@@ -57,7 +58,7 @@ export class PrincipalDirectorComponent {
     });
   }
   cargarDocentes() {
-    this.personaService.cargarDocentes().subscribe((dato) => {
+    this.personaService.getPersonas().subscribe((dato) => {
       this.personas = dato;
     });
   }
