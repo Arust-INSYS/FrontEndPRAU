@@ -58,7 +58,7 @@
                         <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
                             <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
                             
-                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 15 }" [options]="calificacion" optionLabel="label"
+                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion" optionLabel="label"
                                 optionValue="value" (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
                                 
                             </p-dropdown>

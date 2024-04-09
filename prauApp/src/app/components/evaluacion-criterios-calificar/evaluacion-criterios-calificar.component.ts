@@ -140,7 +140,7 @@ export class EvaluacionCriteriosCalificarComponent {
   async listarcalifi() {
     await this.calificacionService.obtenerListacriterios().subscribe((res: any[]) => {
       this.calificacion = res.map((doc) => ({
-        label: doc.codCalificacion,
+        label: doc.descripcion,
         value: doc.codCalificacion,
       }));
     });

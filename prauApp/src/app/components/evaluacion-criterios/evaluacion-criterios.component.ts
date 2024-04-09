@@ -72,14 +72,9 @@ throw new Error('Method not implemented.');
   //  });
   //}
 
-  obtenerCarrera() {
-    this.carreraService.obtenerListaCarreras().subscribe(dato => {
-      this.carrera = dato;
-    });
-  }
   async listarcarrer() {
     await this.carreraService.obtenerListaCarreras().subscribe((res: any[]) => {
-      this.docentes = res.map((doc) => ({
+      this.carrera = res.map((doc) => ({
         label: doc.perNombre1,
         value: doc.usuId,
       }));

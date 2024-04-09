@@ -14,6 +14,11 @@
                 (click)="crearNuevoDato()"></button>
         </div>
         
+        <div><label for="cursoSeleccionado" class="titulo-criterios" >Seleccionar Carrera: </label>
+            <p-dropdown id="dropdown1" [style]="{ 'width.%': 25 }" [options]="docentes" optionLabel="label"
+                optionValue="value" (onChange)="onDocenteSeleccionado($event.value)">
+            </p-dropdown></div>
+
         <div><label for="cursoSeleccionado" class="titulo-criterios" >Seleccionar Docente: </label>
             <p-dropdown id="dropdown1" [style]="{ 'width.%': 25 }" [options]="docentes" optionLabel="label"
                 optionValue="value" (onChange)="onDocenteSeleccionado($event.value)">
