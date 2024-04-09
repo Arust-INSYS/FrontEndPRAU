@@ -80,7 +80,7 @@ throw new Error('Method not implemented.');
          
           Swal.fire(
             'Error',
-            'Hubo un error al intentar eliminar la clasificación.',
+            'Esta clasificacion esta siendo usado por un criterio o varios criterios.',
             'error'
           );
         });
