@@ -11,6 +11,7 @@ import { Table } from 'primeng/table';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import { DataSource } from '@angular/cdk/collections';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 
 @Component({
@@ -47,6 +48,16 @@ applyFilter() {
 
   ngOnInit(): void {
     this.obtenerCriterios();
+  }
+  
+   // Método para dividir la descripción en líneas más cortas
+   splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
+    const maxCharsPerLine = Math.floor(maxWidth / (fontSize * 0.50)); // Ajustar según sea necesario
+    const lines = [];
+    for (let i = 0; i < description.length; i += maxCharsPerLine) {
+        lines.push(description.substring(i, i + maxCharsPerLine));
+    }
+    return lines;
   }
 
   obtenerCriterios() {
@@ -246,18 +257,22 @@ applyFilter() {
     // Definir las propiedades de las celdas
     const fontSize = 10;
     const SizeColumn = [20, 100, 280, 100];
+    const colorlineas = rgb(0.5, 0.5, 0.5);
+    const colorencabezado = rgb(0, 0.1, 1);
   
     // Encabezados de la tabla
     const headers = ['ID', 'Nombre', 'Descripción', 'Clasificación'];
     const headersCellWidth = SizeColumn;
     const rowHeight = 20;
     const tableHeight = 200;
+
+    // Dibujar encabezados y líneas horizontales
     for (let i = 0; i < headers.length; i++) {
       page.drawText(headers[i], {
-        x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width  + cellPadding, 0),
-        y: startY + tableHeight - rowHeight - 20 + cellPadding,
-        size: fontSize,
-        color: rgb(0, 0, 0),
+          x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
+          y: startY + tableHeight - rowHeight - 20 + cellPadding,
+          size: fontSize,
+          color: colorencabezado,
       });
     }
   
@@ -277,20 +292,58 @@ applyFilter() {
         let maxHeight = 0;
         for (let j = 0; j < rowData.length; j++) {
           const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.65));
-          const textHeight = lines * (fontSize * 0.75); // Ajustar según sea necesario
+          const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
           maxHeight = Math.max(maxHeight, textHeight);
           
         }
-        // Dibujar los datos de la fila
-      for (let j = 0; j < rowData.length; j++) {
+    // Dibujar los datos de la fila y las líneas horizontales
+    for (let j = 0; j < rowData.length; j++) {
+      const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
+      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.75;
+      const cellWidth = dataCellWidths[j] - 2 * cellPadding;
+
+      // Dibujar texto
+      if (j === 2) { // Si es la celda de descripción
+        const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
+        for (let k = 0; k < descriptionLines.length; k++) {
+            page.drawText(descriptionLines[k], {
+                x: cellX,
+                y: cellY - k * (fontSize * 0.75),
+                size: fontSize,
+                color: rgb(0, 0, 0),
+                maxWidth: cellWidth,
+            });
+        }
+    } else { // Para otras celdas
         page.drawText(rowData[j], {
-          x: startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 0),
-          y: startY + tableHeight - (i + 3.5) * rowHeight + cellPadding + maxHeight - fontSize * 0.75,
-          size: fontSize,
-          color: rgb(0, 0, 0),
-          maxWidth: dataCellWidths[j] - 2 * cellPadding, // Ajustar según el ancho de la celda
+            x: cellX,
+            y: cellY,
+            size: fontSize,
+            color: rgb(0, 0, 0),
+            maxWidth: cellWidth,
         });
+    }
+
+        // Dibujar líneas verticales entre las columnas
+        if (j < rowData.length - 1) {
+          const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
+          const lineYStart = cellY + 30;
+          const lineYEnd = cellY - maxHeight - 30;
+          page.drawLine({
+              start: { x: nextCellX, y: lineYStart },
+              end: { x: nextCellX, y: lineYEnd },
+              thickness: 1,
+              color: colorlineas
+          });
       }
+  }
+    // Dibujar líneas horizontales entre las filas
+    page.drawLine({
+      start: { x: startX, y: startY - (i - 8) * rowHeight},
+      end: { x: startX + dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight},
+      thickness: 1.5,
+      color: colorlineas
+  });
       startY -= maxHeight + cellPadding;
     }
   
