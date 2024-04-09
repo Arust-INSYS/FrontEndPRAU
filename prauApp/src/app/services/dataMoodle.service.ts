@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { entorno } from '../env/entorno';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataMoodleService {
-  private apiUrl = 'https://660545ba2ca9478ea17fe45a.mockapi.io/app/pruebas';
-
+  private urlPublica: string = `${entorno.urlMoodle}`;
   constructor(private http: HttpClient) {}
 
+  //DATOS DE PERSONAS
   getAllData(): Observable<any[]> {
-    const url = `${this.apiUrl}/personas`; // Agregar "/personas" a la URL base
+    const url = `${this.urlPublica}/personas`; // Agregar "/personas" a la URL base
     return this.http.get<any[]>(url);
   }
 
   getDataById(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.urlPublica}/${id}`;
     return this.http.get<any>(url);
   }
 

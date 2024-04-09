@@ -193,7 +193,7 @@ export class RegistrarPersonaComponent {
     this.dataMoodleService.getAllData().subscribe((data) => {
       this.personas = data.map((persona) => ({
         ...persona,
-        nombreCompleto: `${persona.perNombre1} ${persona.perApellido1}`,
+        nombreCompleto: `${persona.perNombre1} ${persona.perApellido1}|${persona.perCedula}`,
       }));
       this.personasFiltradas = this.personas; // Inicialmente, las personas filtradas serán iguales a todas las personas
     });
