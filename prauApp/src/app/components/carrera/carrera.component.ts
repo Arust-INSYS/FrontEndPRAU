@@ -28,7 +28,7 @@ export class CarreraComponent {
   ngOnInit(): void {
     this.obtenercarreras();
     this.obtenerUsuarios();
-    this.obtenerUsuariosPorRol(1); 
+    this.obtenerUsuariosPorRol(4); 
   }
   obtenerUsuariosPorRol(roleId: number): void {
     this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)

@@ -11,10 +11,11 @@
         <small id="descripcionCarreraHelp">Ingrese la descripción.</small>
     </div>
     <div class="flex flex-column gap-2">
-        <label for="director">Usuario:</label>
+        <label for="director">Director:</label>
         <select id="director" name="director" [(ngModel)]="carrera.director">
-            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.usuId}}</option>
+            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.usuPerId?.perNombre1 }}&nbsp;{{ usuario.usuPerId?.perApellido1 }}</option>
         </select>
+        
     </div>
     <div class="button-container">
         <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()"></p-button>
