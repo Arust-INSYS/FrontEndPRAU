@@ -148,11 +148,17 @@ import { ContenidoAnaliticsComponent } from './components/contenido-analitics/co
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CarreraActualizarComponent } from './components/carrera-actualizar/carrera-actualizar.component';
 import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
+import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
+import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
+
 
 @NgModule({
   declarations: [
+    PrincipalDirectorComponent,
     AsignaturaListarComponent,
     CarreraListarComponent,
+    CarreraActualizarComponent,
+    AsignaturaActualizarComponent,
     AppComponent,
     LoginComponent,
     MenuComponent,
@@ -187,6 +193,7 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
     ContenidoAnaliticsComponent,
     CarreraActualizarComponent,
     ListarUsuarioComponent,
+    PrincipalDirectorComponent,
   ],
   imports: [
     RouterModule,
