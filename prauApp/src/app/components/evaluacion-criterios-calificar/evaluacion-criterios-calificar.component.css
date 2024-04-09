@@ -9,10 +9,15 @@ body {
 
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
-.grow1 {
-  flex-grow: 1;
+.filter {
+  min-width: 300px;
+}
+
+.element-filter {
+  /* width: 100%; */
 }
 
 .header-container {
@@ -39,7 +44,7 @@ body {
 }
 
 .formulario {
-  max-width: 600px;
+  max-width: 80%;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -84,6 +89,7 @@ body {
   margin-bottom: 10px;
 }
 
+/* 
 select {
   width: 25%;
   padding: 5px;
@@ -100,7 +106,7 @@ input[type="text"]:focus,
 select:focus {
   outline: none;
   border-color: #007bff;
-}
+} */
 
 .grupo-preguntas {
   border: 1px solid #ccc;
