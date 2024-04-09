@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class ListarPeriodosAcComponent implements OnInit {
   periodos: PeriodoAc[] = [];
+  origenalesperiodos: PeriodoAc[] = [];
 
   periodoId: number =0
   selectedPeriodoAc: PeriodoAc | null = null;
@@ -37,6 +38,7 @@ export class ListarPeriodosAcComponent implements OnInit {
   ngOnInit() {
     this.periodoAcService.getPeriodosAcs().subscribe((periodos) => {
       this.periodos = periodos;
+      this.origenalesperiodos=periodos;
       // console.log(this.periodos)
     });
   }
@@ -45,6 +47,23 @@ export class ListarPeriodosAcComponent implements OnInit {
     //this.displayModalactualizar = true;
     console.log(periodo)
     this.router.navigate(['/menu/contenido-virtual/actualizar-periodo', periodo.idPeriodoAc]);
+  }
+
+  onSearch(event: any) {
+    let filteredPeriodo = [];
+  
+    if(event.target.value) { // Si el campo de búsqueda no está vacío
+      for(let periodo of this.periodos) {
+        let periodoStr = JSON.stringify(periodo).toLowerCase();
+        if(periodoStr.includes(event.target.value.toLowerCase())) {
+          filteredPeriodo.push(periodo);
+         
+        }
+      }
+      this.periodos = filteredPeriodo; // Actualiza la lista de aulas con los resultados filtrados
+    } else {
+      this.periodos = [...this.origenalesperiodos]; // Si el campo de búsqueda está vacío, restablece la lista de aulas a su estado original
+    }
   }
 
  

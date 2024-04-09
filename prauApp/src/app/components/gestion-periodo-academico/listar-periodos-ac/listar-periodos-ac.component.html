@@ -3,7 +3,7 @@
     <h1 > Gestion de Periodos Academicos</h1>
 <p-button icon="pi pi-plus" label="Nuevo Periodo"  [routerLink]="['/menu/contenido-virtual/registrar-periodo']"></p-button>
 
-<div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
+<div >
 
 
     <div class="card">
@@ -11,6 +11,17 @@
             [tableStyle]="{ 'min-width': '50rem' }"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [rowsPerPageOptions]="[5, 10, 20]">
+
+            <ng-template pTemplate="caption">
+                <div class="table-header">
+                 
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="onSearch($event)" placeholder="Búsqueda " />
+        
+                    </span>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:5%">ID</th>
