@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Criterios } from '../../models/criterios';
 import { CriteriosService } from '../../services/criterios.service';
@@ -16,29 +16,37 @@ import { EvaluacionDetService } from '../../services/evaluacionDet.service';
 import { SharedDataService } from '../../services/sharedData.service';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from '../../services/usuario.service';
+import { PeriodoAcService } from '../../services/periodo-ac.service';
+import { PeriodoAc } from '../../models/periodoAc';
+import { CarreraService } from '../../services/carrera.service';
+import { Carrera } from '../../models/carrera';
+import { IAsignaturaXCarrera, IConsultarAula, IDocenteXAsignatura } from '../../interface/IConsultasBD';
+import { AsignaturaService } from '../../services/asignatura.service';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
   templateUrl: './evaluacion-criterios-calificar.component.html',
   styleUrl: './evaluacion-criterios-calificar.component.css',
 })
-export class EvaluacionCriteriosCalificarComponent {
   
-  calificaciones: Calificacion[] = [];
-  
-  criterio: Criterios[] = [];
+export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   criteriosIds: number[] = [];
+
+  calificaciones: Calificacion[] = [];
+
+  criterio: Criterios[] = [];
+
   calificacionesPorCriterio: { idCriterio: number, calificacion: string }[] = []; // Array para almacenar las calificaciones por criterio
   
   clasificaciones: ClasificacionCriterios[] = [];
   evaluacionDets: EvaluacionDet[] = [];
 
-  
+
   usuario: Usuario[] = [];
-  docentes: any[] = [];
+  // docentes: any[] = [];
   cursos: any[] = [];
-  criterios: any[] =[];
+  criterios: any[] = [];
   calificacion: any[] = [];
 
   cursoSeleccionado: Aula | null = null;
@@ -47,7 +55,7 @@ export class EvaluacionCriteriosCalificarComponent {
 
   nombreCurso: string = ''; // Variable para almacenar el nombre del curso seleccionado
   nombreDocente: string = ''; // Variable para almacenar el nombre del docente asociado al curso seleccionado
-  
+
   calificacionesHechasC: number = 0; // Variable para contar las calificaciones hechas
   calificacionesHechasCM: number = 0; // Variable para contar las calificaciones hechas
   calificacionesHechasNC: number = 0; // Variable para contar las calificaciones hechas
@@ -56,15 +64,35 @@ export class EvaluacionCriteriosCalificarComponent {
   contarCM: number = 0; // Variable para contar las calificaciones hechas
   contarNC: number = 0; // Variable para contar las calificaciones hechas
 
-  TotalCMCNC: number =0;
+  TotalCMCNC: number = 0;
 
-  evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación general
+
 
 
   evaluacionDet: EvaluacionDet = new EvaluacionDet(); // Objeto para almacenar la evaluación detallada
   porcentajeCumplimientoC: number = 0;
   porcentajeCumplimientoM: number = 0;
   porcentajeCumplimientoN: number = 0;
+
+  //////////////////////////BRYAN///////////////////////////////////////////
+  //nro evaluacion
+  nroEvaluacion: number = 0;
+
+  //LISTA DE FILTROS
+  periodosAc: PeriodoAc[] = [];
+  carreras: Carrera[] = [];
+  asignaturas: IAsignaturaXCarrera[] = [];
+  docentes: IDocenteXAsignatura[] = [];
+  aulas: IConsultarAula[] = []
+  //filtros
+  selectedPeriodo: any;
+  selectedCarrera: any;
+  selectedAsignatura: any;
+  selectedDocente: any;
+  selectedAula: any;
+
+  //OBJETOS
+  evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación general
 
   constructor(
     private http: HttpClient,
@@ -75,38 +103,84 @@ export class EvaluacionCriteriosCalificarComponent {
     private clasificacionService: ClasificacionCriteriosService,
     private aulaService: AulaService,
     private sharedDataService: SharedDataService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private periodoAcService: PeriodoAcService,
+    private carreraService: CarreraService,
+    private asignaturaService: AsignaturaService,
 
   ) { }
 
   ngOnInit(): void {
-    this.sharedDataService.idEvaluacionCabecera$.subscribe((id) => {
-      if (id !== null) {
-        this.evaluacionCab.nroEvaluacion = id;
-      }
-    });
-    this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
-    this.getCalificaciones();
-    this.listarcalifi();
-    this.getCriterios();
-    this.getClasificaciones();
-    this.obtenerCursos();
-    this.crearEvaluacionesDetVacias();
+    this.obtenerNroEva();
+    //cargar filtros;
+    this.loadPeriodos();
+    this.loadCarreras();
+    this.loadAsignaturas();
+    this.loadDocentes();
+    this.consultarAula();
+    ////
+    // this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
+    // this.getCalificaciones();
+    // this.listarcalifi();
+    // this.getCriterios();
+    // this.getClasificaciones();
+    // this.obtenerCursos();
+    // this.crearEvaluacionesDetVacias();
   }
+  obtenerNroEva(): void {
+    this.evaluacionCabService.nroEvaluacionNew().subscribe(eva => {
+      this.nroEvaluacion = eva;
+    })
+  }
+  loadPeriodos(): void {
+    this.periodoAcService.getPeriodosAcs().subscribe(response => {
+      this.periodosAc = response;
+    })
+  }
+
+  loadCarreras(): void {
+    this.carreraService.obtenerListaCarreras().subscribe(response => {
+      this.carreras = response;
+    })
+  }
+
+  loadAsignaturas(): void {
+    this.asignaturaService.asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0).subscribe(response => {
+      this.asignaturas = response;
+    })
+  }
+
+  loadDocentes(): void {
+    this.usuarioService.docenteXAsignatura(this.selectedAsignatura?.idAsignatura ?? 0).subscribe(response => {
+      this.docentes = response;
+    })
+  }
+
+  consultarAula(): void {
+    this.aulaService.aulaConsultar(
+      this.selectedAsignatura?.idAsignatura ?? 0,
+      this.selectedCarrera?.idCarrera ?? 0,
+      this.selectedPeriodo?.idPeriodoAc ?? 0,
+      this.selectedDocente?.usuId ?? 0
+    ).subscribe(response => {
+      this.aulas = response;
+    })
+  }
+
 
   obtenerCursos(): void {
     this.aulaService.getAulas().subscribe(cursos => {
       this.cursos = cursos;
     });
   }
-  
+
 
   getClasificaciones(): void {
     this.clasificacionService
       .obtenerListacriterios()
       .subscribe((clasificaciones) => {
         this.clasificaciones = clasificaciones;
-        
+
       });
   }
 
@@ -132,7 +206,7 @@ export class EvaluacionCriteriosCalificarComponent {
     return this.criterios.filter(criterio => criterio.clasificacion?.idClasificacion === idClasificacion);
   }
 
-  getCalificaciones(){
+  getCalificaciones() {
     this.calificacionService.obtenerListacriterios().subscribe(calificaciones => {
       this.calificaciones = calificaciones;
     });
@@ -164,6 +238,7 @@ export class EvaluacionCriteriosCalificarComponent {
       
       // Actualizar los contadores y calcular los porcentajes
       this.actualizarContadores();
+
       this.contarCalificaciones();
     } else {
       // Si la calificación no es válida, no hacer nada
@@ -190,7 +265,7 @@ export class EvaluacionCriteriosCalificarComponent {
   
   contarCalificaciones(){
     const totalCriterios = this.criterios.length;
-  
+
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
     this.porcentajeCumplimientoC = (this.contarC / totalCriterios) * 100;
     this.porcentajeCumplimientoM = (this.contarCM / totalCriterios) * 100;

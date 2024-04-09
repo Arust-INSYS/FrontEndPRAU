@@ -1,23 +1,24 @@
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
 import { catchError } from 'rxjs/operators';
 import { Asignatura } from '../models/asignatura';
+import { IAsignaturaXCarrera } from '../interface/IConsultasBD';
 @Injectable({
   providedIn: 'root'
 })
 export class AsignaturaService {
-    private url: string = `${entorno.urlPrivada}/asignatura`
-  
+  private url: string = `${entorno.urlPrivada}/asignatura`
+
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
   obtenerListaAsignaturas(): Observable<Asignatura[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`
     });
-  
+
     const options = { headers: headers };
 
     return this.http.get<Asignatura[]>(this.url + '/read', options).pipe(
@@ -33,12 +34,12 @@ export class AsignaturaService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
-  
+
     // Realiza la solicitud HTTP DELETE con el encabezado de autorización
     return this.http.delete(`${this.url}/delete?id=${id}`, { headers });
   }
-  
- 
+
+
   actualizarasignatura(id: number, asignatura: Asignatura): Observable<Asignatura> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -63,11 +64,22 @@ export class AsignaturaService {
     return this.http.post<Asignatura>(`${this.url}/create`, asignatura, { headers });
   }
 
- 
+
 
   obtenerAsignaturaPorId(id: number): Observable<Asignatura> {
     return this.http.get<Asignatura>(`${this.url}/buscar?id=${id}`);
   }
 
-  
+  asignaturaXCarreara(carreraId: number): Observable<IAsignaturaXCarrera[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<IAsignaturaXCarrera[]>(`${this.url}/asignaturaXCarrera?carreraId=${carreraId}`, {
+      headers,
+    });
+
+  }
+
+
 } 

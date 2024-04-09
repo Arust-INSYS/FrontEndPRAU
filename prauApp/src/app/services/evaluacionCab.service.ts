@@ -12,7 +12,7 @@ export class EvaluacionCabService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) {}
+  ) { }
   private url: string = `${entorno.urlPrivada}/evaluacionCab`;
   //private token = this.localStorage.getItem('token');
 
@@ -52,7 +52,19 @@ export class EvaluacionCabService {
     });
 
     return this.http.get<EvaluacionCab[]>(this.url + '/read', { headers })
-    .pipe(map((response) => response as EvaluacionCab[]));
-}
+      .pipe(map((response) => response as EvaluacionCab[]));
+  }
 
+
+  ///sacar el numero de la nueva evaluacion para mostrar 
+
+  nroEvaluacionNew(): Observable<number> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.get<number>(`${this.url}/nroEvaluacionNew`, {
+      headers,
+    });
+  }
 }
