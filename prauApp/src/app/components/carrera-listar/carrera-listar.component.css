@@ -17,4 +17,43 @@
 
   table{
     width: 100%;
-  }
+  }.boton-pdf {
+  padding: 10px 20px;
+  background-color: #007bff; /* Cambia el color de fondo según tu preferencia */
+  color: #fff; /* Color del texto */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.boton-pdf:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.boton-pdf:focus {
+  outline: none; /* Elimina el borde de enfoque */
+}
+
+
+
+
+.boton-pdf {
+  padding: 10px 20px;
+  background-color: #007bff; /* Cambia el color de fondo según tu preferencia */
+  color: #fff; /* Color del texto */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.boton-pdf:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.boton-pdf:focus {
+  outline: none; /* Elimina el borde de enfoque */
+}

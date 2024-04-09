@@ -56,7 +56,7 @@ export class AulaService {
       headers,
     });
   }
-  eliminarPeriodoAc(id: number): Observable<void> {
+  eliminarAula(id: number): Observable<void> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
@@ -66,5 +66,16 @@ export class AulaService {
     return this.http.delete<void>(`${this.url}/delete?id=${id}`, {
       headers,
     });
+  }
+
+
+  getAulaById(id: number): Observable<Aula> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get<Aula>(`${this.url}/find/${id}`, { headers });
   }
 }

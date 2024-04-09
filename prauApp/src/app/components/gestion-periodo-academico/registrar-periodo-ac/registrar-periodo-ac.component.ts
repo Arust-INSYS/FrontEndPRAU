@@ -64,7 +64,8 @@ export class RegistrarPeriodoAcComponent {
         this.periodoAcService.registrarPeriodoAc(this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa
-            this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
+            this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
+            
             this.toastr.success('Se guardó correctamente');
             this.resetForm(); 
 
@@ -72,11 +73,13 @@ export class RegistrarPeriodoAcComponent {
           (error) => {
             if (error.status === 409) {
               // 409 es el código de estado para Conflict
-              this.toastr.error(error.error); // Muestra el mensaje de error que viene del servidor
+              this.toastr.error(error.error);
+              this.router.navigate(['/menu/contenido-virtual/listar-periodo']); // Muestra el mensaje de error que viene del servidor
             } else {
               this.toastr.error(
                 'Ocurrió un error al guardar el período académico.'
               );
+              this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
             }
           }
         );
