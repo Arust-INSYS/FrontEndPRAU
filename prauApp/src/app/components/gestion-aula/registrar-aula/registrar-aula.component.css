@@ -13,12 +13,31 @@
   /* --------------------------------------------------------------- */
   /* --------------------------------------------------------------- */
   /* FORMULARIO: fondo blanco y casillas --------------------------- */
+  .error {
+    color: red;
+}
+
+  /* FORMULARIO: fondo blanco y casillas --------------------------- */
+.full-width-dropdown {
+  width: 100%;
+}
+
+/* EDICION CADA INPUT: diseño ----------------------- */
+p-dropdown {
+  width: 100%;
+}
+/* EDICION CADA INPUT: diseño ----------------------- */
+:host ::ng-deep .full-width-dropdown .ui-dropdown {
+  width: 100% !important;
+}
+  
+
   form{
     background-color: white;
     margin:10px;
     margin:0 auto;
     border-radius:19px;
-    width: 100%;
+    width: 70%;
     /* SECUENCIA: para centrar formulario */
     /* position: absolute;
     top: 50%; 
@@ -63,7 +82,7 @@
   /* --------------------------------------------------------------- */
   /* FUNCION DEL BOTON REGISTRARSE --------- */
   #button {
-          width: 94%;
+          width: 90%;
           font-family: sans-serif;
           font-size:15px;
           font-weight: bolder;
