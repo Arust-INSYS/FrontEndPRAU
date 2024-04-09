@@ -145,9 +145,21 @@ export class EvaluacionCriteriosCalificarComponent {
       }));
     });
   } 
-  onCalificacionSeleccionado(selectedCurso: any, cri:number) {
+  onCalificacionSeleccionado(selectedCalificacion: any, cri:number) {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
-    console.log('Calificacion seleccionado:', selectedCurso, cri);
+    console.log('Calificacion seleccionado:', selectedCalificacion, cri);
+
+    if (selectedCalificacion === 'Cumple' || selectedCalificacion === 'Cumple Medianamente' || selectedCalificacion === 'No Cumple') {
+
+      this.calificaciones=selectedCalificacion;
+
+      this.actualizarContadores(selectedCalificacion);
+    // Llamar al método para contar las calificaciones hechas
+      this.contarCalificaciones();
+    } else {
+      // Si la calificación no es válida, no hacer nada
+    }
+
   }
 
   cargarInformacionCurso(): void {
@@ -160,7 +172,7 @@ export class EvaluacionCriteriosCalificarComponent {
     }
   }
 
-  actualizarCalificacion(event: any){
+  actualizarCalificacion(event: any, num: number){
     // Obtener la nueva calificación del evento
     const nuevaCalificacion = event.target.value;
     
