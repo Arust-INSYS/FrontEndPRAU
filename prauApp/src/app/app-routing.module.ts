@@ -38,8 +38,6 @@ import { AsignaturaListarComponent } from './components/asignatura-listar/asigna
 import { ContenidoAnaliticsComponent } from './components/contenido-analitics/contenido-analitics.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'registrar', component: RegistrarPersonaComponent },
-  { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -130,17 +128,6 @@ const routes: Routes = [
         component: ContenidoAnaliticsComponent,
         children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
       },
-
-      // {
-      //   path: 'contenido-asignatura',
-      //   component: ContenidoAsignaturaComponent,
-      //   children: [{ path: 'asignatura', component: AsignaturaComponent }],
-      // },
-      // {
-      //   path: 'contenido-carrera',
-      //   component: ContenidoCarreraComponent,
-      //   children: [{ path: 'carrera', component: CarreraComponent }],
-      //},
     ],
   },
 

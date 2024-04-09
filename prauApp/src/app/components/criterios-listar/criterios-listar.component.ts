@@ -218,14 +218,14 @@ applyFilter() {
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([600, 400]);
+    const page = pdfDoc.addPage();
 
         // Agregar imagen
         const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
         const image = await pdfDoc.embedPng(imageBytes);
         page.drawImage(image, {
           x: 210, // Posición x de la imagen
-          y: 350, // Posición y de la imagen
+          y: 780, // Posición y de la imagen
           width: 180, // Ancho de la imagen
           height: 40 // Alto de la imagen
         });
@@ -233,34 +233,35 @@ applyFilter() {
     // Título de la tabla
     page.drawText('Lista de Criterios:', {
       x: 225,
-      y: 320,
+      y: 750,
       size: 20,
       color: rgb(0, 0, 0),
     });
   
     // Definir el tamaño y la posición de la tabla
     const startX = 50;
-    const startY = 220;
-    const cellPadding = -10;
-    const rowHeight = 20;
-    const tableWidth = 500;
-    const tableHeight = this.criterio.length * rowHeight + rowHeight;
+    let startY = 550;
+    const cellPadding = 5;
   
     // Definir las propiedades de las celdas
-    const fontSize = 9;
-    const cellWidth = tableWidth / 4;
+    const fontSize = 10;
+    const SizeColumn = [20, 100, 280, 100];
   
     // Encabezados de la tabla
     const headers = ['ID', 'Nombre', 'Descripción', 'Clasificación'];
+    const headersCellWidth = SizeColumn;
+    const rowHeight = 20;
+    const tableHeight = 200;
     for (let i = 0; i < headers.length; i++) {
       page.drawText(headers[i], {
-        x: startX + i * cellWidth + cellPadding,
-        y: startY + tableHeight - rowHeight + cellPadding,
+        x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width  + cellPadding, 0),
+        y: startY + tableHeight - rowHeight - 20 + cellPadding,
         size: fontSize,
-        color: rgb(0, 0, 0)
+        color: rgb(0, 0, 0),
       });
     }
   
+    const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
     // Llenar la tabla con los datos
     for (let i = 0; i < this.criterio.length; i++) {
       const dato = this.criterio[i];
@@ -271,15 +272,26 @@ applyFilter() {
         dato.descripcion,
         clasificacionNombre
       ];
-  
+
+        // Calcular la altura máxima de la fila
+        let maxHeight = 0;
+        for (let j = 0; j < rowData.length; j++) {
+          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.65));
+          const textHeight = lines * (fontSize * 0.75); // Ajustar según sea necesario
+          maxHeight = Math.max(maxHeight, textHeight);
+          
+        }
+        // Dibujar los datos de la fila
       for (let j = 0; j < rowData.length; j++) {
         page.drawText(rowData[j], {
-          x: startX + j * cellWidth + cellPadding,
-          y: startY + tableHeight - (i + 2) * rowHeight + cellPadding,
-          size: 8,
-          color: rgb(0, 0, 0)
+          x: startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 0),
+          y: startY + tableHeight - (i + 3.5) * rowHeight + cellPadding + maxHeight - fontSize * 0.75,
+          size: fontSize,
+          color: rgb(0, 0, 0),
+          maxWidth: dataCellWidths[j] - 2 * cellPadding, // Ajustar según el ancho de la celda
         });
       }
+      startY -= maxHeight + cellPadding;
     }
   
     const pdfBytes = await pdfDoc.save();

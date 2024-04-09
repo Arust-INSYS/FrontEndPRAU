@@ -88,6 +88,18 @@ export class UsuarioService {
     });
   }
 
+  buscarNombreUsuario(id: number) {
+    // Construir el encabezado de autorización
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get<Usuario>(`${this.url}/obtenerNombreRol?userId=${id}`, {
+      headers,
+    });
+  }
+
   registrarUsuario(usuario: Usuario): Observable<Usuario> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({

@@ -144,12 +144,13 @@ body{
 
 .user-data{
   padding: 0rem 1rem;
-  width: 10rem;
+  width: auto;
   h5{
     margin: 0;
   }
   .rol{
     font-weight: 400;
+    font-size: 12px;
   }
 }
 
@@ -254,7 +255,8 @@ body{
 }
 
 .responsable{
-  font-size: 18px;
+  font-size: 15px;
   color: $gris-oscuro;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
