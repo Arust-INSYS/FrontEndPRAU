@@ -180,62 +180,58 @@ export class AnalisisUsoComponent implements OnInit {
     };
   }
 
-  ///metodos para filtrar 
-  filterCarrera(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
+ ///////////////metodos  de filtrado //
+filterCarrera(event: AutoCompleteCompleteEvent) {
+  let filtered: any[] = [];
+  let query = event.query;
 
-    for (let i = 0; i < this.carreras.length; i++) {
-      let carrera = this.carreras[i];
-      if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push("Code: "+carrera.idCarrera+" - Carrera : "+carrera.nombreCarrera);
-
-      }
+  for (let i = 0; i < this.carreras.length; i++) {
+    let carrera = this.carreras[i];
+    if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } + carrera.nombreCarrera);
     }
-
-    this.filteredCarrera = filtered;
   }
 
-  filterPerido(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
+  this.filteredCarrera = filtered;
+}
 
-    for (let i = 0; i < this.periodos.length; i++) {
-      let periodo = this.periodos[i];
-      if (periodo.nombrePeriodo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push("Code: "+periodo.idPeriodoAc+" - Periodo : "+periodo.nombrePeriodo);
-      }
+filterPerido(event: AutoCompleteCompleteEvent) {
+  let filtered: any[] = [];
+  let query = event.query;
+
+  for (let i = 0; i < this.periodos.length; i++) {
+    let periodo = this.periodos[i];
+    if (periodo.nombrePeriodo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      filtered.push({ id: periodo.idPeriodoAc, nombre: periodo.nombrePeriodo });
     }
-
-    this.filteredPerido = filtered;
   }
 
-  filterDocente(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
+  this.filteredPerido = filtered;
+}
 
-    for (let i = 0; i < this.docentes.length; i++) {
-      let docente = this.docentes[i];
-      if (docente.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push("Code: "+docente.usuId+" - Docente : "+docente.perNombre1 + " " + docente.perApellido1);
-        filtered.push();
-      }
+filterDocente(event: AutoCompleteCompleteEvent) {
+  let filtered: any[] = [];
+  let query = event.query;
+
+  for (let i = 0; i < this.docentes.length; i++) {
+    let docente = this.docentes[i];
+    if (docente.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      filtered.push({ id: docente.usuId, nombre: docente.perNombre1 + " " + docente.perApellido1 });
     }
-
-    this.filteredDocentes = filtered;
   }
+
+  this.filteredDocentes = filtered;
+}
 
 ///// fin metodos para filtrar ///
 
-///
-onSelectAutoComplete(event: any) {
-  // Obtener el objeto completo seleccionado
-  const selectedObject = event;
-
-  // Imprimir el objeto seleccionado en la consola
-  console.log('Objeto seleccionado:', selectedObject);
+///obtener id selecciondo ya sea de  carrea,periodo o docente ////
+onSelectItem(event: any) {
+  console.log("Objeto seleccionado:", event);
+  //  event.id y event.nombre para obtener el ID y el nombre respectivamente
 }
 
+///
 
 
 

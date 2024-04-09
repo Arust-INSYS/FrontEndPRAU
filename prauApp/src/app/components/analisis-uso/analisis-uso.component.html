@@ -2,30 +2,19 @@
 <div class="container">
     <div class="top">
         <div class="left">
-            
+
             <p-dropdown [options]="opcines" [(ngModel)]="selectedOpcines" [showClear]="true"
                 (ngModelChange)="onOpcionSeleccionada($event)" placeholder="Seleccione una Opcion"></p-dropdown>
         </div>
 
         <div class="card flex justify-content-right">
-          
-<!--           
             <p-autoComplete [(ngModel)]="selectedCarrera"
                 [suggestions]="selectedOption === 'Carrera' ? filteredCarrera : (selectedOption === 'Docente' ? filteredDocentes : filteredPerido)"
-                [dropdown]="true"
+                [dropdown]="true" field="nombre" (onSelect)="onSelectItem($event)"
                 (completeMethod)="selectedOption === 'Carrera' ? filterCarrera($event) : (selectedOption === 'Docente' ? filterDocente($event) : filterPerido($event))"
-                placeholder="Buscar">></p-autoComplete> -->
-                <p-autoComplete [(ngModel)]="selectedCarrera"
-                [suggestions]="selectedOption === 'Carrera' ? filteredCarrera : (selectedOption === 'Docente' ? filteredDocentes : filteredPerido)"
-                [dropdown]="true"
-                (completeMethod)="selectedOption === 'Carrera' ? filterCarrera($event) : (selectedOption === 'Docente' ? filterDocente($event) : filterPerido($event))"
-                (onSelect)="onSelectAutoComplete($event)"
-                placeholder="Buscar"></p-autoComplete>
-
-
+                placeholder="Buscar">
+            </p-autoComplete>
         </div>
-
-     
     </div>
     <br>
     <div class="card flex justify-content-center chartst" id="chart">
