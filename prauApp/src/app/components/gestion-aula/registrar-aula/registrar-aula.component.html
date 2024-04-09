@@ -6,44 +6,67 @@
 
     <div id="tabla-formulario">
         <label for="nombre">Nombre </label>
-        <input [(ngModel)]="nuevaAula.aulaNombre"  placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla">
+        <!-- <input [(ngModel)]="nuevaAula.aulaNombre" type="text" class="entradas" pInputText
+            placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla" required> -->
+            <input [(ngModel)]="nuevaAula.aulaNombre" type="text" class="entradas" pInputText
+        placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla" required>
+    <div *ngIf="f.submitted && f.controls['fnombre'].errors" class="error">
+        Debe ingresar el nombre del aula.
+    </div>
 
         <label for="apellido">Ciclo que Pertenece</label>
-        <input [(ngModel)]="nuevaAula.cicloPertenece" placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla">
+        <!-- <input [(ngModel)]="nuevaAula.cicloPertenece" type="text" pInputText
+            placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla" required="true"> -->
+            <input [(ngModel)]="nuevaAula.cicloPertenece" type="text" pInputText
+            placeholder="Ingrese  el ciclo al que pertenece..." name="fcliclopertenece" type="text" id="tabla" required>
+        <div *ngIf="f.submitted && f.controls['fcliclopertenece'].errors" class="error">
+            Debe ingresar el ciclo al que pertenece el aula.
+        </div>
 
+
+        <!-- Para Docentes -->
         <label for="docente">Docente:</label>
-        <select [(ngModel)]="nuevaAula.docente" name="docente" id="docente" (change)="onDocenteChange($event)"
-        style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
-            <option value="">Seleccione un docente...</option>
-            <option *ngFor="let docente of docentes" [value]="docente.usuId">{{docente.perNombre1}} {{docente.perApellido1}}</option>
-          </select>
-          
+        <!-- <p-dropdown class="full-width-dropdown" [(ngModel)]="nuevaAula.docente" name="docente" [options]="docentes"
+            optionLabel="fullName" placeholder="Seleccione un Docente" (onChange)="onDocenteChange($event)"
+            [style]="{ 'width': '100%' }"></p-dropdown> -->
+            <p-dropdown class="full-width-dropdown" [(ngModel)]="nuevaAula.docente" name="docente" [options]="docentes"
+            optionLabel="fullName" placeholder="Seleccione un Docente" (onChange)="onDocenteChange($event)"
+            [style]="{ 'width': '100%' }"></p-dropdown>
+        <div *ngIf="!docenteSeleccionado" class="error">
+            Debe seleccionar un docente.
+        </div>
 
-        <label for="asignatura">Asignatura:</label>
-        <select  [(ngModel)]="nuevaAula.asignatura"name="asignatura" id="asignatura" (change)="onAsignaturaChange($event)"
-            style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
-            <option value="">Seleccione una asignatura...</option>
-
-            <option *ngFor="let asignatura of asignaturas" [value]="asignatura.idAsignatura">{{asignatura.nombreAsignatura}}</option>
-           
-     
-        </select>
-
-        <label for="periodo">Periodo Académico:</label>
-        <select [(ngModel)]="nuevaAula.periodoAc" name="periodo" id="periodo" (change)="onPeriodoChange($event)"
-            style="margin-bottom:10px; width: 95%; padding: 2%; margin-left: 10px; border: 1px solid #ccc; font-style: italic;">
-            <option value="">Seleccione un periodo...</option>
-            <option *ngFor="let periodo of periodos" [value]="periodo.idPeriodoAc">{{periodo.nombrePeriodo}}</option>
-        </select>
-
-        <label for="descripcion">Observaciones</label>
-        <textarea [(ngModel)]="nuevaAula.observaciones" rows="5" cols="70" class="entradas" pInputTextarea placeholder="Escriba una Observacio" name="descripcion" id="tabla" ></textarea>
         
 
+        <!-- Para Asignaturas -->
+        <label for="asignatura">Asignatura:</label>
+        <p-dropdown class="full-width-dropdown" [(ngModel)]="nuevaAula.asignatura" name="asignatura"
+            [options]="asignaturas" optionLabel="nombreAsignatura" placeholder="Seleccione una Asignatura"
+            (onChange)="onAsignaturaChange($event)" [style]="{ 'width': '100%' }">
+        </p-dropdown>
+        <div *ngIf="!asiganturaSeleccionado" class="error">
+            Debe seleccionar una Asignatura.
+        </div>
+        <label for="periodo">Periodo Académico:</label>
+        <!-- Para Periodos -->
+        <p-dropdown class="full-width-dropdown" [(ngModel)]="nuevaAula.periodoAc" name="periodoAc" [options]="periodos"
+            optionLabel="nombrePeriodo" placeholder="Seleccione un Periodo" (onChange)="onPeriodoChange($event)"
+            [style]="{ 'width': '100%' }">
+        </p-dropdown>
+        <div *ngIf="!periodoSeleccionado" class="error">
+            Debe seleccionar un Periodo Academico.
+        </div>
 
+        <label for="descripcion">Observaciones</label>
+        <textarea [(ngModel)]="nuevaAula.observaciones" pInputTextarea rows="5" cols="70" class="entradas"
+            pInputTextarea placeholder="Escriba una Observacio" name="descripcion" id="tabla"
+            [style]="{ 'width': '100%' }"></textarea>
 
 
 
     </div>
     <button name="registro" type="submit" id="button"> ¡Crear Nueva Aula! </button>
+    <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
+        [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
+
 </form>

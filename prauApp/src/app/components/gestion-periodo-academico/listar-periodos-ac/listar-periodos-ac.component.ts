@@ -11,11 +11,12 @@ import Swal from 'sweetalert2';
 })
 export class ListarPeriodosAcComponent implements OnInit {
   periodos: PeriodoAc[] = [];
+  origenalesperiodos: PeriodoAc[] = [];
 
   periodoId: number =0
   selectedPeriodoAc: PeriodoAc | null = null;
-    displayModalregsitro: boolean = false;
-    displayModalactualizar: boolean = false;
+   // displayModalregsitro: boolean = false;
+   // displayModalactualizar: boolean = false;
 
 
   constructor(
@@ -23,29 +24,47 @@ export class ListarPeriodosAcComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService
   ) {}
-  showModal() {
-    this.displayModalregsitro = true;
-  }
+  // showModal() {
+  //   this.displayModalregsitro = true;
+  // }
  
-  showModalactualizar(id: number) {
-    this.displayModalactualizar = true;
-    this.periodoId = id;
-    console.log('ID del registro a actualizar: ',this.periodoId);
-  }
+  // showModalactualizar(id: number) {
+  //   this.displayModalactualizar = true;
+  //   this.periodoId = id;
+  //   console.log('ID del registro a actualizar: ',this.periodoId);
+  // }
   
 
   ngOnInit() {
     this.periodoAcService.getPeriodosAcs().subscribe((periodos) => {
       this.periodos = periodos;
+      this.origenalesperiodos=periodos;
       // console.log(this.periodos)
     });
   }
 
-  // selectPeriodoAc(periodo: PeriodoAc) {
-  //   this.displayModalactualizar = true;
-  //   console.log(periodo)
-  //   this.router.navigate(['/menu/contenido-virtual/actualizar-periodo', periodo.idPeriodoAc]);
-  // }
+  selectPeriodoAc(periodo: PeriodoAc) {
+    //this.displayModalactualizar = true;
+    console.log(periodo)
+    this.router.navigate(['/menu/contenido-virtual/actualizar-periodo', periodo.idPeriodoAc]);
+  }
+
+  onSearch(event: any) {
+    let filteredPeriodo = [];
+  
+    if(event.target.value) { // Si el campo de búsqueda no está vacío
+      for(let periodo of this.periodos) {
+        let periodoStr = JSON.stringify(periodo).toLowerCase();
+        if(periodoStr.includes(event.target.value.toLowerCase())) {
+          filteredPeriodo.push(periodo);
+         
+        }
+      }
+      this.periodos = filteredPeriodo; // Actualiza la lista de aulas con los resultados filtrados
+    } else {
+      this.periodos = [...this.origenalesperiodos]; // Si el campo de búsqueda está vacío, restablece la lista de aulas a su estado original
+    }
+  }
 
  
 
@@ -79,7 +98,7 @@ export class ListarPeriodosAcComponent implements OnInit {
           );
         });
       }
-      this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
+      this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
     });
   }
 
