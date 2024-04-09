@@ -8,17 +8,46 @@
             </div>
 
             <section class="layout">
-                <div class="grow1">
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="periodosAc" [(ngModel)]="selectedPeriodo"
+                        optionLabel="nombrePeriodo" [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
+                        placeholder="Selecionar Periodo Academico" (onChange)="consultarAula()">
 
+                    </p-dropdown>
                 </div>
-                <div class="grow1">2</div>
-                <div class="grow1">3</div>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="carreras" [(ngModel)]="selectedCarrera"
+                        optionLabel="nombreCarrera" [filter]="true" filterBy="nombreCarrera" [showClear]="true"
+                        placeholder="Selecionar Carrera" (onChange)="loadAsignaturas(); consultarAula()">
+
+                    </p-dropdown>
+                </div>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="asignaturas" [(ngModel)]="selectedAsignatura"
+                        optionLabel="nombreAsignatura" [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                        placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
+
+                    </p-dropdown>
+                </div>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="docentes" [(ngModel)]="selectedDocente"
+                        optionLabel="nombreCompleto" [filter]="true" filterBy="nombreCompleto" [showClear]="true"
+                        placeholder="Selecionar Docente" (onChange)="consultarAula()">
+
+                    </p-dropdown>
+                </div>
+                <div class="">
+                    <p-dropdown class="element-filter" [options]="aulas" [(ngModel)]="selectedAula" optionLabel="nombre"
+                        [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula">
+
+                    </p-dropdown>
+                </div>
             </section>
 
-            <!-- <div class="header-container">
-                    <div><label for="lblPorcentajeCumplimiento"></label>
-                        <span id="lblPorcentajeCumplimiento"></span>
-                    </div>
+            <!-- <div class=" header-container">
+                        <div><label for="lblPorcentajeCumplimiento"></label>
+                            <span id="lblPorcentajeCumplimiento"></span>
+                        </div>
                 </div> -->
 
             <!-- <div class="course-details">

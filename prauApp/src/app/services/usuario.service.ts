@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/loginRequest';
 import { AuthResponse } from '../models/authResponse';
 import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
+import { IDocenteXAsignatura } from '../interface/IConsultasBD';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) {}
+  ) { }
 
   private url: string = `${entorno.urlPrivada}/usuario`;
   private urlPublica: string = `${entorno.urlPublica}`;
@@ -38,7 +39,7 @@ export class UsuarioService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
-    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`,{
+    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`, {
       headers,
     });
   }
@@ -204,5 +205,17 @@ export class UsuarioService {
         headers,
       }
     );
+  }
+
+
+  docenteXAsignatura(asignaturaId: number): Observable<IDocenteXAsignatura[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<IDocenteXAsignatura[]>(`${this.url}/docenteXAsignatura?asignaturaId=${asignaturaId}`, {
+      headers,
+    });
+
   }
 }

@@ -198,6 +198,7 @@ export class RegistrarPersonaComponent {
       this.personasFiltradas = this.personas; // Inicialmente, las personas filtradas serán iguales a todas las personas
     });
   }
+
   filtrar() {
     this.personasFiltradas = this.personas.filter((persona) =>
       persona.nombreCompleto.toLowerCase().includes(this.filtro.toLowerCase())
