@@ -24,11 +24,12 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class EvaluacionCriteriosCalificarComponent {
   
-  criteriosIds: number[] = [];
-  
   calificaciones: Calificacion[] = [];
   
   criterio: Criterios[] = [];
+
+  criteriosIds: number[] = [];
+  calificacionesPorCriterio: { idCriterio: number, calificacion: string }[] = []; // Array para almacenar las calificaciones por criterio
   
   clasificaciones: ClasificacionCriterios[] = [];
   evaluacionDets: EvaluacionDet[] = [];
@@ -149,57 +150,43 @@ export class EvaluacionCriteriosCalificarComponent {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
     console.log('Calificacion seleccionado:', selectedCalificacion, cri);
 
-    if (selectedCalificacion === 'Cumple' || selectedCalificacion === 'Cumple Medianamente' || selectedCalificacion === 'No Cumple') {
+    if (selectedCalificacion === 'C' || selectedCalificacion === 'CM' || selectedCalificacion === 'NC') {
 
-      this.calificaciones=selectedCalificacion;
-
-      this.actualizarContadores(selectedCalificacion);
-    // Llamar al método para contar las calificaciones hechas
-      this.contarCalificaciones();
-    } else {
-      // Si la calificación no es válida, no hacer nada
-    }
-
-  }
-
-  cargarInformacionCurso(): void {
-    if (this.cursoSeleccionado) {
-      this.nombreCurso = this.cursoSeleccionado.aulaNombre;
-      this.nombreDocente = this.cursoSeleccionado.docente ? this.cursoSeleccionado.docente.usuNombreUsuario.toString() : '';
-    } else {
-      this.nombreCurso = ''; // Reinicia el nombre del curso si no se selecciona ningún curso
-      this.nombreDocente = ''; // Reinicia el nombre del docente si no se selecciona ningún curso
-    }
-  }
-
-  actualizarCalificacion(event: any, num: number){
-    // Obtener la nueva calificación del evento
-    const nuevaCalificacion = event.target.value;
-    
-    // Verificar si la calificación es una opción válida (C, CM o NC)
-    if (nuevaCalificacion === 'C' || nuevaCalificacion === 'CM' || nuevaCalificacion === 'NC') {
-
-      this.calificaciones=nuevaCalificacion;
-
-      this.actualizarContadores(nuevaCalificacion);
-    // Llamar al método para contar las calificaciones hechas
+      const index = this.calificacionesPorCriterio.findIndex(item => item.idCriterio === cri);
+      
+      if (index !== -1) {
+        // Si ya existe, actualizar la calificación
+        this.calificacionesPorCriterio[index].calificacion = selectedCalificacion;
+      } else {
+        // Si no existe, agregarla al array
+        this.calificacionesPorCriterio.push({ idCriterio: cri, calificacion: selectedCalificacion });
+      }
+      
+      // Actualizar los contadores y calcular los porcentajes
+      this.actualizarContadores();
       this.contarCalificaciones();
     } else {
       // Si la calificación no es válida, no hacer nada
     }
   }
-  
-  actualizarContadores(nuevaCalificacion: string){
-  // Incrementar el contador correspondiente según la nueva calificación
-  if (nuevaCalificacion === 'C') {
-    this.contarC++;
-  } else if (nuevaCalificacion === 'CM') {
-    this.contarCM++;
-  } else if (nuevaCalificacion === 'NC') {
-    this.contarNC++;
+
+  actualizarContadores(){
+    // Reiniciar los contadores
+    this.contarC = 0;
+    this.contarCM = 0;
+    this.contarNC = 0;
+
+    // Calcular los contadores según las calificaciones almacenadas
+    this.calificacionesPorCriterio.forEach(item => {
+      if (item.calificacion === 'C') {
+        this.contarC++;
+      } else if (item.calificacion === 'CM') {
+        this.contarCM++;
+      } else if (item.calificacion === 'NC') {
+        this.contarNC++;
+      }
+    });
   }
-  
-}
   
   contarCalificaciones(){
     const totalCriterios = this.criterios.length;
@@ -208,7 +195,6 @@ export class EvaluacionCriteriosCalificarComponent {
     this.porcentajeCumplimientoC = (this.contarC / totalCriterios) * 100;
     this.porcentajeCumplimientoM = (this.contarCM / totalCriterios) * 100;
     this.porcentajeCumplimientoN = (this.contarNC / totalCriterios) * 100;
-
   }
 
   /*guardarCalificaciones(){

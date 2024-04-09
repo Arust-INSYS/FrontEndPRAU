@@ -114,17 +114,6 @@ onCursoSeleccionado(selectedCurso: any) {
   this.evaluacionCa.aulaEva!.aulaId=selectedCurso;
   //console.log('Este es el mensaje',this.evaluacionCa.aula)
 }
-
-  cargarInformacionCurso(): void {
-    // Verificar que haya un curso seleccionado
-    if (this.cursoSeleccionado) {
-        // Asignar el ID del curso seleccionado a la variable idAulaSeleccionada
-        this.idAulaSeleccionada = this.cursoSeleccionado;
-    } else {
-        // Reiniciar el ID del curso seleccionado si no hay ninguno seleccionado
-        this.idAulaSeleccionada = null;
-    }
-}
   
 
   getEvaluacionesCAB(): void {
