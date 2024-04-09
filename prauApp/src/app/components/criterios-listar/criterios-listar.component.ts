@@ -52,13 +52,35 @@ applyFilter() {
   
    // Método para dividir la descripción en líneas más cortas
    splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
-    const maxCharsPerLine = Math.floor(maxWidth / (fontSize * 0.50)); // Ajustar según sea necesario
+    const words = description.split(' ');
     const lines = [];
-    for (let i = 0; i < description.length; i += maxCharsPerLine) {
-        lines.push(description.substring(i, i + maxCharsPerLine));
+    let currentLine = '';
+
+    for (const word of words) {
+      const width = this.getTextWidth(currentLine + word, fontSize); // Calcular el ancho del texto actual
+
+      if (width <= maxWidth) {
+          // Si la palabra cabe en la línea actual, añádela
+          currentLine += (currentLine ? ' ' : '') + word;
+      } else {
+          // Si la palabra no cabe, añade la línea actual al array de líneas y comienza una nueva línea
+          lines.push(currentLine);
+          currentLine = word;
+      }
+  }
+
+      // Añadir la última línea
+      if (currentLine !== '') {
+        lines.push(currentLine);
     }
+
     return lines;
   }
+
+  getTextWidth(text: string, fontSize: number): number {
+    // Calcular el ancho del texto según su longitud y el tamaño de la fuente
+    return text.length * (fontSize * 0.5); // Ajusta según sea necesario
+}
 
   obtenerCriterios() {
     this.criteriosService.obtenerListacriterios().subscribe(dato => {
@@ -243,19 +265,19 @@ applyFilter() {
   
     // Título de la tabla
     page.drawText('Lista de Criterios:', {
-      x: 225,
+      x: 250,
       y: 750,
-      size: 20,
+      size: 15,
       color: rgb(0, 0, 0),
     });
   
     // Definir el tamaño y la posición de la tabla
     const startX = 50;
     let startY = 550;
-    const cellPadding = 5;
+    const cellPadding = 8;
   
     // Definir las propiedades de las celdas
-    const fontSize = 10;
+    const fontSize = 9;
     const SizeColumn = [20, 100, 280, 100];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
@@ -291,7 +313,7 @@ applyFilter() {
         // Calcular la altura máxima de la fila
         let maxHeight = 0;
         for (let j = 0; j < rowData.length; j++) {
-          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.65));
+          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
           const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
           maxHeight = Math.max(maxHeight, textHeight);
           
@@ -299,16 +321,16 @@ applyFilter() {
     // Dibujar los datos de la fila y las líneas horizontales
     for (let j = 0; j < rowData.length; j++) {
       const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
-      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.75;
+      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
       const cellWidth = dataCellWidths[j] - 2 * cellPadding;
 
       // Dibujar texto
-      if (j === 2) { // Si es la celda de descripción
+      if (j === 1 || j === 2  || j === 3) { // Si es la celda de descripción
         const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
         for (let k = 0; k < descriptionLines.length; k++) {
             page.drawText(descriptionLines[k], {
                 x: cellX,
-                y: cellY - k * (fontSize * 0.75),
+                y: cellY - k * (fontSize * 0.95),
                 size: fontSize,
                 color: rgb(0, 0, 0),
                 maxWidth: cellWidth,

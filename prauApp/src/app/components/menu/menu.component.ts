@@ -36,7 +36,9 @@ export class MenuComponent implements OnInit{
   }
   
   logout() {
-    sessionStorage.clear();
-    this.router.navigate(['/login']);
+    sessionStorage.clear;
+    sessionStorage.removeItem('token');
+    this.localStorage.removeItem("token");
+    this.router.navigate(['/login']).then(()=> window.location.reload());
   }
 }

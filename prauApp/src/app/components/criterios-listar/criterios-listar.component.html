@@ -22,8 +22,8 @@
       class="registrar-button mb-3"
     ></p-button>
 
-    <button (click)="generarPDF()">generarPDF</button>
-    <button (click)="generarPDFtable()">generarTablaPDF</button>
+    <p-button  [rounded]="true" class="registrar-button mb-3" (click)="generarPDFtable()">
+      <i class="pi pi-print"></i>Imprimir</p-button>
 
     <div class="tabla-container">
       <p-table
