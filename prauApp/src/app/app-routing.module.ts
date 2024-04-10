@@ -41,6 +41,7 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { MainDirectorComponent } from './modules/main-director/main-director.component';
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
+import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarPersonaComponent },
@@ -124,6 +125,8 @@ const routes: Routes = [
           { path: 'asignatura-actualizar/:id', component: AsignaturaActualizarComponent },
           { path: 'listar-periodo', component: ListarPeriodosAcComponent },
           { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
+          { path: 'principal-director', component: PrincipalDirectorComponent },
+          { path: 'grafica-director', component: GraficaDirectorComponent },
           {
             path: 'actualizar-periodo/:id',
             component: ActualizarPeriodoAcComponent,

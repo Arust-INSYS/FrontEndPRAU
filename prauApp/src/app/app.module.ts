@@ -150,10 +150,13 @@ import { CarreraActualizarComponent } from './components/carrera-actualizar/carr
 import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuario.component';
 import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
+import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
 
 
 @NgModule({
   declarations: [
+    PrincipalDirectorComponent,
+    GraficaDirectorComponent,
     PrincipalDirectorComponent,
     AsignaturaListarComponent,
     CarreraListarComponent,
@@ -194,6 +197,7 @@ import { PrincipalDirectorComponent } from './components/principal-director/prin
     CarreraActualizarComponent,
     ListarUsuarioComponent,
     PrincipalDirectorComponent,
+    GraficaDirectorComponent,
   ],
   imports: [
     RouterModule,
