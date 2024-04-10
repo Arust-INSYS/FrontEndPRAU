@@ -22,6 +22,7 @@ import { CarreraService } from '../../services/carrera.service';
 import { Carrera } from '../../models/carrera';
 import { IAsignaturaXCarrera, IConsultarAula, IDocenteXAsignatura } from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -50,6 +51,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   porcentajeCumplimientoC: number = 0;
   porcentajeCumplimientoM: number = 0;
   porcentajeCumplimientoN: number = 0;
+  
 
   //////////////////////////BRYAN///////////////////////////////////////////
   //nro evaluacion
@@ -80,6 +82,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   criterios: any[] = [];
   calificacion: any[] = [];
 
+  userId: number | null = null;
+
   //OBJETOS
   evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación detallada
   evaluacionDet: EvaluacionDet = new EvaluacionDet(); // Objeto para almacenar la evaluación detallada
@@ -93,6 +97,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private clasificacionService: ClasificacionCriteriosService,
     private aulaService: AulaService,
     private sharedDataService: SharedDataService,
+    private sessionStorage: LocalStorageService,
     private usuarioService: UsuarioService,
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
@@ -114,6 +119,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.listarcalifi();
     this.getCriterios();
     this.getClasificaciones();
+    this.userId = this.sessionStorage.getItem('userId');
 
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
@@ -232,8 +238,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.actualizarContadores();
 
       this.contarCalificaciones();
-      this.evaluacionDet.criterio!.idCriterio=index;
-      this.evaluacionDet.calificacion!.codCalificacion=selectedCalificacion;
     } else {
       // Si la calificación no es válida, no hacer nada
       console.log('Calificacion no valida');
@@ -260,6 +264,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   }
 
   contarCalificaciones() {
+
     const totalCriterios = this.criterios.length;
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
@@ -289,8 +294,12 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       observaciones = 'Por favor, complete el formulario.';
     }
 
+    //const userId = this.sessionStorage.getItem('userId');
+    //const evaluador: Usuario | undefined = userId ? { usuId: userId } : undefined;
+
     // Crear EvaluacionCab
     const evaluacionCabCrear: EvaluacionCab = {
+      
       // Aquí debes asignar el ID del usuario, que no veo en tu código actual
       nroEvaluacion: 0,
       totalC: totalC,
@@ -300,6 +309,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       porcTotalCm: porcTotalCM,
       porcTotalNc: porcTotalNC,
       observaciones: observaciones,
+      //evaluador: this.userId,
 
     };
 
@@ -318,47 +328,34 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       // Error al guardar la EvaluacionCab
       console.error('Error al crear la EvaluacionCab: ', error);
     });
+    this.guardarCalificaciones();
   }
 
   guardarCalificaciones() {
-
-    this.evaluacionDet.secCalificacion=0,
-    this.evaluacionDet.evaluacionCab.nroEvaluacion=this.evaluacionCab.nroEvaluacion,
-    
+    this.calificacionesPorCriterio.forEach(calificacion => {
+      // Crea una nueva instancia de EvaluacionDet
+      
+        this.evaluacionDet.secCalificacion= 0; // El ID se generará automáticamente en la base de datos
+        this.evaluacionDet.evaluacionCab.nroEvaluacion= this.evaluacionCab.nroEvaluacion,
+        this.evaluacionDet.criterio!.idCriterio= calificacion.idCriterio , // Asigna el ID del criterio
+        this.evaluacionDet.calificacion!.codCalificacion= calificacion.calificacion  // Asigna el ID de la calificación
+        console.log(this.evaluacionDet.secCalificacion);
+        console.log(this.evaluacionDet.evaluacionCab);
+        console.log(this.evaluacionDet.criterio!.idCriterio);
+        console.log(this.evaluacionDet.calificacion!.codCalificacion);
 
     this.evaluacionDetService.CrearEvaluacionDET(this.evaluacionDet).subscribe(
-      (response) => {
-        console.log('Calificaciones guardadas exitosamente:', response);
-        
-      },
-      (error) => {
-        console.error('Error al guardar calificaciones:', error);
-        // Aquí se maneja el error
-      }
-    );
-  }
-
-    /*this.criteriosIds.forEach((idCriterio) => {
-      // Encontrar la calificación correspondiente al criterio actual
-      const calificacion = this.calificacionesPorCriterio.find(item => item.idCriterio === idCriterio);
-
-      const evaluacionDet: EvaluacionDet = {
-        secCalificacion: 0, // El ID se generará automáticamente en la base de datos
-        evaluacionCab: this.evaluacionCab,
-        calificacion: this.calificaciones, // Asignar la calificación correspondiente
-        criterio: this.criterio // Asignar el ID del criterio actual
-      };
-      // Llamar al servicio para crear la EvaluacionDet
-      this.evaluacionDetService.createList(evaluacionDet).subscribe(() => {
-        // Éxito al guardar la EvaluacionDet
-        console.log(`EvaluacionDet para el criterio con ID ${idCriterio} guardada correctamente.`);
-      }, error => {
-        // Error al guardar la EvaluacionDet
-        console.error(`Error al guardar la EvaluacionDet para el criterio con ID ${idCriterio}: `, error);
-      });
+        (response) => {
+          console.log('Calificación guardada exitosamente:', response);
+          // Aquí puedes realizar cualquier otra acción necesaria después de guardar la calificación
+        },
+        (error) => {
+          console.error('Error al guardar calificación:', error);
+          // Aquí se maneja el error
+        }
+      );
     });
-
-  }*/
+  }
 
   formularioCompleto(): boolean {
     // Verificamos si se han seleccionado todos los criterios

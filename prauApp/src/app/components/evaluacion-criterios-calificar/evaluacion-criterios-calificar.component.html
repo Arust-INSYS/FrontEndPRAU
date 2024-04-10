@@ -77,7 +77,7 @@
                             <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
 
                             <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion"
-                                optionLabel="label" optionValue="value"
+                                optionLabel="label" optionValue="value" placeholder="Selecionar Calificacion"
                                 (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
 
                             </p-dropdown>
