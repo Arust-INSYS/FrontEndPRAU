@@ -188,7 +188,7 @@ filterCarrera(event: AutoCompleteCompleteEvent) {
   for (let i = 0; i < this.carreras.length; i++) {
     let carrera = this.carreras[i];
     if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-      filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } + carrera.nombreCarrera);
+      filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } );
     }
   }
 

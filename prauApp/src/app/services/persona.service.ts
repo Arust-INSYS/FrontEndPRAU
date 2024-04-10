@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { LocalStorageService } from './local-storage.service'; // Importa localStorageService
 import { Persona } from '../models/persona';
@@ -74,7 +74,21 @@ export class PersonaService {
       headers,
     });
   }
+  obtenerListausuarios(): Observable<Persona[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+  
+    const options = { headers: headers };
 
+    return this.http.get<Persona[]>(this.url + '/read', options).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error obteniendo lista de usuarios:', error);
+        // Manejo básico del error, lanzando el error para que lo maneje el código que llame a este método
+        return throwError('Error al obtener la lista de usuarios. Por favor, inténtalo de nuevo más tarde.');
+      })
+    );
+  }
   getPersonas(): Observable<Persona[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
@@ -84,6 +98,7 @@ export class PersonaService {
       .get(this.url + '/read', { headers })
       .pipe(map((response) => response as Persona[]));
   }
+ 
   /*
   getPersonas(): Observable<Persona[]> {
     const token = this.localStorage.getItem('token');

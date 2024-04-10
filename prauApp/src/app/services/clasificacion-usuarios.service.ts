@@ -34,7 +34,9 @@ export class ClasificacionUsuariosService {
       })
     );
   }
-
+  obtenerUsuariosPorRol(roleId: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`);
+  }
   eliminarusuarios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -72,8 +74,8 @@ export class ClasificacionUsuariosService {
 
  
 
-  obtenerUsuarioPorId(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.url}/buscar?id=${id}`);
+  obtenerNombresUsuariosPorRolId(rolId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/searchUserId?roleId=${rolId}`);
   }
 
   private handleError(error: any): Observable<never> {
@@ -90,5 +92,7 @@ export class ClasificacionUsuariosService {
     // Realiza la solicitud HTTP GET con el encabezado de autorización
     return this.http.get<boolean>(`${this.url}/cedulaUnica?ci=${ci}`, { headers });
   }
+
+  
 
 }
