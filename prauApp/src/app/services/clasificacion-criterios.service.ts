@@ -70,7 +70,10 @@ export class ClasificacionCriteriosService {
  
 
   obtenerCriterioPorId(id: number): Observable<ClasificacionCriterios> {
-    return this.http.get<ClasificacionCriterios>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<ClasificacionCriterios>(`${this.url}/buscar?id=${id}`,{ headers });
   }
 
   

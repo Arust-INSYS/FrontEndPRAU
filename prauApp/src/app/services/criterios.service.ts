@@ -76,7 +76,10 @@ export class CriteriosService {
  
 
   obtenerCriterioPorId(id: number): Observable<Criterios> {
-    return this.http.get<Criterios>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Criterios>(`${this.url}/buscar?id=${id}`, { headers });
   }
 
   

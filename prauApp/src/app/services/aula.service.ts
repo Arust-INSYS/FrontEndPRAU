@@ -4,6 +4,7 @@ import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
 import { Observable, map } from 'rxjs';
 import { Aula } from '../models/aula';
+import { IConsultarAula } from '../interface/IConsultasBD';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class AulaService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) {}
+  ) { }
 
   private url: string = `${entorno.urlPrivada}/aula`;
 
@@ -26,7 +27,16 @@ export class AulaService {
       .pipe(map((response) => response as Aula[]));
   }
 
-  registrarAula(aula: Aula): Observable<Aula> {
+  getAulasPorUsuario(userId: number): Observable<Aula[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.get<Aula[]>(`${this.url}/findAulaByUserId/${userId}`, { headers });
+  }
+
+  registrarPeriodoAc(aula: Aula): Observable<Aula> {
+
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
@@ -47,7 +57,7 @@ export class AulaService {
       headers,
     });
   }
-  eliminarPeriodoAc(id: number): Observable<void> {
+  eliminarAula(id: number): Observable<void> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
@@ -57,5 +67,27 @@ export class AulaService {
     return this.http.delete<void>(`${this.url}/delete?id=${id}`, {
       headers,
     });
+  }
+
+
+  getAulaById(id: number): Observable<Aula> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get<Aula>(`${this.url}/find/${id}`, { headers });
+  }
+
+  aulaConsultar(asignaturaId: number, carreraId: number, periodoId: number, usuId: number): Observable<IConsultarAula[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<IConsultarAula[]>(`${this.url}/aulaConsultar?asignaturaId=${asignaturaId}&carreraId=${carreraId}&periodoId=${periodoId}&usuId=${usuId}`, {
+      headers,
+    });
+
   }
 }

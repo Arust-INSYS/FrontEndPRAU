@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/loginRequest';
 import { AuthResponse } from '../models/authResponse';
 import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
+import { IDocenteXAsignatura } from '../interface/IConsultasBD';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,20 @@ export class UsuarioService {
       headers,
     });
   }
+
+  getUsersByRoleId(roleId: number): Observable<Usuario[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.get<Usuario[]>(
+      `${this.url}/usuariosPorRol?roleId=${roleId}`,
+      {
+        headers,
+      }
+    );
+  }
+
   getAllUsuarios(): Observable<Usuario[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
@@ -194,7 +209,33 @@ export class UsuarioService {
       }
     );
   }
+
+  docenteXAsignatura(asignaturaId: number): Observable<IDocenteXAsignatura[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.get<IDocenteXAsignatura[]>(
+      `${this.url}/docenteXAsignatura?asignaturaId=${asignaturaId}`,
+      {
+        headers,
+      }
+    );
+  }
+  //ELIMINAR USUARIO
+  delete(id: number, usuario: Usuario): Observable<Usuario> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.delete<Usuario>(`${this.url}/delete?id=${id}`, {
+      headers,
+    });
+  }
   obtenerUsuariosPorRolId(rolId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.url}/usuariosPorRol?roleId=${rolId}`);
+    return this.http.get<string[]>(
+      `${this.url}/usuariosPorRol?roleId=${rolId}`
+    );
   }
 }

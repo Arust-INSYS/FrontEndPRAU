@@ -102,27 +102,37 @@ applyFilter() {
   async generarPDF() {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([400, 600]);
+
+    // Agregar imagen
+    const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
+    const image = await pdfDoc.embedPng(imageBytes);
+    page.drawImage(image, {
+      x: 110, // Posición x de la imagen
+      y: 550, // Posición y de la imagen
+      width: 180, // Ancho de la imagen
+      height: 40 // Alto de la imagen
+    });
   
     page.drawText('Lista de Criterios:', {
-      x: 50,
+      x: 138,
       y: 500,
-      size: 20,
+      size: 16,
       color: rgb(0, 0, 0),
     });
   
     let yPosition = 450;
     this.criterio.forEach((dato: any) => {
-      page.drawLine({ start: { x: 50, y: yPosition+20 }, end: { x: 250, y: yPosition+20 }, color: rgb(0, 0, 0) });
+      page.drawLine({ start: { x: 50, y: yPosition+20 }, end: { x: 350, y: yPosition+20 }, color: rgb(0, 0, 0) });
       const keys = Object.keys(dato);
       keys.forEach(key => {
         const value = dato[key];
         if (key === 'clasificacion' && typeof value === 'object') {
-          //nombre de la clasificación
+ 
           const clasificacionNombre = value.nombreClasificacion || 'Sin clasificación';
           page.drawText(`Clasificación: \t${clasificacionNombre}`, {
             x: 50,
             y: yPosition,
-            size: 10,
+            size: 9,
             color: rgb(0, 0, 0),
           });
           yPosition -= 20;
@@ -137,7 +147,7 @@ applyFilter() {
           page.drawText(`${displayedKey}:\t ${value}`, {
             x: 50,
             y: yPosition,
-            size: 10,
+            size: 9,
             color: rgb(0, 0, 0),
           });
           yPosition -= 20;
@@ -208,22 +218,32 @@ applyFilter() {
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([400, 600]);
+    const page = pdfDoc.addPage([600, 400]);
+
+        // Agregar imagen
+        const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
+        const image = await pdfDoc.embedPng(imageBytes);
+        page.drawImage(image, {
+          x: 210, // Posición x de la imagen
+          y: 350, // Posición y de la imagen
+          width: 180, // Ancho de la imagen
+          height: 40 // Alto de la imagen
+        });
   
     // Título de la tabla
     page.drawText('Lista de Criterios:', {
-      x: 100,
-      y: 540,
+      x: 225,
+      y: 320,
       size: 20,
       color: rgb(0, 0, 0),
     });
   
     // Definir el tamaño y la posición de la tabla
     const startX = 50;
-    const startY = 450;
+    const startY = 220;
     const cellPadding = -10;
     const rowHeight = 20;
-    const tableWidth = 300;
+    const tableWidth = 500;
     const tableHeight = this.criterio.length * rowHeight + rowHeight;
   
     // Definir las propiedades de las celdas
