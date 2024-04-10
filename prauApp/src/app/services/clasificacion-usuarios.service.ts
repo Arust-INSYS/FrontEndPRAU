@@ -34,9 +34,14 @@ export class ClasificacionUsuariosService {
       })
     );
   }
+  
   obtenerUsuariosPorRol(roleId: number): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}` , { headers } );
   }
+  
   eliminarusuarios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({

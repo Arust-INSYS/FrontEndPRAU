@@ -39,8 +39,8 @@ export class CarreraComponent {
   }
   obtenerUsuariosPorRol(roleId: number): void {
     this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
-      .subscribe(usuarios => {
-        this.usuarios = usuarios;
+      .subscribe(users => {
+        this.usuarios = users;
       });
   }
   filterUsuarios() {

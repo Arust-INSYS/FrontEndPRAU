@@ -6,11 +6,17 @@ import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../models/usuario';
 import { ClasificacionUsuariosService } from '../../services/clasificacion-usuarios.service';
 
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
 @Component({
   selector: 'app-carrera-actualizar',
   templateUrl: './carrera-actualizar.component.html',
   styleUrl: './carrera-actualizar.component.css'
 })
+
+
 export class CarreraActualizarComponent {
   id!: number;
   carrera: Carrera = new Carrera();
@@ -51,36 +57,55 @@ export class CarreraActualizarComponent {
   }
 
   onSubmit() {
-    // Verificar si los campos están llenos
-    if (
-      !this.id ||
-      !this.carrera.nombreCarrera ||
-      !this.carrera.descripcionCarrera ||
-      !this.carrera.director
-    ) {
-      this.toastr.error('Llene todos los campos antes de enviar.');
-      return; // Detener el envío si los campos no están llenos
+     // Realizar la actualización de la carrera
+     if (this.id && this.carrera.nombreCarrera && this.carrera.descripcionCarrera && this.selectedCountry) {
+      // Asignar el director seleccionado a la carrera
+      this.carrera.director = this.selectedCountry;
+      // Llamar al servicio para actualizar la carrera
+      this.carreraService.actualizarcarrera(this.id, this.carrera).subscribe(
+        () => {
+          this.toastr.success('La carrera se actualizó correctamente.', 'Éxito');
+          this.guardar(); // Llamar al método guardar después de la edición
+        },
+        error => {
+          console.error('Error al actualizar la carrera:', error);
+          if (error.error && error.error === 'El nombre ya está en uso') {
+            this.toastr.error('El nombre ya está en uso, por favor ingrese otro.', 'Error');
+          } else {
+            this.toastr.error('Hubo un error al actualizar la carrera.', 'Error');
+          }
+        }
+      );
+    } else {
+      this.toastr.error('Por favor, complete todos los campos antes de enviar.', 'Error');
+    }
+  }
+  guardar() {
+    // Implementa aquí la lógica para guardar después de la edición
+    // Por ejemplo, puedes redirigir al usuario a la lista de carreras después de la edición
+    this.router.navigateByUrl('/menu/contenido-virtual/carrera-listar');
+  }
+  selectedCountry: any ;
+
+  filteredCountries: any[] = [];
+
+
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    console.log(event.query);
+    //console.table(this.usuarios)
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.usuarios as any[]).length; i++) {
+      let country = (this.usuarios as any[])[i];
+     
+      if (country.usuPerId?.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        console.log(country);
+        filtered.push(country);
+      }
     }
 
-    this.carreraService.actualizarcarrera(this.id, this.carrera).subscribe(
-      (dato) => {
-        this.router.navigateByUrl('/menu/contenido-virtual/carrera-listar');
-      },
-      (error) => {
-        console.error('Error al actualizar la carrera:', error);
-        if (
-          error.error &&
-          error.error === 'El nombre  ya está en uso'
-        ) {
-          this.toastr.error(
-            'El nombre ya está en uso, por favor ingrese otro.'
-          );
-        } else {
-          this.toastr.error(
-            'Ese nombre ya esta en uso'
-          );
-        }
-      }
-    );
+    this.filteredCountries = filtered;
   }
 }

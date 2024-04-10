@@ -110,7 +110,7 @@ throw new Error('Method not implemented.');
     const page = pdfDoc.addPage([400, 600]);
     const color = 'rgb(255, 0, 0)';
 
-    page.drawText('Lista de Criterios:', {
+    page.drawText('Lista de Carreras:', {
       x: 50,
       y: 500,
       size: 20,
