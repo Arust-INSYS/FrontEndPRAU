@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit{
   username!: string;
   userId!: bigint;
   datos: any;
+  isAdmin: boolean = false;
 
   constructor(private localStorage: LocalStorageService, private http:HttpClient, private router: Router, private usurioService: UsuarioService){}
 
@@ -22,13 +23,9 @@ export class MenuComponent implements OnInit{
       
       const id: number = Number(this.userId);
       //Bloqueo de menu dependiendo el usuario
-      /*const personasMenu = document.getElementById("personas");
-      if(personasMenu){
-        if(this.userId === BigInt(1)){
-          personasMenu.style.display = "none";
-        }
-        
-      }*/
+      if (id === 1) {
+        this.isAdmin = true;
+      }
 
       this.usurioService.buscarNombreUsuario(id).subscribe(data => {
         this.datos= data;

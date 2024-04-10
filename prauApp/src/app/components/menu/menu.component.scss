@@ -14,6 +14,13 @@ body{
   display: flex;
 }
 
+.router-link-active {
+  background-color: $azul-oscuro;
+  a{
+    color: $blanco !important;
+  }
+}
+
 //SIDEBAR
 .sidebar{
   position: sticky;
@@ -64,7 +71,6 @@ body{
     align-items: center;
     gap: 1.5rem;
     transition: all 0.3s ease-in-out;
-
     span{
       overflow: hidden;
     }
@@ -76,13 +82,12 @@ body{
   li:hover, 
   .active{
     background: $azul-oscuro;
-
+    a{
+      color: $blanco;
+    }
   }
 
-  a:hover, 
-  .active{
-    color: $blanco;
-  }
+
 }
 
 .logout{
@@ -164,20 +169,6 @@ body{
   align-items: center;
   gap: 5px;
   padding: 12 0px;
-  input{
-    background: transparent;
-    padding: 10px;
-  }
-
-  i{
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.5s ease-out;
-  }
-
-  i:hover{
-    transform: scale(1.2);
-  }
 }
 
 //CONTENIDO
@@ -219,8 +210,6 @@ body{
     transform: translateY(-5px);
   }
 }
-
-
 
 .card-header{
   display: flex;
