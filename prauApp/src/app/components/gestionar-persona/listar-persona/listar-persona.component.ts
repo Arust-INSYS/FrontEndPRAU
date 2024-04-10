@@ -41,7 +41,6 @@ export class ListarPersonaComponent {
   listarPersona() {
     this.personaService.getPersonas().subscribe((res) => {
       this.personasList = res;
-      console.log(this.personasList);
     });
   }
   eliminarPersona(id: number) {
