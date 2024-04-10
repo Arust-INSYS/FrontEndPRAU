@@ -44,49 +44,31 @@
                 </div>
             </section>
 
-            <!-- <div class=" header-container">
-                        <div><label for="lblPorcentajeCumplimiento"></label>
-                            <span id="lblPorcentajeCumplimiento"></span>
-                        </div>
-                </div> -->
+        </section>
+        <section class="layoutnum">
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+            </div>
 
-            <!-- <div class="course-details">
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+            </div>
 
-                    <p>Nombre del Curso: {{ nombreCurso }}</p>
-                    <p>Docente a cargo: {{ nombreDocente }}</p>
-
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoC:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoC"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoCM:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoM"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoNC:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoN"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
-                        </div>
-                    </div>
-
-                </div> -->
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+            </div>
         </section>
 
         <section class="formulario">
 
             <!-- Grupo 1 -->
-            <!-- 
+            
             <div class="grupo-preguntas">
                 <div class="question-section">
                     <div class="question" *ngFor="let clasificacion of clasificaciones">
@@ -95,7 +77,7 @@
                             <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
 
                             <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion"
-                                optionLabel="label" optionValue="value"
+                                optionLabel="label" optionValue="value" placeholder="Selecionar Calificacion"
                                 (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
 
                             </p-dropdown>
@@ -108,15 +90,16 @@
 
             </div>
 
-
             <div class="button-container">
                 <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
-                    (click)="actualizarEvaluacionCab()"
-                    routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+                    (click)="crearNuevaEvaluacionCab()"
+                    ></p-button>
                 <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
                     severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            </div> -->
+            </div> 
+
         </section>
+
     </body>
 
 </div>

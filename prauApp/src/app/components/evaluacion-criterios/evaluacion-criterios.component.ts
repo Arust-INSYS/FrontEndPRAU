@@ -100,20 +100,21 @@ export class EvaluacionCriteriosComponent {
     this.evaluacionCa.evaluador!.usuId = selectedDocente;
   }
 
-  async listarcursos(docenteId: number) {
-    await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
-      this.cursos = aulas.map((doc) => ({
-        label: doc.aulaNombre,
-        value: doc.aulaId,
-      }));
-    });
-  }
-  onCursoSeleccionado(selectedCurso: any) {
-    // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
-    console.log('Docente seleccionado:', selectedCurso);
-    this.evaluacionCa.aulaEva!.aulaId = selectedCurso;
-    //console.log('Este es el mensaje',this.evaluacionCa.aula)
-  }
+
+async listarcursos(docenteId: number) {
+  await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
+    this.cursos = aulas.map((doc) => ({
+      label: doc.aulaNombre,
+      value: doc.aulaId,
+    }));
+  });
+}
+onCursoSeleccionado(selectedCurso: any) {
+  // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
+  console.log('Docente seleccionado:', selectedCurso);
+  this.evaluacionCa.aulaEva!.aulaId=selectedCurso;
+  //console.log('Este es el mensaje',this.evaluacionCa.aula)
+}
 
   cargarInformacionCurso(): void {
     // Verificar que haya un curso seleccionado
@@ -125,7 +126,6 @@ export class EvaluacionCriteriosComponent {
       this.idAulaSeleccionada = null;
     }
   }
-
 
   getEvaluacionesCAB(): void {
     this.evaluacionCABService.getEvaluacionCAB().subscribe(dato => {
@@ -142,27 +142,15 @@ export class EvaluacionCriteriosComponent {
   }
 
   crearNuevoDato() {
-
-    //this.evaluacionCa.aulaEva!.aulaId=1;
-    //this.evaluacionCa.evaluador!.usuId=4;
-    this.evaluacionCABService.CrearEvaluacionCab(this.evaluacionCa).subscribe(() => {
-      // La EvaluacionCab se ha actualizado correctamente
-      console.log('EvaluacionCab actualizada correctamente.');
-    });
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion']);
   }
 
-
-
-
   actualizarCriterio(id: number) {
-
 
   }
 
   // Método para eliminar un criterio
   eliminarCriterio(id: number) {
-
 
   }
 }
