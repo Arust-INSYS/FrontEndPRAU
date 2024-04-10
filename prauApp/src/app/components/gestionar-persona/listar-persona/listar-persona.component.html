@@ -3,8 +3,18 @@
   <div class="cabecera">
     <p-toolbar>
       <div class="p-toolbar-group-start">
-        <button pButton icon="pi pi-plus" class="mr-2" (click)="showModal()"></button>
-        <button pButton icon="pi pi-print" class="mr-2"></button>
+        <button
+          pButton
+          icon="pi pi-plus"
+          class="mr-2"
+          (click)="showModal()"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-print"
+          class="mr-2"
+          (click)="generarPDFtable()"
+        ></button>
       </div>
       <div class="p-toolbar-group-center">
         <span class="p-input-icon-left">
@@ -13,10 +23,19 @@
         </span>
       </div>
       <div class="p-toolbar-group-end">
-        <p-button (onClick)="downloadExcel()" label="Excel" icon="pi pi-file-excel" iconPos="right"></p-button>
+        <p-button
+          (onClick)="downloadExcel()"
+          label="Excel"
+          icon="pi pi-file-excel"
+          iconPos="right"
+        ></p-button>
       </div>
       <div class="p-toolbar-group-end">
-        <p-splitButton label="Save" icon="pi pi-check" [model]="items"></p-splitButton>
+        <p-splitButton
+          label="Save"
+          icon="pi pi-check"
+          [model]="items"
+        ></p-splitButton>
       </div>
     </p-toolbar>
   </div>
@@ -44,27 +63,52 @@
           <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
           <td>{{ usu.usuPerId.perTelefono }}</td>
           <td>
-            <button pButton icon="pi pi-pencil" class="p-button-success" (click)="compartirNombre()"></button>
-            <button pButton icon="pi pi-trash" class="p-button-danger" (click)="eliminarPersona(usu.usuId)"></button>
-
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-success"
+              (click)="compartirNombre()"
+            ></button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-danger"
+              (click)="eliminarPersona(usu.usuId)"
+            ></button>
           </td>
         </tr>
       </ng-template>
     </p-table>
-
   </div>
 </section>
-<p-dialog [(visible)]="displayModal" [modal]="true" [responsive]="true" [style]="{ width: '50vw' }">
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '50vw' }"
+>
   <app-registrar-persona></app-registrar-persona>
 </p-dialog>
 
 <!-- Modal para editar -->
-<p-dialog [(visible)]="displayModalEdit" [modal]="true" [responsive]="true" [style]="{ width: '500px' }">
+<p-dialog
+  [(visible)]="displayModalEdit"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '500px' }"
+>
   <h2>Editar Persona</h2>
   <form #editForm="ngForm" (ngSubmit)="guardarCambios()">
     <div class="input-group">
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" pInputText [(ngModel)]="personaEditar.perNombre1" required />
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        pInputText
+        [(ngModel)]="personaEditar.perNombre1"
+        required
+      />
     </div>
     <!-- Otros campos del formulario -->
     <!-- Agrega los campos restantes del formulario según tus necesidades -->

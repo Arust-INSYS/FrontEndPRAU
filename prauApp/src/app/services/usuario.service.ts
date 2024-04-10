@@ -234,8 +234,16 @@ export class UsuarioService {
     });
   }
   obtenerUsuariosPorRolId(rolId: number): Observable<string[]> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+
     return this.http.get<string[]>(
-      `${this.url}/usuariosPorRol?roleId=${rolId}`
+      `${this.url}/usuariosPorRol?roleId=${rolId}`,
+      {
+        headers,
+      }
     );
   }
 }
