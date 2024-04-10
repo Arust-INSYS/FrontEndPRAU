@@ -22,33 +22,42 @@ export class CalificacionActualizarComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id']; 
-    
+      this.cargarCriterio(this.id); 
     });
   }
-
+  cargarCriterio(codCalificacion: string) {
+    this.calificacionService.obtenerCriterioPorId(codCalificacion).subscribe(
+      response => {
+        this.califcacion = response;
+      },
+      error => {
+        console.error('Error al cargar el criterio:', error);
+      }
+    );
+  }
  
   onSubmit() {
-    // Verificar si los campos están llenos
+  
     if (!this.id || !this.califcacion.descripcion) {
       this.toastr.error('Llene todos los campos antes de enviar.');
-      return; // Detener el envío si los campos no están llenos
+      return; 
     }
   
-    // Crear un objeto para actualizar solo la descripción
+   
     const criterioActualizado = new Calificacion(this.id, this.califcacion.descripcion);
 
     this.calificacionService.actualizarcriterios(this.id, criterioActualizado).subscribe(
       dato => {
-        // Mostrar la alerta de éxito
+    
         this.toastr.success('Su cambio ha sido un éxito.');
         
-        // Redirigir a la página de listado de calificaciones
+
         this.router.navigateByUrl('/menu/contenido-criterios/listar-calificacion');
       },
       error => {
-        // Manejar errores si ocurre alguno
+
         console.error('Error al actualizar el calificación:', error);
-        // Mostrar una alerta de error en caso de que falle la actualización
+  
         this.toastr.error('Error al actualizar el calificación. Por favor, intente nuevamente.');
       }
     );
