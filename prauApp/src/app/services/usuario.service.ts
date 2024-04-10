@@ -217,7 +217,6 @@ export class UsuarioService {
       headers,
     });
   }
-
   //ELIMINAR USUARIO
   delete(id: number, usuario: Usuario): Observable<Usuario> {
     // Construir el encabezado de autorización con el token JWT
