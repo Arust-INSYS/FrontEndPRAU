@@ -5,12 +5,16 @@ import { RolService } from '../../../services/rol.service';
 @Component({
   selector: 'app-listar-rol',
   templateUrl: './listar-rol.component.html',
-  styleUrl: './listar-rol.component.css'
+  styleUrls: ['./listar-rol.component.css']
 })
 export class ListarRolComponent {
+  rol: Rol = new Rol();
+
   roles: Rol[] = [];
   selectedRol: Rol = { rolId: 0, rolNombre: '', rolDescripcion: '' };
   displayDialog: boolean = false; // <-- Declaración de displayDialog
+  displayModal: boolean = false;
+  displayModalEdit: boolean = false;
 
   constructor(private rolService: RolService) { }
 
@@ -18,6 +22,13 @@ export class ListarRolComponent {
     this.getAllRoles();
   }
 
+  showModalEditar(rol: Rol): void {
+    this.selectedRol = { ...rol }; // Crear una copia del rol seleccionado
+    this.displayModalEdit = true; // Mostrar el modal de edición
+  }
+  showModal() {
+    this.displayModal = true;
+  }
   getAllRoles(): void {
     this.rolService.getAllRoles().subscribe(
       (data: Rol[]) => {

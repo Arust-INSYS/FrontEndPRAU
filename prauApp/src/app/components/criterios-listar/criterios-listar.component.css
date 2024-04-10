@@ -19,3 +19,9 @@
     width: 100%;
     padding-bottom: 2rem;
   }
+  .descripcion-criterio {
+    max-width: 200px; /* Define el ancho máximo del texto */
+    white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+    overflow: hidden; /* Oculta cualquier contenido que exceda el ancho máximo */
+    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del texto cuando se recorta */
+  }

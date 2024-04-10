@@ -1,26 +1,26 @@
 <div class="container">
   <h1>Listado de Roles</h1>
-  <table class="table">
-    <thead>
+  <p-table [value]="roles" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
       <tr>
         <th>ID Rol</th>
         <th>Nombre</th>
         <th>Descripción</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rol of roles">
+    </ng-template>
+    <ng-template pTemplate="body" let-rol>
+      <tr>
         <td>{{ rol.rolId }}</td>
         <td>{{ rol.rolNombre }}</td>
         <td>{{ rol.rolDescripcion }}</td>
         <td>
-          <button (click)="editarRol(rol)" class="btn btn-primary">Editar</button>
-          <button (click)="eliminarRol(rol.rolId)" class="btn btn-danger">Eliminar</button>
+          <p-button (click)="editarRol(rol)" label="Editar"></p-button>
+          <p-button (click)="eliminarRol(rol.rolId)" label="Eliminar"></p-button>
         </td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
 </div>
 
 <div class="modal" [style.display]="displayDialog ? 'block' : 'none'">
@@ -28,21 +28,37 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title label-lg">Editar Rol</h5>
-        <button type="button" class="close" (click)="displayDialog = false">
-          <span aria-hidden="true" class="label-lg">&times;</span>
-        </button>
+        
+        <p-button  type="button" class="close" (click)="displayDialog = false" label="cerrar"></p-button>
+
+     
       </div>
       <div class="modal-body">
         <form (ngSubmit)="guardarCambios()">
-          <div class="form-group">
-            <label for="rolNombre" class="label-lg">Nombre:</label>
-            <input type="text" class="form-control input-lg" id="rolNombre" name="rolNombre" [(ngModel)]="selectedRol.rolNombre" required>
-          </div>
-          <div class="form-group">
-            <label for="rolDescripcion" class="label-lg">Descripción:</label>
-            <input type="text" class="form-control input-lg" id="rolDescripcion" name="rolDescripcion" [(ngModel)]="selectedRol.rolDescripcion" required>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+         <div class="input-group">
+        
+    <label for="nombre">Nombre:</label>
+    <input
+      type="text"
+      id="nombre"
+      name="nombre"
+      pInputText
+      [(ngModel)]="selectedRol.rolNombre" required
+    />
+  </div>
+  <div class="input-group">
+    <label for="Descripción">Descripción:</label>
+    <input
+      type="text"
+      id="Descripción"
+      name="Descripción"
+      pInputText
+      [(ngModel)]="selectedRol.rolDescripcion"
+      required
+    />
+  </div>
+          <p-button  type="submit" label="Guardar Cambios"></p-button>
+
         </form>
       </div>
     </div>

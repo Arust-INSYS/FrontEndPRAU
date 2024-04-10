@@ -7,6 +7,8 @@ import { Table } from 'primeng/table';
 import { Carrera } from '../../models/carrera';
 import { CarreraService } from '../../services/carrera.service';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { ClasificacionUsuariosService } from '../../services/clasificacion-usuarios.service';
+import { Usuario } from '../../models/usuario';
 @Component({
   selector: 'app-carrera-listar',
   templateUrl: './carrera-listar.component.html',
@@ -33,7 +35,13 @@ throw new Error('Method not implemented.');
   customers: any
   selectedCustomers:any
   loading:any
-  constructor(private carreraService: CarreraService, private router: Router) {}
+  usuarios: Usuario[] = [];
+  constructor(
+    private carreraService: CarreraService, 
+    private router: Router,
+    private clasificacionUsuariosService: ClasificacionUsuariosService,
+  
+  ) {}
 
   ngOnInit(): void {
     this.obtenerCarrera();
@@ -91,7 +99,12 @@ throw new Error('Method not implemented.');
     });
   }
 
-  
+  obtenerUsuariosPorRol(roleId: number): void {
+    this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
+      .subscribe(usuarios => {
+        this.usuarios = usuarios;
+      });
+  }
   async generarPDF() {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([400, 600]);

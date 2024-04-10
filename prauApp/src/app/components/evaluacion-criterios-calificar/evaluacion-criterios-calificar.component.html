@@ -1,80 +1,105 @@
 <div class="formulario">
 
     <body>
-    <header>
-        <div class="subconten2">
+        <section class="subconten2">
 
             <div class="evaluation-details">
-                <label for="lblNumeroEvaluacion">N° Evaluación:</label>
-                <span id="lblNumeroEvaluacion">{{ evaluacionCab.nroEvaluacion }}</span>
-                
+                <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
             </div>
-    
-        <div class="header-container">
-            <div><label for="lblPorcentajeCumplimiento"></label>
-                <span id="lblPorcentajeCumplimiento"></span></div>
-        </div>
 
-        <div class="course-details">
-            <!-- Aquí se cargarán los datos del curso y del docente -->
-            <!-- Ejemplo: -->
-            <p>Nombre del Curso: {{ nombreCurso }}</p>
-            <p>Docente a cargo: {{ nombreDocente }}</p>
+            <section class="layout">
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="periodosAc" [(ngModel)]="selectedPeriodo"
+                        optionLabel="nombrePeriodo" [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
+                        placeholder="Selecionar Periodo Academico" (onChange)="consultarAula()">
 
-            <div class="evaluation-progress">
-                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoC:</label>
-                <div class="progress-container">
-                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
-                    <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+                    </p-dropdown>
                 </div>
-            </div>
-            <div class="evaluation-progress">
-                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoCM:</label>
-                <div class="progress-container">
-                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
-                    <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="carreras" [(ngModel)]="selectedCarrera"
+                        optionLabel="nombreCarrera" [filter]="true" filterBy="nombreCarrera" [showClear]="true"
+                        placeholder="Selecionar Carrera" (onChange)="loadAsignaturas(); consultarAula()">
+
+                    </p-dropdown>
                 </div>
-            </div>
-            <div class="evaluation-progress">
-                <label for="porcentajeCumplimiento">Porcentaje de cumplimientoNC:</label>
-                <div class="progress-container">
-                    <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
-                    <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="asignaturas" [(ngModel)]="selectedAsignatura"
+                        optionLabel="nombreAsignatura" [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                        placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
+
+                    </p-dropdown>
                 </div>
+                <div class="filter">
+                    <p-dropdown class="element-filter" [options]="docentes" [(ngModel)]="selectedDocente"
+                        optionLabel="nombreCompleto" [filter]="true" filterBy="nombreCompleto" [showClear]="true"
+                        placeholder="Selecionar Docente" (onChange)="consultarAula()">
+
+                    </p-dropdown>
+                </div>
+                <div class="">
+                    <p-dropdown class="element-filter" [options]="aulas" [(ngModel)]="selectedAula" optionLabel="nombre"
+                        [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula">
+
+                    </p-dropdown>
+                </div>
+            </section>
+
+        </section>
+        <section class="layoutnum">
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
             </div>
 
-        </div>
-    </div>
-    </header>
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+            </div>
 
-    <div class="formulario">
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+            </div>
+        </section>
 
-        <!-- Grupo 1 -->
-        
+        <section class="formulario">
+
+            <!-- Grupo 1 -->
+            
             <div class="grupo-preguntas">
                 <div class="question-section">
                     <div class="question" *ngFor="let clasificacion of clasificaciones">
                         <h2>{{ clasificacion.nombreClasificacion }}</h2>
                         <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
                             <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
-                            <select id="pregunta{{criterio.idCriterio}}" name="pregunta{{criterio.idCriterio}}"(change)="actualizarCalificacion($event)">
-                                <option value="" selected disabled>Seleccione la calificacion</option>
-                                <option *ngFor="let calificacion of calificaciones" [value]="calificacion.codCalificacion">{{ calificacion.codCalificacion }}</option>
-                            </select>
+
+                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion"
+                                optionLabel="label" optionValue="value" placeholder="Selecionar Calificacion"
+                                (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
+
+                            </p-dropdown>
+
                         </div>
                         <hr>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
-        
-        <div class="button-container">
-            <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="actualizarEvaluacionCab()" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-        </div>
-    </div>
-</body>
-    
-    </div>
+
+            <div class="button-container">
+                <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
+                    (click)="crearNuevaEvaluacionCab()"
+                    ></p-button>
+                <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
+                    severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+            </div> 
+
+        </section>
+
+    </body>
+
+</div>

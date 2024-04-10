@@ -57,10 +57,7 @@ throw new Error('Method not implemented.');
 
  
   eliminarCriterio(codCalificacion: string) {
-    // Convertir codCalificacion de string a number
- 
-  
-    // Mostrar cuadro de diálogo SweetAlert para confirmar la eliminación
+
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Desea eliminar la calificación?',
@@ -72,11 +69,11 @@ throw new Error('Method not implemented.');
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma la eliminación, procede con la eliminación
+     
         this.calificacionService.eliminarcriterios(codCalificacion).subscribe(() => {
-          // Actualiza la lista de criterios después de la eliminación
+       
           this.obtenerCriterios(); 
-          // Muestra un cuadro de diálogo SweetAlert para informar al usuario que se eliminó correctamente
+    
           Swal.fire(
             '¡Eliminado!',
             'La calificación ha sido eliminada.',
@@ -84,7 +81,7 @@ throw new Error('Method not implemented.');
           );
         }, error => {
           console.error('Error al eliminar el criterio:', error);
-          // Muestra un cuadro de diálogo SweetAlert para informar al usuario sobre el error
+       
           Swal.fire(
             'Error',
             'Hubo un error al intentar eliminar la calificación.',
