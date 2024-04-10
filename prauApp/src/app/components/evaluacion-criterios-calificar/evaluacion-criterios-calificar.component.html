@@ -7,42 +7,54 @@
                 <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
             </div>
 
-            <section class="layout">
+            <div class="layout">
                 <div class="filter">
-                    <p-dropdown class="element-filter" [options]="periodosAc" [(ngModel)]="selectedPeriodo"
-                        optionLabel="nombrePeriodo" [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
-                        placeholder="Selecionar Periodo Academico" (onChange)="consultarAula()">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="periodosAc"
+                        [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo" [filter]="true"
+                        filterBy="nombrePeriodo" [showClear]="true" placeholder="Selecionar Periodo Academico"
+                        (onChange)="consultarAula()">
 
                     </p-dropdown>
                 </div>
                 <div class="filter">
-                    <p-dropdown class="element-filter" [options]="carreras" [(ngModel)]="selectedCarrera"
-                        optionLabel="nombreCarrera" [filter]="true" filterBy="nombreCarrera" [showClear]="true"
-                        placeholder="Selecionar Carrera" (onChange)="loadAsignaturas(); consultarAula()">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="carreras"
+                        [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera" [filter]="true"
+                        filterBy="nombreCarrera" [showClear]="true" placeholder="Selecionar Carrera"
+                        (onChange)="loadAsignaturas(); consultarAula()">
 
                     </p-dropdown>
                 </div>
                 <div class="filter">
-                    <p-dropdown class="element-filter" [options]="asignaturas" [(ngModel)]="selectedAsignatura"
-                        optionLabel="nombreAsignatura" [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                        [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
+                        [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
                         placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
 
                     </p-dropdown>
                 </div>
-                <div class="filter">
-                    <p-dropdown class="element-filter" [options]="docentes" [(ngModel)]="selectedDocente"
-                        optionLabel="nombreCompleto" [filter]="true" filterBy="nombreCompleto" [showClear]="true"
-                        placeholder="Selecionar Docente" (onChange)="consultarAula()">
-
-                    </p-dropdown>
-                </div>
+            </div>
+            <div class="layout-criterio">
                 <div class="">
-                    <p-dropdown class="element-filter" [options]="aulas" [(ngModel)]="selectedAula" optionLabel="nombre"
-                        [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="docentes"
+                        [(ngModel)]="selectedDocente" optionLabel="nombreCompleto" [filter]="true"
+                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente"
+                        (onChange)="consultarAula()">
 
                     </p-dropdown>
                 </div>
-            </section>
+                <div class="grow1-criterio">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="aulas"
+                        [(ngModel)]="selectedAula" optionLabel="nombre" [filter]="true" filterBy="nombre"
+                        [showClear]="true" placeholder="Selecionar Aula">
+
+                    </p-dropdown>
+                </div>
+            </div>
 
         </section>
         <section class="layoutnum">
@@ -66,22 +78,61 @@
         </section>
 
         <section class="formulario">
+            <div class="grupo-preguntas">
+                <div class="question-section">
+                    <div class="question" *ngFor="let clasificacion of clasificaciones">
+                        <h2>{{ clasificacion.nombreClasificacion }}</h2>
+                        <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
+                            <div class="layout-criterio">
+                                <div class="grow1-criterio ">
+                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion
+                                        }}:</label>
+                                </div>
+                                <div>
+                                    <p-dropdown id="dropdown1" class="custome_drop"
+                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
+                                        [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
+                                        placeholder="Selecionar Calificacion"
+                                        [(ngModel)]="det.calificacion.codCalificacion">
 
-            <!-- Grupo 1 -->
-            
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
+                    (click)="crearNuevaEvaluacionCab()"></p-button>
+                <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
+                    severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+            </div>
+
+        </section>
+
+        <!-- <section class="formulario">
             <div class="grupo-preguntas">
                 <div class="question-section">
                     <div class="question" *ngFor="let clasificacion of clasificaciones">
                         <h2>{{ clasificacion.nombreClasificacion }}</h2>
                         <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
-                            <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                            <div class="layout-criterio">
+                                <div class="grow1-criterio ">
+                                    <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                                </div>
+                                <div>
+                                    <p-dropdown id="dropdown1" class="custome_drop"
+                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
+                                        [options]="calificacion" optionLabel="label" optionValue="value"
+                                        placeholder="Selecionar Calificacion"
+                                        (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
 
-                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion"
-                                optionLabel="label" optionValue="value" placeholder="Selecionar Calificacion"
-                                (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
-
-                            </p-dropdown>
-
+                                    </p-dropdown>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                     </div>
@@ -92,13 +143,12 @@
 
             <div class="button-container">
                 <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
-                    (click)="crearNuevaEvaluacionCab()"
-                    ></p-button>
+                    (click)="crearNuevaEvaluacionCab()"></p-button>
                 <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
                     severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            </div> 
+            </div>
 
-        </section>
+        </section> -->
 
     </body>
 
