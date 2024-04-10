@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Router } from '@angular/router';
 import { Persona } from '../../../models/persona';
 import Swal from 'sweetalert2';
+import { Usuario } from '../../../models/usuario';
+import { UsuarioService } from '../../../services/usuario.service';
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
   styleUrl: './listar-persona.component.scss',
+  
 })
+
 export class ListarPersonaComponent {
   value: any;
   personasList: Persona[] = [];
   displayModal: boolean = false;
+  usuario: Usuario = new Usuario();
 
   items = [
     {
@@ -23,8 +28,10 @@ export class ListarPersonaComponent {
       icon: 'pi pi-times',
     },
   ];
-  constructor(private personaService: PersonaService) {
+  constructor(private personaService: PersonaService,
+    private usuarioService:UsuarioService) {
     this.listarPersona();
+    this.compartirNombre()
   }
 
   showModal() {
@@ -53,6 +60,8 @@ export class ListarPersonaComponent {
       confirmButtonText: 'Sí, eliminarlo!',
     }).then((result) => {
       if (result.isConfirmed) {
+        //this.usuarioService.
+        
         this.personaService.delete(id).subscribe(() => {
           Swal.fire('¡Eliminado!', 'La persona ha sido eliminada.', 'success');
           // Actualiza la lista de personas después de eliminar
@@ -81,5 +90,18 @@ export class ListarPersonaComponent {
       this.displayModalEdit = false;
       console.log('UPDATE: ' + res);
     });
+  }
+  nombreGuardar:string="";
+  enviarNombre(){
+    this.nombreGuardar="EDITAR";
+   return this.nombreGuardar;
+  }
+  recibirValor: string = '';
+
+  @Output() nombreCompartido = new EventEmitter<string>();
+
+  compartirNombre() {
+    this.nombreCompartido.emit('Nombre a compartir');
+    
   }
 }

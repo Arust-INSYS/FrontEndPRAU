@@ -27,20 +27,20 @@
     </p-toolbar>
   </div>
   <div class="subconten2">
-    <p-table [value]="personasList" [scrollable]="true" scrollHeight="400px">
+    <p-table [value]="personasList">
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Cédula</th>
           <th>Dirección</th>
-          <th>F-Nacimiento</th>
+          <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body">
-        <tr *ngFor="let per of personasList">
+      <ng-template pTemplate="body" let-per>
+        <tr>
           <td>{{ per.perNombre1 }}</td>
           <td>{{ per.perApellido1 }}</td>
           <td>{{ per.perCedula }}</td>
@@ -48,25 +48,14 @@
           <td>{{ per.perFechaNacimiento }}</td>
           <td>{{ per.perTelefono }}</td>
           <td>
-            <!-- Botón para abrir el modal -->
-            <button
-              pButton
-              type="button"
-              label="Editar"
-              (click)="showModalEditar(per)"
-            ></button>
-
-            <!-- Botón de Eliminar -->
-            <button
-              pButton
-              icon="pi pi-trash"
-              label="Eliminar"
-              (click)="eliminarPersona(per.perId)"
-            ></button>
+            <button pButton icon="pi pi-pencil" class="p-button-success" (click)="compartirNombre()"></button>
+            <button pButton icon="pi pi-trash" class="p-button-danger" (click)="eliminarPersona(per.perId)"></button>
+            
           </td>
         </tr>
       </ng-template>
     </p-table>
+    
   </div>
 </section>
 <p-dialog
