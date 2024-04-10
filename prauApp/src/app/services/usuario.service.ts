@@ -216,6 +216,17 @@ export class UsuarioService {
     return this.http.get<IDocenteXAsignatura[]>(`${this.url}/docenteXAsignatura?asignaturaId=${asignaturaId}`, {
       headers,
     });
+  }
+  //ELIMINAR USUARIO
+  delete(id: number, usuario: Usuario): Observable<Usuario> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
 
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.delete<Usuario>(`${this.url}/delete?id=${id}`, {
+      headers
+    });
   }
 }
