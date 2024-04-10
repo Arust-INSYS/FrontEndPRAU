@@ -52,10 +52,12 @@ a{
     cursor: pointer;
     display: inline-block;
     font-weight: $regular;
+    transition: transform 0.3s  ease-in-out;
 }
 
 a:hover{
     font-weight: $bold;
+    transform: scale(1.2);
 }
 
 
