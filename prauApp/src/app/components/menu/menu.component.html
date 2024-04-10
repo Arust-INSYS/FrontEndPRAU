@@ -1,4 +1,5 @@
 <body>
+    <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="logo">
       <img
@@ -6,38 +7,32 @@
         alt=""/>
     </div>
     <ul class="menu">
-      <li>
-        <a
-          [routerLink]="['/menu/contenido-persona/listar-persona']"
-          routerLinkActive="router-link-active"
-        >
+      <li routerLinkActive="router-link-active" *ngIf="isAdmin">
+        <a id="personas" [routerLink]="['/menu/contenido-persona']" >
           <i class="pi pi-users"></i>
           <span id="registrar" class="nav-item">Personas</span>
         </a>
       </li>
 
-      <li>
+      <li routerLinkActive="router-link-active">
         <a
           [routerLink]="['/menu/contenido-criterios']"
-          routerLinkActive="router-link-active"
         >
           <i class="pi pi-flag"></i>
           <span class="nav-item">Criterios</span>
         </a>
       </li>
-      <li>
+      <li routerLinkActive="router-link-active">
         <a
           [routerLink]="['/menu/contenido-virtual']"
-          routerLinkActive="router-link-active"
         >
-          <i class="pi pi-flag"></i>
+          <i class="pi pi-desktop"></i>
           <span class="nav-item">Aula Virtual</span>
         </a>
       </li>
 
-      <li>
-        <a [routerLink]="['/menu/contenido-analitics']"
-        routerLinkActive="router-link-active">
+      <li routerLinkActive="router-link-active">
+        <a [routerLink]="['/menu/contenido-analitics']">
           <i class="pi pi-chart-line"></i>
           <span class="nav-item">Analitics</span>
         </a>
@@ -49,9 +44,9 @@
           <span class="nav-item">Reportes</span>
         </a>
       </li>
-      <li class="logout">
-        <a href="">
-          <i class="pi pi-moon"></i>
+      <li class="logout" routerLinkActive="router-link-active">
+        <a [routerLink]="['/login']">
+          <i class="pi pi-sign-out"></i>
           <span class="nav-item">Log out</span>
         </a>
       </li>
@@ -72,12 +67,12 @@
         />
       </div>
       <div class="user-info search-box">
-        <div class="user-data">
-          <h5 class="nombre">{{username}}</h5>
-          <h5 class="rol">{{userId}}</h5>
+        <div class="user-data" *ngIf="datos && datos.length > 0">
+          <h5 class="responsable"> {{datos[0][1]}}</h5>
+          <h5 class="rol"> {{datos[0][0]}}</h5>
         </div>
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVR9V1Ix26V2s_WWWryH3FU5Qkl2yR4PL3BcUybf2cUw&s"
+          src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745"
           alt=""
         />
       </div>

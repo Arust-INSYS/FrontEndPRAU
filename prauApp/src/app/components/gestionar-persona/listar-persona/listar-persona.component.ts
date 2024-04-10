@@ -341,41 +341,27 @@ export class ListarPersonaComponent {
           });
         }
 
-        // Dibujar líneas verticales entre las columnas
-        if (j < rowData.length - 1) {
-          const nextCellX =
-            startX +
-            dataCellWidths
-              .slice(0, j + 1)
-              .reduce((acc, width) => acc + width + cellPadding, -8);
-          const lineYStart = cellY + 30;
-          const lineYEnd = cellY - maxHeight - 30;
-          page.drawLine({
-            start: { x: nextCellX, y: lineYStart },
-            end: { x: nextCellX, y: lineYEnd },
-            thickness: 1,
-            color: colorlineas,
-          });
-        }
+        // Dibujar líneas horizontales entre las filas
+        page.drawLine({
+          start: { x: startX, y: startY - (i - 8) * rowHeight },
+          end: {
+            x:
+              startX +
+              60 +
+              dataCellWidths.reduce((acc, width) => acc + width, 0),
+            y: startY - (i - 8) * rowHeight,
+          },
+          thickness: 1.5,
+          color: colorlineas,
+        });
+        startY -= maxHeight + cellPadding;
       }
-      // Dibujar líneas horizontales entre las filas
-      page.drawLine({
-        start: { x: startX, y: startY - (i - 8) * rowHeight },
-        end: {
-          x:
-            startX + 60 + dataCellWidths.reduce((acc, width) => acc + width, 0),
-          y: startY - (i - 8) * rowHeight,
-        },
-        thickness: 1.5,
-        color: colorlineas,
-      });
-      startY -= maxHeight + cellPadding;
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+
+      window.open(url, '_blank');
     }
-
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-
-    window.open(url, '_blank');
   }
 }
