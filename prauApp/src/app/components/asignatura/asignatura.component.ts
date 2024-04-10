@@ -50,8 +50,8 @@ export class AsignaturaComponent {
     this.asignaturaService.registrarasignaturas(this.asignatura).subscribe(
       () => {
         this.obtenerasignaturas();
-        this.router.navigateByUrl('/menu/contenido-criterios/criterios-listar');
-        this.toastr.success('Criterio guardado exitosamente.', 'Éxito');
+        this.router.navigateByUrl('/menu/contenido-virtual/asignatura-listar');
+        this.toastr.success('Asignatura guardada exitosamente.', 'Éxito');
         this.asignatura.nombreAsignatura = '';
         this.asignatura.descripcionAsignatura = '';
         this.asignatura.carrera = clasificacionSeleccionada;
@@ -61,7 +61,7 @@ export class AsignaturaComponent {
           this.toastr.error(error.error, 'Error');
         } else {
           this.toastr.error(
-            'Error al guardar el criterio. Por favor, inténtelo de nuevo más tarde.',
+            'Error al guardar el asignatura. Por favor, inténtelo de nuevo más tarde.',
             'Error'
           );
         }

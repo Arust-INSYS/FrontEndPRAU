@@ -6,11 +6,11 @@ export class Usuario {
   usuNombreUsuario: string;
   usuContrasena: string;
   usuCorreo: string;
+  foto?: string; // Campo para la imagen
   usuEstado: number;
   usuFechaRegistro: Date;
   usuPerId: Persona;
   rolId: Rol;
-  foto?: string; // Campo para la imagen
 
   constructor(
     usuId?: number,

@@ -6,7 +6,7 @@
     [(ngModel)]="selectedPersona"
     optionLabel="nombreCompleto"
     [filter]="true"
-    [showClear]="true"
+    [showClear]="false"
     placeholder="Seleccione un usuario"
     (onChange)="onPersonaSelect($event)"
   >
@@ -105,7 +105,7 @@
       pButton
       icon="pi pi-check"
       label="Guardar"
-      (click)="registrar()"
+      (click)="registrar(habilitar)"
     ></button>
   </div>
 </div>

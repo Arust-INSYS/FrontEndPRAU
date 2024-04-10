@@ -14,7 +14,7 @@
     </div>
   
     <div class="subconten2">
-      <h1 class="text-center titulo-criterios">Lista de clasificación</h1>
+      <h1 class="text-center titulo-criterios">Lista de calisificación</h1>
   
       <p-button
         label="Registrar"
@@ -45,7 +45,7 @@
           <ng-template pTemplate="body" let-calificacion>
             <tr>
               <td>{{ calificacion.codCalificacion }}</td>
-              <td>{{ calificacion.descripcion }}</td>
+              <td class="descripcion-criterio">{{ calificacion.descripcion }}</td>
             
               <td>
                 <button

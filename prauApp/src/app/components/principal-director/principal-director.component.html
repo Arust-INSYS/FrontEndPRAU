@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="left-column">
+        <div class="flex flex-column gap-2">
+            <label for="periodo" class="text-gray-800">Periodo</label>
+            <select id="periodo" name="periodo" [(ngModel)]="periodo.nombrePeriodo" class="border border-gray-300 rounded-md px-3 py-2">
+                <option *ngFor="let periodo of periodos" [ngValue]="periodo" class="text-gray-800">{{ periodo.nombrePeriodo }}</option>
+            </select>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="persona" class="text-gray-800">Docente</label>
+            <select id="persona" name="persona" [(ngModel)]="persona.usuNombreUsuario" class="border border-gray-300 rounded-md px-3 py-2">
+                <option *ngFor="let persona of personas" [ngValue]="persona" class="text-gray-800">{{persona.perNombre1}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="right-column">
+        <div class="flex flex-column gap-2">
+            <label for="carrera" class="text-gray-800">Carrera</label>
+            <select id="carrera" name="carrera" [(ngModel)]="carrera.nombreCarrera" class="border border-gray-300 rounded-md px-3 py-2">
+                <option *ngFor="let carrera of carreras" [ngValue]="carrera" class="text-gray-800">{{ carrera.nombreCarrera}}</option>
+            </select>
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="aula" class="text-gray-800">Curso</label>
+            <select id="aula" name="aula" [(ngModel)]="aula.aulaNombre" class="border border-gray-300 rounded-md px-3 py-2">
+                <option *ngFor="let aula of aulas" [ngValue]="aula" class="text-gray-800">{{aula.aulaNombre}}</option>
+            </select>
+        </div>
+    </div>
+    
+    
+
+  </div><button class="boton-pdf" (click)="cargarDocentes()">Aceptar</button>
+  
+  
+  

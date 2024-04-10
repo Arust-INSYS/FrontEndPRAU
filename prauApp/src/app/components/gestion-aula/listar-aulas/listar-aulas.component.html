@@ -1,68 +1,57 @@
-<router-outlet></router-outlet>
-
-<section>
-    <h1 > Gestion de Aulas</h1>
-<p-button icon="pi pi-plus" label="Nueva Aula" (click)="showModal()"></p-button>
-
-<div style="display: flex; justify-content: center; align-items: center; width: 80%; margin: auto;">
 
 
-    <div class="card">
-        <p-table [value]="aulas" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
-            [tableStyle]="{ 'min-width': '50rem' }"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [rowsPerPageOptions]="[5, 10, 20]">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width:5%">ID</th>
-                    <th style="width:15%">Nombre del Aula</th>
-                    <th style="width:10%">Ciclo Pertenece</th>
-                    <th style="width:10%">Periodo Academico</th>
-                    <th style="width:10%">Docente</th>
-                    <th style="width:10%">Asignatura</th>
-                    <th style="width:25%">Observaciones</th>
-                    <th style="width:5%">Editar</th>
-                    <th style="width:5%">Borrar</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-aula>
-                <tr>
-                    <td>{{ aula.aulaId }}</td>
-                    <td>{{ aula.aulaNombre }}</td>
-                    <td>{{ aula.cicloPertenece  }}</td>
-                    <td>{{ aula.periodoAc.nombrePeriodo  }}</td>
-                    <td>{{ aula.docente.usuPerId.perNombre1 }} {{ aula.docente.usuPerId.perApellido1 }}</td>
-                    <td>{{ aula.asignatura.nombreAsignatura }}</td>
-                    <td>{{ aula.observaciones }}</td>
-                    <td>  <p-button icon="pi pi-pencil" severity="success"></p-button>
-                    </td>
-                    <td> <p-button icon="pi pi-times" severity="danger"></p-button></td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="paginatorleft">
-                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
-            </ng-template>
-           
-        </p-table>
-    </div>
+<h1> Gestion de Aulas</h1>
 
+<p-button icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
+
+<div class="card">
+    <p-table #dt [value]="aulas" [(selection)]="selectedAulas" dataKey="id" [rowHover]="true" [rows]="10"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['aulaId', 'aulaNombre', 'cicloPertenece', 'periodoAc.nombrePeriodo', 'docente.usuPerId.perNombre1', 'docente.usuPerId.perApellido1', 'asignatura.nombreAsignatura', 'observaciones']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+         
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onSearch($event)" placeholder="Búsqueda " />
+
+            </span>
+        </div>
+    </ng-template>
+    
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%">ID</th>
+                <th style="width:15%">Nombre del Aula</th>
+                <th style="width:10%">Ciclo Pertenece</th>
+                <th style="width:10%">Periodo Academico</th>
+                <th style="width:10%">Docente</th>
+                <th style="width:10%">Asignatura</th>
+                <th style="width:25%">Observaciones</th>
+                <th style="width:5%">Editar</th>
+                <th style="width:5%">Borrar</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-aula>
+            <tr>
+                <td>{{ aula.aulaId }}</td>
+                <td>{{ aula.aulaNombre }}</td>
+                <td>{{ aula.cicloPertenece }}</td>
+                <td>{{ aula.periodoAc.nombrePeriodo }}</td>
+                <td>{{ aula.docente.usuPerId.perNombre1 }} {{ aula.docente.usuPerId.perApellido1 }}</td>
+                <td>{{ aula.asignatura.nombreAsignatura }}</td>
+                <td>{{ aula.observaciones }}</td>
+                <td> <p-button icon="pi pi-pencil" severity="success" (click)="selectAula(aula)"></p-button>
+                </td>
+                <td> <p-button icon="pi pi-trash" severity="danger"
+                        (click)="eliminarAulaConfirmado(aula.aulaId)"></p-button></td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"
+                [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
+        </ng-template>
+
+    </p-table>
 </div>
-
-
-</section>
-<p-dialog
-  [(visible)]="displayModalregsitro"
-  [modal]="true"
-  [responsive]="true"
-  [style]="{ width: '50vw' }"
->
-  <app-registrar-aula></app-registrar-aula>
-</p-dialog>
-<p-dialog
-  [(visible)]="displayModalactualizar"
-  [modal]="true"
-  [responsive]="true"
-  [style]="{ width: '60vw' }"
->
-<app-actualizar-aula [aulaId]="aulaId"></app-actualizar-aula>
-</p-dialog>

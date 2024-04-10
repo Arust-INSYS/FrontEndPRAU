@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PeriodoAcService } from '../../../services/periodo-ac.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,11 +10,11 @@ import { NgForm } from '@angular/forms';
   templateUrl: './actualizar-periodo-ac.component.html',
   styleUrl: './actualizar-periodo-ac.component.css'
 })
-export class ActualizarPeriodoAcComponent implements OnChanges{
-  @Input() periodoId!: number;
+export class ActualizarPeriodoAcComponent implements OnInit{
+  //@Input() periodoId!: number;
 
   periodoAc: PeriodoAc = new PeriodoAc();
- // periodoId :number=0;
+  periodoId :number=0;
   f!: NgForm;
   constructor(
     private periodoAcService: PeriodoAcService,
@@ -33,36 +33,16 @@ export class ActualizarPeriodoAcComponent implements OnChanges{
       this.periodoAc.nombrePeriodo = yearInicio + '-' + yearFin;
     }
   }
-
-  // ngOnInit() {
-  //   console.log(this.periodoId); // Verifica que el periodoId esté definido correctamente
-  //   this.activatedRoute.params.subscribe(params => {
-  //     this.periodoId = params['id'];
-  //     this.periodoAcService.getPeriodoAcById(this.periodoId).subscribe(
-  //       (periodo) => {
-  //         this.periodoAc = periodo; 
-  //         console.log(this.periodoAc);
-  //       },
-  //       (error) => {
-  //         console.error('Error obteniendo el periodo académico:', error);
-  //         this.toastr.error('Error obteniendo el periodo académico.');
-  //       }
-  //     );
-  //   });
-  // }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['periodoId'] && changes['periodoId'].currentValue) {
-      this.obtenerPeriodoAc();
-    }
-  }
-  
-
-  obtenerPeriodoAc() {
-    this.periodoAcService.getPeriodoAcById(this.periodoId).subscribe(
+  ngOnInit() {
+    const periodoId = this.route.snapshot.params['id']; // Obtener el ID del periodo de la URL
+    this.periodoAcService.getPeriodoAcById(periodoId).subscribe(
       (periodo) => {
+        // Convertir las fechas a objetos Date
+        periodo.fechaInicio = new Date(periodo.fechaInicio);
+        periodo.fechaFin = new Date(periodo.fechaFin);
+  
         this.periodoAc = periodo; 
-        console.log(this.periodoAc);
+        console.log('El periodos es ', this.periodoAc);
       },
       (error) => {
         console.error('Error obteniendo el periodo académico:', error);
@@ -71,6 +51,8 @@ export class ActualizarPeriodoAcComponent implements OnChanges{
     );
   }
   
+
+
 
 
 
@@ -106,7 +88,7 @@ export class ActualizarPeriodoAcComponent implements OnChanges{
         this.periodoAcService.update(this.periodoAc.idPeriodoAc,this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa
-            this.router.navigate(['/menu/contenido-virtual/listar-periodos-acs']);
+            this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
             this.toastr.success('Se actualizo correctamente');
             this.resetForm(); 
           },
@@ -114,10 +96,14 @@ export class ActualizarPeriodoAcComponent implements OnChanges{
             if (error.status === 409) {
               // 409 es el código de estado para Conflict
               this.toastr.error(error.error); // Muestra el mensaje de error que viene del servidor
+              this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
+
             } else {
               this.toastr.error(
                 'Ocurrió un error al actualizar el período académico.'
               );
+              this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
+
             }
           }
         );
