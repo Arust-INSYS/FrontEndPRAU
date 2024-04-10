@@ -48,9 +48,8 @@
           <tr>
             <td>{{ carrera.idCarrera }}</td>
             <td>{{ carrera.nombreCarrera }}</td>
-            <td>{{ carrera.descripcionCarrera}}</td>
-            <td>{{ carrera.director?.usuNombreUsuario}}</td>
-            
+            <td>{{ carrera.descripcionCarrera }}</td>
+            <td>{{ carrera.director?.usuPerId?.perNombre1 }}</td> <!-- Utiliza la propiedad director para acceder al usuario -->
             <td>
               <button
                 pButton

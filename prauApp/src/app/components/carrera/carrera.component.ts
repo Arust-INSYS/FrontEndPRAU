@@ -15,6 +15,10 @@ export class CarreraComponent {
   carrera: Carrera = new Carrera();
   carreras: Carrera[] = [];
   usuarios: Usuario[] = [];
+  searchTerm: string = ''; // Término de búsqueda
+  selectedUsuario: string = ''; // Usuario seleccionado
+  usuarioss: any[] = []; // Lista de usuarios
+  filteredUsuarios: any[] = []; 
   constructor(
     private CarreraService: CarreraService,
     private router: Router,
@@ -24,8 +28,25 @@ export class CarreraComponent {
   ngOnInit(): void {
     this.obtenercarreras();
     this.obtenerUsuarios();
+    this.obtenerUsuariosPorRol(4); 
+  }
+  obtenerUsuariosPorRol(roleId: number): void {
+    this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
+      .subscribe(usuarios => {
+        this.usuarios = usuarios;
+      });
+  }
+  filterUsuarios() {
+    this.filteredUsuarios = this.usuarios.filter(usuario =>
+      usuario.usuPerId?.perNombre1.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      usuario.usuPerId?.perApellido1.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
+  // Función para seleccionar un usuario
+  seleccionarUsuario(usuario: any) {
+    this.selectedUsuario = usuario;
+  }
   obtenercarreras() {
     this.CarreraService.obtenerListaCarreras().subscribe((dato) => {
       this.carreras = dato;
@@ -36,10 +57,13 @@ export class CarreraComponent {
     this.clasificacionUsuariosService
       .obtenerListausuarios()
       .subscribe((dato) => {
+        
         this.usuarios = dato;
       });
   }
+recuperarId(id: number){
 
+}
   guardarCarrera() {
     if (
       !this.carrera.nombreCarrera ||
