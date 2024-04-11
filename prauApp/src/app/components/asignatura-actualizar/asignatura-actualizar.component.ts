@@ -42,6 +42,7 @@ export class AsignaturaActualizarComponent implements OnInit {
   obtenerCarreras() {
     this.carreraService.obtenerListaCarreras().subscribe((datos) => {
       this.carreras = datos;
+      console.log(datos)
     });
   }
 
@@ -57,30 +58,34 @@ export class AsignaturaActualizarComponent implements OnInit {
   }
 
   onSubmit() {
-    if (
-      !this.asignatura.nombreAsignatura ||
-      !this.asignatura.descripcionAsignatura ||
-      !this.asignatura.carrera
-    ) {
-      this.toastr.error('Llene todos los campos antes de enviar.');
-      return;
-    }
-
-    this.asignaturaService.actualizarasignatura(this.id, this.asignatura).subscribe(
-      () => {
-        this.toastr.success('Asignatura actualizada correctamente.');
-        this.router.navigateByUrl('/menu/contenido-virtual/asignatura-listar');
-      },
-      (error) => {
-        console.error('Error al actualizar la asignatura:', error);
-        if (error.error && error.error === 'El nombre ya está en uso') {
-          this.toastr.error('El nombre ya está en uso, por favor ingrese otro.');
-        } else {
-          this.toastr.error('Error al actualizar la asignatura. Por favor, inténtelo de nuevo más tarde.');
-        }
-      }
-    );
-  }
+    // Realizar la actualización de la carrera
+    if (this.id && this.asignatura.nombreAsignatura && this.asignatura.descripcionAsignatura && this.selectedCountry) {
+     // Asignar el director seleccionado a la carrera
+     this.asignatura.carrera = this.selectedCountry;
+     // Llamar al servicio para actualizar la carrera
+     this.asignaturaService.actualizarasignatura(this.id, this.asignatura).subscribe(
+       () => {
+         this.toastr.success('La carrera se actualizó correctamente.', 'Éxito');
+         this.guardar(); // Llamar al método guardar después de la edición
+       },
+       error => {
+         console.error('Error al actualizar la carrera:', error);
+         if (error.error && error.error === 'El nombre ya está en uso') {
+           this.toastr.error('El nombre ya está en uso, por favor ingrese otro.', 'Error');
+         } else {
+           this.toastr.error('Hubo un error al actualizar la carrera.', 'Error');
+         }
+       }
+     );
+   } else {
+     this.toastr.error('Por favor, complete todos los campos antes de enviar.', 'Error');
+   }
+ }
+ guardar() {
+   // Implementa aquí la lógica para guardar después de la edición
+   // Por ejemplo, puedes redirigir al usuario a la lista de carreras después de la edición
+   this.router.navigateByUrl('/menu/contenido-virtual/asignatura-listar');
+ }
 
   ///////////////////////////////
  
@@ -101,7 +106,7 @@ export class AsignaturaActualizarComponent implements OnInit {
     for (let i = 0; i < (this.carreras as any[]).length; i++) {
       let country = (this.carreras as any[])[i];
      
-      if (country.idCarrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (country.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         console.log(country);
         filtered.push(country);
       }

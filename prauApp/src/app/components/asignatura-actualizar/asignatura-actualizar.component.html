@@ -13,9 +13,9 @@
     </div>
     <div class="flex flex-column gap-2">
         <label for="carrera">Carrera:</label>
-        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="idCarrera.nombreCarrera"> 
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="nombreCarrera"> 
             <ng-template let-item pTemplate="item">
-                <div>{{item.idCarrera.nombreCarrera}} </div>
+                <div>{{item.nombreCarrera}} </div>
                 
             </ng-template>
         </p-autoComplete>
