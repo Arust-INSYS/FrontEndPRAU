@@ -13,10 +13,14 @@
     </div>
     <div class="flex flex-column gap-2">
         <label for="carrera">Carrera:</label>
-        <select id="carrera" name="carrera" [(ngModel)]="asignatura.carrera">
-            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{ carrera.nombreCarrera }}</option>
-        </select>
-    </div>
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="nombreCarrera"> 
+            <ng-template let-item pTemplate="item">
+                <div>{{item.nombreCarrera}} </div>
+                
+            </ng-template>
+        </p-autoComplete>
+        
+    
     <div class="button-container">
         <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()"></p-button>
         <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger" routerLink="/menu/contenido-virtual/asignatura-listar"></p-button>

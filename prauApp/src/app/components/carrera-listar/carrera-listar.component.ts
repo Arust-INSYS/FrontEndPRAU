@@ -52,6 +52,7 @@ throw new Error('Method not implemented.');
   obtenerCarrera() {
     this.carreraService.obtenerListaCarreras().subscribe(dato => {
       this.carrera = dato;
+      console.log( this.carrera )
     });
   }
  
@@ -101,16 +102,17 @@ throw new Error('Method not implemented.');
 
   obtenerUsuariosPorRol(roleId: number): void {
     this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
-      .subscribe(usuarios => {
-        this.usuarios = usuarios;
+      .subscribe(user => {
+        this.usuarios = user;
       });
+      
   }
   async generarPDF() {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([400, 600]);
     const color = 'rgb(255, 0, 0)';
 
-    page.drawText('Lista de Criterios:', {
+    page.drawText('Lista de Carreras:', {
       x: 50,
       y: 500,
       size: 20,

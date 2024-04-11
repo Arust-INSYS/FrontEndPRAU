@@ -2,29 +2,33 @@
     <h2 class="text-center">Registro de Carrera</h2>
     <div class="flex flex-column gap-2">
         <label for="nombreCarrera">Nombre de Carrera:</label>
-        <input pInputText type="text" id="nombreCarrera" name="nombreCarrera" placeholder="Nombre de Carrera" [(ngModel)]="carrera.nombreCarrera" />
+        <input pInputText type="text" id="nombreCarrera" name="nombreCarrera" placeholder="Nombre de Carrera"
+            [(ngModel)]="carrera.nombreCarrera" />
         <small id="nombreCarrera">Ingrese nombre de carrera.</small>
     </div>
     <div class="flex flex-column gap-2">
         <label for="descripcionCarrera">Descripción:</label>
-        <input pInputText type="text" id="descripcionCarrera" name="descripcionCarrera" placeholder="Descripción" [(ngModel)]="carrera.descripcionCarrera" />
+        <input pInputText type="text" id="descripcionCarrera" name="descripcionCarrera" placeholder="Descripción"
+            [(ngModel)]="carrera.descripcionCarrera" />
         <small id="descripcionCarrera">Ingrese la descripción.</small>
     </div>
-    
- <div class="flex flex-column gap-2">
+
+    <div class="flex flex-column gap-2">
         <label for="director">Director:</label>
-        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="usuPerId.perNombre1"> 
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries"
+            (completeMethod)="filterCountry($event)" field="perNombre1">
             <ng-template let-item pTemplate="item">
-                <div>{{item.usuPerId?.perNombre1}} {{item.usuPerId?.perApellido1}}</div>
-                
+                <div>{{item?.perNombre1}} {{item?.perApellido1}}</div>
+
             </ng-template>
         </p-autoComplete>
-        
+
     </div>
-    
-    
-    
+
+
+
     <div class="button-container">
-        <p-button  type="submit" icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="guardarCarrera()"></p-button>
+        <p-button type="submit" icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
+            (click)="guardarCarrera()"></p-button>
     </div>
 </div>

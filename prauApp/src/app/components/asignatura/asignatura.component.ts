@@ -5,6 +5,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarreraService } from '../../services/carrera.service';
 import { AsignaturaService } from '../../services/asignatura.service';
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
+
 @Component({
   selector: 'app-asignatura',
   templateUrl: './asignatura.component.html',
@@ -41,11 +46,12 @@ export class AsignaturaComponent {
     if (
       !this.asignatura.nombreAsignatura ||
       !this.asignatura.descripcionAsignatura ||
-      !this.asignatura.carrera?.idCarrera
+      !this.selectedCountry.idCarrera
     ) {
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
+    this.asignatura.carrera = this.selectedCountry
     const clasificacionSeleccionada = this.asignatura.carrera;
     this.asignaturaService.registrarasignaturas(this.asignatura).subscribe(
       () => {
@@ -54,7 +60,8 @@ export class AsignaturaComponent {
         this.toastr.success('Asignatura guardada exitosamente.', 'Éxito');
         this.asignatura.nombreAsignatura = '';
         this.asignatura.descripcionAsignatura = '';
-        this.asignatura.carrera = clasificacionSeleccionada;
+        this.asignatura.carrera = this.selectedCountry.idCarrera;
+        
       },
       (error) => {
         if (error.error === 'La asignatura ya ha sido registrado previamente.') {
@@ -68,8 +75,70 @@ export class AsignaturaComponent {
       }
     );
   }
+/*
+  guardarAsignatura() {
+    if (
+      !this.asignatura.nombreAsignatura ||
+      !this.asignatura.descripcionAsignatura ||
+      !this.selectedCountry.idCarrera
+    ) {
+      this.toastr.error('Por favor, complete todos los campos.', 'Error');
+      return;
+    }
+    this.asignatura = this.selectedCountry
+    const seleccion= this.asignatura.carrera;
+    this.asignaturaService.registrarasignaturas(this.asignatura).subscribe(
+      () => {
+        this.obtenerasignaturas();
+        this.router.navigateByUrl('/menu/contenido-virtual/carrera');
+        this.toastr.success('Carrera guardada exitosamente.', 'Éxito');
+        this.asignatura.nombreAsignatura = '';
+        this.asignatura.descripcionAsignatura = '';
+        this.asignatura.carrera = this.selectedCountry;
+      },
+      (error) => {
+        if (error.error === 'La carrera ya ha sido registrado previamente.') {
+          this.toastr.error(error.error, 'Error');
+        } else {
+          this.toastr.error(
+            'Error al guardar la carrera. Por favor, inténtelo de nuevo más tarde.',
+            'Error'
+          );
+        }
+      }
+    );
+  }*/
+  
+
 
   onSubmit() {
     this.guardarAsignatura();
+  }
+
+  ///////////////////////////////
+ 
+
+  selectedCountry: any;
+
+  filteredCountries: any[] = [];
+
+
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    console.log(event.query);
+    //console.table(this.usuarios)
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.carrera as any[]).length; i++) {
+      let country = (this.carrera as any[])[i];
+     
+      if (country.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        console.log(country);
+        filtered.push(country);
+      }
+    }
+
+    this.filteredCountries = filtered;
   }
 }
