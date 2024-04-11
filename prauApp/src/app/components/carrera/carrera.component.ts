@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarreraService } from '../../services/carrera.service';
 import { validarCadena, validarLetrasNum } from '../../common/validaciones';
+import { UsuarioPorRolDTO } from '../../models/UsuarioPorRolDTO';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -20,10 +21,12 @@ export class CarreraComponent {
   carrera: Carrera = new Carrera();
   carreras: Carrera[] = [];
   usuarios: Usuario[] = [];
+  userDto:UsuarioPorRolDTO[]=[];
   searchTerm: string = ''; // Término de búsqueda
   selectedUsuario: string = ''; // Usuario seleccionado
   usuarioss: any[] = []; // Lista de usuarios
   filteredUsuarios: any[] = [];
+
 
 
   constructor(
@@ -34,21 +37,21 @@ export class CarreraComponent {
   ) { }
   ngOnInit(): void {
     this.obtenercarreras();
-  
+    this.obtenerUsuarios();
     this.obtenerUsuariosPorRol(4);
   }
   obtenerUsuariosPorRol(roleId: number) {
     
-    this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
+    this.clasificacionUsuariosService.obtenerUsuariosPorRolDto(roleId)
       .subscribe((users) => {
-        this.usuarios = users;
-        console.log(users)
+        this.userDto = users;
+  
       });
   }
   filterUsuarios() {
-    this.filteredUsuarios = this.usuarios.filter(usuario =>
-      usuario.usuPerId?.perNombre1.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      usuario.usuPerId?.perApellido1.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredUsuarios = this.userDto.filter(usuario =>
+      usuario.perNombre1?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      usuario.perApellido1?.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
@@ -59,6 +62,7 @@ export class CarreraComponent {
   obtenercarreras() {
     this.CarreraService.obtenerListaCarreras().subscribe((dato) => {
       this.carreras = dato;
+      
     });
   }
   validarNombreCarrera(event: KeyboardEvent) {
@@ -73,7 +77,7 @@ export class CarreraComponent {
     this.clasificacionUsuariosService
       .obtenerListausuarios()
       .subscribe((dato) => {
-
+        console.log(dato)
         this.usuarios = dato;
       });
   }
@@ -124,15 +128,14 @@ export class CarreraComponent {
 
 
   filterCountry(event: AutoCompleteCompleteEvent) {
-    console.log(event.query);
     //console.table(this.usuarios)
     let filtered: any[] = [];
     let query = event.query;
 
-    for (let i = 0; i < (this.usuarios as any[]).length; i++) {
-      let country = (this.usuarios as any[])[i];
+    for (let i = 0; i < (this.userDto as any[]).length; i++) {
+      let country = (this.userDto as any[])[i];
      
-      if (country.usuPerId?.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (country.perNombre1?.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         console.log(country);
         filtered.push(country);
       }
