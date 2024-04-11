@@ -5,6 +5,7 @@ import { CarreraService } from '../../services/carrera.service';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../models/usuario';
 import { ClasificacionUsuariosService } from '../../services/clasificacion-usuarios.service';
+import { UsuarioPorRolDTO } from '../../models/UsuarioPorRolDTO';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -22,7 +23,8 @@ export class CarreraActualizarComponent {
   carrera: Carrera = new Carrera();
   carreras: Carrera[] = [];
   usuarios: Usuario[] = [];
-  
+  userDto:UsuarioPorRolDTO[]=[];
+
   constructor(
     private carreraService: CarreraService,
     private router: Router,
@@ -30,19 +32,22 @@ export class CarreraActualizarComponent {
     private toastr: ToastrService,
     private clasificacionUsuariosService: ClasificacionUsuariosService
   ) {}
-  obtenerUsuarios() {
-    this.clasificacionUsuariosService
-      .obtenerListausuarios()
-      .subscribe((dato) => {
-        this.usuarios = dato;
-      });
-  }
+
   ngOnInit(): void {
-    this.obtenerUsuarios();
+    this.obtenerUsuariosPorRol(4);
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.cargarCarrera(this.id);
     });
+  }
+  
+  obtenerUsuariosPorRol(roleId: number) {
+    
+    this.clasificacionUsuariosService.obtenerUsuariosPorRolDto(roleId)
+      .subscribe((users) => {
+        this.userDto = users;
+  
+      });
   }
 
   cargarCarrera(id: number) {
@@ -91,16 +96,16 @@ export class CarreraActualizarComponent {
 
 
 
+
   filterCountry(event: AutoCompleteCompleteEvent) {
-    console.log(event.query);
     //console.table(this.usuarios)
     let filtered: any[] = [];
     let query = event.query;
 
-    for (let i = 0; i < (this.usuarios as any[]).length; i++) {
-      let country = (this.usuarios as any[])[i];
+    for (let i = 0; i < (this.userDto as any[]).length; i++) {
+      let country = (this.userDto as any[])[i];
      
-      if (country.usuPerId?.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (country.perNombre1?.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         console.log(country);
         filtered.push(country);
       }

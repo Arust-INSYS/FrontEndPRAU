@@ -37,7 +37,6 @@ export class CarreraComponent {
   ) { }
   ngOnInit(): void {
     this.obtenercarreras();
-    this.obtenerUsuarios();
     this.obtenerUsuariosPorRol(4);
   }
   obtenerUsuariosPorRol(roleId: number) {
@@ -73,14 +72,6 @@ export class CarreraComponent {
     validarCadena(inputValue);
   }
 
-  obtenerUsuarios() {
-    this.clasificacionUsuariosService
-      .obtenerListausuarios()
-      .subscribe((dato) => {
-        console.log(dato)
-        this.usuarios = dato;
-      });
-  }
 
   guardarCarrera() {
     if (
