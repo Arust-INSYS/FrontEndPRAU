@@ -15,7 +15,7 @@
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de criterios</h1>
 
-    <p-button
+    <p-button *ngIf="isAdmin"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCriterios()"

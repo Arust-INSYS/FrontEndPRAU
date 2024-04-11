@@ -7,6 +7,7 @@ import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
+import { AuthRolService } from '../../services/authRolService.service';
 
 import { PDFDocument, rgb } from 'pdf-lib';
 import { saveAs } from 'file-saver';
@@ -31,6 +32,8 @@ Delete: string|undefined;
 
 dt: any;
 
+isAdmin: boolean =  false;
+
 showModal() {
 throw new Error('Method not implemented.');
 }
@@ -44,10 +47,14 @@ applyFilter() {
   customers: any
   selectedCustomers:any
   loading:any
-  constructor(private criteriosService: CriteriosService, private router: Router,private toastr: ToastrService) {}
+
+  constructor(private criteriosService: CriteriosService, private router: Router,private toastr: ToastrService, private authRolService: AuthRolService) {}
 
   ngOnInit(): void {
     this.obtenerCriterios();
+    this.authRolService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
   }
   
    // Método para dividir la descripción en líneas más cortas

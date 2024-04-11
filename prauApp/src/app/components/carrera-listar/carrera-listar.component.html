@@ -22,7 +22,7 @@
       (click)="redirectToCarrera()"
       class="registrar-button mb-3"
     ></p-button>
-    <button class="boton-pdf" (click)="generarPDF()">Generar PDF</button>
+    <p-button label="Imprimir"class="imprimir" icon="pi pi-print" [rounded]="true" (click)="generarPDFtable()"></p-button>
     <div class="tabla-container">
       <p-table
         #dt

@@ -36,6 +36,11 @@ throw new Error('Method not implemented.');
   selectedCustomers:any
   loading:any
   usuarios: Usuario[] = [];
+
+  titulo: string = 'Carreras Registradas';
+  encabezado: [string, string, string, string] = ['ID', 'Carrera', 'Descripcion', 'Director'];
+  cellSize: [number, number, number, number] = [20, 100, 250, 100,];
+
   constructor(
     private carreraService: CarreraService, 
     private router: Router,
@@ -55,7 +60,6 @@ throw new Error('Method not implemented.');
       console.log( this.carrera )
     });
   }
- 
 
   actualizarCarrera(id: number) {
 
@@ -102,65 +106,167 @@ throw new Error('Method not implemented.');
 
   obtenerUsuariosPorRol(roleId: number): void {
     this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
-      .subscribe(user => {
-        this.usuarios = user;
+      .subscribe(usuarios => {
+        this.usuarios = usuarios;
       });
       
   }
-  async generarPDF() {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([400, 600]);
-    const color = 'rgb(255, 0, 0)';
 
-    page.drawText('Lista de Carreras:', {
-      x: 50,
-      y: 500,
-      size: 20,
-      color: rgb(0, 0, 0),
+
+  // Método para dividir la descripción en líneas más cortas
+  splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
+    const words = description.split(' ');
+    const lines = [];
+    let currentLine = '';
+
+    for (const word of words) {
+      const width = this.getTextWidth(currentLine + word, fontSize); // Calcular el ancho del texto actual
+
+      if (width <= maxWidth) {
+          // Si la palabra cabe en la línea actual, añádela
+          currentLine += (currentLine ? ' ' : '') + word;
+      } else {
+          // Si la palabra no cabe, añade la línea actual al array de líneas y comienza una nueva línea
+          lines.push(currentLine);
+          currentLine = word;
+      }
+  }
+
+      // Añadir la última línea
+      if (currentLine !== '') {
+        lines.push(currentLine);
+    }
+
+    return lines;
+  }
+
+  getTextWidth(text: string, fontSize: number): number {
+    // Calcular el ancho del texto según su longitud y el tamaño de la fuente
+    return text.length * (fontSize * 0.5); // Ajusta según sea necesario
+}
+
+  async generarPDFtable() {
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+
+    // Agregar imagen
+    const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
+    const image = await pdfDoc.embedPng(imageBytes);
+    page.drawImage(image, {
+        x: 210, // Posición x de la imagen
+        y: 780, // Posición y de la imagen
+        width: 180, // Ancho de la imagen
+        height: 40 // Alto de la imagen
     });
-  
-    let yPosition = 450;
-    this.carrera.forEach((dato: any) => {
-      page.drawLine({ start: { x: 50, y: yPosition+20 }, end: { x: 250, y: yPosition+20 }, color: rgb(0, 0, 0) });
-      const keys = Object.keys(dato);
-      keys.forEach(key => {
-        const value = dato[key];
-        if (key === 'clasificacion' && typeof value === 'object') {
-          //nombre de la clasificación
-          const clasificacionNombre = value.nombreClasificacion || 'Sin clasificación';
-          page.drawText(`Clasificación: \t${clasificacionNombre}`, {
-            x: 50,
-            y: yPosition,
-            size: 10,
-            color: rgb(0, 0, 0),
-          });
-          yPosition -= 20;
-        } else {
-          const keyMap: { [key: string]: string } = {
-            idCarrera: 'ID',
-            nombreCarrera: 'Nombre',
-            descripcionCarrera: 'Descripción'
-          };
-          const displayedKey = keyMap[key] || key;
+
+    // Título de la tabla
+    page.drawText('Lista de carreras', {
+        x: 250,
+        y: 750,
+        size: 15,
+        color: rgb(0, 0, 0),
+    });
+
+    // Definir el tamaño y la posición de la tabla
+    const startX = 30;
+    let startY = 550;
+    const cellPadding = 8;
+
+    // Definir las propiedades de las celdas
+    const fontSize = 9;
+    const SizeColumn = [20, 100, 250, 100,];
+    const colorlineas = rgb(0.5, 0.5, 0.5);
+    const colorencabezado = rgb(0, 0.1, 1);
+
+    // Encabezados de la tabla
+    const headers = ['ID', 'Carrera', 'Descripcion', 'Director'];
+    const headersCellWidth = SizeColumn;
+    const rowHeight = 20;
+    const tableHeight = 200;
+
+    // Dibujar encabezados y líneas horizontales
+    for (let i = 0; i < headers.length; i++) {
+        page.drawText(headers[i], {
+            x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
+            y: startY + tableHeight - rowHeight - 20 + cellPadding,
+            size: fontSize,
+            color: colorencabezado,
+        });
+    }
+
+    const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
+    // Llenar la tabla con los datos
+    for (let i = 0; i < this.carrera.length; i++) {
+        const dato = this.carrera[i];
+        const rowData = [
+          dato.idCarrera?.toString() || '', // Manejar valores null
+          dato.nombreCarrera || '',
+          dato.descripcionCarrera || '',
+          dato.director?.usuPerId?.perNombre1 || '' + dato.director?.usuPerId.perApellido1 || '',
+        ];
+        // Calcular la altura máxima de la fila
+        let maxHeight = 0;
+        for (let j = 0; j < rowData.length; j++) {
+          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
+          const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
+          maxHeight = Math.max(maxHeight, textHeight);
           
-          page.drawText(`${displayedKey}:\t ${value}`, {
-            x: 50,
-            y: yPosition,
-            size: 10,
-            color: rgb(0, 0, 0),
-          });
-          yPosition -= 20;
         }
+    // Dibujar los datos de la fila y las líneas horizontales
+    for (let j = 0; j < rowData.length; j++) {
+      const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
+      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
+      const cellWidth = dataCellWidths[j] - 2 * cellPadding;
+
+      // Dibujar texto
+      if (j === 1 || j === 2  || j === 3) { // Si es la celda de descripción
+        const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
+        for (let k = 0; k < descriptionLines.length; k++) {
+            page.drawText(descriptionLines[k], {
+                x: cellX,
+                y: cellY - k * (fontSize * 0.95),
+                size: fontSize,
+                color: rgb(0, 0, 0),
+                maxWidth: cellWidth,
+            });
+        }
+    } else { // Para otras celdas
+        page.drawText(rowData[j], {
+            x: cellX,
+            y: cellY,
+            size: fontSize,
+            color: rgb(0, 0, 0),
+            maxWidth: cellWidth,
+        });
+    }
+
+    // Dibujar líneas verticales entre las columnas
+    if (j < rowData.length - 1) {
+      const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
+      const lineYStart = cellY + 30;
+      const lineYEnd = cellY - maxHeight - 30;
+      page.drawLine({
+          start: { x: nextCellX, y: lineYStart },
+          end: { x: nextCellX, y: lineYEnd },
+          thickness: 1,
+          color: colorlineas
       });
-      yPosition -= 20;
-    });
-  
+  }
+}
+        // Dibujar líneas horizontales entre las filas
+        page.drawLine({
+            start: { x: startX, y: startY - (i - 8) * rowHeight },
+            end: { x: startX  + 60+ dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight },
+            thickness: 1.5,
+            color: colorlineas
+        });
+        startY -= maxHeight + cellPadding;
+    }
+
     const pdfBytes = await pdfDoc.save();
-  
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-  
+
     window.open(url, '_blank');
   }
-  
 }

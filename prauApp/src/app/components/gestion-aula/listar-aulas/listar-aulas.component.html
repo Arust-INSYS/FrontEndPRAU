@@ -3,6 +3,7 @@
 <h1> Gestion de Aulas</h1>
 
 <p-button icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
+<p-button class="imprimir" icon="pi pi-print" label="Imprimir" (click)="generarPDFtable()"></p-button>
 
 <div class="card">
     <p-table #dt [value]="aulas" [(selection)]="selectedAulas" dataKey="id" [rowHover]="true" [rows]="10"

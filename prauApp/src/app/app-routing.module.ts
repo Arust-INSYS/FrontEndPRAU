@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'registrar', component: RegistrarPersonaComponent },
   { path: 'main-director', component: MainDirectorComponent},
   { path: 'use-director', component: UseDirectorComponent },
-   { path: 'listar-persona', component: ListarPersonaComponent },
+  { path: 'listar-persona', component: ListarPersonaComponent },
   {
     path: 'menu',
     component: MenuComponent,
@@ -124,10 +124,7 @@ const routes: Routes = [
           { path: 'asignatura-actualizar/:id', component: AsignaturaActualizarComponent },
           { path: 'listar-periodo', component: ListarPeriodosAcComponent },
           { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent },
-          {
-            path: 'actualizar-periodo/:id',
-            component: ActualizarPeriodoAcComponent,
-          },
+          { path: 'actualizar-periodo/:id', component: ActualizarPeriodoAcComponent},
           { path: 'listar-aulas', component: ListarAulasComponent },
           { path: 'principal-director', component: PrincipalDirectorComponent },
           { path: 'registrar-aula', component: RegistrarAulaComponent },
