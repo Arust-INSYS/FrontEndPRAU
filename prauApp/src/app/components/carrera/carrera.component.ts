@@ -85,6 +85,7 @@ export class CarreraComponent {
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
+    this.carrera.director= this.selectedCountry
     const clasificacionSeleccionada = this.carrera.director;
     this.CarreraService.registrarcarreras(this.carrera).subscribe(
       () => {

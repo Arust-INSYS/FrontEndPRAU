@@ -21,12 +21,14 @@ export class AsignaturaService {
 
     const options = { headers: headers };
 
-    return this.http.get<Asignatura[]>(this.url + '/read', options).pipe(
+    return this.http.get<Asignatura[]>(this.url + '/read', options ).pipe(
       catchError(error => {
         console.error('Error obteniendo lista de asignaturas:', error);
         throw error;
       })
+    
     );
+    
   }
 
   eliminarAsignatura(id: number): Observable<object> {

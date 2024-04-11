@@ -83,7 +83,12 @@ export class CarreraService {
   }
 
   obtenerCarreraPorId(id: number): Observable<Carrera> {
-    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`, {headers}
+
+    );
   }
 
   obtenerListaCarreras(): Observable<Carrera[]> {

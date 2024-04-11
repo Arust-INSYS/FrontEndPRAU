@@ -4,7 +4,6 @@ export class Asignatura {
   idAsignatura: number;
   nombreAsignatura: string;
   descripcionAsignatura: string;
-
   carrera?: Carrera;
 
   constructor(
