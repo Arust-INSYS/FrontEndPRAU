@@ -33,7 +33,7 @@ export class CarreraComponent {
     private clasificacionUsuariosService: ClasificacionUsuariosService
   ) { }
   ngOnInit(): void {
-    
+    this.obtenercarreras();
   
     this.obtenerUsuariosPorRol(4);
   }
