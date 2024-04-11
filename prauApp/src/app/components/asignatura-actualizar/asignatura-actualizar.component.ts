@@ -7,6 +7,11 @@ import { AsignaturaService } from '../../services/asignatura.service';
 import { Asignatura } from '../../models/asignatura';
 import { Carrera } from '../../models/carrera';
 
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
+
 @Component({
   selector: 'app-asignatura-actualizar',
   templateUrl: './asignatura-actualizar.component.html',
@@ -16,7 +21,8 @@ export class AsignaturaActualizarComponent implements OnInit {
   id!: number;
   asignatura: Asignatura = new Asignatura();
   carreras: Carrera[] = [];
-  
+  asignaturas: Asignatura[] = [];
+
   constructor(
     private asignaturaService: AsignaturaService,
     private router: Router,
@@ -74,5 +80,33 @@ export class AsignaturaActualizarComponent implements OnInit {
         }
       }
     );
+  }
+
+  ///////////////////////////////
+ 
+
+  selectedCountry: any ;
+
+  filteredCountries: any[] = [];
+
+
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    
+    console.log(event.query);
+    console.table(this.asignaturas)
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.carreras as any[]).length; i++) {
+      let country = (this.carreras as any[])[i];
+     
+      if (country.idCarrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        console.log(country);
+        filtered.push(country);
+      }
+    }
+
+    this.filteredCountries = filtered;
   }
 }

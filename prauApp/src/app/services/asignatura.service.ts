@@ -69,7 +69,10 @@ export class AsignaturaService {
 
 
   obtenerAsignaturaPorId(id: number): Observable<Asignatura> {
-    return this.http.get<Asignatura>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Asignatura>(`${this.url}/buscar?id=${id}`, {headers});
   }
 
   asignaturaXCarreara(carreraId: number): Observable<IAsignaturaXCarrera[]> {
