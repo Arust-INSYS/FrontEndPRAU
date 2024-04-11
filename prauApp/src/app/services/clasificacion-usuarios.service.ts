@@ -6,6 +6,7 @@ import { entorno } from '../env/entorno';
 import { LocalStorageService } from './local-storage.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,13 @@ export class ClasificacionUsuariosService {
     return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}` , { headers } );
   }
   
+  obtenerUsuariosPorRolDto(roleId: number): Observable<UsuarioPorRolDTO[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<UsuarioPorRolDTO[]>(`${this.url}/usuariosPorRol?roleId=${roleId}` , { headers } );
+  }
+
   eliminarusuarios(id: number): Observable<object> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
