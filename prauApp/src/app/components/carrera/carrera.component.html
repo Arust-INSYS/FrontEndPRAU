@@ -12,7 +12,7 @@
     </div>
     
  <div class="flex flex-column gap-2">
-        <label for="director">Director:</label>
+        <label >Director:</label>
         <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="usuPerId.perNombre1"> 
             <ng-template let-item pTemplate="item">
                 <div>{{item.usuPerId?.perNombre1}} {{item.usuPerId?.perApellido1}}</div>

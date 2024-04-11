@@ -33,14 +33,16 @@ export class CarreraComponent {
     private clasificacionUsuariosService: ClasificacionUsuariosService
   ) { }
   ngOnInit(): void {
-    this.obtenercarreras();
-    this.obtenerUsuarios();
+    
+  
     this.obtenerUsuariosPorRol(4);
   }
-  obtenerUsuariosPorRol(roleId: number): void {
+  obtenerUsuariosPorRol(roleId: number) {
+    
     this.clasificacionUsuariosService.obtenerUsuariosPorRol(roleId)
-      .subscribe(users => {
+      .subscribe((users) => {
         this.usuarios = users;
+        console.log(users)
       });
   }
   filterUsuarios() {
