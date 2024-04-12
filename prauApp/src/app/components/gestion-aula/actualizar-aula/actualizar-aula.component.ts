@@ -156,7 +156,10 @@ console.log('Selected Periodo ID:', this.selectedPeriodo.idPeriodoAc);
           }
         );
       
+    }else {
+      this.toastr.error('Por favor, complete todos los campos obligatorios.');
     }
+
   
   }
 

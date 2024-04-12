@@ -81,28 +81,35 @@ export class ListarPeriodosAcComponent implements OnInit {
       if (result.isConfirmed) {
         this.periodoAcService.eliminarPeriodoAc(id).subscribe(() => {
           // Actualizar la lista de periodos después de la eliminación
-         
           this.periodos = this.periodos.filter(periodo => periodo.idPeriodoAc !== id);
           Swal.fire(
             '¡Eliminado!',
             'El periodo académico ha sido eliminado correctamente.',
             'success'
           );
-          
         }, error => {
-          console.error('Error al eliminar el periodo académico:', error);
-          Swal.fire(
-            'Error',
-            'Ha ocurrido un error al eliminar el periodo académico.',
-            'error'
-          );
+         // console.error('Error al eliminar el periodo académico:', error);
+          if (error.status === 400) {
+            // Si el servidor responde con un error 400 (Bad Request), muestra el mensaje del backend
+            Swal.fire(
+              'Error',
+              error.error,
+              'error'
+            );
+          } else {
+            // En caso de otros errores, muestra un mensaje genérico
+            Swal.fire(
+              'Error',
+              'Ha ocurrido un error al eliminar el periodo académico.',
+              'error'
+            );
+          }
         });
       }
       this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
     });
   }
-
-
+  
   
 
 

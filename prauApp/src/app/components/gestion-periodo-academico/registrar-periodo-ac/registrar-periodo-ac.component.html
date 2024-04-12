@@ -22,16 +22,25 @@
       </div>
     </div>
 
-    <label for="nombrePeriodo">Nombre del Periodo</label>
-    <input [(ngModel)]="periodoAc.nombrePeriodo" type="text" class="entradas" pInputText
-      placeholder="Nombre del periodo " name="nombrePeriodo" id="tabla" readonly />
+  
+
+      <label for="nombrePeriodo">Nombre del Periodo</label>
+<input [(ngModel)]="periodoAc.nombrePeriodo" type="text" class="entradas" pInputText
+  placeholder="Nombre del periodo" name="nombrePeriodo" id="tabla" readonly />
+<span class="help-text">(Este campo se completará automáticamente)</span>
+
     <label for="descripcion">Descripcion</label>
     <textarea [(ngModel)]="periodoAc.descripcion" rows="5" cols="30" class="entradas" pInputTextarea
       placeholder="Escriba la descripcion" name="descripcion" id="tabla" required></textarea>
   </div>
 
-  <button type="submit" id="button"> ¡Crear Periodo! </button>
-  <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
-    [routerLink]="['/menu/contenido-virtual/listar-periodo']"></p-button>
+
+
+    <div id="botones-container">
+      <button type="submit" id="button"> ¡Crear Periodo! </button>
+      <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
+        [routerLink]="['/menu/contenido-virtual/listar-periodo']"></p-button>
+  </div>
+  
 
 </form>
