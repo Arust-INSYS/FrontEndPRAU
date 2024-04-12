@@ -65,7 +65,7 @@ export class AsignaturaListarComponent {
           console.error('Error al eliminar la asignatura:', error);
           Swal.fire(
             'Error',
-            'Hubo un error al intentar eliminar la asignatura.',
+            'Error al eliminar asignatura: Está vinculada con una carrera.',
             'error'
           );
         });

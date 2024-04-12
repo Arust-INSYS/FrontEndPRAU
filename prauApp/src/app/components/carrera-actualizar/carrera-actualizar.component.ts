@@ -54,6 +54,7 @@ export class CarreraActualizarComponent {
     this.carreraService.obtenerCarreraPorId(id).subscribe(
       (response) => {
         this.carrera = response;
+        this.selectedCountry = response.director?.usuPerId.perNombre1
       },
       (error) => {
         console.error('Error al cargar la carrera:', error);

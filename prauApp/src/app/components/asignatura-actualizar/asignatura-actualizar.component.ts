@@ -50,6 +50,7 @@ export class AsignaturaActualizarComponent implements OnInit {
     this.asignaturaService.obtenerAsignaturaPorId(id).subscribe(
       (response) => {
         this.asignatura = response;
+        this.selectedCountry = response.carrera?.nombreCarrera;
       },
       (error) => {
         console.error('Error al cargar la asignatura:', error);
