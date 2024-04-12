@@ -24,7 +24,7 @@ export class CarreraActualizarComponent {
   carreras: Carrera[] = [];
   usuarios: Usuario[] = [];
   userDto:UsuarioPorRolDTO[]=[];
-
+//
   constructor(
     private carreraService: CarreraService,
     private router: Router,
