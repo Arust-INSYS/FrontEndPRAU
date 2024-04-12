@@ -48,15 +48,28 @@ export class EvaluacionCabService {
   }
 
 
-  getEvaluacionCAB(): Observable<EvaluacionCab[]> {
+  getEvaluacionCAB(est: number): Observable<EvaluacionCab[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.get<EvaluacionCab[]>(`${this.url}/evaXEstado?est=${est}`, {
+      headers,
+    });
+  }
+  
+  //Actualiza el estado
+
+  updateEstado(id: number, estado: number): Observable<void> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
-    return this.http.get<EvaluacionCab[]>(this.url + '/read', { headers })
-      .pipe(map((response) => response as EvaluacionCab[]));
+    return this.http.put<void>(`${this.url}/updateEst?id=${id}&estado=${estado}`,
+    null,
+    { headers }
+  );
+   
   }
-
 
   ///sacar el numero de la nueva evaluacion para mostrar 
 
@@ -69,4 +82,14 @@ export class EvaluacionCabService {
       headers,
     });
   }
+  //Busca la cabecera para el editar
+
+  findNroEvaluacion(nroEvaluacion: number): Observable<EvaluacionCab> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    return this.http.get<EvaluacionCab>(`${this.url}/findNroEvaluacion?nroEvaluacion=${nroEvaluacion}`, { headers });
+  }
+
 }

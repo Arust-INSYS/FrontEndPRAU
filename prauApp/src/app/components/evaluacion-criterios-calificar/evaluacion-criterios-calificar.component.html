@@ -4,10 +4,16 @@
         <section class="subconten2">
 
             <div class="evaluation-details">
-                <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
+                <ng-container *ngIf="id; else normal">
+                    <label for="lblNumeroEvaluacion">N° Evaluación: {{ id }}</label>
+                </ng-container>
+                <ng-template #normal>
+                    <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
+                </ng-template>
+                <!-- <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label> -->
             </div>
 
-            <div class="layout">
+            <div class="layout" *ngIf="status !== 'edit'">
                 <div class="filter">
                     <p-dropdown class="element-filter"
                         [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="periodosAc"
@@ -36,13 +42,12 @@
                     </p-dropdown>
                 </div>
             </div>
-            <div class="layout-criterio">
+            <div class="layout-criterio" *ngIf="status !== 'edit'">
                 <div class="">
                     <p-dropdown class="element-filter"
                         [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="docentes"
                         [(ngModel)]="selectedDocente" optionLabel="nombreCompleto" [filter]="true"
-                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente"
-                        (onChange)="consultarAula()">
+                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente">
 
                     </p-dropdown>
                 </div>
@@ -57,23 +62,33 @@
             </div>
 
         </section>
+        <section >
+            <div>
+                <label for="selectedAula" class="titulo-criterios">Aula Seleccionada:  {{selectedAula?.nombre}}</label>
+            </div>
+            <div>
+                <label for="selectedDocente" class="titulo-criterio">Docente a cargo:  {{selectedDocente?.nombreCompleto}}</label>
+            </div>
+          </section>
+          
         <section class="layoutnum">
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalC"></progress>
+                <!-- <p-slider [(ngModel)]="evaluacionCab.porcTotalC" styleClass="w-full mt-3"></p-slider> -->
+                <span class="progress-value">{{ evaluacionCab.porcTotalC }}%</span>
             </div>
 
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalCm"></progress>
+                <span class="progress-value">{{ evaluacionCab.porcTotalCm }}%</span>
             </div>
 
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalNc"></progress>
+                <span class="progress-value">{{ evaluacionCab.porcTotalNc }}%</span>
             </div>
         </section>
 
@@ -85,15 +100,23 @@
                         <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
                             <div class="layout-criterio">
                                 <div class="grow1-criterio ">
-                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion
-                                        }}:</label>
+                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
                                 </div>
                                 <div>
+
+<!--</div> *ngIf="status !== 'edit'; else normal">
+                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
+                </div>
+                <ng-template #normal>
+                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
+                </ng-template>-->
+
+
                                     <p-dropdown id="dropdown1" class="custome_drop"
                                         [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
                                         [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
                                         placeholder="Selecionar Calificacion"
-                                        [(ngModel)]="det.calificacion.codCalificacion">
+                                        [(ngModel)]="det.calificacion.codCalificacion" (onChange)="onCalificacionSeleccionado()">
 
                                     </p-dropdown>
                                 </div>
@@ -105,8 +128,8 @@
             </div>
 
             <div class="button-container">
-                <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
-                    (click)="crearNuevaEvaluacionCab()"></p-button>
+                <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true" 
+                [text]="true" [raised]="true"(click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
                 <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
                     severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
             </div>

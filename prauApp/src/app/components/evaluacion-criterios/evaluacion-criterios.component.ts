@@ -11,7 +11,7 @@ import { Aula } from '../../models/aula';
 import { AulaService } from '../../services/aula.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { CarreraService } from '../../services/carrera.service';
-import { PDFDocument, rgb } from 'pdf-lib';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -25,6 +25,8 @@ export class EvaluacionCriteriosComponent {
   $even: any;
   $odd: any;
   Delete: string | undefined;
+
+  status: string="";
 
   dt: any;
 
@@ -44,9 +46,9 @@ export class EvaluacionCriteriosComponent {
   docenteSeleccionado: number | null = null; // Almacenará el ID del docente seleccionado
   cursoSeleccionado: number = 0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
-
-
-
+//nro evaluacion
+nroEvaluacion: number = 0;
+  estado: number=1;// este es el estado establecido
   customers: any
   selectedCustomers: any
   loading: any
@@ -57,11 +59,12 @@ export class EvaluacionCriteriosComponent {
     private router: Router,
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
-    private carreraService: CarreraService) { }
+    private carreraService: CarreraService,
+    ) {}
 
 
   ngOnInit(): void {
-    this.getEvaluacionesCAB();
+    this.getEvaluacionesCAB(1);
     this.listarevalu();
 
 
@@ -72,6 +75,23 @@ export class EvaluacionCriteriosComponent {
   //    console.log(this.docentes);
   //  });
   //}
+
+  cargarEvaluacion(id: number) {
+    this.evaluacionCABService.findNroEvaluacion(id).subscribe(
+      response => {
+        this.evaluacionCa = response;
+      },
+      error => {
+        console.error('Error al cargar la calificacion:', error);
+      }
+    );
+  }
+
+  obtenerNroEva(): void {
+    this.evaluacionCABService.nroEvaluacionNew().subscribe(eva => {
+      this.nroEvaluacion = eva;
+    })
+  }
 
   async listarcarrer() {
     await this.carreraService.obtenerListaCarreras().subscribe((res: any[]) => {
@@ -128,8 +148,8 @@ onCursoSeleccionado(selectedCurso: any) {
     }
   }
 
-  getEvaluacionesCAB(): void {
-    this.evaluacionCABService.getEvaluacionCAB().subscribe(dato => {
+  getEvaluacionesCAB(est: number): void {
+    this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
       //this.generarPDF();
     },
@@ -140,181 +160,55 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   filtrar() {
+    this.table.filter(this.searchTerm, 'aulaEva.docente.usuPerId.perNombre1', 'contains'); // Aplicar el filtro global
   }
 
-  crearNuevoDato() {
-    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion']);
+  crearNuevoDato(status: string) {
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion',this.status]);
+
   }
 
-  actualizarCriterio(id: number) {
-
+  actualizarCriterio(id: number, status: string) {
+  
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', status, id]);
+    alert(status);
   }
 
   // Método para eliminar un criterio
-  eliminarCriterio(id: number) {
-
-  }
-
-
-
-
-
-  // Método para dividir la descripción en líneas más cortas
-  splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
-    const words = description.split(' ');
-    const lines = [];
-    let currentLine = '';
-
-    for (const word of words) {
-      const width = this.getTextWidth(currentLine + word, fontSize); // Calcular el ancho del texto actual
-
-      if (width <= maxWidth) {
-          // Si la palabra cabe en la línea actual, añádela
-          currentLine += (currentLine ? ' ' : '') + word;
-      } else {
-          // Si la palabra no cabe, añade la línea actual al array de líneas y comienza una nueva línea
-          lines.push(currentLine);
-          currentLine = word;
+  eliminarCriterio(id: number, est: number) {
+    let mensaje;
+    if (est === 0) {
+      mensaje = 'eliminar'
+    } else {
+      mensaje = 'activar'
+    }
+    Swal.fire({
+      title: `¿Está seguro de que desea ${mensaje} la evaluacion?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Sí, ${mensaje}`,
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.evaluacionCABService.updateEstado(id, est).subscribe({
+          next: () => {
+            this.cargarEvaluacion(est)
+            this.estado = est;
+            if (est === 0) {
+              this.toastr.success('ELIMINADO CORRECTAMENTE', 'ÉXITO');
+            } else {
+              this.toastr.success('ACTIVADO CORRECTAMENTE', 'ÉXITO');
+            }
+            this.getEvaluacionesCAB(est)
+          },
+          error: (error) => {
+            // Manejar errores
+          },
+          complete: () => {
+            // Manejar completado
+          }
+        });
       }
-  }
-
-      // Añadir la última línea
-      if (currentLine !== '') {
-        lines.push(currentLine);
-    }
-
-    return lines;
-  }
-
-  getTextWidth(text: string, fontSize: number): number {
-    // Calcular el ancho del texto según su longitud y el tamaño de la fuente
-    return text.length * (fontSize * 0.5); // Ajusta según sea necesario
-}
-
-  async generarPDFtable() {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
-
-    // Agregar imagen
-    const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
-    const image = await pdfDoc.embedPng(imageBytes);
-    page.drawImage(image, {
-        x: 210, // Posición x de la imagen
-        y: 780, // Posición y de la imagen
-        width: 180, // Ancho de la imagen
-        height: 40 // Alto de la imagen
     });
-
-    // Título de la tabla
-    page.drawText('Lista de Evaluaciones', {
-        x: 250,
-        y: 750,
-        size: 15,
-        color: rgb(0, 0, 0),
-    });
-
-    // Definir el tamaño y la posición de la tabla
-    const startX = 30;
-    let startY = 550;
-    const cellPadding = 8;
-
-    // Definir las propiedades de las celdas
-    const fontSize = 9;
-    const SizeColumn = [40, 40, 100, 150, 100];
-    const colorlineas = rgb(0.5, 0.5, 0.5);
-    const colorencabezado = rgb(0, 0.1, 1);
-
-    // Encabezados de la tabla
-    const headers = ['Criterio', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
-    const headersCellWidth = SizeColumn;
-    const rowHeight = 20;
-    const tableHeight = 200;
-
-    // Dibujar encabezados y líneas horizontales
-    for (let i = 0; i < headers.length; i++) {
-        page.drawText(headers[i], {
-            x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
-            y: startY + tableHeight - rowHeight - 20 + cellPadding,
-            size: fontSize,
-            color: colorencabezado,
-        });
-    }
-
-    const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
-    // Llenar la tabla con los datos
-    for (let i = 0; i < this.evaluacionCab.length; i++) {
-        const dato = this.evaluacionCab[i];
-        const rowData = [
-          dato.nroEvaluacion.toString() || '', // Manejar valores null
-          dato.aulaEva?.aulaNombre || '',
-          dato.evaluador?.usuPerId.perNombre1 || '',
-          dato.observaciones || '',
-          dato.porcTotalC.toString() || '',
-        ];
-        // Calcular la altura máxima de la fila
-        let maxHeight = 0;
-        for (let j = 0; j < rowData.length; j++) {
-          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
-          const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
-          maxHeight = Math.max(maxHeight, textHeight);
-          
-        }
-    // Dibujar los datos de la fila y las líneas horizontales
-    for (let j = 0; j < rowData.length; j++) {
-      const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
-      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
-      const cellWidth = dataCellWidths[j] - 2 * cellPadding;
-
-      // Dibujar texto
-      if (j < 7) { // Si es la celda de descripción
-        const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
-        for (let k = 0; k < descriptionLines.length; k++) {
-            page.drawText(descriptionLines[k], {
-                x: cellX,
-                y: cellY - k * (fontSize * 0.95),
-                size: fontSize,
-                color: rgb(0, 0, 0),
-                maxWidth: cellWidth,
-            });
-        }
-    } else { // Para otras celdas
-        page.drawText(rowData[j], {
-            x: cellX,
-            y: cellY,
-            size: fontSize,
-            color: rgb(0, 0, 0),
-            maxWidth: cellWidth,
-        });
-    }
-
-    // Dibujar líneas verticales entre las columnas
-    if (j < rowData.length - 1) {
-      const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
-      const lineYStart = cellY + 30;
-      const lineYEnd = cellY - maxHeight - 30;
-      page.drawLine({
-          start: { x: nextCellX, y: lineYStart },
-          end: { x: nextCellX, y: lineYEnd },
-          thickness: 1,
-          color: colorlineas
-      });
   }
-}
-        // Dibujar líneas horizontales entre las filas
-        page.drawLine({
-            start: { x: startX, y: startY - (i - 8) * rowHeight },
-            end: { x: startX  + 60+ dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight },
-            thickness: 1.5,
-            color: colorlineas
-        });
-        startY -= maxHeight + cellPadding;
-    }
-
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-
-    window.open(url, '_blank');
-  }
-
 }

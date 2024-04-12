@@ -96,7 +96,11 @@ const routes: Routes = [
             component: EvaluacionCriteriosComponent,
           },
           {
-            path: 'criterios-evaluacion-calificacion',
+            path: 'criterios-evaluacion-calificacion/:status',
+            component: EvaluacionCriteriosCalificarComponent,
+          },
+          {
+            path: 'criterios-evaluacion-calificacion/:status/:id',
             component: EvaluacionCriteriosCalificarComponent,
           },
 
