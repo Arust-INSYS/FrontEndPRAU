@@ -78,7 +78,7 @@ export class CarreraActualizarComponent {
           if (error.error && error.error === 'El nombre ya está en uso') {
             this.toastr.error('El nombre ya está en uso, por favor ingrese otro.', 'Error');
           } else {
-            this.toastr.error('Hubo un error al actualizar la carrera.', 'Error');
+            this.toastr.error('Seleccione un director.', 'Error');
           }
         }
       );
