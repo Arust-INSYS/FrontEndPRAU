@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Persona } from '../../../models/persona';
 import { ToastrService } from 'ngx-toastr';
@@ -20,7 +20,7 @@ import { ListarPersonaComponent } from '../listar-persona/listar-persona.compone
   
 })
 export class RegistrarPersonaComponent {
-  @ViewChild(ListarPersonaComponent) listarPersonaComponent: ListarPersonaComponent | undefined;
+  @Input() nombre: string="";
   
   public date: Date = new Date();
   selectedUser: number = 3;
@@ -42,21 +42,10 @@ export class RegistrarPersonaComponent {
     
     ;
   } 
+  mostrarNombre() {
+    console.log('El nombre es:', this.nombre);
+  }
   
-  // Inyecta tu servicio en el constructor del componente
-  /*
-  registrarPersona(): void {
-    this.personaService.registrarPersona(this.persona).subscribe(
-      (response) => {
-        console.log('Persona registrada correctamente:', response);
-        // Aquí puedes manejar la respuesta como desees, por ejemplo, mostrar un mensaje de éxito o redirigir a otra página
-      },
-      (error) => {
-        console.error('Error al registrar persona:', error);
-        // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje de error al usuario
-      }
-    );
-  }*/
   //OBJETOS
   persona: Persona = new Persona();
   usuario: Usuario = new Usuario();

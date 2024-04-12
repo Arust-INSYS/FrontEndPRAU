@@ -67,7 +67,7 @@
               pButton
               icon="pi pi-pencil"
               class="p-button-success"
-              (click)="compartirNombre()"
+            (click)="showModal()"
             ></button>
             <button
               pButton
@@ -89,7 +89,7 @@ class="ventana"
 >
 <div class="modal">
   <p-button (onClick)="displayModal=false">Cerrar</p-button>
-<app-registrar-persona></app-registrar-persona>
+<app-registrar-persona [nombre]="'Juan'"></app-registrar-persona>
 </div>
 <!--
   <div class="modal-content">
