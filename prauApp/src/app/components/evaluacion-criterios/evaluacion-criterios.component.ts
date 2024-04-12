@@ -11,6 +11,7 @@ import { Aula } from '../../models/aula';
 import { AulaService } from '../../services/aula.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { CarreraService } from '../../services/carrera.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -47,7 +48,7 @@ export class EvaluacionCriteriosComponent {
   idAulaSeleccionada: number | null = null;
 //nro evaluacion
 nroEvaluacion: number = 0;
-
+  estado: number=1;// este es el estado establecido
   customers: any
   selectedCustomers: any
   loading: any
@@ -74,6 +75,17 @@ nroEvaluacion: number = 0;
   //    console.log(this.docentes);
   //  });
   //}
+
+  cargarEvaluacion(id: number) {
+    this.evaluacionCABService.findNroEvaluacion(id).subscribe(
+      response => {
+        this.evaluacionCa = response;
+      },
+      error => {
+        console.error('Error al cargar la calificacion:', error);
+      }
+    );
+  }
 
   obtenerNroEva(): void {
     this.evaluacionCABService.nroEvaluacionNew().subscribe(eva => {
@@ -163,7 +175,39 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   // Método para eliminar un criterio
-  eliminarCriterio(id: number) {
-
+  eliminarCriterio(id: number, est: number) {
+    let mensaje;
+    if (est === 0) {
+      mensaje = 'eliminar'
+    } else {
+      mensaje = 'activar'
+    }
+    Swal.fire({
+      title: `¿Está seguro de que desea ${mensaje} la evaluacion?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Sí, ${mensaje}`,
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.evaluacionCABService.updateEstado(id, est).subscribe({
+          next: () => {
+            this.cargarEvaluacion(est)
+            this.estado = est;
+            if (est === 0) {
+              this.toastr.success('ELIMINADO CORRECTAMENTE', 'ÉXITO');
+            } else {
+              this.toastr.success('ACTIVADO CORRECTAMENTE', 'ÉXITO');
+            }
+          },
+          error: (error) => {
+            // Manejar errores
+          },
+          complete: () => {
+            // Manejar completado
+          }
+        });
+      }
+    });
   }
 }

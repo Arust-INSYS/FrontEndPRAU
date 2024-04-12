@@ -59,7 +59,7 @@ export class EvaluacionCabService {
   
   //Actualiza el estado
 
-  updateEstado(id: number, estado: string): Observable<EvaluacionCab> {
+  updateEstado(id: number, estado: number): Observable<EvaluacionCab> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
