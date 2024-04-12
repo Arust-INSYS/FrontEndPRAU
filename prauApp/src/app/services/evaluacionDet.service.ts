@@ -12,7 +12,7 @@ export class EvaluacionDetService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) {}
+  ) { }
   private url: string = `${entorno.urlPrivada}/evaluacionDet`;
   //private token = this.localStorage.getItem('token');
 
@@ -24,6 +24,15 @@ export class EvaluacionDetService {
 
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.post<EvaluacionDet>(`${this.url}/create`, evaluacionDet, { headers });
+  }
+
+  createList(detalle: EvaluacionDet[]): Observable<EvaluacionDet[]> {
+    console.log(detalle)
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+
+    return this.http.post<EvaluacionDet[]>(`${this.url}/detalleEva`, detalle, { headers });
   }
 
   update(id: number, evaluacionDet: EvaluacionDet): Observable<EvaluacionDet> {

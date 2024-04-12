@@ -21,9 +21,6 @@ Delete: string|undefined;
 products: any;
 dt: any;
 selectedProducts: any;
-showModal() {
-throw new Error('Method not implemented.');
-}
 
   displayModal: boolean = false;
 

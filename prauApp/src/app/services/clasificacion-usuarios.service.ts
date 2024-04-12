@@ -6,6 +6,7 @@ import { entorno } from '../env/entorno';
 import { LocalStorageService } from './local-storage.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UsuarioPorRolDTO } from '../models/UsuarioPorRolDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,20 @@ export class ClasificacionUsuariosService {
         return throwError('Error al obtener la lista de usuarios. Por favor, inténtalo de nuevo más tarde.');
       })
     );
+  }
+  
+  obtenerUsuariosPorRol(roleId: number): Observable<Usuario[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}` , { headers } );
+  }
+  
+  obtenerUsuariosPorRolDto(roleId: number): Observable<UsuarioPorRolDTO[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<UsuarioPorRolDTO[]>(`${this.url}/usuariosPorRol?roleId=${roleId}` , { headers } );
   }
 
   eliminarusuarios(id: number): Observable<object> {
@@ -72,8 +87,8 @@ export class ClasificacionUsuariosService {
 
  
 
-  obtenerUsuarioPorId(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.url}/buscar?id=${id}`);
+  obtenerNombresUsuariosPorRolId(rolId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/searchUserId?roleId=${rolId}`);
   }
 
   private handleError(error: any): Observable<never> {
@@ -90,5 +105,7 @@ export class ClasificacionUsuariosService {
     // Realiza la solicitud HTTP GET con el encabezado de autorización
     return this.http.get<boolean>(`${this.url}/cedulaUnica?ci=${ci}`, { headers });
   }
+
+  
 
 }

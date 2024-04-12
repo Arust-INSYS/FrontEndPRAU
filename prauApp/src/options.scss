@@ -18,6 +18,21 @@ ul{
     padding: 1rem 0;
 }
 
+.router-link-active {
+    color: $azul-oscuro;
+    font-weight: $black;
+    transform: scale(1.2);
+    .nav-item::before{
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 7px;
+        width: 100%;
+        border-bottom: 0.2rem solid $amarillo;
+        padding-left: 1rem;
+    }
+}
+
 .lista, .menu{
     display: flex;
     flex-direction: row;
@@ -36,10 +51,13 @@ a{
     transition: color 0.3s;
     cursor: pointer;
     display: inline-block;
+    font-weight: $regular;
+    transition: transform 0.3s  ease-in-out;
 }
 
 a:hover{
     font-weight: $bold;
+    transform: scale(1.2);
 }
 
 

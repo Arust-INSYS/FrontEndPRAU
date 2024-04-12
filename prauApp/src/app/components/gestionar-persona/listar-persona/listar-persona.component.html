@@ -9,13 +9,26 @@
           class="mr-2"
           (click)="showModal()"
         ></button>
-        <button pButton icon="pi pi-print" class="mr-2"></button>
+        <button
+          pButton
+          icon="pi pi-print"
+          class="mr-2"
+          (click)="generarPDFtable()"
+        ></button>
       </div>
       <div class="p-toolbar-group-center">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input pInputText placeholder="Search" />
         </span>
+      </div>
+      <div class="p-toolbar-group-end">
+        <p-button
+          (onClick)="downloadExcel()"
+          label="Excel"
+          icon="pi pi-file-excel"
+          iconPos="right"
+        ></p-button>
       </div>
       <div class="p-toolbar-group-end">
         <p-splitButton
@@ -27,41 +40,40 @@
     </p-toolbar>
   </div>
   <div class="subconten2">
-    <p-table [value]="personasList" [scrollable]="true" scrollHeight="400px">
+    <p-table [value]="userList">
       <ng-template pTemplate="header">
         <tr>
+          <th>Nro.</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Cédula</th>
           <th>Dirección</th>
-          <th>F-Nacimiento</th>
+          <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body">
-        <tr *ngFor="let per of personasList">
-          <td>{{ per.perNombre1 }}</td>
-          <td>{{ per.perApellido1 }}</td>
-          <td>{{ per.perCedula }}</td>
-          <td>{{ per.perDireccion }}</td>
-          <td>{{ per.perFechaNacimiento }}</td>
-          <td>{{ per.perTelefono }}</td>
+      <ng-template pTemplate="body" let-usu>
+        <tr>
+          <td>{{ usu.usuId }}</td>
+          <td>{{ usu.usuPerId.perNombre1 }}</td>
+          <td>{{ usu.usuPerId.perApellido1 }}</td>
+          <td>{{ usu.usuPerId.perCedula }}</td>
+          <td>{{ usu.usuPerId.perDireccion }}</td>
+          <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
+          <td>{{ usu.usuPerId.perTelefono }}</td>
           <td>
-            <!-- Botón para abrir el modal -->
             <button
               pButton
-              type="button"
-              label="Editar"
-              (click)="showModalEditar(per)"
+              icon="pi pi-pencil"
+              class="p-button-success"
+              (click)="compartirNombre()"
             ></button>
-
-            <!-- Botón de Eliminar -->
             <button
               pButton
               icon="pi pi-trash"
-              label="Eliminar"
-              (click)="eliminarPersona(per.perId)"
+              class="p-button-danger"
+              (click)="eliminarPersona(usu.usuId)"
             ></button>
           </td>
         </tr>
@@ -75,31 +87,14 @@
   [responsive]="true"
   [style]="{ width: '50vw' }"
 >
-  <app-registrar-persona></app-registrar-persona>
-</p-dialog>
-
-<!-- Modal para editar -->
-<p-dialog
-  [(visible)]="displayModalEdit"
-  [modal]="true"
-  [responsive]="true"
-  [style]="{ width: '500px' }"
->
-  <h2>Editar Persona</h2>
-  <form #editForm="ngForm" (ngSubmit)="guardarCambios()">
-    <div class="input-group">
-      <label for="nombre">Nombre:</label>
-      <input
-        type="text"
-        id="nombre"
-        name="nombre"
-        pInputText
-        [(ngModel)]="personaEditar.perNombre1"
-        required
-      />
+<div class="modal">
+  <div class="modal-content">
+    <div class="form">
+      <app-registrar-persona></app-registrar-persona>
     </div>
-    <!-- Otros campos del formulario -->
-    <!-- Agrega los campos restantes del formulario según tus necesidades -->
-    <button type="submit" pButton label="Guardar"></button>
-  </form>
+  </div>
+</div>
+    
+ 
+  
 </p-dialog>

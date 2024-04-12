@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Persona } from '../../../models/persona';
 import { ToastrService } from 'ngx-toastr';
@@ -11,13 +11,17 @@ import { RolService } from '../../../services/rol.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataMoodleService } from '../../../services/dataMoodle.service';
+import { ListarPersonaComponent } from '../listar-persona/listar-persona.component';
 
 @Component({
   selector: 'app-registrar-persona',
   templateUrl: './registrar-persona.component.html',
   styleUrl: './registrar-persona.component.css',
+  
 })
 export class RegistrarPersonaComponent {
+  @ViewChild(ListarPersonaComponent) listarPersonaComponent: ListarPersonaComponent | undefined;
+  
   public date: Date = new Date();
   selectedUser: number = 3;
   value: any;
@@ -34,7 +38,12 @@ export class RegistrarPersonaComponent {
   ) {
     this.listarRol();
     this.getData();
-  } // Inyecta tu servicio en el constructor del componente
+    
+    
+    ;
+  } 
+  
+  // Inyecta tu servicio en el constructor del componente
   /*
   registrarPersona(): void {
     this.personaService.registrarPersona(this.persona).subscribe(
@@ -130,7 +139,9 @@ export class RegistrarPersonaComponent {
                   text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
                   icon: 'success',
                   confirmButtonText: 'Confirmar',
-                  showCancelButton: false, // No mostrar el botón de cancelar
+                  showCancelButton: false,// No mostrar el botón de cancelar
+                  
+                
                 }).then(() => {
                   this.recargarPagina();
                   this.limpiarRegistro();
@@ -145,6 +156,9 @@ export class RegistrarPersonaComponent {
           icon: 'error',
           confirmButtonText: 'OK',
           showCancelButton: false,
+          customClass: {
+            popup: 'mensaje-guardado' // Clase CSS para el mensaje de Swal
+          }
         });
       }
     } else {
@@ -154,6 +168,9 @@ export class RegistrarPersonaComponent {
         icon: 'error',
         confirmButtonText: 'OK',
         showCancelButton: false,
+        customClass: {
+          popup: 'mensaje-guardado' // Clase CSS para el mensaje de Swal
+        }
       });
     }
   }
@@ -185,6 +202,7 @@ export class RegistrarPersonaComponent {
     this.usuario = new Usuario();
     this.persona = new Persona();
   }
+  //FILTRAR DROPDOW CON BUSCAR
   selectedPersona: any;
   filtro: string = '';
   personas: any[] = [];
@@ -198,6 +216,7 @@ export class RegistrarPersonaComponent {
       this.personasFiltradas = this.personas; // Inicialmente, las personas filtradas serán iguales a todas las personas
     });
   }
+
   filtrar() {
     this.personasFiltradas = this.personas.filter((persona) =>
       persona.nombreCompleto.toLowerCase().includes(this.filtro.toLowerCase())
@@ -211,4 +230,5 @@ export class RegistrarPersonaComponent {
   recargarPagina() {
     window.location.reload();
   }
+ 
 }

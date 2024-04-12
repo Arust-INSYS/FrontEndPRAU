@@ -1,12 +1,26 @@
 <div class="formulario">
   <h1>Registrar Rol</h1>
   <div class="input-group">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" [(ngModel)]="rol.rolNombre" required>
+    <label for="nombre">Nombre:</label>
+    <input
+      type="text"
+      id="nombre"
+      name="nombre"
+      pInputText
+      [(ngModel)]="rol.rolNombre"
+      required
+    />
   </div>
   <div class="input-group">
-      <label for="descripcion">Descripción:</label>
-      <input type="text" id="descripcion" name="descripcion" [(ngModel)]="rol.rolDescripcion" required>
+    <label for="Descripción">Descripción:</label>
+    <input
+      type="text"
+      id="Descripción"
+      name="Descripción"
+      pInputText
+      [(ngModel)]="rol.rolDescripcion"
+      required
+    />
   </div>
   
 

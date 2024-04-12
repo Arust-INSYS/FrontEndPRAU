@@ -17,6 +17,8 @@ export class EvaluacionCabService {
   //private token = this.localStorage.getItem('token');
 
   CrearEvaluacionCab(evaluacionCab: EvaluacionCab): Observable<EvaluacionCab> {
+
+    console.log(evaluacionCab)
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí

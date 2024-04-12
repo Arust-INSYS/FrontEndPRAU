@@ -7,70 +7,132 @@
                 <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
             </div>
 
-            <section class="layout">
-                <div class="grow1">
+            <div class="layout">
+                <div class="filter">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="periodosAc"
+                        [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo" [filter]="true"
+                        filterBy="nombrePeriodo" [showClear]="true" placeholder="Selecionar Periodo Academico"
+                        (onChange)="consultarAula()">
 
+                    </p-dropdown>
                 </div>
-                <div class="grow1">2</div>
-                <div class="grow1">3</div>
-            </section>
+                <div class="filter">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="carreras"
+                        [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera" [filter]="true"
+                        filterBy="nombreCarrera" [showClear]="true" placeholder="Selecionar Carrera"
+                        (onChange)="loadAsignaturas(); consultarAula()">
 
-            <!-- <div class="header-container">
-                    <div><label for="lblPorcentajeCumplimiento"></label>
-                        <span id="lblPorcentajeCumplimiento"></span>
-                    </div>
-                </div> -->
+                    </p-dropdown>
+                </div>
+                <div class="filter">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                        [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
+                        [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                        placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
 
-            <!-- <div class="course-details">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="layout-criterio">
+                <div class="">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="docentes"
+                        [(ngModel)]="selectedDocente" optionLabel="nombreCompleto" [filter]="true"
+                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente"
+                        (onChange)="consultarAula()">
 
-                    <p>Nombre del Curso: {{ nombreCurso }}</p>
-                    <p>Docente a cargo: {{ nombreDocente }}</p>
+                    </p-dropdown>
+                </div>
+                <div class="grow1-criterio">
+                    <p-dropdown class="element-filter"
+                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="aulas"
+                        [(ngModel)]="selectedAula" optionLabel="nombre" [filter]="true" filterBy="nombre"
+                        [showClear]="true" placeholder="Selecionar Aula">
 
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoC:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoC"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoCM:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoM"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-progress">
-                        <label for="porcentajeCumplimiento">Porcentaje de cumplimientoNC:</label>
-                        <div class="progress-container">
-                            <progress id="porcentajeCumplimiento" max="100"
-                                [value]="porcentajeCumplimientoN"></progress>
-                            <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
-                        </div>
-                    </div>
+                    </p-dropdown>
+                </div>
+            </div>
 
-                </div> -->
+        </section>
+        <section class="layoutnum">
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+            </div>
+
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+            </div>
+
+            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
+            <div class="col1Last1">
+                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
+                <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+            </div>
         </section>
 
         <section class="formulario">
+            <div class="grupo-preguntas">
+                <div class="question-section">
+                    <div class="question" *ngFor="let clasificacion of clasificaciones">
+                        <h2>{{ clasificacion.nombreClasificacion }}</h2>
+                        <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
+                            <div class="layout-criterio">
+                                <div class="grow1-criterio ">
+                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion
+                                        }}:</label>
+                                </div>
+                                <div>
+                                    <p-dropdown id="dropdown1" class="custome_drop"
+                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
+                                        [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
+                                        placeholder="Selecionar Calificacion"
+                                        [(ngModel)]="det.calificacion.codCalificacion">
 
-            <!-- Grupo 1 -->
-            <!-- 
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
+                    (click)="crearNuevaEvaluacionCab()"></p-button>
+                <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
+                    severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+            </div>
+
+        </section>
+
+        <!-- <section class="formulario">
             <div class="grupo-preguntas">
                 <div class="question-section">
                     <div class="question" *ngFor="let clasificacion of clasificaciones">
                         <h2>{{ clasificacion.nombreClasificacion }}</h2>
                         <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
-                            <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                            <div class="layout-criterio">
+                                <div class="grow1-criterio ">
+                                    <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
+                                </div>
+                                <div>
+                                    <p-dropdown id="dropdown1" class="custome_drop"
+                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
+                                        [options]="calificacion" optionLabel="label" optionValue="value"
+                                        placeholder="Selecionar Calificacion"
+                                        (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
 
-                            <p-dropdown id="dropdown1" [style]="{ 'width.%': 50 }" [options]="calificacion"
-                                optionLabel="label" optionValue="value"
-                                (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
-
-                            </p-dropdown>
-
+                                    </p-dropdown>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                     </div>
@@ -79,15 +141,15 @@
 
             </div>
 
-
             <div class="button-container">
                 <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
-                    (click)="actualizarEvaluacionCab()"
-                    routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+                    (click)="crearNuevaEvaluacionCab()"></p-button>
                 <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
                     severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            </div> -->
-        </section>
+            </div>
+
+        </section> -->
+
     </body>
 
 </div>
