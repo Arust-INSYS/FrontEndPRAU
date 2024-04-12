@@ -1,26 +1,37 @@
+
 .formulario {
-  margin-top: 100px;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Dividir el formulario en tres columnas */
-  gap: 20px; /* Espacio entre las columnas */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Crea columnas de tamaño flexible */
+  grid-gap: 10px; /* Espacio entre elementos */
 }
 
 .input-group {
   margin-bottom: 10px;
-  
 }
 
 .input-group label {
-  display: block;
-  margin-bottom: 5px;
+  display: block; /* Para que las etiquetas ocupen toda la columna */
 }
 
-.p-dropdown {
-  width: 100%;
+.boton-group {
+  margin-top: 20px;
+  grid-column: span 3; /* Para que el botón ocupe tres columnas */
+}
+
+@media screen and (max-width: 600px) {
+  .formulario {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajusta el tamaño de las columnas para pantallas pequeñas */
+  }
+}
+.mensaje-guardado {
+  z-index: 1500; /* Z-index más alto que el modal */
+}
+/* Estilos para el mensaje de Swal */
+.swal2-popup {
+  z-index: 1500; /* Z-index más alto que el modal */
+}
+
+/* Estilos para el overlay de Swal */
+.swal2-container.swal2-shown .swal2-backdrop {
+  z-index: 1400; /* Z-index para el overlay */
 }

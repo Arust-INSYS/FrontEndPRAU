@@ -57,6 +57,7 @@ throw new Error('Method not implemented.');
   obtenerCarrera() {
     this.carreraService.obtenerListaCarreras().subscribe(dato => {
       this.carrera = dato;
+      console.log( this.carrera )
     });
   }
 
@@ -108,6 +109,7 @@ throw new Error('Method not implemented.');
       .subscribe(usuarios => {
         this.usuarios = usuarios;
       });
+      
   }
 
 

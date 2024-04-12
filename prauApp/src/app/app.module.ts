@@ -155,6 +155,7 @@ import { GraficaDirectorComponent } from './components/grafica-director/grafica-
 
 @NgModule({
   declarations: [
+    CarreraActualizarComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
     PrincipalDirectorComponent,

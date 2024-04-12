@@ -87,31 +87,14 @@
   [responsive]="true"
   [style]="{ width: '50vw' }"
 >
-  <app-registrar-persona></app-registrar-persona>
-</p-dialog>
-
-<!-- Modal para editar -->
-<p-dialog
-  [(visible)]="displayModalEdit"
-  [modal]="true"
-  [responsive]="true"
-  [style]="{ width: '500px' }"
->
-  <h2>Editar Persona</h2>
-  <form #editForm="ngForm" (ngSubmit)="guardarCambios()">
-    <div class="input-group">
-      <label for="nombre">Nombre:</label>
-      <input
-        type="text"
-        id="nombre"
-        name="nombre"
-        pInputText
-        [(ngModel)]="personaEditar.perNombre1"
-        required
-      />
+<div class="modal">
+  <div class="modal-content">
+    <div class="form">
+      <app-registrar-persona></app-registrar-persona>
     </div>
-    <!-- Otros campos del formulario -->
-    <!-- Agrega los campos restantes del formulario según tus necesidades -->
-    <button type="submit" pButton label="Guardar"></button>
-  </form>
+  </div>
+</div>
+    
+ 
+  
 </p-dialog>

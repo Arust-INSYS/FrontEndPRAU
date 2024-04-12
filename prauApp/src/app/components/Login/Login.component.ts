@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
 
 
   logIn() {
-    console.log('hola');
     this.usuarioService.usuarioValido(this.loginRequest.usuNombreUsuario?.trim() || '').subscribe(
       res => {
         if (res) {
