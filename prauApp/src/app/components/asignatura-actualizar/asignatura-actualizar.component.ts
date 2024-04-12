@@ -62,7 +62,8 @@ export class AsignaturaActualizarComponent implements OnInit {
     // Realizar la actualización de la carrera
     if (this.id && this.asignatura.nombreAsignatura && this.asignatura.descripcionAsignatura && this.selectedCountry) {
      // Asignar el director seleccionado a la carrera
-     this.asignatura.carrera = this.selectedCountry;
+     
+     /*this.asignatura.carrera = this.selectedCountry;*/
      // Llamar al servicio para actualizar la carrera
      this.asignaturaService.actualizarasignatura(this.id, this.asignatura).subscribe(
        () => {
@@ -74,7 +75,7 @@ export class AsignaturaActualizarComponent implements OnInit {
          if (error.error && error.error === 'El nombre ya está en uso') {
            this.toastr.error('El nombre ya está en uso, por favor ingrese otro.', 'Error');
          } else {
-           this.toastr.error('Hubo un error al actualizar la carrera.', 'Error');
+           this.toastr.error('Seleccione nuevamente la carrera.', 'Error');
          }
        }
      );

@@ -43,14 +43,20 @@ export class AsignaturaComponent {
  
 
   guardarAsignatura() {
-    if (
-      !this.asignatura.nombreAsignatura ||
-      !this.asignatura.descripcionAsignatura ||
-      !this.selectedCountry.idCarrera
-    ) {
-      this.toastr.error('Por favor, complete todos los campos.', 'Error');
+    if (!this.asignatura.nombreAsignatura) {
+      this.toastr.error('Por favor, ingrese el nombre de la asignatura.', 'Error');
       return;
-    }
+  }
+  
+  if (!this.asignatura.descripcionAsignatura) {
+      this.toastr.error('Por favor, ingrese la descripción de la asignatura.', 'Error');
+      return;
+  }
+  
+  if (!this.selectedCountry || !this.selectedCountry.idCarrera) {
+      this.toastr.error('Por favor, seleccione una carrera.', 'Error');
+      return;
+  }
     this.asignatura.carrera = this.selectedCountry
     const clasificacionSeleccionada = this.asignatura.carrera;
     this.asignaturaService.registrarasignaturas(this.asignatura).subscribe(
