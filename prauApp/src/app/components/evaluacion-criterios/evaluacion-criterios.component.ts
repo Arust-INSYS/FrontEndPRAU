@@ -206,7 +206,7 @@ onCursoSeleccionado(selectedCurso: any) {
     });
 
     // Título de la tabla
-    page.drawText('Lista de carreras', {
+    page.drawText('Lista de Evaluaciones', {
         x: 250,
         y: 750,
         size: 15,
