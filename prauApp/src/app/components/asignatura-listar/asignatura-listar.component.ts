@@ -6,6 +6,8 @@ import { Table } from 'primeng/table';
 import Swal from 'sweetalert2';
 import { Asignatura } from '../../models/asignatura';
 import { AsignaturaService } from '../../services/asignatura.service';
+import { ExcelService } from '../../services/excel.service';
+import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
 
 @Component({
   selector: 'app-asignatura-listar',
@@ -18,8 +20,13 @@ export class AsignaturaListarComponent {
   searchTerm: string = '';
   asignaturas: Asignatura[] = [];
   items: MenuItem[] | undefined;
+  asignatura: Asignatura[] = [];
+  excelReportData: IExcelReportParams | null = null;
 
-  constructor(private asignaturaService: AsignaturaService, private router: Router) {}
+  constructor(private asignaturaService: AsignaturaService, 
+    private router: Router,
+    private excelService: ExcelService,
+  ) {}
 
   ngOnInit(): void {
     this.obtenerAsignaturas();
@@ -32,6 +39,7 @@ export class AsignaturaListarComponent {
   obtenerAsignaturas() {
     this.asignaturaService.obtenerListaAsignaturas().subscribe(data => {
       this.asignaturas = data;
+      this.loadExcelReportData(this.asignaturas);
     });
   }
 
@@ -108,6 +116,18 @@ export class AsignaturaListarComponent {
     // Calcular el ancho del texto según su longitud y el tamaño de la fuente
     return text.length * (fontSize * 0.5); // Ajusta según sea necesario
 }
+
+downloadExcel(): void {
+  if (this.excelReportData) {
+    this.excelService.dowloadExcel(this.excelReportData);
+  }
+  //PASO 4 colocar metodo listar objeto
+  this.obtenerAsignaturas();
+}
+
+
+
+
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
@@ -233,5 +253,57 @@ export class AsignaturaListarComponent {
 
     window.open(url, '_blank');
   }
+
+ //EXCEL
+  ///cargar data en el excel
+  //cambiar el tipo de dato de la lista
+  //PASO2
+  loadExcelReportData(data: Asignatura[]) {
+    //NOMBRE DEL REPORTE
+    const reportName = 'asignatura';
+
+    //TAMAÑO DEL LOGO
+    const logo = 'G1:J1';
+
+    //ENCABEZADOS
+    const headerItems: IHeaderItem[] = [
+     // { header: '№ REGISTRO' },
+      
+      { header: 'ID ASIGNATURA' },
+      { header: 'NOMBRE ASIGNATURA' },
+      { header: 'DESCRIPCION ASIGNATURA' },
+      
+     
+    ];
+
+    //DATOS DEL REPORTE
+    const rowData = data.map((item) => ({
+      idAsi: item?.idAsignatura,
+      // foto: item.foto,
+      noma: item?.nombreAsignatura,
+      desa: item?.descripcionAsignatura,
+      
+    
+    }));
+
+    if (this.excelReportData) {
+      this.excelReportData.logo = logo;
+      this.excelReportData.rowData = rowData;
+      this.excelReportData.headerItems = headerItems;
+      this.excelReportData.reportName = reportName;
+    } else {
+      this.excelReportData = {
+        logo,
+        rowData,
+        headerItems,
+        reportName,
+      };
+    }
+  }
+
+
+
+
+
 
 }

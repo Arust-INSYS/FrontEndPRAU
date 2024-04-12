@@ -9,6 +9,9 @@ import { CarreraService } from '../../services/carrera.service';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { ClasificacionUsuariosService } from '../../services/clasificacion-usuarios.service';
 import { Usuario } from '../../models/usuario';
+import { ExcelService } from '../../services/excel.service';
+import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
+
 @Component({
   selector: 'app-carrera-listar',
   templateUrl: './carrera-listar.component.html',
@@ -20,6 +23,7 @@ export class CarreraListarComponent {
   searchTerm: string = '';
   carrera: Carrera[] = [];
   items: MenuItem[]|undefined;
+  excelReportData: IExcelReportParams | null = null;
 $even: any;
 $odd: any;
 Delete: string|undefined;
@@ -44,6 +48,7 @@ throw new Error('Method not implemented.');
   constructor(
     private carreraService: CarreraService, 
     private router: Router,
+    private excelService: ExcelService,
     private clasificacionUsuariosService: ClasificacionUsuariosService,
   
   ) {}
@@ -57,7 +62,7 @@ throw new Error('Method not implemented.');
   obtenerCarrera() {
     this.carreraService.obtenerListaCarreras().subscribe(dato => {
       this.carrera = dato;
-      console.log( this.carrera )
+      this.loadExcelReportData(this.carrera);
     });
   }
 
@@ -144,6 +149,17 @@ throw new Error('Method not implemented.');
     // Calcular el ancho del texto según su longitud y el tamaño de la fuente
     return text.length * (fontSize * 0.5); // Ajusta según sea necesario
 }
+//PASO 3
+  //metodo para el boton dew descarga
+  downloadExcel(): void {
+    if (this.excelReportData) {
+      this.excelService.dowloadExcel(this.excelReportData);
+    }
+    //PASO 4 colocar metodo listar objeto
+    this.obtenerCarrera();
+  }
+
+
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
@@ -269,4 +285,54 @@ throw new Error('Method not implemented.');
 
     window.open(url, '_blank');
   }
+ //EXCEL
+  ///cargar data en el excel
+  //cambiar el tipo de dato de la lista
+  //PASO2
+  loadExcelReportData(data: Carrera[]) {
+    //NOMBRE DEL REPORTE
+    const reportName = 'Carreras';
+
+    //TAMAÑO DEL LOGO
+    const logo = 'G1:J1';
+
+    //ENCABEZADOS
+    const headerItems: IHeaderItem[] = [
+     // { header: '№ REGISTRO' },
+      
+      { header: 'ID CARRERA' },
+      { header: 'NOMBRE CARRERA' },
+      { header: 'DESCRIPCION' },
+      { header: 'DIRECTOR DE CARRERA' },
+     
+    ];
+
+    //DATOS DEL REPORTE
+    const rowData = data.map((item) => ({
+      idCar: item?.idCarrera,
+      // foto: item.foto,
+      nomc: item?.nombreCarrera,
+      desc: item?.descripcionCarrera,
+      dirca: (item?.director?.usuPerId.perNombre1 ?? '') + ' ' + (item?.director?.usuPerId.perApellido1 ?? '')
+    
+    }));
+
+    if (this.excelReportData) {
+      this.excelReportData.logo = logo;
+      this.excelReportData.rowData = rowData;
+      this.excelReportData.headerItems = headerItems;
+      this.excelReportData.reportName = reportName;
+    } else {
+      this.excelReportData = {
+        logo,
+        rowData,
+        headerItems,
+        reportName,
+      };
+    }
+  }
+
+
+
+
 }

@@ -8,6 +8,7 @@ import { entorno } from '../env/entorno';
 })
 export class DataMoodleService {
   private urlPublica: string = `${entorno.urlMoodle}`;
+ 
   constructor(private http: HttpClient) {}
 
   //DATOS DE PERSONAS
@@ -20,6 +21,9 @@ export class DataMoodleService {
     const url = `${this.urlPublica}/${id}`;
     return this.http.get<any>(url);
   }
-
-  // Agrega más métodos según sea necesario, como por ejemplo para crear, actualizar o eliminar datos.
 }
+  // Agrega más métodos según sea necesario, como por ejemplo para crear, actualizar o eliminar datos.
+
+ 
+
+
