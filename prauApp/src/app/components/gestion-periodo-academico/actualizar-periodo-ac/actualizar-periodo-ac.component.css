@@ -73,7 +73,7 @@
   /* --------------------------------------------------------------- */
   /* FUNCION DEL BOTON REGISTRARSE --------- */
   #button {
-          width: 60%;
+          width: 100%;
           font-family: sans-serif;
           font-size:20px;
           font-weight: bolder;
@@ -95,3 +95,20 @@
   #button:hover{
     background-color: #7FACDE;
   }
+
+#botones-container {
+  text-align: center; /* Centra los botones horizontalmente */
+  margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+}
+
+
+#button,
+p-button {
+  margin-right: 10px; /* Ajusta el margen entre los botones */
+}
+
+.help-text {
+  font-size: 12px; /* Tamaño de fuente más pequeño para el texto de ayuda */
+  color: #999; /* Color de texto gris para el texto de ayuda */
+}
+

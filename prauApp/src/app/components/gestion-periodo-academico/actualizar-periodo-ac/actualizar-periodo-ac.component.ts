@@ -4,18 +4,17 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PeriodoAc } from '../../../models/periodoAc';
 import { NgForm } from '@angular/forms';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-actualizar-periodo-ac',
   templateUrl: './actualizar-periodo-ac.component.html',
   styleUrl: './actualizar-periodo-ac.component.css'
 })
-export class ActualizarPeriodoAcComponent implements OnInit{
-  //@Input() periodoId!: number;
-
+export class ActualizarPeriodoAcComponent implements OnInit {
   periodoAc: PeriodoAc = new PeriodoAc();
-  periodoId :number=0;
+  periodoId: number = 0;
   f!: NgForm;
+  
   constructor(
     private periodoAcService: PeriodoAcService,
     private toastr: ToastrService,
@@ -24,8 +23,6 @@ export class ActualizarPeriodoAcComponent implements OnInit{
     private route: ActivatedRoute,
   ) {}
 
- 
-
   actualizarNombrePeriodo() {
     if (this.periodoAc.fechaInicio && this.periodoAc.fechaFin) {
       let yearInicio = this.periodoAc.fechaInicio.getFullYear();
@@ -33,16 +30,14 @@ export class ActualizarPeriodoAcComponent implements OnInit{
       this.periodoAc.nombrePeriodo = yearInicio + '-' + yearFin;
     }
   }
+
   ngOnInit() {
-    const periodoId = this.route.snapshot.params['id']; // Obtener el ID del periodo de la URL
+    const periodoId = this.route.snapshot.params['id'];
     this.periodoAcService.getPeriodoAcById(periodoId).subscribe(
       (periodo) => {
-        // Convertir las fechas a objetos Date
         periodo.fechaInicio = new Date(periodo.fechaInicio);
         periodo.fechaFin = new Date(periodo.fechaFin);
-  
-        this.periodoAc = periodo; 
-        console.log('El periodos es ', this.periodoAc);
+        this.periodoAc = periodo;
       },
       (error) => {
         console.error('Error obteniendo el periodo académico:', error);
@@ -50,17 +45,12 @@ export class ActualizarPeriodoAcComponent implements OnInit{
       }
     );
   }
-  
-
-
-
-
 
   actualizar(form: NgForm) {
     if (form.valid) {
       let fechaActual = new Date();
-      let duracionMaxima = 12; // Duración máxima en meses
-      let duracionMinima = 6; // Duración mínima en meses
+      let duracionMaxima = 12;
+      let duracionMinima = 6;
 
       let duracion =
         (this.periodoAc.fechaFin.getFullYear() -
@@ -70,44 +60,43 @@ export class ActualizarPeriodoAcComponent implements OnInit{
       duracion += this.periodoAc.fechaFin.getMonth();
       duracion <= 0 ? (duracion = 0) : duracion;
 
-      if (
-        this.periodoAc.fechaInicio < fechaActual ||
-        this.periodoAc.fechaFin < fechaActual
-      ) {
-        this.toastr.error(
-          'La fecha de inicio y la fecha de fin deben estar en el futuro.'
-        );
-      } else if (this.periodoAc.fechaInicio >= this.periodoAc.fechaFin) {
+      if (this.periodoAc.fechaInicio >= this.periodoAc.fechaFin) {
         this.toastr.error(
           'La fecha de inicio debe ser menor que la fecha de fin.'
         );
-        // } else if (duracion < duracionMinima || duracion > duracionMaxima) {
-        //   this.toastr.error('La duración del periodo académico debe estar entre ' + duracionMinima + ' y ' + duracionMaxima + ' meses.');
-        // }
+      } else if (duracion < duracionMinima || duracion > duracionMaxima) {
+        this.toastr.error('La duración del periodo académico debe estar entre ' + duracionMinima + ' y ' + duracionMaxima + ' meses.');
       } else {
-        this.periodoAcService.update(this.periodoAc.idPeriodoAc,this.periodoAc).subscribe(
+        // Verificar si las fechas son iguales a las originales
+        const fechasOriginales = this.obtenerFechasOriginales();
+        if (
+          this.sonFechasIguales(this.periodoAc.fechaInicio, fechasOriginales.fechaInicio) &&
+          this.sonFechasIguales(this.periodoAc.fechaFin, fechasOriginales.fechaFin)
+        ) {
+          // Si las fechas son iguales, establecer las fechas originales
+          this.periodoAc.fechaInicio = fechasOriginales.fechaInicio;
+          this.periodoAc.fechaFin = fechasOriginales.fechaFin;
+        }
+
+        this.periodoAcService.update(this.periodoAc.idPeriodoAc, this.periodoAc).subscribe(
           (response) => {
-            // Si la respuesta es exitosa
             this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
-            this.toastr.success('Se actualizo correctamente');
-            this.resetForm(); 
+            this.toastr.success('Se actualizó correctamente');
+            this.resetForm();
           },
           (error) => {
             if (error.status === 409) {
-              // 409 es el código de estado para Conflict
-              this.toastr.error(error.error); // Muestra el mensaje de error que viene del servidor
+              this.toastr.error(error.error);
               this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
-
             } else {
-              this.toastr.error(
-                'Ocurrió un error al actualizar el período académico.'
-              );
+              this.toastr.error('Ocurrió un error al actualizar el período académico.');
               this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
-
             }
           }
         );
       }
+    } else {
+      this.toastr.error('Por favor, complete todos los campos obligatorios.');
     }
   }
 
@@ -117,5 +106,16 @@ export class ActualizarPeriodoAcComponent implements OnInit{
     this.f.form.markAsUntouched();
   }
 
+  sonFechasIguales(fecha1: Date, fecha2: Date): boolean {
+    return fecha1.getTime() === fecha2.getTime();
+  }
 
+  obtenerFechasOriginales(): { fechaInicio: Date, fechaFin: Date } {
+
+    return {
+      fechaInicio: this.periodoAc.fechaInicio,
+      fechaFin: this.periodoAc.fechaFin
+    };
+  }
+  
 }

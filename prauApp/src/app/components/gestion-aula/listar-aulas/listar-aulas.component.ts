@@ -79,7 +79,7 @@ selectAula(aula: Aula) {
 
 eliminarAulaConfirmado(id: number) {
   Swal.fire({
-    title: '¿Estás seguro de eliminar este periodo académico?',
+    title: '¿Estás seguro de eliminar este aula?',
     text: '¡No podrás revertir esto!',
     icon: 'warning',
     showCancelButton: true,
@@ -89,21 +89,23 @@ eliminarAulaConfirmado(id: number) {
   }).then((result) => {
     if (result.isConfirmed) {
       this.aulaService.eliminarAula(id).subscribe(() => {
-        // Actualizar la lista de periodos después de la eliminación
-       
+        // Actualizar la lista de aulas después de la eliminación
         this.aulas = this.aulas.filter(aula => aula.aulaId !== id);
         Swal.fire(
           '¡Eliminado!',
           'El Aula ha sido eliminado correctamente.',
           'success'
         );
-        
-        
       }, error => {
-       // console.error('Error al eliminar Aula:', error);
+      //  console.error('Error al eliminar Aula:', error);
+        let errorMessage = 'Ha ocurrido un error al eliminar el Aula.';
+        if (error.error) {
+          // Si el error tiene un mensaje del backend, lo utilizamos
+          errorMessage = error.error;
+        }
         Swal.fire(
           'Error',
-          'Ha ocurrido un error al eliminar Aula.',
+          errorMessage,
           'error'
         );
       });
@@ -111,6 +113,7 @@ eliminarAulaConfirmado(id: number) {
     this.router.navigate(['/menu/contenido-virtual/listar-aulas']);
   });
 }
+
 
 
 

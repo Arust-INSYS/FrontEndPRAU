@@ -18,9 +18,12 @@ export class RegistrarPeriodoAcComponent {
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.resetForm();
+
+  }
 
   periodoAc: PeriodoAc = new PeriodoAc();
 
@@ -57,17 +60,17 @@ export class RegistrarPeriodoAcComponent {
         this.toastr.error(
           'La fecha de inicio debe ser menor que la fecha de fin.'
         );
-        // } else if (duracion < duracionMinima || duracion > duracionMaxima) {
-        //   this.toastr.error('La duración del periodo académico debe estar entre ' + duracionMinima + ' y ' + duracionMaxima + ' meses.');
-        // }
+      } else if (duracion < duracionMinima || duracion > duracionMaxima) {
+        this.toastr.error('La duración del periodo académico debe estar entre ' + duracionMinima + ' y ' + duracionMaxima + ' meses.');
+
       } else {
         this.periodoAcService.registrarPeriodoAc(this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa
             this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
-            
+
             this.toastr.success('Se guardó correctamente');
-            this.resetForm(); 
+            this.resetForm();
 
           },
           (error) => {
@@ -84,6 +87,9 @@ export class RegistrarPeriodoAcComponent {
           }
         );
       }
+    }
+    else {
+      this.toastr.error('Por favor, complete todos los campos obligatorios.');
     }
   }
   resetForm() {

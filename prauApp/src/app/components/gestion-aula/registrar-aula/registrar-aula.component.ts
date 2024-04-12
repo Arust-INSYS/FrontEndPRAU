@@ -48,6 +48,7 @@ export class RegistrarAulaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+   // this.resetForm();
     this.periodoAcService.getPeriodosAcs().subscribe((periodos) => {
       this.periodos = periodos;
     });
@@ -135,9 +136,12 @@ export class RegistrarAulaComponent implements OnInit {
           } else {
             this.toastr.error('Ocurrió un error al guardar el Aula.');
             this.router.navigate(['/menu/contenido-virtual/listar-aulas']);
+            this.resetForm();
           }
         }
       );
+    }  else {
+      this.toastr.error('Por favor, complete todos los campos obligatorios.');
     }
   }
 
