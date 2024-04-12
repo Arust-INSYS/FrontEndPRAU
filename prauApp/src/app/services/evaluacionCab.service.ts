@@ -56,7 +56,20 @@ export class EvaluacionCabService {
     return this.http.get<EvaluacionCab[]>(this.url + '/read', { headers })
       .pipe(map((response) => response as EvaluacionCab[]));
   }
+  
+  //Actualiza el estado
 
+  updateEstado(id: number, estado: string): Observable<EvaluacionCab> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    return this.http.put<EvaluacionCab>(`${this.url}/updateEst?id=${id}`, { estado }, { headers }).pipe(
+      catchError(error => {
+        throw error;
+      })
+    );
+  }
 
   ///sacar el numero de la nueva evaluacion para mostrar 
 
@@ -69,4 +82,14 @@ export class EvaluacionCabService {
       headers,
     });
   }
+  //Busca la cabecera para el editar
+
+  findNroEvaluacion(nroEvaluacion: number): Observable<EvaluacionCab> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    return this.http.get<EvaluacionCab>(`${this.url}/findNroEvaluacion?nroEvaluacion=${nroEvaluacion}`, { headers });
+  }
+
 }

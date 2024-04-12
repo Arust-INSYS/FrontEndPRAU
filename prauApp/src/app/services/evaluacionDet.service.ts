@@ -62,4 +62,22 @@ export class EvaluacionDetService {
 
     return this.http.get(this.url + '/read').pipe(map((response) => response as EvaluacionDet[]));
   }
+
+  updateList(evaluacionDets: EvaluacionDet[]): Observable<EvaluacionDet[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+
+    return this.http.put<EvaluacionDet[]>(`${this.url}/updateList`, evaluacionDets, { headers });
+  }
+//Busca al detalle
+  detalleEvaluacion(nroEvaluacion: number): Observable<EvaluacionDet[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    return this.http.get<EvaluacionDet[]>(`${this.url}/detalleEvaluacion?nroEvaluacion=${nroEvaluacion}`, { headers });
+  }
+
+
 }

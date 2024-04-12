@@ -23,6 +23,7 @@ import { Carrera } from '../../models/carrera';
 import { IAsignaturaXCarrera, IConsultarAula, IDocenteXAsignatura } from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -56,6 +57,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   //////////////////////////BRYAN///////////////////////////////////////////
   //nro evaluacion
   nroEvaluacion: number = 0;
+  id!: number;
+  status!: string;
 
   //LISTA DE FILTROS
   periodosAc: PeriodoAc[] = [];
@@ -67,6 +70,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   clasificaciones: ClasificacionCriterios[] = [];
   //
   evaluacionDets: EvaluacionDet[] = [];
+  evaluacionDeta: EvaluacionDet[] = [];
   //
   criteriosIds: number[] = [];
   calificaciones: Calificacion[] = [];
@@ -104,6 +108,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private sharedDataService: SharedDataService,
     private sessionStorage: LocalStorageService,
     private usuarioService: UsuarioService,
+    private route: ActivatedRoute,
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
@@ -111,6 +116,15 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.status = params['status'];
+      console.log(this.id ,this.status);
+      if(this.id){
+      this.cargarEvaluacion(this.id);
+      this.cargarDetalle(this.id);
+    }
+    });
     this.obtenerNroEva();
     //cargar filtros;
     this.loadPeriodos();
@@ -129,11 +143,39 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
   }
+  cargarEvaluacion(id: number) {
+    this.evaluacionCabService.findNroEvaluacion(id).subscribe(
+      response => {
+        this.evaluacionCab = response;
+        this.nroEvaluacion = this.evaluacionCab.nroEvaluacion;
+      },
+      error => {
+        console.error('Error al cargar la calificacion:', error);
+      }
+    );
+  }
+
+  cargarDetalle(id: number) {
+    this.evaluacionDetService.detalleEvaluacion(id).subscribe(
+      response => {
+        this.evaluacionDets = response;
+        const correctCriterions = this.evaluacionDets.filter(det => det.criterio?.idCriterio !== null); // Assuming criterioId is the property for the criterion ID.
+        this.evaluacionDeta = correctCriterions;
+      },
+      error => {
+        console.error('Error al cargar el detalle:', error);
+      }
+    );
+  }
+
   obtenerNroEva(): void {
     this.evaluacionCabService.nroEvaluacionNew().subscribe(eva => {
       this.nroEvaluacion = eva;
     })
   }
+
+  
+
   loadPeriodos(): void {
     this.periodoAcService.getPeriodosAcs().subscribe(response => {
       this.periodosAc = response;
@@ -205,9 +247,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
 
   async listarCriterios() {
+    if(this.status!== 'edit'){
     await this.criteriosService.obtenerListacriterios().subscribe((res) => {
       this.generarDetalle(res);
     });
+  }else{
+    console.log('ya hay criterios');
+  }
   }
 
   generarDetalle(listCriterios: Criterios[]) {
@@ -225,6 +271,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   criteriosPorClasificacion(idClasificacion: number): EvaluacionDet[] {
     return this.evaluacionDets.filter(det => det?.criterio?.clasificacion?.idClasificacion === idClasificacion);
+    
   }
 
   getCalificaciones() {
@@ -240,6 +287,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   }
   onCalificacionSeleccionado(selectedCalificacion: any, cri: number) {
     // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
+    
     console.log('Calificacion seleccionado:', selectedCalificacion, cri);
 
     if (selectedCalificacion === 'C' || selectedCalificacion === 'CM' || selectedCalificacion === 'NC') {
@@ -309,9 +357,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
     // Calcular los porcentajes totales
     const totalCriterios = this.criterios.length;
-    this.evaluacionCab.totalC = (this.evaluacionCab.totalC / totalCriterios) * 100;
-    this.evaluacionCab.totalCm = (this.evaluacionCab.totalCm / totalCriterios) * 100;
-    this.evaluacionCab.totalNc = (this.evaluacionCab.totalNc / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / totalCriterios) * 100;
 
     // Determinar las observaciones
     if (this.formularioCompleto()) {
@@ -328,7 +376,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       cab => {
 
         // La EvaluacionCab se ha actualizado correctamente
-        console.log('EvaluacionCab actualizada correctamente.');
+        console.log('EvaluacionCab creada correctamente.');
         console.log(cab);
 
         this.evaluacionDets.forEach(det => {
@@ -336,7 +384,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         });
 
         this.evaluacionDetService.createList(this.evaluacionDets).subscribe(det => {
-          console.log('EvaluacionCab actualizada correctamente.');
+          console.log('EvaluacioDet Creada correctamente.');
           console.log(det);
         })
 
@@ -373,6 +421,88 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       );
     });
   }
+
+
+  updateNuevaEvaluacionCab() {
+
+    //asignar aula
+    this.evaluacionCab.aulaEva = this.selectedAula;
+    //evaluador
+    const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
+    if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
+      this.evaluacionCab.evaluador.usuId = idString;
+    }
+    // Obtener la suma total de cada tipo de calificación
+    this.evaluacionCab.totalC = this.contarC;
+    this.evaluacionCab.totalCm = this.contarCM;
+    this.evaluacionCab.totalNc = this.contarNC;
+
+    // Calcular los porcentajes totales
+    const totalCriterios = this.criterios.length;
+    this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / totalCriterios) * 100;
+
+    // Determinar las observaciones
+    if (this.formularioCompleto()) {
+      this.evaluacionCab.observaciones = 'El formulario está completo.';
+    } else {
+      this.evaluacionCab.observaciones = 'Por favor, complete el formulario.';
+    }
+
+    this.evaluacionCab.fechaRegistro = new Date();
+
+
+    // Llamamos al servicio para crear la EvaluacionCab
+    this.evaluacionCabService.update(this.id,this.evaluacionCab).subscribe(
+      cab => {
+
+        // La EvaluacionCab se ha actualizado correctamente
+        console.log('EvaluacionCab actualizada correctamente.');
+        console.log(cab);
+
+      
+
+        this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
+          console.log('EvaluacionCab actualizada correctamente.');
+          console.log(det);
+        })
+
+      }, error => {
+        // Error al actualizar la EvaluacionCab
+        console.error('Error al crear la EvaluacionCab: ', error);
+      }
+    );
+    // this.guardarCalificaciones();
+  }
+
+  updateCalificaciones() {
+    this.calificacionesPorCriterio.forEach(calificacion => {
+      // Crea una nueva instancia de EvaluacionDet
+
+      this.evaluacionDet.secCalificacion = 0; // El ID se generará automáticamente en la base de datos
+      this.evaluacionDet.evaluacionCab.nroEvaluacion = this.evaluacionCab.nroEvaluacion,
+        this.evaluacionDet.criterio!.idCriterio = calificacion.idCriterio, // Asigna el ID del criterio
+        this.evaluacionDet.calificacion!.codCalificacion = calificacion.calificacion  // Asigna el ID de la calificación
+      // console.log(this.evaluacionDet.secCalificacion);
+      // console.log(this.evaluacionDet.evaluacionCab);
+      // console.log(this.evaluacionDet.criterio!.idCriterio);
+      // console.log(this.evaluacionDet.calificacion!.codCalificacion);
+
+      this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(
+        (response) => {
+          console.log('Calificación guardada exitosamente:', response);
+          // Aquí puedes realizar cualquier otra acción necesaria después de guardar la calificación
+        },
+        (error) => {
+          console.error('Error al guardar calificación:', error);
+          // Aquí se maneja el error
+        }
+      );
+    });
+  }
+
+
 
   formularioCompleto(): boolean {
     // Verificamos si se han seleccionado todos los criterios

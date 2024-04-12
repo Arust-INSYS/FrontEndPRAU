@@ -10,6 +10,8 @@ export class EvaluacionCab {
   porcTotalCm: number;
   porcTotalNc: number;
   observaciones: string;
+  progreso:number;
+  estado:number;
   fechaRegistro: Date;
   aulaEva?: Aula;
   evaluador?: Usuario;
@@ -23,6 +25,8 @@ export class EvaluacionCab {
     porcTotalCm?: number,
     porcTotalNc?: number,
     observaciones?: string,
+    progreso?:number,
+    estado?:number,
     fechaRegistro?: Date,
     aulaEva?: Aula,
     evaluador?: Usuario,
@@ -36,6 +40,8 @@ export class EvaluacionCab {
     this.porcTotalCm = porcTotalCm || 0;
     this.porcTotalNc = porcTotalNc || 0;
     this.observaciones = observaciones || '';
+    this.progreso = progreso|| 0;
+    this.estado = estado|| 0;
     this.fechaRegistro = fechaRegistro || new Date;
     this.aulaEva = aulaEva || new Aula();
     this.evaluador = evaluador || new Usuario();

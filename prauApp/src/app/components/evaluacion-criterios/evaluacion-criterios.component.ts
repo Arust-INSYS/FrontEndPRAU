@@ -25,6 +25,8 @@ export class EvaluacionCriteriosComponent {
   $odd: any;
   Delete: string | undefined;
 
+  status: string="";
+
   dt: any;
 
   showModal() {
@@ -43,8 +45,8 @@ export class EvaluacionCriteriosComponent {
   docenteSeleccionado: number | null = null; // Almacenará el ID del docente seleccionado
   cursoSeleccionado: number = 0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
-
-
+//nro evaluacion
+nroEvaluacion: number = 0;
 
   customers: any
   selectedCustomers: any
@@ -56,7 +58,8 @@ export class EvaluacionCriteriosComponent {
     private router: Router,
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
-    private carreraService: CarreraService) { }
+    private carreraService: CarreraService,
+    ) {}
 
 
   ngOnInit(): void {
@@ -71,6 +74,12 @@ export class EvaluacionCriteriosComponent {
   //    console.log(this.docentes);
   //  });
   //}
+
+  obtenerNroEva(): void {
+    this.evaluacionCABService.nroEvaluacionNew().subscribe(eva => {
+      this.nroEvaluacion = eva;
+    })
+  }
 
   async listarcarrer() {
     await this.carreraService.obtenerListaCarreras().subscribe((res: any[]) => {
@@ -141,12 +150,16 @@ onCursoSeleccionado(selectedCurso: any) {
   filtrar() {
   }
 
-  crearNuevoDato() {
-    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion']);
+  crearNuevoDato(status: string) {
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion',this.status]);
+
+    alert(status);
   }
 
-  actualizarCriterio(id: number) {
-
+  actualizarCriterio(id: number, status: string) {
+  
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', status, id]);
+    alert(status);
   }
 
   // Método para eliminar un criterio
