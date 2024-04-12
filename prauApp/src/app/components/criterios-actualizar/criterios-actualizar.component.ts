@@ -3,6 +3,8 @@ import { Criterios } from '../../models/criterios';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CriteriosService } from '../../services/criterios.service';
 import { ToastrService } from 'ngx-toastr';
+import { ClasificacionCriteriosService } from '../../services/clasificacion-criterios.service';
+import { ClasificacionCriterios } from '../../models/clasificacion-criterios';
 
 @Component({
   selector: 'app-criterios-actualizar',
@@ -13,11 +15,13 @@ export class CriteriosActualizarComponent {
   id!: number;
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
+  
+  clasificaciones: ClasificacionCriterios[] = [];
   constructor(
     private criteriosService: CriteriosService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,private clasificacionCriteriosService: ClasificacionCriteriosService
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +31,7 @@ export class CriteriosActualizarComponent {
     });
   }
 
-  cargarCriterio(id: number) {
+  /*cargarCriterio(id: number) {
     this.criteriosService.obtenerCriterioPorId(id).subscribe(
       (response) => {
         this.criterio = response;
@@ -36,17 +40,38 @@ export class CriteriosActualizarComponent {
         console.error('Error al cargar el criterio:', error);
       }
     );
+  }*/
+  cargarCriterio(id: number) {
+    this.criteriosService.obtenerCriterioPorId(id).subscribe(
+      (criterioResponse) => {
+        this.criterio = criterioResponse;
+      },
+      (criterioError) => {
+        console.error('Error al cargar el criterio:', criterioError);
+      }
+    );
+  
+    this.clasificacionCriteriosService.obtenerListacriterios().subscribe(
+      (clasificacionesResponse) => {
+        this.clasificaciones = clasificacionesResponse;
+      },
+      (clasificacionesError) => {
+        console.error('Error al cargar las clasificaciones:', clasificacionesError);
+      }
+    );
   }
-
   onSubmit() {
     // Verificar si los campos están llenos
     if (
       !this.id ||
       !this.criterio.nombreCriterio ||
-      !this.criterio.descripcion
+      !this.criterio.descripcion   ||
+      !this.criterio.clasificacion || 
+      !this.criterio.clasificacion.nombreClasificacion
+    
     ) {
       this.toastr.error('Llene todos los campos antes de enviar.');
-      return; // Detener el envío si los campos no están llenos
+      return; 
     }
 
     this.criteriosService.actualizarcriterios(this.id, this.criterio).subscribe(
