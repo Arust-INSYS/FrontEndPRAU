@@ -298,11 +298,12 @@ throw new Error('Method not implemented.');
 
     //ENCABEZADOS
     const headerItems: IHeaderItem[] = [
-      { header: '№ REGISTRO' },
-      // { header: "FOTO" },
-      { header: 'idCarrera' },
-      { header: 'NOMBRE carrera' },
-      { header: 'DESCRIPCIOON' },
+     // { header: '№ REGISTRO' },
+      
+      { header: 'ID CARRERA' },
+      { header: 'NOMBRE CARRERA' },
+      { header: 'DESCRIPCION' },
+      { header: 'DIRECTOR DE CARRERA' },
      
     ];
 
@@ -310,8 +311,9 @@ throw new Error('Method not implemented.');
     const rowData = data.map((item) => ({
       idCar: item?.idCarrera,
       // foto: item.foto,
-      nomc: item.nombreCarrera,
-      desc: item.descripcionCarrera
+      nomc: item?.nombreCarrera,
+      desc: item?.descripcionCarrera,
+      dirca: (item?.director?.usuPerId.perNombre1 ?? '') + ' ' + (item?.director?.usuPerId.perApellido1 ?? '')
     
     }));
 
