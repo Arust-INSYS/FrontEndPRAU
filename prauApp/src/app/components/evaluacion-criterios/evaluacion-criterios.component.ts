@@ -149,7 +149,7 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   getEvaluacionesCAB(): void {
-    this.evaluacionCABService.getEvaluacionCAB().subscribe(dato => {
+    this.evaluacionCABService.getEvaluacionCAB(1).subscribe(dato => {
       this.evaluacionCab = dato;
       //this.generarPDF();
     },
@@ -199,6 +199,7 @@ onCursoSeleccionado(selectedCurso: any) {
             } else {
               this.toastr.success('ACTIVADO CORRECTAMENTE', 'ÉXITO');
             }
+            this.getEvaluacionesCAB()
           },
           error: (error) => {
             // Manejar errores

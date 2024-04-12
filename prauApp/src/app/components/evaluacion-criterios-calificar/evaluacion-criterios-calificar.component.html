@@ -66,8 +66,9 @@
         <section class="layoutnum">
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoC"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoC }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalC"></progress>
+                <!-- <p-slider [(ngModel)]="evaluacionCab.porcTotalC" styleClass="w-full mt-3"></p-slider> -->
+                <span class="progress-value">{{ evaluacionCab.porcTotalC }}%</span>
             </div>
 
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
@@ -107,7 +108,7 @@
                                         [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
                                         [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
                                         placeholder="Selecionar Calificacion"
-                                        [(ngModel)]="det.calificacion.codCalificacion" (onChange)="onCalificacionSeleccionado($event.value, det.criterio?.idCriterio || 0)">
+                                        [(ngModel)]="det.calificacion.codCalificacion" (onChange)="onCalificacionSeleccionado()">
 
                                     </p-dropdown>
                                 </div>
