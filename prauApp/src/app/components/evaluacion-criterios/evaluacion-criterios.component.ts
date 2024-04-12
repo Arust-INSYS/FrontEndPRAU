@@ -64,7 +64,7 @@ nroEvaluacion: number = 0;
 
 
   ngOnInit(): void {
-    this.getEvaluacionesCAB();
+    this.getEvaluacionesCAB(1);
     this.listarevalu();
 
 
@@ -148,8 +148,8 @@ onCursoSeleccionado(selectedCurso: any) {
     }
   }
 
-  getEvaluacionesCAB(): void {
-    this.evaluacionCABService.getEvaluacionCAB(1).subscribe(dato => {
+  getEvaluacionesCAB(est: number): void {
+    this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
       //this.generarPDF();
     },
@@ -160,12 +160,12 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   filtrar() {
+    this.table.filter(this.searchTerm, 'aulaEva.docente.usuPerId.perNombre1', 'contains'); // Aplicar el filtro global
   }
 
   crearNuevoDato(status: string) {
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion',this.status]);
 
-    alert(status);
   }
 
   actualizarCriterio(id: number, status: string) {
@@ -199,7 +199,7 @@ onCursoSeleccionado(selectedCurso: any) {
             } else {
               this.toastr.success('ACTIVADO CORRECTAMENTE', 'ÉXITO');
             }
-            this.getEvaluacionesCAB()
+            this.getEvaluacionesCAB(est)
           },
           error: (error) => {
             // Manejar errores

@@ -47,8 +47,7 @@
                     <p-dropdown class="element-filter"
                         [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="docentes"
                         [(ngModel)]="selectedDocente" optionLabel="nombreCompleto" [filter]="true"
-                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente"
-                        (onChange)="consultarAula()">
+                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente">
 
                     </p-dropdown>
                 </div>
@@ -63,6 +62,15 @@
             </div>
 
         </section>
+        <section >
+            <div>
+                <label for="selectedAula" class="titulo-criterios">Aula Seleccionada:  {{selectedAula?.nombre}}</label>
+            </div>
+            <div>
+                <label for="selectedDocente" class="titulo-criterio">Docente a cargo:  {{selectedDocente?.nombreCompleto}}</label>
+            </div>
+          </section>
+          
         <section class="layoutnum">
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
             <div class="col1Last1">
@@ -73,14 +81,14 @@
 
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoM"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoM }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalCm"></progress>
+                <span class="progress-value">{{ evaluacionCab.porcTotalCm }}%</span>
             </div>
 
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
             <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="porcentajeCumplimientoN"></progress>
-                <span class="progress-value">{{ porcentajeCumplimientoN }}%</span>
+                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalNc"></progress>
+                <span class="progress-value">{{ evaluacionCab.porcTotalNc }}%</span>
             </div>
         </section>
 

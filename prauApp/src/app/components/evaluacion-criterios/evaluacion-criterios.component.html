@@ -7,12 +7,28 @@
         <h1 class="text-center titulo-criterios">Evaluación</h1>
 
         <!-- Botón "+" y botón para filtrar -->
-        <div class="botones-container">
-            <input pInputText placeholder="Texto a filtrar" class="filtro-input" />
-            <button pButton label="Filtrar" class="p-button-rounded p-button-info ml-2" (click)="filtrar()"></button>
-            <button pButton icon="pi pi-plus" class="p-button-rounded p-button-info ml-2"
-                (click)="crearNuevoDato(status='create')"></button>
-        </div>
+
+        <section class="layout">
+            <div class="botones-container">
+                <input pInputText [(ngModel)]="searchTerm" placeholder="Search" (input)="filtrar()" />
+
+            </div>
+            <div class="marginLeft"><button pButton icon="pi pi-plus" class="p-button-rounded p-button-info ml-2"
+                    (click)="crearNuevoDato(status='create')"></button></div>
+            <div class="radio-inputs">
+                <label class="radio">
+                    <input type="radio" name="radio" value=1 (change)="getEvaluacionesCAB(1)">
+                    <span class="name">Activo</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="radio" value=0 (change)="getEvaluacionesCAB(0)">
+                    <span class="name">Inactivo</span>
+                </label>
+
+            </div>
+
+        </section>
+
 
         <!-- <div><label for="cursoSeleccionado" class="titulo-criterios" >Seleccionar Docente: </label>
             <p-dropdown id="dropdown1" [style]="{ 'width.%': 25 }" [options]="docentes" optionLabel="label"
@@ -37,14 +53,14 @@
                         <th>Observaciones</th>
                         <th>Porcentaje Cumplido</th>
                         <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th>Acción</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-evaluacionCab>
                     <tr>
                         <td>{{ evaluacionCab.nroEvaluacion }}</td>
                         <td>{{ evaluacionCab.aulaEva?.aulaNombre }}</td>
-                        <td>{{ evaluacionCab.evaluador?.usuPerId.perNombre1 }}</td>
+                        <td>{{ evaluacionCab.aulaEva?.docente.usuPerId.perNombre1 }}</td>
                         <td>{{ evaluacionCab.observaciones }}</td>
                         <td>{{ evaluacionCab.porcTotalC }}</td>
                         <td>
@@ -52,8 +68,25 @@
                                 (click)="actualizarCriterio(evaluacionCab.nroEvaluacion, status='edit')"></button>
                         </td>
                         <td>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"
-                                (click)="eliminarCriterio(evaluacionCab.nroEvaluacion, 0)"></button>
+                            <button role="button" class="button-name2"
+                                *ngIf="evaluacionCab.estado ===1"
+                                (click)="eliminarCriterio(evaluacionCab.nroEvaluacion, 0)"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="svgTbl" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                                </svg>
+                            </button>
+
+                            <button role="button" class="button-name3"
+                                *ngIf="evaluacionCab.estado ===0"
+                                (click)="eliminarCriterio(evaluacionCab.nroEvaluacion, 1)"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="svgTbl" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022" />
+                                </svg>
+                            </button>
                     </tr>
                 </ng-template>
             </p-table>

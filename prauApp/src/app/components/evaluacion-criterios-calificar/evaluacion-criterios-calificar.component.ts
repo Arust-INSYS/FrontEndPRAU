@@ -23,7 +23,8 @@ import { Carrera } from '../../models/carrera';
 import { IAsignaturaXCarrera, IConsultarAula, IDocenteXAsignatura } from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -96,6 +97,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   //OBJETOS
   evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación detallada
   evaluacionDet: EvaluacionDet = new EvaluacionDet(); // Objeto para almacenar la evaluación detallada
+  carrera: Carrera = new Carrera();
 
   constructor(
     private http: HttpClient,
@@ -109,6 +111,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private sharedDataService: SharedDataService,
     private sessionStorage: LocalStorageService,
     private usuarioService: UsuarioService,
+    private router: Router,
     private route: ActivatedRoute,
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
@@ -135,21 +138,21 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.getClasificaciones();
     this.userId = this.sessionStorage.getItem('userId');
 
-    if (this.status == 'edit'){
+    if (this.status == 'edit') {
       if (this.id) {
         this.cargarEvaluacion(this.id);
         this.cargarDetalle(this.id);
         this.contarCalificaciones();
       }
-    }else{
+    } else {
       this.obtenerNroEva();
       this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
 
     }
 
-
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
+
   }
   cargarEvaluacion(id: number) {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
@@ -224,15 +227,26 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.aulas = response;
     })
     this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
+    
   }
 
+  cargarNombres(){
+    if (this.selectedAula && this.selectedAula) {
+      console.log('Docente seleccionado:', this.selectedDocente);
+      console.log('Aula seleccionado:', this.selectedAula);
+    } else {
+      console.log('Ningún docente seleccionado');
+    }
+  }
 
   obtenerCursos(): void {
     this.aulaService.getAulas().subscribe(cursos => {
       this.cursos = cursos;
     });
+    
   }
 
+  
 
   getClasificaciones(): void {
     this.clasificacionService
@@ -266,7 +280,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.generarDetalle(res);
       });
     } else {
-      console.log('ya hay criterios');
+      console.log('ya existe varios criterios');
     }
   }
 
@@ -352,17 +366,22 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
     const totalCriterios = this.evaluacionDets.length;
 
-    this.evaluacionCab.progreso = ((this.contarC||0 + this.contarCM||0  + this.contarNC||0 ) / totalCriterios) * 100;
+    this.evaluacionCab.progreso = ((this.contarC || 0 + this.contarCM || 0 + this.contarNC || 0) / totalCriterios) * 100;
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
-    alert((this.contarC||0 * 100) );
-    this.evaluacionCab.porcTotalC = (this.contarC* 100) / totalCriterios;
-    this.evaluacionCab.porcTotalCm = (this.contarCM||0  / totalCriterios) * 100;
-    this.evaluacionCab.porcTotalNc = (this.contarNC||0  / totalCriterios) * 100;
+    
+    this.evaluacionCab.porcTotalC = (this.contarC * 100) / totalCriterios;
+    this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
+    this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
   }
 
   crearNuevaEvaluacionCab() {
 
+    if (!this.selectedAula || !this.evaluacionCab.evaluador) {
+      console.log('Por favor, seleccione un aula y un evaluador.');
+      return; // Detener la ejecución del método si no se han seleccionado el aula y el evaluador
+    }
+    
     //asignar aula
     this.evaluacionCab.aulaEva = this.selectedAula;
     //evaluador
@@ -371,16 +390,16 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.evaluacionCab.evaluador.usuId = idString;
     }
     // Obtener la suma total de cada tipo de calificación
-    // this.evaluacionCab.totalC = this.contarC;
-    // this.evaluacionCab.totalCm = this.contarCM;
-    // this.evaluacionCab.totalNc = this.contarNC;
+     this.evaluacionCab.totalC = this.contarC;
+     this.evaluacionCab.totalCm = this.contarCM;
+     this.evaluacionCab.totalNc = this.contarNC;
 
     // // Calcular los porcentajes totales
     // this.evaluacionCab.progreso = this.criterios.length;
     // this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / this.evaluacionCab.progreso) * 100;
-    // this.evaluacionCab.estado=1;
+     this.evaluacionCab.estado=1;
 
     // Determinar las observaciones
     if (this.evaluacionCab.progreso == 100) {
@@ -407,6 +426,21 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.evaluacionDetService.createList(this.evaluacionDets).subscribe(det => {
           console.log('EvaluacioDet Creada correctamente.');
           console.log(det);
+
+          this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
+            console.log('EvaluacionCab agregada correctamente.');
+            console.log(det);
+            Swal.fire({
+              title: '¡Registro Exitoso!',
+              text: 'La evaluacion fue agregada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Confirmar',
+              showCancelButton: false, // No mostrar el botón de cancelar
+            });
+          })
+  
+          this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
+
         })
 
       }, error => {
@@ -464,7 +498,16 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
           console.log('EvaluacionCab actualizada correctamente.');
           console.log(det);
+          Swal.fire({
+            title: '¡Registro Exitoso!',
+            text: 'La evaluacion fue actualizada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Confirmar',
+            showCancelButton: false, // No mostrar el botón de cancelar
+          });
         })
+
+        this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
 
       }, error => {
         // Error al actualizar la EvaluacionCab
