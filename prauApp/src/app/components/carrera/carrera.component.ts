@@ -37,7 +37,7 @@ export class CarreraComponent {
   ) { }
   ngOnInit(): void {
     this.obtenercarreras();
-    this.obtenerUsuariosPorRol(4);
+    this.obtenerUsuariosPorRol(3);
   }
   obtenerUsuariosPorRol(roleId: number) {
     
@@ -74,14 +74,20 @@ export class CarreraComponent {
 
 
   guardarCarrera() {
-    if (
-      !this.carrera.nombreCarrera ||
-      !this.carrera.descripcionCarrera ||
-      !this.selectedCountry.usuId
-    ) {
-      this.toastr.error('Por favor, complete todos los campos.', 'Error');
+    if (!this.carrera.nombreCarrera) {
+      this.toastr.error('Por favor, ingrese el nombre de la carrera.', 'Error');
       return;
-    }
+  }
+  
+  if (!this.carrera.descripcionCarrera) {
+      this.toastr.error('Por favor, ingrese la descripción de la carrera.', 'Error');
+      return;
+  }
+  
+  if (!this.selectedCountry || !this.selectedCountry.usuId) {
+      this.toastr.error('Por favor, seleccione un director.', 'Error');
+      return;
+  }
     this.carrera.director= this.selectedCountry
     const clasificacionSeleccionada = this.carrera.director;
     this.CarreraService.registrarcarreras(this.carrera).subscribe(
@@ -92,6 +98,7 @@ export class CarreraComponent {
         this.carrera.nombreCarrera = '';
         this.carrera.descripcionCarrera = '';
         this.carrera.director = this.selectedCountry;
+        this.selectedCountry = null;
       },
       (error) => {
         if (error.error === 'La carrera ya ha sido registrado previamente.') {

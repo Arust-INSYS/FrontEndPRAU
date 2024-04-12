@@ -15,7 +15,7 @@
         <label for="director">Director:</label>
         <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="perNombre1"> 
             <ng-template let-item pTemplate="item">
-                <div>{{item?.perNombre1}} {{item?.perNombre1}}</div>
+                <div>{{item?.perNombre1}} {{item?.perApellido1}}</div>
                 
             </ng-template>
         </p-autoComplete>

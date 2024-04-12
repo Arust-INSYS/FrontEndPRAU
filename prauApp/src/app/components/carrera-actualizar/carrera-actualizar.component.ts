@@ -34,7 +34,7 @@ export class CarreraActualizarComponent {
   ) {}
 
   ngOnInit(): void {
-    this.obtenerUsuariosPorRol(4);
+    this.obtenerUsuariosPorRol(3);
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.cargarCarrera(this.id);
@@ -54,6 +54,7 @@ export class CarreraActualizarComponent {
     this.carreraService.obtenerCarreraPorId(id).subscribe(
       (response) => {
         this.carrera = response;
+        this.selectedCountry = response.director?.usuPerId.perNombre1
       },
       (error) => {
         console.error('Error al cargar la carrera:', error);

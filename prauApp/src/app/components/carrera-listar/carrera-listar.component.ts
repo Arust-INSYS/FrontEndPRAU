@@ -96,7 +96,7 @@ throw new Error('Method not implemented.');
           // Muestra un cuadro de diálogo SweetAlert para informar al usuario sobre el error
           Swal.fire(
             'Error',
-            'Hubo un error al intentar eliminar la carrera.',
+            'Error al eliminar: Esta vinculada con una asignatura .',
             'error'
           );
         });
