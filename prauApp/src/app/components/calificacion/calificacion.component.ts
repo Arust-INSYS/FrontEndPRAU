@@ -43,7 +43,7 @@ export class CalificacionComponent {
         if (error.error === 'La calificación ya ha sido registrada previamente.') {
           this.toastr.error(error.error, 'Error');
         } else {
-          this.toastr.error('Error al guardar la calificación. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastr.error('Ya exite una calificación con el mismo nombre', 'Error');
         }
       }
     );
