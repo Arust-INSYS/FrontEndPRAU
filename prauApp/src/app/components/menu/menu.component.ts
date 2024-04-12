@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit{
         this.datos= data;
       });
 
-      this.authRolService.setIsAdmin(this.compronarPermisoUsuario());
+      this.authRolService.setIsAdmin(this.comprobarPermisoUsuario());
   }
   
   logout() {
@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit{
     this.router.navigate(['/login']).then(()=> window.location.reload());
   }
 
-  compronarPermisoUsuario():boolean{
+  comprobarPermisoUsuario():boolean{
     const id: number = Number(this.userId);
       //Bloqueo de menu dependiendo el usuario
       if (id === 1) {

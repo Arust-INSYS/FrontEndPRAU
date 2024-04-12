@@ -165,7 +165,7 @@ eliminarAulaConfirmado(id: number) {
     });
 
     // Título de la tabla
-    page.drawText('Lista de carreras', {
+    page.drawText('Lista de Aulas', {
         x: 250,
         y: 750,
         size: 15,
