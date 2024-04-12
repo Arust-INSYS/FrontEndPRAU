@@ -13,6 +13,8 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import { DataSource } from '@angular/cdk/collections';
 import { color } from 'html2canvas/dist/types/css/types/color';
+import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
+import { ExcelService } from '../../services/excel.service';
 
 
 @Component({
@@ -26,6 +28,8 @@ export class CriteriosListarComponent {
   @ViewChild('dt', { static: true }) table!: Table; 
   searchTerm: string = '';
   items: MenuItem[]|undefined;
+  excelReportData: IExcelReportParams | null = null;
+ 
 $even: any;
 $odd: any;
 Delete: string|undefined;
@@ -48,7 +52,12 @@ applyFilter() {
   selectedCustomers:any
   loading:any
 
-  constructor(private criteriosService: CriteriosService, private router: Router,private toastr: ToastrService, private authRolService: AuthRolService) {}
+  constructor(private criteriosService: CriteriosService, 
+    private router: Router,
+    private toastr: ToastrService, 
+    private authRolService: AuthRolService,
+    private excelService: ExcelService,
+  ) {}
 
   ngOnInit(): void {
     this.obtenerCriterios();
@@ -92,6 +101,7 @@ applyFilter() {
   obtenerCriterios() {
     this.criteriosService.obtenerListacriterios().subscribe(dato => {
       this.criterio = dato;
+      this.loadExcelReportData(this.criterio);
     },
     error => {
       console.error('Error al obtener los criterios: ', error);
@@ -203,7 +213,13 @@ applyFilter() {
   
     window.open(url, '_blank');
   }
-  
+  downloadExcel(): void {
+    if (this.excelReportData) {
+      this.excelService.dowloadExcel(this.excelReportData);
+    }
+    //PASO 4 colocar metodo listar objeto
+    this.obtenerCriterios();
+  }
   
   // async generarPDF() {
   //   const pdfDoc = await PDFDocument.create();
@@ -383,5 +399,57 @@ applyFilter() {
     window.open(url, '_blank');
   }
   
+  loadExcelReportData(data: Criterios[]) {
+    //NOMBRE DEL REPORTE
+    const reportName = 'CRITERIO';
+
+    //TAMAÑO DEL LOGO
+    const logo = 'G1:J1';
+
+    //ENCABEZADOS
+    const headerItems: IHeaderItem[] = [
+     // { header: '№ REGISTRO' },
+      
+      { header: 'ID CRITERIO' },
+      { header: 'NOMBRE CRITERIO' },
+      { header: 'DESCRIPCION ' },
+      { header: 'CLASIFICACION ' },
+      
+     
+    ];
+
+    //DATOS DEL REPORTE
+    const rowData = data.map((item) => ({
+      idCrit: item?.idCriterio,
+      // foto: item.foto,
+      nomCRITERIO: item?.nombreCriterio,
+      desCRITERIO: item?.descripcion,
+      clasCRITERIO: item?.clasificacion?.nombreClasificacion,
+      
+    
+    }));
+
+    if (this.excelReportData) {
+      this.excelReportData.logo = logo;
+      this.excelReportData.rowData = rowData;
+      this.excelReportData.headerItems = headerItems;
+      this.excelReportData.reportName = reportName;
+    } else {
+      this.excelReportData = {
+        logo,
+        rowData,
+        headerItems,
+        reportName,
+      };
+    }
+  }
+
+
+
+
+
+
+
+
 }
 

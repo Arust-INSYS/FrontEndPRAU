@@ -22,8 +22,17 @@
       class="registrar-button mb-3"
     ></p-button>
 
-    <p-button  [rounded]="true" class="registrar-button mb-3" (click)="generarPDFtable()">
-      <i class="pi pi-print"></i>Imprimir</p-button>
+    <p-button  [rounded]="true" class="registrar-button mb-3" 
+    (click)="generarPDFtable()">
+      <i class="pi pi-print">
+      </i>Imprimir</p-button>
+      
+      <p-button label="Excel"
+      class="Excel" 
+      icon="pi pi-print"
+       [rounded]="true" 
+      (click)="downloadExcel()"
+      ></p-button>
 
     <div class="tabla-container">
       <p-table
