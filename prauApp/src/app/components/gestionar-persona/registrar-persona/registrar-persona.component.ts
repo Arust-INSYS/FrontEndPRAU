@@ -156,9 +156,7 @@ export class RegistrarPersonaComponent {
           icon: 'error',
           confirmButtonText: 'OK',
           showCancelButton: false,
-          customClass: {
-            popup: 'mensaje-guardado' // Clase CSS para el mensaje de Swal
-          }
+          
         });
       }
     } else {
