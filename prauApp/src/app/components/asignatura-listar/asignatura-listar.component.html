@@ -55,8 +55,8 @@
               <th>Nombre Asignatura</th>
               <th>Descripción</th>
               <th>Carrera</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
+              <th *ngIf="rol === 'Administrador'">Editar</th>
+              <th *ngIf="rol === 'Administrador'">Eliminar</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-asignatura>
@@ -65,8 +65,8 @@
               <td>{{ asignatura.nombreAsignatura }}</td>
               <td>{{ asignatura.descripcionAsignatura }}</td>
               <td>{{ asignatura.carrera?.nombreCarrera }}</td>
-              <td>
-                <button [disabled] = "rol === 'Docente'"
+              <td *ngIf="rol === 'Administrador'">
+                <button
                   pButton
                   pRipple
                   icon="pi pi-pencil"
@@ -74,8 +74,8 @@
                   (click)="actualizarAsignatura(asignatura.idAsignatura)"
                 ></button>
               </td>
-              <td>
-                <button [disabled] = "rol === 'Docente'"
+              <td *ngIf="rol === 'Administrador'">
+                <button
                   pButton
                   pRipple
                   icon="pi pi-trash"

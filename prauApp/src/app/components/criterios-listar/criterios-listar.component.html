@@ -15,7 +15,7 @@
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de criterios</h1>
 
-    <p-button *ngIf="rol === 'Administrador'"
+    <p-button *ngIf="rol === 'Administrador'  || rol === 'Responsable'"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCriterios()"
@@ -52,8 +52,8 @@
             <th>Nombre Criterio</th>
             <th>Descripción</th>
             <th>Clasificación de criterio</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th *ngIf="rol === 'Administrador' || rol === 'Responsable'">Editar</th>
+            <th *ngIf="rol === 'Administrador'">Eliminar</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-criterio>
@@ -62,8 +62,8 @@
             <td>{{ criterio.nombreCriterio }}</td>
             <td class="descripcion-criterio">{{ criterio.descripcion }}</td>
             <td>{{ criterio.clasificacion?.nombreClasificacion }}</td>
-            <td>
-              <button [disabled]="rol === 'Docente'"
+            <td *ngIf="rol === 'Administrador' || rol === 'Responsable'">
+              <button
                 pButton
                 pRipple
                 icon="pi pi-pencil"
@@ -71,8 +71,8 @@
                 (click)="actualizarCriterio(criterio.idCriterio)"
               ></button>
             </td>
-            <td>
-              <button [disabled]="rol === 'Docente'"
+            <td *ngIf="rol === 'Administrador'">
+              <button 
                 pButton
                 pRipple
                 icon="pi pi-trash"
