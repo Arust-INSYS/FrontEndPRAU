@@ -96,13 +96,14 @@ export class RegistrarPersonaComponent {
       return false;
     }
   }
-  
+  personID:number=0;
   valorSeleccionado: any;
   encontrarUsuario(id: number) {
     this.limpiarRegistro() 
     this.usuarioService.searchUsersId(id).subscribe((res) => {
        // Asigna los datos recibidos a userListado
       console.log('Datos recibidos:', res); // Muestra en la consola el objeto recibido
+      this.personID=res.usuPerId.perId;
       this.persona.perCedula=res.usuPerId.perCedula
       this.persona.perNombre1=res.usuPerId.perNombre1
       this.persona.perApellido1=res.usuPerId.perApellido1
@@ -110,7 +111,7 @@ export class RegistrarPersonaComponent {
       this.persona.perTelefono=res.usuPerId.perTelefono
       //this.usuario.rolId.rolNombre=res.rolId.rolNombre
       this.valorSeleccionado=res.rolId.rolId
-      
+      return this.personID;
       
     });
   }
@@ -172,7 +173,16 @@ export class RegistrarPersonaComponent {
         });
       }
     } else {
-      this.encontrarUsuario(this.IdEditar);
+     
+        
+        this.personaService.update(this.personID,this.persona).subscribe(()=>{
+          Swal.fire('Actualizado!', 'La persona ha sido actualizado.', 'success');
+          this.usuarioService.update(this.IdEditar,this.usuario).subscribe(() => {
+            
+          });
+        })
+        this.cargarTabla()
+      
       console.log(
         'ESTAMOS TRABAJANDO EN EDITAR, PERO ESTE ES EL CÓDIGO DE USUARIO',
         this.IdEditar
@@ -233,7 +243,12 @@ export class RegistrarPersonaComponent {
     this.persona = event.value;
     console.log('Persona seleccionada:', this.persona);
   }
-
+  @ViewChild(ListarPersonaComponent)
+  listarPersonaComponent!: ListarPersonaComponent;
+  cargarTabla() {
+    // Envía los datos al componente RegistrarPersonaComponent
+    this.listarPersonaComponent.listarPersona();
+  }
   recargarPagina() {
     window.location.reload();
   }

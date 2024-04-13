@@ -89,7 +89,7 @@ export class ListarPersonaComponent implements OnInit{
   }
   cerrar_Limpiar(){
     this.displayModal=false
-    this.registrarPersonaComponent.limpiarRegistro();
+    
   }
   
  
@@ -124,7 +124,8 @@ export class ListarPersonaComponent implements OnInit{
         this.personaService.delete(id).subscribe(() => {
           Swal.fire('¡Eliminado!', 'La persona ha sido eliminada.', 'success');
           // Actualiza la lista de personas después de eliminar
-          this.actualizarListaPersonas();
+          //this.actualizarListaPersonas();
+          this.listarPersona();
         });
       }
     });
@@ -133,12 +134,6 @@ export class ListarPersonaComponent implements OnInit{
     window.location.reload();
   }
 
-  
-
-
-  
-  
-  
 
   //EXCEL
   ///cargar data en el excel
