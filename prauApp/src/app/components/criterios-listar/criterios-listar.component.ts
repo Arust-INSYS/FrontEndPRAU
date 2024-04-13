@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Criterios } from '../../models/criterios';
 import { CriteriosService } from '../../services/criterios.service';
 import { Router } from '@angular/router';
@@ -8,11 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
 import { AuthRolService } from '../../services/authRolService.service';
-
+import { Subscription } from 'rxjs';
 import { PDFDocument, rgb } from 'pdf-lib';
-import { saveAs } from 'file-saver';
-import { DataSource } from '@angular/cdk/collections';
-import { color } from 'html2canvas/dist/types/css/types/color';
 import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
 import { ExcelService } from '../../services/excel.service';
 
@@ -23,7 +20,10 @@ import { ExcelService } from '../../services/excel.service';
   styleUrl: './criterios-listar.component.css'
 })
 
-export class CriteriosListarComponent {
+export class CriteriosListarComponent implements OnInit{
+   
+  rol: string = '';
+  private subscription!: Subscription;
 
   @ViewChild('dt', { static: true }) table!: Table; 
   searchTerm: string = '';
@@ -61,9 +61,12 @@ applyFilter() {
 
   ngOnInit(): void {
     this.obtenerCriterios();
-    this.authRolService.isAdmin$.subscribe(isAdmin => {
-      this.isAdmin = isAdmin;
-    });
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) =>
+    this.rol = rol);
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
   
    // Método para dividir la descripción en líneas más cortas

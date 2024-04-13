@@ -1,7 +1,7 @@
 <body>
 <div class="encabezado">
     <ul class="lista">
-        <li>
+        <li *ngIf="rol === 'Administrador'">
             <a [routerLink]="['/menu/contenido-criterios/clasificacion-listar']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-list"></i>
                 <span class="nav-item">Clasificaciones</span>
@@ -13,13 +13,13 @@
                 <span class="nav-item">Criterios</span>
             </a>
         </li>
-        <li>
+        <li *ngIf="rol === 'Administrador'">
             <a [routerLink]="['/menu/contenido-criterios/criterios-evaluacion']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-book"></i>
                 <span class="nav-item">Evaluacion</span>
             </a>
         </li>
-        <li>
+        <li *ngIf="rol === 'Administrador'">
             <a [routerLink]="['/menu/contenido-criterios/listar-calificacion']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-book"></i>
                 <span class="nav-item">Listar Calificacion</span>

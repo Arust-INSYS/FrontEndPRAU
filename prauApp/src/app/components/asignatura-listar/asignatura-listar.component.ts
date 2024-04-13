@@ -8,6 +8,8 @@ import { Asignatura } from '../../models/asignatura';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { ExcelService } from '../../services/excel.service';
 import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
+import { AuthRolService } from '../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-asignatura-listar',
@@ -15,6 +17,9 @@ import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportPar
   styleUrls: ['./asignatura-listar.component.css']
 })
 export class AsignaturaListarComponent {
+
+  rol: string = '';
+  private subscription!: Subscription;
 
   @ViewChild('dt', { static: true }) table!: Table;
   searchTerm: string = '';
@@ -26,10 +31,18 @@ export class AsignaturaListarComponent {
   constructor(private asignaturaService: AsignaturaService, 
     private router: Router,
     private excelService: ExcelService,
+    private  authRolService: AuthRolService
   ) {}
 
   ngOnInit(): void {
     this.obtenerAsignaturas();
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   applyGlobalFilter() {

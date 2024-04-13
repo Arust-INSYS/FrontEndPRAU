@@ -15,7 +15,7 @@
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de criterios</h1>
 
-    <p-button *ngIf="isAdmin"
+    <p-button *ngIf="rol === 'Administrador'"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCriterios()"
@@ -24,8 +24,8 @@
 
     <p-button  [rounded]="true" class="registrar-button mb-3" 
     (click)="generarPDFtable()">
-      <i class="pi pi-print">
-      </i>Imprimir</p-button>
+      <i class="pi pi-file-pdf">
+      </i>PDF</p-button>
       
       <p-button label="Excel"
       class="Excel" 
@@ -63,7 +63,7 @@
             <td class="descripcion-criterio">{{ criterio.descripcion }}</td>
             <td>{{ criterio.clasificacion?.nombreClasificacion }}</td>
             <td>
-              <button
+              <button [disabled]="rol === 'Docente'"
                 pButton
                 pRipple
                 icon="pi pi-pencil"
@@ -72,7 +72,7 @@
               ></button>
             </td>
             <td>
-              <button
+              <button [disabled]="rol === 'Docente'"
                 pButton
                 pRipple
                 icon="pi pi-trash"

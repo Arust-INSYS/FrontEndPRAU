@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthRolService } from '../../services/authRolService.service';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-menu',
@@ -14,6 +15,7 @@ export class MenuComponent implements OnInit{
   username!: string;
   userId!: bigint;
   datos: any;
+  nombredeRol!: string;
   @Input() isAdmin = false;
 
   constructor(private localStorage: LocalStorageService, private http:HttpClient, private router: Router, private usurioService: UsuarioService, 
@@ -26,10 +28,11 @@ export class MenuComponent implements OnInit{
       const id: number = Number(this.userId);
 
       this.usurioService.buscarNombreUsuario(id).subscribe(data => {
-        this.datos= data;
+        this.datos = data;
+        this.nombreRol(this.datos[0][0]);
+        this.authRolService.setNombreRol(this.datos[0][0]);
       });
-
-      this.authRolService.setIsAdmin(this.comprobarPermisoUsuario());
+      
   }
   
   logout() {
@@ -39,13 +42,10 @@ export class MenuComponent implements OnInit{
     this.router.navigate(['/login']).then(()=> window.location.reload());
   }
 
-  comprobarPermisoUsuario():boolean{
-    const id: number = Number(this.userId);
-      //Bloqueo de menu dependiendo el usuario
-      if (id === 1) {
-        this.isAdmin = true;
-      }
-      return this.isAdmin;
+  nombreRol(dato: string){
+    this.nombredeRol = dato;
+    console.log(this.nombredeRol);
+    this.authRolService.setNombreRol(this.nombredeRol);
   }
 
 }

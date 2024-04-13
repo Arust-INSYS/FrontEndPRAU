@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Asignatura } from '../../../models/asignatura';
-
-
+import { AuthRolService } from '../../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listar-aulas',
@@ -15,6 +15,9 @@ import { Asignatura } from '../../../models/asignatura';
   styleUrl: './listar-aulas.component.css'
 })
 export class ListarAulasComponent implements OnInit {
+
+  rol: string = '';
+  private subscription!: Subscription;
 
   // @ViewChild('dt', { static: true }) table!: Table;
   // @ViewChild('dt2') dt2!: Table;
@@ -35,7 +38,7 @@ export class ListarAulasComponent implements OnInit {
   aulas: Aula[]=[];
   originalAulas: Aula[]=[];
   constructor(private aulaService:AulaService, 
-       private router: Router,) { }
+       private router: Router, private authRolService: AuthRolService) { }
 
   // displayModalregsitro: boolean = false;
   // displayModalactualizar: boolean = false;
@@ -49,7 +52,15 @@ export class ListarAulasComponent implements OnInit {
       this.originalAulas = data;
     
   });
+
+  this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+    this.rol = rol;
+  });
   
+}
+
+ngOnDestroy(): void{
+  this.subscription.unsubscribe();
 }
 
 

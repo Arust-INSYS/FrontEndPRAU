@@ -2,8 +2,8 @@
 
 <h1> Gestion de Aulas</h1>
 
-<p-button icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
-<p-button class="imprimir" icon="pi pi-print" label="Imprimir" (click)="generarPDFtable()"></p-button>
+<p-button *ngIf="rol ==='Administrador'" icon="pi pi-plus" label="Nueva Aula" [routerLink]="['/menu/contenido-virtual/registrar-aula']"></p-button>
+<p-button class="imprimir" icon="pi pi-file-pdf" label="PDF" (click)="generarPDFtable()"></p-button>
 
 <div class="card">
     <p-table #dt [value]="aulas" [(selection)]="selectedAulas" dataKey="id" [rowHover]="true" [rows]="10"
@@ -43,9 +43,9 @@
                 <td>{{ aula.docente.usuPerId.perNombre1 }} {{ aula.docente.usuPerId.perApellido1 }}</td>
                 <td>{{ aula.asignatura.nombreAsignatura }}</td>
                 <td>{{ aula.observaciones }}</td>
-                <td> <p-button icon="pi pi-pencil" severity="success" (click)="selectAula(aula)"></p-button>
+                <td> <p-button [disabled]="rol === 'Docente'" icon="pi pi-pencil" severity="success" (click)="selectAula(aula)"></p-button>
                 </td>
-                <td> <p-button icon="pi pi-trash" severity="danger"
+                <td> <p-button [disabled]="rol === 'Docente'" icon="pi pi-trash" severity="danger"
                         (click)="eliminarAulaConfirmado(aula.aulaId)"></p-button></td>
             </tr>
         </ng-template>

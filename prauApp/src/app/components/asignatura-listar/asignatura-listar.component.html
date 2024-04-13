@@ -16,7 +16,7 @@
     <div class="subconten2">
       <h1 class="text-center titulo-criterios">Lista de Asignaturas</h1>
   
-      <p-button
+      <p-button *ngIf="rol === 'Administrador'"
         label="Registrar"
         [rounded]="true"
         (click)="redirectToAsignatura()"
@@ -31,10 +31,10 @@
       ></p-button>
       
       <p-button
-      label="Imprimir"
+      label="PDF"
       [rounded]="true"
       (click)="generarPDFtable()"
-      icon="pi pi-print"
+      icon="pi pi-file-pdf"
       class="registrar-button mb-3 imprimir"
     ></p-button>
       
@@ -66,7 +66,7 @@
               <td>{{ asignatura.descripcionAsignatura }}</td>
               <td>{{ asignatura.carrera?.nombreCarrera }}</td>
               <td>
-                <button
+                <button [disabled] = "rol === 'Docente'"
                   pButton
                   pRipple
                   icon="pi pi-pencil"
@@ -75,7 +75,7 @@
                 ></button>
               </td>
               <td>
-                <button
+                <button [disabled] = "rol === 'Docente'"
                   pButton
                   pRipple
                   icon="pi pi-trash"
