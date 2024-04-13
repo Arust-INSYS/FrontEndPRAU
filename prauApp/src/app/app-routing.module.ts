@@ -104,9 +104,10 @@ const routes: Routes = [
         path: 'contenido-analitics', component: ContenidoAnaliticsComponent,
         children: 
         [
-          { 
-            path: 'analisis-uso', component: AnalisisUsoComponent,
-          }
+          { path: 'analisis-uso', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-carrera', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-docente', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-asignatura', component: AnalisisUsoComponent},
         ],
       },
     ],

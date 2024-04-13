@@ -3,31 +3,31 @@
     <ul class="lista">
         <li *ngIf="rol ==='Administrador' || rol === 'Director de Carrera'">
             <a [routerLink]="['/menu/contenido-virtual/carrera-listar']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-list"></i>
+                <i class="pi pi-flag-fill"></i>
                 <span class="nav-item">Carreras</span>
             </a>
         </li>
         <li>
             <a [routerLink]="['/menu/contenido-virtual/asignatura-listar']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-list"></i>
+                <i class="pi pi-clone"></i>
                 <span class="nav-item">Asignaturas</span>
             </a>
         </li>
         <li *ngIf="rol ==='Administrador'">
             <a [routerLink]="['/menu/contenido-virtual/listar-periodo']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-book"></i>
+                <i class="pi pi-stopwatch"></i>
                 <span class="nav-item">Periodos</span>
             </a>
         </li>
         <li>
             <a [routerLink]="['/menu/contenido-virtual/listar-aulas']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-book"></i>
+                <i class="pi pi-briefcase"></i>
                 <span class="nav-item">Aulas</span>
             </a>
         </li>
         <li *ngIf="rol ==='Administrador'">
             <a [routerLink]="['/menu/contenido-virtual/principal-director']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-book"></i>
+                <i class="pi pi-verified"></i>
                 <span class="nav-item">Director</span>
             </a>
         </li>
