@@ -97,12 +97,21 @@ export class RegistrarPersonaComponent {
     }
   }
   
-  encontrarUsuario(userCod:number) {
-    userCod=this.IdEditar;
-    this.usuarioService.searchUsersId(userCod).subscribe((res) => {
+  valorSeleccionado: any;
+  encontrarUsuario(id: number) {
+    this.limpiarRegistro() 
+    this.usuarioService.searchUsersId(id).subscribe((res) => {
        // Asigna los datos recibidos a userListado
       console.log('Datos recibidos:', res); // Muestra en la consola el objeto recibido
+      this.persona.perCedula=res.usuPerId.perCedula
+      this.persona.perNombre1=res.usuPerId.perNombre1
       this.persona.perApellido1=res.usuPerId.perApellido1
+      this.persona.perDireccion=res.usuPerId.perDireccion
+      this.persona.perTelefono=res.usuPerId.perTelefono
+      //this.usuario.rolId.rolNombre=res.rolId.rolNombre
+      this.valorSeleccionado=res.rolId.rolId
+      
+      
     });
   }
   registrar(validaRol: boolean) {

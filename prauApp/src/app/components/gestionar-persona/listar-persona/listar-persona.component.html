@@ -82,8 +82,8 @@ class="ventana"
   [responsive]="true"
 >
 <div class="modal">
-  <p-button (onClick)="displayModal=false">Cerrar</p-button>
-<app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" ></app-registrar-persona>
+  <p-button (onClick)="cerrar_Limpiar()">Cerrar</p-button>
+<app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" #registrarPersonaComponents></app-registrar-persona>
 </div>
 <!--
   <div class="modal-content">

@@ -18,20 +18,13 @@
   grid-column: span 3; /* Para que el botón ocupe tres columnas */
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 400px) {
   .formulario {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajusta el tamaño de las columnas para pantallas pequeñas */
   }
 }
-.mensaje-guardado {
-  z-index: 1500; /* Z-index más alto que el modal */
-}
-/* Estilos para el mensaje de Swal */
-.swal2-popup {
-  z-index: 1500; /* Z-index más alto que el modal */
-}
-
-/* Estilos para el overlay de Swal */
-.swal2-container.swal2-shown .swal2-backdrop {
-  z-index: 1400; /* Z-index para el overlay */
+.texto{
+  margin-top: 10px;
+  margin-left: 100px;
+  font-size: 50px;
 }

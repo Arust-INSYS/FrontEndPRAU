@@ -1,5 +1,5 @@
 <div class="formulario">
-  <h1>contenido de persona</h1>
+  <h1 class="texto">PRAU</h1>
 
   <p-dropdown
     [options]="personasFiltradas"
@@ -84,7 +84,8 @@
       [options]="roles"
       optionLabel="label"
       optionValue="value"
-      (onChange)="onRolChange($event.value)"
+      [(ngModel)]="valorSeleccionado"
+    (ngModelChange)="onRolChange($event)"
     >
     </p-dropdown>
   </div>

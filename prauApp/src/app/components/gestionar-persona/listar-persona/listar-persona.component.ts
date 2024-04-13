@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Router } from '@angular/router';
 import { Persona } from '../../../models/persona';
@@ -11,6 +11,7 @@ import {
 } from '../../../interface/IExcelReportParams';
 import { ExcelService } from '../../../services/excel.service';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { RegistrarPersonaComponent } from '../registrar-persona/registrar-persona.component';
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
@@ -53,6 +54,7 @@ export class ListarPersonaComponent {
     if(this.nombreEditar=="EDITAR"){
       this.idUsuario=id;
       this.displayModal = true;
+      this.enviarDatos(); 
 
     }if(this.nombreEditar=="REGISTRAR"){
       this.displayModal = true;
@@ -61,6 +63,17 @@ export class ListarPersonaComponent {
     
     
   } 
+  
+  @ViewChild(RegistrarPersonaComponent)
+  registrarPersonaComponent!: RegistrarPersonaComponent;
+  enviarDatos() {
+    // Envía los datos al componente RegistrarPersonaComponent
+    this.registrarPersonaComponent.encontrarUsuario(this.idUsuario);
+  }
+  cerrar_Limpiar(){
+    this.displayModal=false
+    this.registrarPersonaComponent.limpiarRegistro();
+  }
   
  
   /*
@@ -102,9 +115,8 @@ export class ListarPersonaComponent {
   actualizarListaPersonas() {
     window.location.reload();
   }
-  //EDITAR
-  personaEditar: Persona = new Persona();
-  displayModalEdit: boolean = false;
+
+  
 
 
   
