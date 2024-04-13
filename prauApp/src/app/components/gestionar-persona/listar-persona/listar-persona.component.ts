@@ -107,8 +107,8 @@ export class ListarPersonaComponent implements OnInit{
       this.loadExcelReportData(this.userList);
     });
   }
-
-  eliminarPersona(id: number) {
+  persona:Persona=new Persona()
+  eliminarPersona(idUser: number,idPer:number) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¡No podrás revertir esto!',
@@ -119,14 +119,26 @@ export class ListarPersonaComponent implements OnInit{
       confirmButtonText: 'Sí, eliminarlo!',
     }).then((result) => {
       if (result.isConfirmed) {
-        //this.usuarioService.
-
-        this.personaService.delete(id).subscribe(() => {
-          Swal.fire('¡Eliminado!', 'La persona ha sido eliminada.', 'success');
-          // Actualiza la lista de personas después de eliminar
-          //this.actualizarListaPersonas();
-          this.listarPersona();
+        this.usuario.usuEstado=0;
+          this.usuario.usuNombreUsuario="";
+          this.usuario.usuContrasena="";
+          this.usuario.rolId.rolId=3;
+        this.usuarioService.update(idUser,this.usuario).subscribe(() => {
+          this.personaService.update(idPer,this.persona).subscribe(()=>{
+          
+          
+            //this.usuario.usuId=idUser;
+            Swal.fire('¡Eliminado!', 'La persona ha sido eliminada.', 'success');
+            // Actualiza la lista de personas después de eliminar
+            //this.actualizarListaPersonas();
+            
+           
+            this.listarPersona();
+          })
+            
         });
+        
+        
       }
     });
   }

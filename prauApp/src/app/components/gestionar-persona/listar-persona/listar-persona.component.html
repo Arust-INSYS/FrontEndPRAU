@@ -51,6 +51,7 @@
           <th>Dirección</th>
           <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
+          <th>Estado</th>
           <th *ngIf="rol === 'Administrador'">Acciones</th>
         </tr>
       </ng-template>
@@ -63,6 +64,7 @@
           <td>{{ usu.usuPerId.perDireccion }}</td>
           <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
           <td>{{ usu.usuPerId.perTelefono }}</td>
+          <td>{{ usu.usuEstado }}</td>
           <td *ngIf="rol === 'Administrador'">
             <button
               pButton
@@ -74,7 +76,7 @@
               pButton
               icon="pi pi-trash"
               class="p-button-danger"
-              (click)="eliminarPersona(usu.usuId)"
+              (click)="eliminarPersona(usu.usuId,usu.usuPerId.perId)"
             ></button>
           </td>
         </tr>

@@ -115,7 +115,7 @@ export class RegistrarPersonaComponent {
       
     });
   }
-  registrar(validaRol: boolean) {
+  guardarDatos(validaRol: boolean) {
     if (this.nombre == 'REGISTRAR') {
       // REGISTRAR PERSONA
       if (
