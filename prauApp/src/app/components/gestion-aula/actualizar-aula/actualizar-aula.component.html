@@ -20,7 +20,7 @@
         <label for="docente">Docente:</label>
         <p-dropdown class="full-width-dropdown" [(ngModel)]="actualizadaAula.docente" name="docente"
             [options]="docentes" optionLabel="fullName" placeholder="Seleccione un Docente"
-            (onChange)="onDocenteChange($event)" [style]="{ 'width': '100%' }"></p-dropdown>
+            (onChange)="onDocenteChange($event)" [style]="{ 'width': '100%' }"[required]="true"></p-dropdown>
 
             
 
@@ -35,13 +35,13 @@
         <label for="asignatura">Asignatura:</label>
         <p-dropdown class="full-width-dropdown" [(ngModel)]="actualizadaAula.asignatura" name="asignatura"
             [options]="asignaturas" optionLabel="nombreAsignatura" placeholder="Seleccione una Asignatura"
-            (onChange)="onAsignaturaChange($event)" [style]="{ 'width': '100%' }">
+            (onChange)="onAsignaturaChange($event)" [style]="{ 'width': '100%' }"[required]="true" >
         </p-dropdown>
         <label for="periodo">Periodo Académico:</label>
         <!-- Para Periodos -->
         <p-dropdown class="full-width-dropdown" [(ngModel)]="actualizadaAula.periodoAc" name="periodoAc"
             [options]="periodos" optionLabel="nombrePeriodo" placeholder="Seleccione un Periodo"
-            (onChange)="onPeriodoChange($event)" [style]="{ 'width': '100%' }">
+            (onChange)="onPeriodoChange($event)" [style]="{ 'width': '100%' }"[required]="true">
         </p-dropdown>
 
         <label for="descripcion">Observaciones</label>
@@ -57,7 +57,7 @@
   
 
         <div id="botones-container">
-            <button name="registro" type="submit" id="button"> ¡Actualizar Aula! </button>
+            <p-button name="registro" type="submit" id="button"> ¡Actualizar Aula! </p-button>
             <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
                 [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
         </div>

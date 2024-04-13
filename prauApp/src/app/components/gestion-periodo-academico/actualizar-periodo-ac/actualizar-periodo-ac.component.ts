@@ -26,10 +26,17 @@ export class ActualizarPeriodoAcComponent implements OnInit {
   actualizarNombrePeriodo() {
     if (this.periodoAc.fechaInicio && this.periodoAc.fechaFin) {
       let yearInicio = this.periodoAc.fechaInicio.getFullYear();
+      let monthInicio = this.periodoAc.fechaInicio.getMonth();
       let yearFin = this.periodoAc.fechaFin.getFullYear();
-      this.periodoAc.nombrePeriodo = yearInicio + '-' + yearFin;
+      let monthFin = this.periodoAc.fechaFin.getMonth();
+      this.periodoAc.nombrePeriodo = this.getFormattedPeriodName(yearInicio, monthInicio, yearFin, monthFin);
     }
   }
+  private getFormattedPeriodName(yearInicio: number, monthInicio: number, yearFin: number, monthFin: number): string {
+    const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+    return months[monthInicio] + '/' + yearInicio + '-' + months[monthFin] + '/' + yearFin;
+  }
+
 
   ngOnInit() {
     const periodoId = this.route.snapshot.params['id'];
@@ -77,7 +84,7 @@ export class ActualizarPeriodoAcComponent implements OnInit {
           this.periodoAc.fechaInicio = fechasOriginales.fechaInicio;
           this.periodoAc.fechaFin = fechasOriginales.fechaFin;
         }
-
+        this.actualizarNombrePeriodo();
         this.periodoAcService.update(this.periodoAc.idPeriodoAc, this.periodoAc).subscribe(
           (response) => {
             this.router.navigate(['/menu/contenido-virtual/listar-periodo']);
