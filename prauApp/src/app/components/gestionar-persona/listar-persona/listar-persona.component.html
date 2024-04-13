@@ -7,7 +7,7 @@
           pButton
           icon="pi pi-plus"
           class="mr-2"
-          (click)="showModal()"
+          (click)="showModal('REGISTRAR',0)"
         ></button>
         <button
           label="PDF"
@@ -68,7 +68,7 @@
               pButton
               icon="pi pi-pencil"
               class="p-button-success"
-              (click)="compartirNombre()"
+            (click)="showModal('EDITAR',usu.usuPerId.perId)"
             ></button>
             <button
               pButton
@@ -83,19 +83,18 @@
   </div>
 </section>
 <p-dialog
+class="ventana"
   [(visible)]="displayModal"
   [modal]="true"
   [responsive]="true"
-  [style]="{ width: '50vw' }"
 >
 <div class="modal">
-  <div class="modal-content">
-    <div class="form">
-      <app-registrar-persona></app-registrar-persona>
-    </div>
-  </div>
+  <p-button (onClick)="displayModal=false">Cerrar</p-button>
+<app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" ></app-registrar-persona>
 </div>
-    
- 
-  
+<!--
+  <div class="modal-content">
+  </div>
+</div> -->
+
 </p-dialog>

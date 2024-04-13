@@ -53,7 +53,11 @@ export class ListarPersonaComponent implements OnInit{
     this.listarPersona();
     this.compartirNombre();
   }
-
+  nombreEditar:string="";
+  idUsuario:number=0;
+  showModal(guardarComo:string,id: number) {
+    this.nombreEditar=guardarComo;
+    
   ngOnInit(): void {
     this.subscription = this.authRolService.nombreRol$.subscribe((rol) =>
     this.rol = rol);
@@ -63,10 +67,18 @@ export class ListarPersonaComponent implements OnInit{
     this.subscription.unsubscribe();
   }
 
-  showModal() {
-    this.displayModal = true;
-    //this.router.navigate(['/persona', 'registrar']); // Navega a la ruta de MiModalComponent
-  } /*
+    if(this.nombreEditar=="EDITAR"){
+      this.idUsuario=id;
+      this.displayModal = true;
+
+    }if(this.nombreEditar=="REGISTRAR"){
+      this.displayModal = true;
+
+    }
+    
+    
+  } 
+  /*
   async listarPersona() {
     await this.personaService.getAllPersonas().subscribe((res) => {
       console.log((this.personas = res));
@@ -109,32 +121,16 @@ export class ListarPersonaComponent implements OnInit{
   personaEditar: Persona = new Persona();
   displayModalEdit: boolean = false;
 
-  showModalEditar(persona: Persona) {
-    // Abre el modal
-    this.displayModalEdit = true;
-    // Carga los datos de la persona en el formulario
-    this.personaEditar = persona;
-  }
   guardarCambios() {
     // Guarda los cambios en la base de datos
     this.personaService.update(72, this.personaEditar).subscribe((res) => {
-      // Cierra el modal después de guardar los cambios
-      this.displayModalEdit = false;
+      
       console.log('UPDATE: ' + res);
     });
   }
-  nombreGuardar: string = '';
-  enviarNombre() {
-    this.nombreGuardar = 'EDITAR';
-    return this.nombreGuardar;
-  }
-  recibirValor: string = '';
-
-  @Output() nombreCompartido = new EventEmitter<string>();
-
-  compartirNombre() {
-    this.nombreCompartido.emit('Nombre a compartir');
-  }
+  
+  
+  
 
   //EXCEL
   ///cargar data en el excel
