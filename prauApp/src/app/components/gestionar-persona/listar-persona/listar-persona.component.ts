@@ -43,13 +43,22 @@ export class ListarPersonaComponent {
     private excelService: ExcelService
   ) {
     this.listarPersona();
-    this.compartirNombre();
+    
   }
+  nombreEditar:string="";
+  showModal(guardarComo:string) {
+    this.nombreEditar=guardarComo;
+    if(this.nombreEditar=="EDITAR"){
+      this.displayModal = true;
 
-  showModal() {
-    this.displayModal = true;
-    //this.router.navigate(['/persona', 'registrar']); // Navega a la ruta de MiModalComponent
-  } /*
+    }if(this.nombreEditar=="REGISTRAR"){
+      this.displayModal = true;
+
+    }
+    
+    
+  } 
+  /*
   async listarPersona() {
     await this.personaService.getAllPersonas().subscribe((res) => {
       console.log((this.personas = res));
@@ -92,12 +101,6 @@ export class ListarPersonaComponent {
   personaEditar: Persona = new Persona();
   displayModalEdit: boolean = false;
 
-  showModalEditar(persona: Persona) {
-    // Abre el modal
-    this.displayModalEdit = true;
-    // Carga los datos de la persona en el formulario
-    this.personaEditar = persona;
-  }
   guardarCambios() {
     // Guarda los cambios en la base de datos
     this.personaService.update(72, this.personaEditar).subscribe((res) => {
@@ -106,18 +109,9 @@ export class ListarPersonaComponent {
       console.log('UPDATE: ' + res);
     });
   }
-  nombreGuardar: string = '';
-  enviarNombre() {
-    this.nombreGuardar = 'EDITAR';
-    return this.nombreGuardar;
-  }
-  recibirValor: string = '';
-
-  @Output() nombreCompartido = new EventEmitter<string>();
-
-  compartirNombre() {
-    this.nombreCompartido.emit('Nombre a compartir');
-  }
+  
+  
+  
 
   //EXCEL
   ///cargar data en el excel

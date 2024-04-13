@@ -7,7 +7,7 @@
           pButton
           icon="pi pi-plus"
           class="mr-2"
-          (click)="showModal()"
+          (click)="showModal('REGISTRAR')"
         ></button>
         <button
           pButton
@@ -30,13 +30,7 @@
           iconPos="right"
         ></p-button>
       </div>
-      <div class="p-toolbar-group-end">
-        <p-splitButton
-          label="Save"
-          icon="pi pi-check"
-          [model]="items"
-        ></p-splitButton>
-      </div>
+      
     </p-toolbar>
   </div>
   <div class="subconten2">
@@ -67,7 +61,7 @@
               pButton
               icon="pi pi-pencil"
               class="p-button-success"
-            (click)="showModal()"
+            (click)="showModal('EDITAR')"
             ></button>
             <button
               pButton
@@ -89,7 +83,7 @@ class="ventana"
 >
 <div class="modal">
   <p-button (onClick)="displayModal=false">Cerrar</p-button>
-<app-registrar-persona [nombre]="'Juan'"></app-registrar-persona>
+<app-registrar-persona [nombre]="nombreEditar"></app-registrar-persona>
 </div>
 <!--
   <div class="modal-content">

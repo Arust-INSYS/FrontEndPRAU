@@ -102,7 +102,8 @@ export class RegistrarPersonaComponent {
     }
   }
   registrar(validaRol: boolean) {
-    // REGISTRAR PERSONA
+    if(this.nombre=="REGISTRAR"){
+      // REGISTRAR PERSONA
     if (
       this.persona.perCedula &&
       this.persona.perNombre1 &&
@@ -160,6 +161,11 @@ export class RegistrarPersonaComponent {
         }
       });
     }
+
+    }else{
+console.log("ESTAMOS TRABAJANDO EN EDITAR")
+    }
+    
   }
 
   userListar: any;
