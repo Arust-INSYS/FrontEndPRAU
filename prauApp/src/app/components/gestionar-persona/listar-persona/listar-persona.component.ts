@@ -46,9 +46,12 @@ export class ListarPersonaComponent {
     
   }
   nombreEditar:string="";
-  showModal(guardarComo:string) {
+  idUsuario:number=0;
+  showModal(guardarComo:string,id: number) {
     this.nombreEditar=guardarComo;
+    
     if(this.nombreEditar=="EDITAR"){
+      this.idUsuario=id;
       this.displayModal = true;
 
     }if(this.nombreEditar=="REGISTRAR"){
@@ -104,8 +107,7 @@ export class ListarPersonaComponent {
   guardarCambios() {
     // Guarda los cambios en la base de datos
     this.personaService.update(72, this.personaEditar).subscribe((res) => {
-      // Cierra el modal después de guardar los cambios
-      this.displayModalEdit = false;
+      
       console.log('UPDATE: ' + res);
     });
   }

@@ -7,7 +7,7 @@
           pButton
           icon="pi pi-plus"
           class="mr-2"
-          (click)="showModal('REGISTRAR')"
+          (click)="showModal('REGISTRAR',0)"
         ></button>
         <button
           pButton
@@ -61,7 +61,7 @@
               pButton
               icon="pi pi-pencil"
               class="p-button-success"
-            (click)="showModal('EDITAR')"
+            (click)="showModal('EDITAR',usu.usuPerId.perId)"
             ></button>
             <button
               pButton
@@ -83,7 +83,7 @@ class="ventana"
 >
 <div class="modal">
   <p-button (onClick)="displayModal=false">Cerrar</p-button>
-<app-registrar-persona [nombre]="nombreEditar"></app-registrar-persona>
+<app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" ></app-registrar-persona>
 </div>
 <!--
   <div class="modal-content">
