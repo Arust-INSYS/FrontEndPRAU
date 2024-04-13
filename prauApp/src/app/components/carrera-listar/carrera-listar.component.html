@@ -18,7 +18,7 @@
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de Carreras</h1>
 
-    <p-button
+    <p-button *ngIf="rol === 'Administrador'"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCarrera()"
@@ -56,8 +56,8 @@
             <th>Nombre Carrera</th>
             <th>Descripciòn</th>
             <th>Director</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th *ngIf="rol === 'Administrador'">Editar</th>
+            <th *ngIf="rol === 'Administrador'">Eliminar</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-carrera>
@@ -66,7 +66,7 @@
             <td>{{ carrera.nombreCarrera }}</td>
             <td>{{ carrera.descripcionCarrera }}</td>
             <td>{{ carrera.director?.usuPerId.perNombre1 }}</td> <!-- Utiliza la propiedad director para acceder al usuario -->
-            <td>
+            <td *ngIf="rol === 'Administrador'">
               <button
                 pButton
                 pRipple
@@ -75,7 +75,7 @@
                 (click)="actualizarCarrera(carrera.idCarrera)"
               ></button>
             </td>
-            <td>
+            <td *ngIf="rol === 'Administrador'">
               <button
                 pButton
                 pRipple

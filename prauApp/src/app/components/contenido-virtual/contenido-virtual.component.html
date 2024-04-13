@@ -1,7 +1,7 @@
 <body>
 <div class="encabezado">
     <ul class="lista">
-        <li *ngIf="rol ==='Administrador'">
+        <li *ngIf="rol ==='Administrador' || rol === 'Director de Carrera'">
             <a [routerLink]="['/menu/contenido-virtual/carrera-listar']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-list"></i>
                 <span class="nav-item">Carreras</span>

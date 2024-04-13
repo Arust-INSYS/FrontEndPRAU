@@ -1,7 +1,7 @@
 <body>
   <div class="encabezado">
     <ul class="lista">
-      <li>
+      <li *ngIf="rol === 'Administrador' || rol === 'Director de Carrera'">
         <a
           [routerLink]="['/menu/contenido-persona/listar-persona']"
           routerLinkActive="router-link-active"
@@ -11,7 +11,7 @@
           <span class="nav-item">Personas</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="rol === 'Administrador'">
         <a
           [routerLink]="['/menu/contenido-persona/listar-rol']"
           routerLinkActive="router-link-active"
@@ -21,7 +21,7 @@
           <span class="nav-item">Rol</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="rol === 'Administrador'">
         <a
           [routerLink]="['/menu/contenido-persona/registrar-rol']"
           routerLinkActive="router-link-active"
@@ -31,7 +31,7 @@
           <span class="nav-item">Registrar rol</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="rol === 'Administrador'">
         <a
           [routerLink]="['/menu/contenido-persona/listar-usuarios']"
           routerLinkActive="router-link-active"

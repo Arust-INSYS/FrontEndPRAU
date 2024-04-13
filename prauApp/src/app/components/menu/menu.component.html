@@ -7,7 +7,7 @@
         alt=""/>
     </div>
     <ul class="menu">
-      <li routerLinkActive="router-link-active" *ngIf="nombredeRol === 'Administrador'">
+      <li routerLinkActive="router-link-active" *ngIf="nombredeRol === 'Administrador' || nombredeRol === 'Director de Carrera'">
         <a id="personas" [routerLink]="['/menu/contenido-persona']" >
           <i class="pi pi-users"></i>
           <span id="registrar" class="nav-item">Personas</span>

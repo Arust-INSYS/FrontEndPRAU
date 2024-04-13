@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Router } from '@angular/router';
 import { Persona } from '../../../models/persona';
@@ -11,12 +11,19 @@ import {
 } from '../../../interface/IExcelReportParams';
 import { ExcelService } from '../../../services/excel.service';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { AuthRolService } from '../../../services/authRolService.service';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
   styleUrl: './listar-persona.component.scss',
 })
-export class ListarPersonaComponent {
+export class ListarPersonaComponent implements OnInit{
+
+  rol: string = '';
+  private subscription!: Subscription;
+
   value: any;
   // personasList: Persona[] = [];
   userList: Usuario[] = [];
@@ -40,10 +47,20 @@ export class ListarPersonaComponent {
   constructor(
     private personaService: PersonaService,
     private usuarioService: UsuarioService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private  authRolService: AuthRolService,
   ) {
     this.listarPersona();
     this.compartirNombre();
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) =>
+    this.rol = rol);
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   showModal() {

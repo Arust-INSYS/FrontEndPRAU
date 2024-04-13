@@ -3,7 +3,7 @@
   <div class="cabecera">
     <p-toolbar>
       <div class="p-toolbar-group-start">
-        <button
+        <button *ngIf="rol === 'Administrador'"
           pButton
           icon="pi pi-plus"
           class="mr-2"
@@ -32,7 +32,7 @@
         ></p-button>
       </div>
       <div class="p-toolbar-group-end">
-        <p-splitButton
+        <p-splitButton *ngIf="rol === 'Administrador'"
           label="Save"
           icon="pi pi-check"
           [model]="items"
@@ -51,7 +51,7 @@
           <th>Dirección</th>
           <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
-          <th>Acciones</th>
+          <th *ngIf="rol === 'Administrador'">Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-usu>
@@ -63,7 +63,7 @@
           <td>{{ usu.usuPerId.perDireccion }}</td>
           <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
           <td>{{ usu.usuPerId.perTelefono }}</td>
-          <td>
+          <td *ngIf="rol === 'Administrador'">
             <button
               pButton
               icon="pi pi-pencil"
