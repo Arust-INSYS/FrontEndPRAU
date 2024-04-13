@@ -1,20 +1,20 @@
 <section class="contenedor">
   <div class="header text-center">
     <div class="p-toolbar-group-center">
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          [(ngModel)]="searchTerm"
-          placeholder="Search"
-          (input)="applyGlobalFilter()"
-        />
-      </span>
+      
     </div>
   </div>
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de criterios</h1>
-
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        [(ngModel)]="searchTerm"
+        placeholder="Search"
+        (input)="applyGlobalFilter()"
+      />
+    </span>
     <p-button *ngIf="isAdmin"
       label="Registrar"
       [rounded]="true"
