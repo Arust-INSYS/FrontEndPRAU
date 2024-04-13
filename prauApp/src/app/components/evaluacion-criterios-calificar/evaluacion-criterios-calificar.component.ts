@@ -20,7 +20,7 @@ import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
 import { CarreraService } from '../../services/carrera.service';
 import { Carrera } from '../../models/carrera';
-import { IAsignaturaXCarrera, IConsultarAula, IDocenteXAsignatura } from '../../interface/IConsultasBD';
+import { IAsignaturaXCarrera, IConsultarAula, IConsultarCarrera, IDocenteXAsignatura } from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -64,7 +64,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   //LISTA DE FILTROS
   periodosAc: PeriodoAc[] = [];
-  carreras: Carrera[] = [];
+  carreras: IConsultarCarrera[] = [];
   asignaturas: IAsignaturaXCarrera[] = [];
   docentes: IDocenteXAsignatura[] = [];
   usuario: Usuario[] = [];
@@ -199,8 +199,15 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     })
   }
 
+  // loadCarreras(): void {
+  //   this.carreraService.obtenerListaCarreras().subscribe(response => {
+  //     this.carreras = response;
+  //   })
+  // }
+
   loadCarreras(): void {
-    this.carreraService.obtenerListaCarreras().subscribe(response => {
+
+    this.carreraService.carreraXperiodo(this.selectedPeriodo?.idPeriodoAc ?? 0).subscribe(response => {
       this.carreras = response;
     })
   }
@@ -227,10 +234,10 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.aulas = response;
     })
     this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
-    
+
   }
 
-  cargarNombres(){
+  cargarNombres() {
     if (this.selectedAula && this.selectedAula) {
       console.log('Docente seleccionado:', this.selectedDocente);
       console.log('Aula seleccionado:', this.selectedAula);
@@ -243,10 +250,10 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.aulaService.getAulas().subscribe(cursos => {
       this.cursos = cursos;
     });
-    
+
   }
 
-  
+
 
   getClasificaciones(): void {
     this.clasificacionService
@@ -369,7 +376,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.progreso = ((this.contarC || 0 + this.contarCM || 0 + this.contarNC || 0) / totalCriterios) * 100;
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
-    
+
     this.evaluacionCab.porcTotalC = (this.contarC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
@@ -381,7 +388,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       console.log('Por favor, seleccione un aula y un evaluador.');
       return; // Detener la ejecución del método si no se han seleccionado el aula y el evaluador
     }
-    
+
     //asignar aula
     this.evaluacionCab.aulaEva = this.selectedAula;
     //evaluador
@@ -390,16 +397,16 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.evaluacionCab.evaluador.usuId = idString;
     }
     // Obtener la suma total de cada tipo de calificación
-     this.evaluacionCab.totalC = this.contarC;
-     this.evaluacionCab.totalCm = this.contarCM;
-     this.evaluacionCab.totalNc = this.contarNC;
+    this.evaluacionCab.totalC = this.contarC;
+    this.evaluacionCab.totalCm = this.contarCM;
+    this.evaluacionCab.totalNc = this.contarNC;
 
     // // Calcular los porcentajes totales
     // this.evaluacionCab.progreso = this.criterios.length;
     // this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / this.evaluacionCab.progreso) * 100;
-     this.evaluacionCab.estado=1;
+    this.evaluacionCab.estado = 1;
 
     // Determinar las observaciones
     if (this.evaluacionCab.progreso == 100) {
@@ -438,7 +445,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
               showCancelButton: false, // No mostrar el botón de cancelar
             });
           })
-  
+
           this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
 
         })
