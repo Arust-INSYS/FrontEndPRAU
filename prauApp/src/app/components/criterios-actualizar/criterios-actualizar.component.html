@@ -20,6 +20,11 @@
                     ></textarea>
                 <small id="descripcion">Ingrese la  descripción .</small>
               </div>
+
+              <div class="flex flex-column gap-2">
+                <label for="clasificacion">Clasificación de Criterio:</label>
+                <p-dropdown [options]="clasificaciones" [(ngModel)]="criterio.clasificacion" optionLabel="nombreClasificacion" [showClear]="true" placeholder="Seleccione una clasificación"></p-dropdown>
+            </div>
             <div class="button-container">
                 <p-button  icon="pi pi-check"  label="Guardar"[rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()" ></p-button>
               

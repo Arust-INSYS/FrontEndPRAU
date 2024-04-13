@@ -10,12 +10,23 @@
         <input pInputText type="text" id="descripcion" name="descripcion" placeholder="descripcion" [(ngModel)]="asignatura.descripcionAsignatura" />
         <small id="descripcion">Ingrese la descripcion.</small>
     </div>
-    <div class="flex flex-column gap-2">
+    <!-- <div class="flex flex-column gap-2"> 
         <label for="carrera">Carrera:</label>
         <select id="carrera" name="carrera" [(ngModel)]="asignatura.carrera">
             <option *ngFor="let carrera of carrera" [ngValue]="carrera">{{ carrera.nombreCarrera }}</option>
         </select>
+    </div>-->
+      
+    <div class="flex flex-column gap-2">
+        <label for="carrera">Carrera:</label>
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="nombreCarrera">
+            <ng-template let-item pTemplate="item">
+                <div>{{item.nombreCarrera}}</div>
+            </ng-template>
+        </p-autoComplete>
     </div>
+    
+    
     <div class="button-container">
         <p-button  type="submit" icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="guardarAsignatura()"></p-button>
     </div>

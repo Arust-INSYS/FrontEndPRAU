@@ -21,7 +21,22 @@
         [rounded]="true"
         (click)="redirectToAsignatura()"
         class="registrar-button mb-3"
+      ></p-button>  
+
+      <p-button label="Excel"
+      class="Excel" 
+      icon="pi pi-print"
+       [rounded]="true" 
+      (click)="downloadExcel()"
       ></p-button>
+      
+      <p-button
+      label="Imprimir"
+      [rounded]="true"
+      (click)="generarPDFtable()"
+      icon="pi pi-print"
+      class="registrar-button mb-3 imprimir"
+    ></p-button>
       
       <div class="tabla-container">
         <p-table

@@ -11,7 +11,9 @@
         />
       </span>
     </div>
+  
   </div>
+  
 
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de Carreras</h1>
@@ -22,8 +24,22 @@
       (click)="redirectToCarrera()"
       class="registrar-button mb-3"
     ></p-button>
-    <button class="boton-pdf" (click)="generarPDF()">Generar PDF</button>
-    <div class="tabla-container">
+    <p-button label="Imprimir"
+    class="imprimir" 
+    icon="pi pi-print"
+     [rounded]="true" 
+    (click)="generarPDFtable()"
+    ></p-button>
+    
+    
+    <p-button label="Excel"
+    class="Excel" 
+    icon="pi pi-print"
+     [rounded]="true" 
+    (click)="downloadExcel()"
+    ></p-button>
+   
+  <div class="tabla-container">
       <p-table
         #dt
         [rows]="10"
@@ -48,9 +64,8 @@
           <tr>
             <td>{{ carrera.idCarrera }}</td>
             <td>{{ carrera.nombreCarrera }}</td>
-            <td>{{ carrera.descripcionCarrera}}</td>
-            <td>{{ carrera.director?.usuNombreUsuario}}</td>
-            
+            <td>{{ carrera.descripcionCarrera }}</td>
+            <td>{{ carrera.director?.usuPerId.perNombre1 }}</td> <!-- Utiliza la propiedad director para acceder al usuario -->
             <td>
               <button
                 pButton

@@ -139,7 +139,9 @@ export class RegistrarPersonaComponent {
                   text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
                   icon: 'success',
                   confirmButtonText: 'Confirmar',
-                  showCancelButton: false, // No mostrar el botón de cancelar
+                  showCancelButton: false,// No mostrar el botón de cancelar
+                  
+                
                 }).then(() => {
                   this.recargarPagina();
                   this.limpiarRegistro();
@@ -154,6 +156,7 @@ export class RegistrarPersonaComponent {
           icon: 'error',
           confirmButtonText: 'OK',
           showCancelButton: false,
+          
         });
       }
     } else {
@@ -163,6 +166,9 @@ export class RegistrarPersonaComponent {
         icon: 'error',
         confirmButtonText: 'OK',
         showCancelButton: false,
+        customClass: {
+          popup: 'mensaje-guardado' // Clase CSS para el mensaje de Swal
+        }
       });
     }
   }

@@ -18,6 +18,8 @@ import { Carrera } from '../../models/carrera';
 import { CarreraService } from '../../services/carrera.service';
 import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
+import { DataMoodleService } from '../../services/dataMoodle.service';
+import { GraficosService } from '../../services/graficos.service';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -33,209 +35,223 @@ export class AnalisisUsoComponent implements OnInit {
 
 
 //variables para el chars o grafica
-  data: any;
-  options: any;
-  ///
-  opcines: string[] | undefined;
-  selectedOpcines: string | undefined;
+data: any;
+options: any;
 
-  //datos consumidos 
-  listacriterios: Criterios[] = [];
-  docentes: UsuarioPorRolDTO[] = [];
-  carreras: Carrera[] = [];
-  periodos: PeriodoAc[] = [];
-  //saber cual opcion esta seleccionado para poder trabajr on el filtro
-  selectedCarrera: any;
-  filteredCarrera: any[] = [];
-  selectedPerido: any;
-  filteredPerido: any[] = [];
-  selectedDocente: any;
-  filteredDocentes: any[] = [];
-  selectedOption: string = '';
-  /////
 
-  constructor(
-    private criteriosService: CriteriosService,
-    private router: Router,
-   
-    private carreraService: CarreraService,
-    private usuarioService: UsuarioService,
-    private periodoAcService: PeriodoAcService,
+///
+opcines: string[] | undefined;
+selectedOpcines: string | undefined;
+graficas: any[] = [];
+//datos consumidos 
+listacriterios: Criterios[] = [];
+docentes: UsuarioPorRolDTO[] = [];
+carreras: Carrera[] = [];
+periodos: PeriodoAc[] = [];
 
-  ) { }
+//saber cual opcion esta seleccionado para poder trabajr on el filtro
+selectedCarrera: any;
+filteredCarrera: any[] = [];
+selectedPerido: any;
+filteredPerido: any[] = [];
+selectedDocente: any;
+filteredDocentes: any[] = [];
+selectedOption: string = '';
+/////
+
+constructor(
+  private criteriosService: CriteriosService,
+  private router: Router,
+  private dataMoodleService: DataMoodleService,
+  private graficosservice: GraficosService,
+  private carreraService: CarreraService,
+  private usuarioService: UsuarioService,
+  private periodoAcService: PeriodoAcService,
+
+) {
+
+  this.getListargrafico()
+}
 
 
 ////////////////////////////// metodos de consumo////
-  obtenereDocentes() {
+obtenereDocentes() {
 
-    this.usuarioService.findUsuariosByRolId(4).subscribe((dato) => {
-      this.docentes = dato;
-      console.log(this.docentes);
-    });
-  }
-  obtenerCarrera() {
-    this.carreraService.obtenerListaCarreras().subscribe(dato => {
-      this.carreras = dato;
-      console.log(this.carreras);
-    });
-  }
-  obtenerPerodosAc() {
-    this.periodoAcService.getPeriodosAcs().subscribe((dato) => {
-      this.periodos = dato;
-      console.log(this.periodos)
-    });
-  }
+  this.usuarioService.findUsuariosByRolId(4).subscribe((dato) => {
+    this.docentes = dato;
+    console.log(this.docentes);
+  });
+}
+obtenerCarrera() {
+  this.carreraService.obtenerListaCarreras().subscribe(dato => {
+    this.carreras = dato;
+    console.log(this.carreras);
+  });
+}
+obtenerPerodosAc() {
+  this.periodoAcService.getPeriodosAcs().subscribe((dato) => {
+    this.periodos = dato;
+    console.log(this.periodos)
+  });
+}
 
-  obtenerCriterios() {
-    this.criteriosService.obtenerListacriterios().subscribe(dato => {
-      this.listacriterios = dato;
-      console.log(this.listacriterios)
-        
-       this.generarGrafica();
-    
-    },
+obtenerCriterios() {
+  this.criteriosService.obtenerListacriterios().subscribe(dato => {
+    this.listacriterios = dato;
+    console.log(this.listacriterios)
+
+    this.generarGrafica();
+
+  },
     error => {
       console.error('Error al obtener los criterios: ', error);
     }
-    );
-  }
-//////////////////////////////// fin metodos de consumo ///////////////////////
- 
-///saber que opcion esta selecionada 
-  onOpcionSeleccionada(opcion: string) {
-    this.selectedOption = opcion;
-    this.selectedCarrera = null; // Limpiar la selección en el p-autoComplete
-    this.filteredCarrera = []; // Limpiar las sugerencias filtradas
-    this.filteredPerido = []; // Limpiar las sugerencias filtradas
-    this.filteredDocentes = []; // Limpiar las sugerencias filtradas
+  );
+}
 
-    switch (opcion) {
-      case 'Periodo Academico':
-        this.obtenerPerodosAc();
-        break;
-      case 'Docente':
-        this.obtenereDocentes();
-        break;
-      case 'Carrera':
-        this.obtenerCarrera();
-        break;
-      default:
-        console.log('Opción no reconocida');
-        break;
-    }
+
+
+getListargrafico() {
+  this.graficosservice.getAllGrafica().subscribe((data) => {
+    this.graficas = data; // Asigna los datos recibidos al arreglo de graficas
+    console.log(this.graficas); // Muestra el listado en la consola
+
+    // Llama al método para generar la gráfica después de obtener los datos
+    this.generarGrafica();
+  });
+}
+
+////////////////////////////// fin metodos de consumo ///////////////////////
+
+///saber que opcion esta selecionada 
+onOpcionSeleccionada(opcion: string) {
+  this.selectedOption = opcion;
+  this.selectedCarrera = null; // Limpiar la selección en el p-autoComplete
+  this.filteredCarrera = []; // Limpiar las sugerencias filtradas
+  this.filteredPerido = []; // Limpiar las sugerencias filtradas
+  this.filteredDocentes = []; // Limpiar las sugerencias filtradas
+
+  switch (opcion) {
+    case 'Periodo Academico':
+      this.obtenerPerodosAc();
+      break;
+    case 'Docente':
+      this.obtenereDocentes();
+      break;
+    case 'Carrera':
+      this.obtenerCarrera();
+      break;
+    default:
+      console.log('Opción no reconocida');
+      break;
   }
+}
 
 ////
 
+///grafica
 
+ngOnInit(): void {
+  this.obtenerCriterios();
 
+  this.opcines = ['Periodo Academico', 'Docente', 'Carrera'];  
+}
 
+// metod generacion de grafica chart
+generarGrafica() {
+    // Verifica que this.graficas esté correctamente inicializado y tenga los datos necesarios
+    console.log(this.graficas);
 
-  ngOnInit():void {
-    this.obtenerCriterios();
+    if (this.graficas && this.graficas.length > 0) {
+      const labels = this.graficas.map(c => `${c.PeriodoAcademico} - ${c.totalCm}`); // Utiliza la propiedad correcta para el nombre del criterio
+      const dataValues = this.graficas.map(c => `${c.totalC} `); // Utiliza la propiedad correcta para la cantidad (valor) del criterio
 
-    this.opcines = ['Periodo Academico', 'Docente', 'Carrera'];
-  
-   
- 
+      const backgroundColors = Array.from({ length: labels.length }, () => '#' + (Math.random().toString(16) + '000000').substring(2, 8));
 
-  }
-
-
-// metod generar grafica chart
-  generarGrafica(){
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-  
-    // nombres de los criterios para las etiquetas
-    const nombreCriterios = this.listacriterios.map(c => c.nombreCriterio);
-  
-    // Genera valores aleatorios para los datos hasta consumiir del back esto es el porcentaje ya de cada criterio 
-    const dataValues = Array.from({ length: nombreCriterios.length }, () => Math.floor(Math.random() * 100));
-  
-    const backgroundColors = Array.from({ length: nombreCriterios.length }, () => '#' + (Math.random().toString(16) + '000000').substring(2, 8)); // Genera colores aleatorios
-  
-    this.data = {
-      labels: nombreCriterios,
-      datasets: [
-        {
-          data: dataValues,
-          backgroundColor: backgroundColors,
-          hoverBackgroundColor: backgroundColors.map(color => color + '100') // Agrega más colores aquí
-        }
-      ]
-    };
-  
-    this.options = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: textColor
+      this.data = {
+        labels: labels,
+        datasets: [
+          {
+            data: dataValues,
+            backgroundColor: backgroundColors,
+            hoverBackgroundColor: backgroundColors.map(color => color + '100') // Agrega más colores aquí
           }
-        }
-      },
-      responsive: true,
-      maintainAspectRatio: false
-    };
-  }
+        ]
+      };
 
- ///////////////metodos  de filtrado //
-filterCarrera(event: AutoCompleteCompleteEvent) {
-  let filtered: any[] = [];
-  let query = event.query;
+      // Otras configuraciones para la gráfica, como opciones y estilos
+      this.options = {
+        plugins: {
+          legend: {
+            labels: {
+              usePointStyle: true,
 
-  for (let i = 0; i < this.carreras.length; i++) {
-    let carrera = this.carreras[i];
-    if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-      filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } + carrera.nombreCarrera);
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      };
     }
   }
 
-  this.filteredCarrera = filtered;
-}
 
-filterPerido(event: AutoCompleteCompleteEvent) {
-  let filtered: any[] = [];
-  let query = event.query;
+  ///////////////metodos  de filtrado //
+  filterCarrera(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
 
-  for (let i = 0; i < this.periodos.length; i++) {
-    let periodo = this.periodos[i];
-    if (periodo.nombrePeriodo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-      filtered.push({ id: periodo.idPeriodoAc, nombre: periodo.nombrePeriodo });
+    for (let i = 0; i < this.carreras.length; i++) {
+      let carrera = this.carreras[i];
+      if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } + carrera.nombreCarrera);
+      }
     }
+
+    this.filteredCarrera = filtered;
   }
 
-  this.filteredPerido = filtered;
-}
+  filterPerido(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
 
-filterDocente(event: AutoCompleteCompleteEvent) {
-  let filtered: any[] = [];
-  let query = event.query;
-
-  for (let i = 0; i < this.docentes.length; i++) {
-    let docente = this.docentes[i];
-    if (docente.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-      filtered.push({ id: docente.usuId, nombre: docente.perNombre1 + " " + docente.perApellido1 });
+    for (let i = 0; i < this.periodos.length; i++) {
+      let periodo = this.periodos[i];
+      if (periodo.nombrePeriodo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push({ id: periodo.idPeriodoAc, nombre: periodo.nombrePeriodo });
+      }
     }
+
+    this.filteredPerido = filtered;
   }
 
-  this.filteredDocentes = filtered;
-}
+  filterDocente(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
 
-///// fin metodos para filtrar ///
+    for (let i = 0; i < this.docentes.length; i++) {
+      let docente = this.docentes[i];
+      if (docente.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push({ id: docente.usuId, nombre: docente.perNombre1 + " " + docente.perApellido1 });
+      }
+    }
 
-///obtener id selecciondo ya sea de  carrea,periodo o docente ////
-onSelectItem(event: any) {
-  console.log("Objeto seleccionado:", event);
-  //  event.id y event.nombre para obtener el ID y el nombre respectivamente
-}
+    this.filteredDocentes = filtered;
+  }
 
-///
+  ///// fin metodos para filtrar ///
+
+  ///obtener id selecciondo ya sea de  carrea,periodo o docente ////
+  onSelectItem(event: any) {
+    console.log("Objeto seleccionado:", event);
+    //  event.id y event.nombre para obtener el ID y el nombre respectivamente
+  }
+
+  ///
 
 
 
-//metodo descargar el grafico  en formato PDF
+  //metodo descargar el grafico  en formato PDF
   descargar() {
     let data = document.getElementById('chart');
     html2canvas(data!).then(canvas => {

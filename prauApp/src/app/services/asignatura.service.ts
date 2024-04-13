@@ -21,12 +21,14 @@ export class AsignaturaService {
 
     const options = { headers: headers };
 
-    return this.http.get<Asignatura[]>(this.url + '/read', options).pipe(
+    return this.http.get<Asignatura[]>(this.url + '/read', options ).pipe(
       catchError(error => {
         console.error('Error obteniendo lista de asignaturas:', error);
         throw error;
       })
+    
     );
+    
   }
 
   eliminarAsignatura(id: number): Observable<object> {
@@ -67,7 +69,10 @@ export class AsignaturaService {
 
 
   obtenerAsignaturaPorId(id: number): Observable<Asignatura> {
-    return this.http.get<Asignatura>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Asignatura>(`${this.url}/buscar?id=${id}`, {headers});
   }
 
   asignaturaXCarreara(carreraId: number): Observable<IAsignaturaXCarrera[]> {

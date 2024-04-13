@@ -4,7 +4,6 @@ export class Carrera {
   nombreCarrera: string;
   descripcionCarrera: string;
   director?: Usuario;
-
   constructor(
     idCarrera?: number,
     nombreCarrera?: string,

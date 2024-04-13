@@ -9,7 +9,7 @@
         <div class="flex flex-column gap-2">
             <label for="persona" class="text-gray-800">Docente</label>
             <select id="persona" name="persona" [(ngModel)]="persona.usuNombreUsuario" class="border border-gray-300 rounded-md px-3 py-2">
-                <option *ngFor="let persona of personas" [ngValue]="persona" class="text-gray-800">{{persona.usuNombreUsuario}}</option>
+                <option *ngFor="let persona of personas" [ngValue]="persona" class="text-gray-800">{{persona.perNombre1}}</option>
             </select>
         </div>
     </div>
@@ -30,7 +30,7 @@
     
     
 
-  </div><button class="boton-pdf" (click)="cargarDocentes()">Aceptar</button>
-  
+  </div><button class="boton-pdf" (click)="cargarDatosSeleccionados()">Aceptar</button>
+ 
   
   

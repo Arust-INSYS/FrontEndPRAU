@@ -15,15 +15,24 @@
   <div class="subconten2">
     <h1 class="text-center titulo-criterios">Lista de criterios</h1>
 
-    <p-button
+    <p-button *ngIf="isAdmin"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCriterios()"
       class="registrar-button mb-3"
     ></p-button>
 
-    <button (click)="generarPDF()">generarPDF</button>
-    <button (click)="generarPDFtable()">generarTablaPDF</button>
+    <p-button  [rounded]="true" class="registrar-button mb-3" 
+    (click)="generarPDFtable()">
+      <i class="pi pi-print">
+      </i>Imprimir</p-button>
+      
+      <p-button label="Excel"
+      class="Excel" 
+      icon="pi pi-print"
+       [rounded]="true" 
+      (click)="downloadExcel()"
+      ></p-button>
 
     <div class="tabla-container">
       <p-table

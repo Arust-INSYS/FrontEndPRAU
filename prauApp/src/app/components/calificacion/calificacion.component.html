@@ -11,10 +11,15 @@
             </div>
             <div class="flex flex-column gap-2">
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" placeholder="Ingrese la descripción" [(ngModel)]="clasificacion.descripcion"></textarea>
-                <small>Ingrese la descripción.</small>
-            </div>
-           
+                <textarea
+                        pInputText
+                        id="descripcion"
+                        name="descripcion "
+                        placeholder="Descripción"
+                        [(ngModel)]="clasificacion.descripcion"
+                    ></textarea>
+                <small id="descripcion">Ingrese la descripción .</small>
+              </div>
             <div class="button-container">
           
 

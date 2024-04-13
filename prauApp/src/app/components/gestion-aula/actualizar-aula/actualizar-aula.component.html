@@ -9,22 +9,20 @@
         <!-- <input [(ngModel)]="actualizadaAula.aulaNombre"  placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla"> -->
         <input [(ngModel)]="actualizadaAula.aulaNombre" type="text" class="entradas" pInputText
             placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla" required>
-        <div *ngIf="f.submitted && f.controls['fnombre'].errors" class="error">
-            Debe ingresar el nombre del aula.
-        </div>
+     
         <label for="apellido">Ciclo que Pertenece</label>
         <!-- <input [(ngModel)]="actualizadaAula.cicloPertenece" placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla"> -->
         <input [(ngModel)]="actualizadaAula.cicloPertenece" type="text" pInputText
             placeholder="Ingrese  el ciclo al que pertenece..." name="fcliclopertenece" type="text" id="tabla" required>
-        <div *ngIf="f.submitted && f.controls['fcliclopertenece'].errors" class="error">
-            Debe ingresar el ciclo al que pertenece el aula.
-        </div>
+       
 
         <!-- Para Docentes -->
         <label for="docente">Docente:</label>
         <p-dropdown class="full-width-dropdown" [(ngModel)]="actualizadaAula.docente" name="docente"
             [options]="docentes" optionLabel="fullName" placeholder="Seleccione un Docente"
             (onChange)="onDocenteChange($event)" [style]="{ 'width': '100%' }"></p-dropdown>
+
+            
 
         <!-- <p-dropdown class="full-width-dropdown" [(ngModel)]="selectedDocente" name="docente" [options]="docentes"
             optionLabel="fullName" placeholder="Seleccione un Docente" [style]="{ 'width': '100%' }">
@@ -48,7 +46,7 @@
 
         <label for="descripcion">Observaciones</label>
         <textarea [(ngModel)]="actualizadaAula.observaciones" rows="5" cols="70" class="entradas" pInputTextarea
-            placeholder="Escriba una Observacio" name="descripcion" id="tabla"></textarea>
+            placeholder="Escriba una Observacio" name="descripcion" id="tabla"  [style]="{ 'width': '100%' }"></textarea>
 
 
 
@@ -56,8 +54,12 @@
 
 
     </div>
-    <button name="registro" type="submit" id="button"> ¡Actualizar Aula! </button>
-    <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
-        [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
+  
+
+        <div id="botones-container">
+            <button name="registro" type="submit" id="button"> ¡Actualizar Aula! </button>
+            <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()"
+                [routerLink]="['/menu/contenido-virtual/listar-aulas']"></p-button>
+        </div>
 
 </form>

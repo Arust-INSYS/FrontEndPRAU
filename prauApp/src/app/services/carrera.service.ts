@@ -16,7 +16,7 @@ export class CarreraService {
     private localStorage: LocalStorageService
   ) {}
 
-  obtenerListaCarreras(): Observable<Carrera[]> {
+  /*obtenerListaCarreras(): Observable<Carrera[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
@@ -29,7 +29,7 @@ export class CarreraService {
         throw error;
       })
     );
-  }
+  }*/
   cargarCarrera(): Observable<Carrera[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -83,6 +83,26 @@ export class CarreraService {
   }
 
   obtenerCarreraPorId(id: number): Observable<Carrera> {
-    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`, {headers}
+
+    );
   }
+
+  obtenerListaCarreras(): Observable<Carrera[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+
+    return this.http.get<Carrera[]>(this.url + '/read', { headers }).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo lista de carreras:', error);
+        throw error;
+      })
+    );
+  }
+
+  
 }

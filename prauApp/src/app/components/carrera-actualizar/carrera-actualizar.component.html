@@ -10,12 +10,16 @@
         <input pInputText type="text" id="descripcionCarrera" name="descripcionCarrera" placeholder="Descripción de Carrera" [(ngModel)]="carrera.descripcionCarrera" />
         <small id="descripcionCarreraHelp">Ingrese la descripción.</small>
     </div>
+    
     <div class="flex flex-column gap-2">
-        <label for="director">Usuario:</label>
-        <select id="director" name="director" [(ngModel)]="carrera.director">
-            <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.usuId}}</option>
-        </select>
-    </div>
+        <label for="director">Director:</label>
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field ="perNombre1"> 
+            <ng-template let-item pTemplate="item">
+                <div>{{item?.perNombre1}} {{item?.perApellido1}}</div>
+                
+            </ng-template>
+        </p-autoComplete>
+        
     <div class="button-container">
         <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true" (click)="onSubmit()"></p-button>
         <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true" severity="danger" routerLink="/menu/contenido-virtual/carrera-listar"></p-button>

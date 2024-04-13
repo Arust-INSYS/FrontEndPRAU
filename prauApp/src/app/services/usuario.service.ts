@@ -16,7 +16,7 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) { }
+  ) {}
 
   private url: string = `${entorno.urlPrivada}/usuario`;
   private urlPublica: string = `${entorno.urlPublica}`;
@@ -39,9 +39,12 @@ export class UsuarioService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
 
-    return this.http.get<Usuario[]>(`${this.url}/usuariosPorRol?roleId=${roleId}`, {
-      headers,
-    });
+    return this.http.get<Usuario[]>(
+      `${this.url}/usuariosPorRol?roleId=${roleId}`,
+      {
+        headers,
+      }
+    );
   }
 
   getAllUsuarios(): Observable<Usuario[]> {
@@ -96,6 +99,18 @@ export class UsuarioService {
 
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.get<Usuario>(`${this.url}/searchUserId?id=${id}`, {
+      headers,
+    });
+  }
+
+  buscarNombreUsuario(id: number) {
+    // Construir el encabezado de autorización
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get<Usuario>(`${this.url}/obtenerNombreRol?userId=${id}`, {
       headers,
     });
   }
@@ -207,26 +222,40 @@ export class UsuarioService {
     );
   }
 
-
   docenteXAsignatura(asignaturaId: number): Observable<IDocenteXAsignatura[]> {
-
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
     });
-    return this.http.get<IDocenteXAsignatura[]>(`${this.url}/docenteXAsignatura?asignaturaId=${asignaturaId}`, {
-      headers,
-    });
+    return this.http.get<IDocenteXAsignatura[]>(
+      `${this.url}/docenteXAsignatura?asignaturaId=${asignaturaId}`,
+      {
+        headers,
+      }
+    );
   }
   //ELIMINAR USUARIO
   delete(id: number, usuario: Usuario): Observable<Usuario> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
 
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.delete<Usuario>(`${this.url}/delete?id=${id}`, {
-      headers
+      headers,
     });
+  }
+  obtenerUsuariosPorRolId(rolId: number): Observable<string[]> {
+    // Construir el encabezado de autorización con el token JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+
+    return this.http.get<string[]>(
+      `${this.url}/usuariosPorRol?roleId=${rolId}`,
+      {
+        headers,
+      }
+    );
   }
 }
