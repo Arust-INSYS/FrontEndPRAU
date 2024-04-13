@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthRolService } from '../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -17,7 +19,10 @@ import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportPar
   templateUrl: './carrera-listar.component.html',
   styleUrl: './carrera-listar.component.css'
 })
-export class CarreraListarComponent {
+export class CarreraListarComponent implements OnInit{
+
+  rol: string = '';
+  private subscription!: Subscription;
 
   @ViewChild('dt', { static: true }) table!: Table;
   searchTerm: string = '';
@@ -50,11 +55,15 @@ throw new Error('Method not implemented.');
     private router: Router,
     private excelService: ExcelService,
     private clasificacionUsuariosService: ClasificacionUsuariosService,
+    private authRolService: AuthRolService
   
   ) {}
 
   ngOnInit(): void {
     this.obtenerCarrera();
+  }
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
   applyGlobalFilter() {
     this.table.filter(this.searchTerm, 'nombreCarrera', 'contains'); // Aplicar el filtro global
@@ -63,6 +72,9 @@ throw new Error('Method not implemented.');
     this.carreraService.obtenerListaCarreras().subscribe(dato => {
       this.carrera = dato;
       this.loadExcelReportData(this.carrera);
+    });
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
     });
   }
 

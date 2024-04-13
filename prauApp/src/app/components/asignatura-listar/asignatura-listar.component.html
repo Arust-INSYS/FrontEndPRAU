@@ -16,7 +16,7 @@
     <div class="subconten2">
       <h1 class="text-center titulo-criterios">Lista de Asignaturas</h1>
   
-      <p-button
+      <p-button *ngIf="rol === 'Administrador'"
         label="Registrar"
         [rounded]="true"
         (click)="redirectToAsignatura()"
@@ -31,10 +31,10 @@
       ></p-button>
       
       <p-button
-      label="Imprimir"
+      label="PDF"
       [rounded]="true"
       (click)="generarPDFtable()"
-      icon="pi pi-print"
+      icon="pi pi-file-pdf"
       class="registrar-button mb-3 imprimir"
     ></p-button>
       
@@ -55,8 +55,8 @@
               <th>Nombre Asignatura</th>
               <th>Descripción</th>
               <th>Carrera</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
+              <th *ngIf="rol === 'Administrador'">Editar</th>
+              <th *ngIf="rol === 'Administrador'">Eliminar</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-asignatura>
@@ -65,7 +65,7 @@
               <td>{{ asignatura.nombreAsignatura }}</td>
               <td>{{ asignatura.descripcionAsignatura }}</td>
               <td>{{ asignatura.carrera?.nombreCarrera }}</td>
-              <td>
+              <td *ngIf="rol === 'Administrador'">
                 <button
                   pButton
                   pRipple
@@ -74,7 +74,7 @@
                   (click)="actualizarAsignatura(asignatura.idAsignatura)"
                 ></button>
               </td>
-              <td>
+              <td *ngIf="rol === 'Administrador'">
                 <button
                   pButton
                   pRipple

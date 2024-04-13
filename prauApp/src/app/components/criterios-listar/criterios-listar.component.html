@@ -15,7 +15,7 @@
         (input)="applyGlobalFilter()"
       />
     </span>
-    <p-button *ngIf="isAdmin"
+    <p-button *ngIf="rol === 'Administrador'  || rol === 'Responsable'"
       label="Registrar"
       [rounded]="true"
       (click)="redirectToCriterios()"
@@ -24,8 +24,8 @@
 
     <p-button  [rounded]="true" class="registrar-button mb-3" 
     (click)="generarPDFtable()">
-      <i class="pi pi-print">
-      </i>Imprimir</p-button>
+      <i class="pi pi-file-pdf">
+      </i>PDF</p-button>
       
       <p-button label="Excel"
       class="Excel" 
@@ -52,8 +52,8 @@
             <th>Nombre Criterio</th>
             <th>Descripción</th>
             <th>Clasificación de criterio</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th *ngIf="rol === 'Administrador' || rol === 'Responsable'">Editar</th>
+            <th *ngIf="rol === 'Administrador'">Eliminar</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-criterio>
@@ -62,7 +62,7 @@
             <td>{{ criterio.nombreCriterio }}</td>
             <td class="descripcion-criterio">{{ criterio.descripcion }}</td>
             <td>{{ criterio.clasificacion?.nombreClasificacion }}</td>
-            <td>
+            <td *ngIf="rol === 'Administrador' || rol === 'Responsable'">
               <button
                 pButton
                 pRipple
@@ -71,8 +71,8 @@
                 (click)="actualizarCriterio(criterio.idCriterio)"
               ></button>
             </td>
-            <td>
-              <button
+            <td *ngIf="rol === 'Administrador'">
+              <button 
                 pButton
                 pRipple
                 icon="pi pi-trash"

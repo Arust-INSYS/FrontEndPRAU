@@ -7,7 +7,7 @@
         alt=""/>
     </div>
     <ul class="menu">
-      <li routerLinkActive="router-link-active" *ngIf="isAdmin">
+      <li routerLinkActive="router-link-active" *ngIf="nombredeRol === 'Administrador' || nombredeRol === 'Director de Carrera'">
         <a id="personas" [routerLink]="['/menu/contenido-persona']" >
           <i class="pi pi-users"></i>
           <span id="registrar" class="nav-item">Personas</span>
@@ -18,8 +18,8 @@
         <a
           [routerLink]="['/menu/contenido-criterios']"
         >
-          <i class="pi pi-flag"></i>
-          <span class="nav-item">Criterios</span>
+          <i class="pi pi-check-square"></i>
+          <span class="nav-item">Evaluacion</span>
         </a>
       </li>
       <li routerLinkActive="router-link-active">
@@ -34,16 +34,10 @@
       <li routerLinkActive="router-link-active">
         <a [routerLink]="['/menu/contenido-analitics']">
           <i class="pi pi-chart-line"></i>
-          <span class="nav-item">Analitics</span>
+          <span class="nav-item">Análisis de Uso</span>
         </a>
       </li>
 
-      <li>
-        <a href="">
-          <i class="pi pi-book"></i>
-          <span class="nav-item">Reportes</span>
-        </a>
-      </li>
       <li class="logout" routerLinkActive="router-link-active">
         <a [routerLink]="['/login']">
           <i class="pi pi-sign-out"></i>

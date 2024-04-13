@@ -43,18 +43,16 @@ import { UseDirectorComponent } from './modules/use-director/use-director.compon
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'registrar', component: RegistrarPersonaComponent },
   { path: 'main-director', component: MainDirectorComponent},
   { path: 'use-director', component: UseDirectorComponent },
-  { path: 'listar-persona', component: ListarPersonaComponent },
   {
-    path: 'menu',
-    component: MenuComponent,
-    children: [
+    path: 'menu', component: MenuComponent,
+    children: 
+    [
       {
-        path: 'contenido-persona',
-        component: ContenidoPersonaComponent,
-        children: [
+        path: 'contenido-persona', component: ContenidoPersonaComponent,
+        children: 
+        [
           { path: 'registrar-persona', component: RegistrarPersonaComponent },
           { path: 'listar-persona', component: ListarPersonaComponent },
           { path: 'listar-rol', component: ListarRolComponent },
@@ -64,62 +62,28 @@ const routes: Routes = [
       },
 
       {
-        path: 'contenido-criterios',
-        component: ContenidoCriteriosComponent,
-        children: [
-          {
-            path: 'clasificacion-criterios',
-            component: ClasificacionCriteriosComponent,
-          },
-          {
-            path: 'clasificacion-actualizar/:id',
-            component: ClasificacionCriteriosActualizarComponent,
-          },
-          {
-            path: 'clasificacion-listar',
-            component: ClasificacionCriteriosListarComponent,
-          },
-          {
-            path: 'criterios',
-            component: CriteriosComponent,
-          },
-          {
-            path: 'criterios-actualizar/:id',
-            component: CriteriosActualizarComponent,
-          },
-          {
-            path: 'criterios-listar',
-            component: CriteriosListarComponent,
-          },
-          {
-            path: 'criterios-evaluacion',
-            component: EvaluacionCriteriosComponent,
-          },
-          {
-            path: 'criterios-evaluacion-calificacion/:status',
-            component: EvaluacionCriteriosCalificarComponent,
-          },
-          {
-            path: 'criterios-evaluacion-calificacion/:status/:id',
-            component: EvaluacionCriteriosCalificarComponent,
-          },
-
-          {
-            path: 'listar-calificacion',
-            component: CalificacionListarComponent,
-          },
+        path: 'contenido-criterios', component: ContenidoCriteriosComponent,
+        children: 
+        [
+          { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent },
+          { path: 'clasificacion-actualizar/:id', component: ClasificacionCriteriosActualizarComponent },
+          { path: 'clasificacion-listar', component: ClasificacionCriteriosListarComponent },
+          { path: 'criterios', component: CriteriosComponent },
+          { path: 'criterios-actualizar/:id', component: CriteriosActualizarComponent },
+          { path: 'criterios-listar', component: CriteriosListarComponent },
+          { path: 'criterios-evaluacion', component: EvaluacionCriteriosComponent },
+          { path: 'criterios-evaluacion-calificacion/:status', component: EvaluacionCriteriosCalificarComponent },
+          { path: 'criterios-evaluacion-calificacion/:status/:id', component: EvaluacionCriteriosCalificarComponent },
+          { path: 'listar-calificacion', component: CalificacionListarComponent },
           { path: 'calificacion', component: CalificacionComponent },
-          {
-            path: 'calificacion-actualizar/:id',
-            component: CalificacionActualizarComponent,
-          },
+          { path: 'calificacion-actualizar/:id', component: CalificacionActualizarComponent },
         ],
       },
 
       {
-        path: 'contenido-virtual',
-        component: ContenidoVirtualComponent,
-        children: [
+        path: 'contenido-virtual', component: ContenidoVirtualComponent,
+        children: 
+        [
           { path: 'carrera', component: CarreraComponent },
           { path: 'carrera-listar', component: CarreraListarComponent },
           { path: 'carrera-actualizar/:id', component: CarreraActualizarComponent },
@@ -137,9 +101,14 @@ const routes: Routes = [
       },
 
       {
-        path: 'contenido-analitics',
-        component: ContenidoAnaliticsComponent,
-        children: [{ path: 'analisis-uso', component: AnalisisUsoComponent }],
+        path: 'contenido-analitics', component: ContenidoAnaliticsComponent,
+        children: 
+        [
+          { path: 'analisis-uso', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-carrera', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-docente', component: AnalisisUsoComponent},
+          //{ path: 'analisis-uso-asignatura', component: AnalisisUsoComponent},
+        ],
       },
     ],
   },
