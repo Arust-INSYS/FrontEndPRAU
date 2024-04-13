@@ -11,6 +11,9 @@ import {
 } from '../../../interface/IExcelReportParams';
 import { ExcelService } from '../../../services/excel.service';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { Subscription } from 'rxjs';
+import { AuthRolService } from '../../../services/authRolService.service';
+import { RegistrarPersonaComponent } from '../registrar-persona/registrar-persona.component';
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
