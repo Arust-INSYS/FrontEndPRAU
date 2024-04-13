@@ -27,12 +27,26 @@ export class RegistrarPeriodoAcComponent {
 
   periodoAc: PeriodoAc = new PeriodoAc();
 
+  // actualizarNombrePeriodo() {
+  //   if (this.periodoAc.fechaInicio && this.periodoAc.fechaFin) {
+  //     let yearInicio = this.periodoAc.fechaInicio.getFullYear();
+  //     let yearFin = this.periodoAc.fechaFin.getFullYear();
+  //     this.periodoAc.nombrePeriodo = yearInicio + '-' + yearFin;
+  //   }
+  // }
+
   actualizarNombrePeriodo() {
     if (this.periodoAc.fechaInicio && this.periodoAc.fechaFin) {
       let yearInicio = this.periodoAc.fechaInicio.getFullYear();
+      let monthInicio = this.periodoAc.fechaInicio.getMonth();
       let yearFin = this.periodoAc.fechaFin.getFullYear();
-      this.periodoAc.nombrePeriodo = yearInicio + '-' + yearFin;
+      let monthFin = this.periodoAc.fechaFin.getMonth();
+      this.periodoAc.nombrePeriodo = this.getFormattedPeriodName(yearInicio, monthInicio, yearFin, monthFin);
     }
+  }
+  private getFormattedPeriodName(yearInicio: number, monthInicio: number, yearFin: number, monthFin: number): string {
+    const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+    return months[monthInicio] + '/' + yearInicio + '-' + months[monthFin] + '/' + yearFin;
   }
 
   registrar(form: NgForm) {
@@ -64,6 +78,8 @@ export class RegistrarPeriodoAcComponent {
         this.toastr.error('La duración del periodo académico debe estar entre ' + duracionMinima + ' y ' + duracionMaxima + ' meses.');
 
       } else {
+
+        this.actualizarNombrePeriodo();
         this.periodoAcService.registrarPeriodoAc(this.periodoAc).subscribe(
           (response) => {
             // Si la respuesta es exitosa

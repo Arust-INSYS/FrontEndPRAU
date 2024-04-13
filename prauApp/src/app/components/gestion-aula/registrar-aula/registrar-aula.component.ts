@@ -34,8 +34,10 @@ export class RegistrarAulaComponent implements OnInit {
 
   nuevaAula: Aula = new Aula();
   docenteSeleccionado: boolean = false;
-  asiganturaSeleccionado: boolean = false;
+ // asiganturaSeleccionado: boolean = false;
   periodoSeleccionado: boolean = false;
+asignaturaSeleccionado: boolean = false;
+
   constructor(
     private periodoAcService: PeriodoAcService,
     private usuarioService: UsuarioService,
@@ -79,7 +81,7 @@ export class RegistrarAulaComponent implements OnInit {
   }
 
   onPeriodoChange(event: any) {
-    this.asiganturaSeleccionado = !!event.value;
+    this.periodoSeleccionado = !!event.value;
     this.selectedPeriodo = this.periodos.find(
       (periodo) => periodo.idPeriodoAc == event.target.value
     );
@@ -104,7 +106,7 @@ export class RegistrarAulaComponent implements OnInit {
   }
 
   onAsignaturaChange(event: any) {
-    this.asiganturaSeleccionado = !!event.value;
+    this.asignaturaSeleccionado = !!event.value;
     this.selectedAsignatura = this.asignaturas.find(
       (asignatura) => asignatura.idAsignatura == event.target.value
     );
@@ -120,7 +122,7 @@ export class RegistrarAulaComponent implements OnInit {
 
   //crea aula
   registrar(form: NgForm) {
-    if (form.valid) {
+    if (form.valid && this.docenteSeleccionado && this.asignaturaSeleccionado && this.periodoSeleccionado) {
       this.aulaServie.registrarPeriodoAc(this.nuevaAula).subscribe(
         (response) => {
           // Si la respuesta es exitosa
