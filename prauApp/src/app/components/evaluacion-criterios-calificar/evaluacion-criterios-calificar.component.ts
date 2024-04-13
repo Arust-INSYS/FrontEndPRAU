@@ -377,8 +377,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   crearNuevaEvaluacionCab() {
 
-    if (!this.selectedAula || !this.evaluacionCab.evaluador) {
-      console.log('Por favor, seleccione un aula y un evaluador.');
+    if (!this.selectedAula || !this.evaluacionCab.evaluador || !this.selectedDocente) {
+      alert('Por favor, seleccione un aula y un docente.');
       return; // Detener la ejecución del método si no se han seleccionado el aula y el evaluador
     }
     
