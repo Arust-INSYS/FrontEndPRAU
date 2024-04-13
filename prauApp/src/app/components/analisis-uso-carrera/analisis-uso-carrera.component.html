@@ -1,0 +1,40 @@
+<h1>Analisis de Uso</h1>
+<div class="container">
+    <div class="top" style="display: flex; align-items: center;">
+        <div class="left" style="width: 50px;">
+            <p-dropdown [options]="carreras" [(ngModel)]="carrera" [showClear]="false"
+                        (ngModelChange)="onOpcionSeleccionada()" placeholder="Seleccione una Carrera"
+                        optionLabel="nombreCarrera">
+            </p-dropdown>
+        </div>
+    
+        <div class="card flex justify-content-right" style=" margin-left: auto;">
+               <p-dropdown [options]="periodos" [(ngModel)]="periDto" [showClear]="false"
+                        (ngModelChange)="buscarChart()" placeholder="Seleccione una Periodo"
+                        optionLabel="nombrePeriodo">
+            </p-dropdown>
+        </div>
+    </div>
+    
+    <br>
+
+    <div style="width: 60%; margin: 0 auto;" *ngIf="banderaDatos && !inidicaInit" id="chart">
+        <div class="card">
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+    </div>
+
+    <div *ngIf="!banderaDatos && !inidicaInit" style="text-align: center;">
+        <h2>No hay datos disponibles</h2>
+    </div>
+    <div *ngIf="inidicaInit" style="text-align: center;">
+        <h2>Eliga una carrera y período</h2>
+    </div>
+    
+    <div style="text-align: center;">
+        <p-button label="Descargar" icon="pi pi-download" *ngIf="banderaDatos && !inidicaInit"  (click)="crearPDF()"></p-button>
+    </div>
+    
+
+
+</div>

@@ -41,6 +41,7 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { MainDirectorComponent } from './modules/main-director/main-director.component';
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
+import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-director', component: MainDirectorComponent},
@@ -105,7 +106,7 @@ const routes: Routes = [
         children: 
         [
           { path: 'analisis-uso', component: AnalisisUsoComponent},
-          //{ path: 'analisis-uso-carrera', component: AnalisisUsoComponent},
+          { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent},
           //{ path: 'analisis-uso-docente', component: AnalisisUsoComponent},
           //{ path: 'analisis-uso-asignatura', component: AnalisisUsoComponent},
         ],
