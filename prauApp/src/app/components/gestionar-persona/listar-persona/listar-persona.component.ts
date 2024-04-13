@@ -61,6 +61,8 @@ export class ListarPersonaComponent {
     
     
   } 
+  
+ 
   /*
   async listarPersona() {
     await this.personaService.getAllPersonas().subscribe((res) => {
@@ -104,13 +106,7 @@ export class ListarPersonaComponent {
   personaEditar: Persona = new Persona();
   displayModalEdit: boolean = false;
 
-  guardarCambios() {
-    // Guarda los cambios en la base de datos
-    this.personaService.update(72, this.personaEditar).subscribe((res) => {
-      
-      console.log('UPDATE: ' + res);
-    });
-  }
+
   
   
   

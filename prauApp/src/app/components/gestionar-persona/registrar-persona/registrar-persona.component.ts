@@ -23,7 +23,7 @@ export class RegistrarPersonaComponent {
   @Input() IdEditar: number = 0;
 
   public date: Date = new Date();
-  selectedUser: number = 3;
+  
   value: any;
 
   valorCedula: string = '';
@@ -38,6 +38,7 @@ export class RegistrarPersonaComponent {
   ) {
     this.listarRol();
     this.getData();
+    
   }
 
   //OBJETOS
@@ -94,6 +95,15 @@ export class RegistrarPersonaComponent {
       console.log('No se encontró un rol con el ID correspondiente.');
       return false;
     }
+  }
+  
+  encontrarUsuario(userCod:number) {
+    userCod=this.IdEditar;
+    this.usuarioService.searchUsersId(userCod).subscribe((res) => {
+       // Asigna los datos recibidos a userListado
+      console.log('Datos recibidos:', res); // Muestra en la consola el objeto recibido
+      this.persona.perApellido1=res.usuPerId.perApellido1
+    });
   }
   registrar(validaRol: boolean) {
     if (this.nombre == 'REGISTRAR') {
@@ -153,10 +163,12 @@ export class RegistrarPersonaComponent {
         });
       }
     } else {
+      this.encontrarUsuario(this.IdEditar);
       console.log(
         'ESTAMOS TRABAJANDO EN EDITAR, PERO ESTE ES EL CÓDIGO DE USUARIO',
         this.IdEditar
       );
+      
     }
   }
 

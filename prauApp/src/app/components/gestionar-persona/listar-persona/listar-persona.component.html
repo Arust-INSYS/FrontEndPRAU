@@ -33,7 +33,7 @@
       
     </p-toolbar>
   </div>
-  <div class="subconten2">
+  <div class="subconten2" style="max-height: 400px; overflow-y: auto;">
     <p-table [value]="userList">
       <ng-template pTemplate="header">
         <tr>
@@ -61,7 +61,7 @@
               pButton
               icon="pi pi-pencil"
               class="p-button-success"
-            (click)="showModal('EDITAR',usu.usuPerId.perId)"
+            (click)="showModal('EDITAR',usu.usuId)"
             ></button>
             <button
               pButton
