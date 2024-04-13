@@ -171,7 +171,7 @@ onCursoSeleccionado(selectedCurso: any) {
   actualizarCriterio(id: number, status: string) {
   
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', status, id]);
-    alert(status);
+    
   }
 
   // Método para eliminar un criterio

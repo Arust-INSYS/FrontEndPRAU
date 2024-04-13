@@ -62,7 +62,7 @@
             </div>
 
         </section>
-        <section >
+        <section *ngIf="status !== 'edit'">
             <div>
                 <label for="selectedAula" class="titulo-criterios">Aula Seleccionada:  {{selectedAula?.nombre}}</label>
             </div>
