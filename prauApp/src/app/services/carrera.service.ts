@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Carrera } from '../models/carrera';
 import { entorno } from '../env/entorno';
 import { LocalStorageService } from './local-storage.service';
+import { IConsultarCarrera } from '../interface/IConsultasBD';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class CarreraService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService
-  ) {}
+  ) { }
 
   /*obtenerListaCarreras(): Observable<Carrera[]> {
     const headers = new HttpHeaders({
@@ -86,7 +87,7 @@ export class CarreraService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
-    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`, {headers}
+    return this.http.get<Carrera>(`${this.url}/buscar?id=${id}`, { headers }
 
     );
   }
@@ -104,5 +105,15 @@ export class CarreraService {
     );
   }
 
-  
+  carreraXperiodo(periodoId: number): Observable<IConsultarCarrera[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<IConsultarCarrera[]>(`${this.url}/carreraXperiodo?periodoId=${periodoId}`, {
+      headers,
+    });
+
+  }
+
 }

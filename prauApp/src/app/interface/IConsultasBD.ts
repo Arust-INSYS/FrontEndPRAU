@@ -13,3 +13,9 @@ export interface IConsultarAula {
     aulaId?: number;
     nombre: string;
 }
+
+
+export interface IConsultarCarrera {
+    carreraId?: number;
+    nombreCarrera: string;
+}
