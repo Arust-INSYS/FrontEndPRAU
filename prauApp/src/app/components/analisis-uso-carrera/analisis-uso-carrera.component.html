@@ -2,14 +2,14 @@
 <div class="container">
     <div class="top" style="display: flex; align-items: center;">
         <div class="left" style="width: 50px;">
-            <p-dropdown [options]="carreras" [(ngModel)]="carrera" [showClear]="false"
+            <p-dropdown [options]="carreras" [(ngModel)]="carrera" [showClear]="true"
                         (ngModelChange)="onOpcionSeleccionada()" placeholder="Seleccione una Carrera"
                         optionLabel="nombreCarrera">
             </p-dropdown>
         </div>
     
         <div class="card flex justify-content-right" style=" margin-left: auto;">
-               <p-dropdown [options]="periodos" [(ngModel)]="periDto" [showClear]="false"
+               <p-dropdown [options]="periodos" [(ngModel)]="periDto" [showClear]="true"
                         (ngModelChange)="buscarChart()" placeholder="Seleccione una Periodo"
                         optionLabel="nombrePeriodo">
             </p-dropdown>
@@ -24,11 +24,10 @@
         </div>
     </div>
 
-    <div *ngIf="!banderaDatos && !inidicaInit" style="text-align: center;">
-        <h2>No hay datos disponibles</h2>
-    </div>
-    <div *ngIf="inidicaInit" style="text-align: center;">
-        <h2>Eliga una carrera y período</h2>
+    <div *ngIf="!banderaDatos && inidicaInit" style="width: 80%; margin: 0 auto;">
+        <div class="card">
+            <p-chart type="bar" [data]="completeData" [options]="completeOptions"></p-chart>
+        </div>
     </div>
     
     <div style="text-align: center;">
