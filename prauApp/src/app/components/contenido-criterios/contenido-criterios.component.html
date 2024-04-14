@@ -13,7 +13,7 @@
                 <span class="nav-item">Criterios</span>
             </a>
         </li>
-        <li *ngIf="rol === 'Administrador'">
+        <li *ngIf="rol === 'Administrador' || rol==='Responsable'">
             <a [routerLink]="['/menu/contenido-criterios/criterios-evaluacion']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-check-circle"></i>
                 <span class="nav-item">Evaluacion</span>
