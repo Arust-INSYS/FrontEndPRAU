@@ -23,7 +23,7 @@ export class RegistrarPersonaComponent {
   @Input() IdEditar: number = 0;
 
   public date: Date = new Date();
-  
+
   value: any;
 
   valorCedula: string = '';
@@ -38,7 +38,6 @@ export class RegistrarPersonaComponent {
   ) {
     this.listarRol();
     this.getData();
-    
   }
 
   //OBJETOS
@@ -96,103 +95,94 @@ export class RegistrarPersonaComponent {
       return false;
     }
   }
-  personID:number=0;
+  personID: number = 0;
   valorSeleccionado: any;
   encontrarUsuario(id: number) {
-    this.limpiarRegistro() 
+    this.limpiarRegistro();
     this.usuarioService.searchUsersId(id).subscribe((res) => {
-       // Asigna los datos recibidos a userListado
+      // Asigna los datos recibidos a userListado
       console.log('Datos recibidos:', res); // Muestra en la consola el objeto recibido
-      this.personID=res.usuPerId.perId;
-      this.persona.perCedula=res.usuPerId.perCedula
-      this.persona.perNombre1=res.usuPerId.perNombre1
-      this.persona.perApellido1=res.usuPerId.perApellido1
-      this.persona.perDireccion=res.usuPerId.perDireccion
-      this.persona.perTelefono=res.usuPerId.perTelefono
+      this.personID = res.usuPerId.perId;
+      this.persona.perCedula = res.usuPerId.perCedula;
+      this.persona.perNombre1 = res.usuPerId.perNombre1;
+      this.persona.perApellido1 = res.usuPerId.perApellido1;
+      this.persona.perDireccion = res.usuPerId.perDireccion;
+      this.persona.perTelefono = res.usuPerId.perTelefono;
       //this.usuario.rolId.rolNombre=res.rolId.rolNombre
-      this.valorSeleccionado=res.rolId.rolId
+      this.valorSeleccionado = res.rolId.rolId;
       return this.personID;
-      
     });
   }
   guardarDatos(validaRol: boolean) {
     if (this.nombre == 'REGISTRAR') {
-      if(this.validarRegistro()){
-        if (
-          this.persona.perCedula &&
-          this.persona.perNombre1 &&
-          this.persona.perApellido1 &&
-          this.persona.perDireccion &&
-          this.persona.perFechaNacimiento &&
-          this.persona.perTelefono
-        ) {
-          if (validaRol) {
-            this.personaService
-              .registrarPersona(this.persona)
-              .subscribe((response) => {
-                this.usuario.usuEstado = 1;
-                this.usuario.usuPerId = response;
-                this.usuario.usuNombreUsuario = this.persona.perCedula;
-  
-                // REGISTRAR USUARIO
-                this.usuarioService
-                  .registrarUsuario(this.usuario)
-                  .subscribe((response) => {
-                    Swal.fire({
-                      title: '¡Registro Exitoso!',
-                      text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
-                      icon: 'success',
-                      confirmButtonText: 'Confirmar',
-                      showCancelButton: false, // No mostrar el botón de cancelar
-                    }).then(() => {
-                      this.recargarPagina();
-                      this.limpiarRegistro();
-                      //this.router.navigate(['/listausu']);
-                    });
+      if (
+        this.persona.perCedula &&
+        this.persona.perNombre1 &&
+        this.persona.perApellido1 &&
+        this.persona.perDireccion &&
+        this.persona.perFechaNacimiento &&
+        this.persona.perTelefono
+      ) {
+        if (validaRol) {
+          this.personaService
+            .registrarPersona(this.persona)
+            .subscribe((response) => {
+              this.usuario.usuEstado = 1;
+              this.usuario.usuPerId = response;
+              this.usuario.usuNombreUsuario = this.persona.perCedula;
+
+              // REGISTRAR USUARIO
+              this.usuarioService
+                .registrarUsuario(this.usuario)
+                .subscribe((response) => {
+                  Swal.fire({
+                    title: '¡Registro Exitoso!',
+                    text: `${this.persona.perNombre1} ${this.persona.perApellido1} (${this.usuario.rolId.rolNombre}) agregado correctamente`,
+                    icon: 'success',
+                    confirmButtonText: 'Confirmar',
+                    showCancelButton: false, // No mostrar el botón de cancelar
+                  }).then(() => {
+                    this.recargarPagina();
+                    this.limpiarRegistro();
+                    //this.router.navigate(['/listausu']);
                   });
-              });
-          } else {
-            Swal.fire({
-              title: '¡Error!',
-              text: 'Por favor seleccione el rol para guardar el dato',
-              icon: 'error',
-              confirmButtonText: 'OK',
-              showCancelButton: false,
+                });
             });
-          }
         } else {
           Swal.fire({
             title: '¡Error!',
-            text: 'Campos Vacíos',
+            text: 'Por favor seleccione el rol para guardar el dato',
             icon: 'error',
             confirmButtonText: 'OK',
             showCancelButton: false,
-            customClass: {
-              popup: 'mensaje-guardado', // Clase CSS para el mensaje de Swal
-            },
           });
         }
-      } else{
-        console.log("ESCRIBE PE BIEN SONSO!!");
-      }
-
-      
-    }else {
-       
-          
-      this.personaService.update(this.personID,this.persona).subscribe(()=>{
-        Swal.fire('Actualizado!', 'La persona ha sido actualizado.', 'success');
-        this.usuarioService.update(this.IdEditar,this.usuario).subscribe(() => {
-          
+      } else {
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Campos Vacíos',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          showCancelButton: false,
+          customClass: {
+            popup: 'mensaje-guardado', // Clase CSS para el mensaje de Swal
+          },
         });
-      })
-      this.cargarTabla()
-    
-    console.log(
-      'ESTAMOS TRABAJANDO EN EDITAR, PERO ESTE ES EL CÓDIGO DE USUARIO',
-      this.IdEditar
-    );
-  }
+      }
+    } else {
+      this.personaService.update(this.personID, this.persona).subscribe(() => {
+        Swal.fire('Actualizado!', 'La persona ha sido actualizado.', 'success');
+        this.usuarioService
+          .update(this.IdEditar, this.usuario)
+          .subscribe(() => {});
+      });
+      this.cargarTabla();
+
+      console.log(
+        'ESTAMOS TRABAJANDO EN EDITAR, PERO ESTE ES EL CÓDIGO DE USUARIO',
+        this.IdEditar
+      );
+    }
   }
 
   userListar: any;
