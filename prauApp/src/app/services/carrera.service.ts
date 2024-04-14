@@ -6,6 +6,7 @@ import { Carrera } from '../models/carrera';
 import { entorno } from '../env/entorno';
 import { LocalStorageService } from './local-storage.service';
 import { IConsultarCarrera } from '../interface/IConsultasBD';
+import { graficaCarrera } from '../models/graficaCarrera';
 
 @Injectable({
   providedIn: 'root',
@@ -114,6 +115,19 @@ export class CarreraService {
       headers,
     });
 
+  }
+
+  graficaCarrera(idCarre: number, idPerio: number): Observable<graficaCarrera[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
+    });
+
+    return this.http.get<graficaCarrera[]>(`${this.url}/graficaCarrera?carreraId=${idCarre}&periodoId=${idPerio}`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo lista de carreras:', error);
+        throw error;
+      })
+    );
   }
 
 }

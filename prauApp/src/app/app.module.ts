@@ -154,6 +154,7 @@ import { GraficaDirectorComponent } from './components/grafica-director/grafica-
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { TokenExpirationInterceptor } from './env/TokenExpirationInterceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 
 
 
@@ -203,8 +204,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ListarUsuarioComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
-    AnalisisGraficaDocenteComponent
+    AnalisisGraficaDocenteComponent,
 
+    AnalisisUsoCarreraComponent,
   ],
   imports: [
     RouterModule,
