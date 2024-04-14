@@ -3,6 +3,8 @@ import { Calificacion } from '../../models/calificacion';
 import { CalificacionService } from '../../services/calificacion.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthRolService } from '../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-calificacion',
@@ -10,14 +12,23 @@ import { Router } from '@angular/router';
   styleUrl: './calificacion.component.css'
 })
 export class CalificacionComponent {
+  rol: string = '';
+  private subscription!: Subscription;
   clasificacion:Calificacion = new Calificacion();
   clasificaciones: Calificacion[] = [];
-  constructor(private clasificacionService:CalificacionService,private router:Router,private toastr: ToastrService) { }
+  constructor(private clasificacionService:CalificacionService,private router:Router,private toastr: ToastrService, private authRolService: AuthRolService) { }
   ngOnInit(): void {
     this.obtenercriterios();
-   
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
+    });
   
   }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
+  }
+  
   obtenercriterios(){
     this.clasificacionService.obtenerListacriterios().subscribe(dato => {
       this.clasificaciones = dato;

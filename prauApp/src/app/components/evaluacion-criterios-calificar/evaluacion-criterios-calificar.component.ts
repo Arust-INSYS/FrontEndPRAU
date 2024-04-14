@@ -26,6 +26,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { AuthRolService } from '../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -34,7 +36,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class EvaluacionCriteriosCalificarComponent implements OnInit {
-
+  rol: string = '';
+  private subscription!: Subscription;
   cursoSeleccionado: Aula | null = null;
   profesorSeleccionado: Usuario | null = null;
   clasificacionSeleccionada: ClasificacionCriterios | null = null;
@@ -123,7 +126,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authRolService: AuthRolService
 
   ) { }
 
@@ -131,6 +135,10 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.status = params['status'];
+    });
+
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
     });
     //cargar filtros;
     this.loadPeriodos();
@@ -161,6 +169,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.crearEvaluacionesDetVacias();
 
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   cargarEvaluacion(id: number) {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
       response => {
