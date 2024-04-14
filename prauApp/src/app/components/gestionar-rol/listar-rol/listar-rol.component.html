@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="rolAuth === 'Administrador'" class="container">
   <h1>Listado de Roles</h1>
   <p-table [value]="roles" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
