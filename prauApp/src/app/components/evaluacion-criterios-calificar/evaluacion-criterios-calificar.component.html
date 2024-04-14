@@ -5,12 +5,11 @@
             <!-- <p-card header="Title"> -->
             <p-card header="Evaluación N° {{ nroEvaluacion }}">
                 <ng-container *ngIf="status !== 'edit'">
-                    <p-divider align="left" type="solid">
+                    <p-divider align="left" type="solid" [style]="{ 'margin-top': 0 }">
                         <div className="inline-flex align-items-center">
                             <i class="pi pi-filter" style="padding-right: 0.5rem;"></i>
                             <b>Buscar Aula por Evaluar</b>
                         </div>
-
                     </p-divider>
                     <div class="layout" *ngIf="status !== 'edit'">
                         <div class="filter">
@@ -47,7 +46,7 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="docentes" [(ngModel)]="selectedDocente" optionLabel="nombreCompleto"
                                 [filter]="true" filterBy="nombreCompleto" [showClear]="true"
-                                placeholder="Selecionar Docente">
+                                placeholder="Selecionar Docente" (onChange)="consultarAula()">
 
                             </p-dropdown>
                         </div>
@@ -55,139 +54,162 @@
                             <p-dropdown class="element-filter"
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="aulas" [(ngModel)]="selectedAula" optionLabel="nombre" [filter]="true"
-                                filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula">
+                                filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula"
+                                (onChange)="aulaFindById()">
 
                             </p-dropdown>
+
+
                         </div>
                     </div>
                 </ng-container>
-                <ng-container>
+                <!-- <ng-container> -->
+                <p-divider align="left" type="solid" [style]="{ 'margin-top': status == 'edit' ? '0' : '' }">
+                    <div className="inline-flex align-items-center">
+                        <i class="pi pi-search" style="padding-right: 0.5rem;"></i>
+                        <b>Detalles del Aula Seleccionada</b>
+                    </div>
+                </p-divider>
+                <section>
+                    <!-- <div class="layout-aula"> -->
+                    <div class="layout-data">
+                        <div class="grow1-data">
+                            <p-chip class="grow1-data" styleClass="pl-0 pr-3">
+                                <span class="bg-primary   h-2rem flex align-items-center justify-content-center"
+                                    style="border-radius: 20px; padding: 0.5rem;">Aula:</span>
+                                <span class="ml-2 font-medium" style="">{{this.aula?.aulaNombre ?? ''}}</span>
+                            </p-chip>
+                        </div>
+                    </div>
+                    <div class="layout-data">
+                        <div class="grow1-data">
+                            <p-chip class="" styleClass="pl-0 pr-3">
+                                <span class="bg-primary   h-2rem flex align-items-center justify-content-center"
+                                    style="border-radius: 20px; padding: 0.5rem;">Docente:</span>
+                                <span class="ml-2 font-medium" style="">{{(this.aula?.docente?.usuPerId?.perApellido1 ??
+                                    '') +
+                                    '
+                                    ' +
+                                    (this.aula?.docente?.usuPerId?.perApellido2 ?? '') + ' ' +
+                                    (this.aula?.docente?.usuPerId?.perNombre1 ?? '') + ' ' +
+                                    (this.aula?.docente?.usuPerId?.perNombre2 ?? '')}}
+                                </span>
+                            </p-chip>
+                        </div>
+                        <div class="grow1-data">
+                            <p-chip class="" class="" styleClass="pl-0 pr-3">
+                                <span class="bg-primary   h-2rem flex align-items-center justify-content-center"
+                                    style="border-radius: 20px; padding: 0.5rem;">Asignatura:</span>
+                                <span class="ml-2 font-medium" style="">{{(this.aula?.asignatura?.nombreAsignatura
+                                    ?? '')}}
+                                </span>
+                            </p-chip>
+                        </div>
+                    </div>
+                    <div class="layout-data">
+                        <div class="grow1-data">
+                            <p-chip class="" styleClass="pl-0 pr-3">
+                                <span class="bg-primary   h-2rem flex align-items-center justify-content-center"
+                                    style="border-radius: 20px; padding: 0.5rem;">Periodo Academico:</span>
+                                <span class="ml-2 font-medium" style="">{{(this.aula?.periodoAc?.nombrePeriodo ??
+                                    '')}}
+                                </span>
+                            </p-chip>
+                        </div>
+                        <div class="grow1-data">
+                            <p-chip class="" styleClass="pl-0 pr-3">
+                                <span class="bg-primary   h-2rem flex align-items-center justify-content-center"
+                                    style="border-radius: 20px; padding: 0.5rem;">Ciclo:</span>
+                                <span class="ml-2 font-medium" style="">{{(this.aula?.cicloPertenece ??
+                                    '')}}
+                                </span>
+                            </p-chip>
+                        </div>
+                    </div>
 
-                </ng-container>
+                </section>
+                <!-- </ng-container> -->
+                <p-divider align="left" type="solid">
+                    <div className="inline-flex align-items-center">
+                        <i class="pi pi-chart-line" style="padding-right: 0.5rem;"></i>
+                        <b>Progreso</b>
+                    </div>
+                </p-divider>
+                <section class="layout-estats ">
+                    <div class="stats">
+                        <p-knob [(ngModel)]="evaluacionCab.progreso" valueTemplate="{{ evaluacionCab.progreso }}%"
+                            [readonly]="true" [strokeWidth]="8" [size]="70" valueColor="#004f9f"></p-knob>
+                        <label>Progreso</label>
+                    </div>
+                    <div class="grow1-estats">
+                        <p-meterGroup [value]="cumplimiento"></p-meterGroup>
+                    </div>
+                    <!-- <div class="grow1-equals">
+                        <p-knob [(ngModel)]="evaluacionCab.porcTotalC" valueTemplate="{{ evaluacionCab.porcTotalC }}%"
+                            [readonly]="true" [strokeWidth]="5" [size]="65" valueColor="#004f9f"></p-knob>
+                        <label>Cumple</label>
+                    </div>
+                    <div class="grow1-equals">
+                        <p-knob [(ngModel)]="evaluacionCab.porcTotalCm" valueTemplate="{{ evaluacionCab.porcTotalCm }}%"
+                            [readonly]="true" [strokeWidth]="5" [size]="65" valueColor="#004f9f"></p-knob>
+                        <label>Cumple Medianamente</label>
+                    </div>
+                    <div class="grow1-equals">
+                        <p-knob [(ngModel)]="evaluacionCab.porcTotalNc" valueTemplate="{{ evaluacionCab.porcTotalNc }}%"
+                            [readonly]="true" [strokeWidth]="5" [size]="65" valueColor="#004f9f"></p-knob>
+                        <label>No Cumple</label>
+                    </div> -->
+
+                </section>
+                <p-divider align="left" type="solid">
+                    <div className="inline-flex align-items-center">
+                        <i class="pi pi-file-edit" style="padding-right: 0.5rem;"></i>
+                        <b>Evaluacion</b>
+                    </div>
+                </p-divider>
+
+
+                <section class="formulario">
+                    <div class="grupo-preguntas">
+                        <div class="question" *ngFor="let clasificacion of clasificaciones">
+                            <h2 class="clasificacion">{{ clasificacion.nombreClasificacion }}</h2>
+                            <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
+                                <div class="layout-criterio">
+                                    <div class="grow1-criterio ">
+                                        <label for="pregunta{{det.criterio?.idCriterio}}">{{
+                                            det.criterio?.descripcion}}:</label>
+                                    </div>
+
+
+                                    <div class="drop-calificacion">
+                                        <p-dropdown id="dropdown1" class="custome_drop"
+                                            [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
+                                            [options]="calificacion" optionLabel="descripcion"
+                                            optionValue="codCalificacion" placeholder="Selecionar Calificacion"
+                                            [(ngModel)]="det.calificacion.codCalificacion"
+                                            (onChange)="onCalificacionSeleccionado()" [showClear]="true">
+
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <p-divider type="dashed" [style]="{ 'margin': 0 }"></p-divider>
+                            </div>
+                            <p-divider type="solid"></p-divider>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true"
+                            [text]="true" [raised]="true"
+                            (click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
+                        <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
+                            severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+                    </div>
+
+                </section>
+
             </p-card>
-
-
-
         </section>
-        <section>
-            <p-chip styleClass="pl-0 pr-3">
-                <span
-                    class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">P</span>
-                <span class="ml-2 font-medium"><b>Aula Seleccionada:</b> {{selectedAula?.nombre}}</span>
-            </p-chip>
-            <!-- <div>
-                <label for="selectedAula" class="titulo-criterios">Aula Seleccionada: {{selectedAula?.nombre}}</label>
-            </div>
-            <div>
-                <label for="selectedDocente" class="titulo-criterio">Docente a cargo:
-                    {{selectedDocente?.nombreCompleto}}</label>
-            </div> -->
-        </section>
-
-        <section class="layoutnum">
-            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
-            <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalC"></progress>
-                <!-- <p-slider [(ngModel)]="evaluacionCab.porcTotalC" styleClass="w-full mt-3"></p-slider> -->
-                <span class="progress-value">{{ evaluacionCab.porcTotalC }}%</span>
-            </div>
-
-            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple Medianamente:</label></div>
-            <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalCm"></progress>
-                <span class="progress-value">{{ evaluacionCab.porcTotalCm }}%</span>
-            </div>
-
-            <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento No Cumple:</label></div>
-            <div class="col1Last1">
-                <progress id="porcentajeCumplimiento" max="100" [value]="evaluacionCab.porcTotalNc"></progress>
-                <span class="progress-value">{{ evaluacionCab.porcTotalNc }}%</span>
-            </div>
-        </section>
-
-        <section class="formulario">
-            <div class="grupo-preguntas">
-                <div class="question-section">
-                    <div class="question" *ngFor="let clasificacion of clasificaciones">
-                        <h2>{{ clasificacion.nombreClasificacion }}</h2>
-                        <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
-                            <div class="layout-criterio">
-                                <div class="grow1-criterio ">
-                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{
-                                        det.criterio?.descripcion}}:</label>
-                                </div>
-                                <div>
-
-                                    <!--</div> *ngIf="status !== 'edit'; else normal">
-                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
-                </div>
-                <ng-template #normal>
-                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
-                </ng-template>-->
-
-
-                                    <p-dropdown id="dropdown1" class="custome_drop"
-                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
-                                        [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
-                                        placeholder="Selecionar Calificacion"
-                                        [(ngModel)]="det.calificacion.codCalificacion"
-                                        (onChange)="onCalificacionSeleccionado()">
-
-                                    </p-dropdown>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-container">
-                <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true"
-                    [text]="true" [raised]="true"
-                    (click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
-                <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
-                    severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            </div>
-
-        </section>
-
-        <!-- <section class="formulario">
-            <div class="grupo-preguntas">
-                <div class="question-section">
-                    <div class="question" *ngFor="let clasificacion of clasificaciones">
-                        <h2>{{ clasificacion.nombreClasificacion }}</h2>
-                        <div *ngFor="let criterio of criteriosPorClasificacion(clasificacion.idClasificacion)">
-                            <div class="layout-criterio">
-                                <div class="grow1-criterio ">
-                                    <label for="pregunta{{criterio.idCriterio}}">{{ criterio.descripcion }}:</label>
-                                </div>
-                                <div>
-                                    <p-dropdown id="dropdown1" class="custome_drop"
-                                        [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
-                                        [options]="calificacion" optionLabel="label" optionValue="value"
-                                        placeholder="Selecionar Calificacion"
-                                        (onChange)="onCalificacionSeleccionado($event.value, criterio.idCriterio)">
-
-                                    </p-dropdown>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="button-container">
-                <p-button icon="pi pi-check" label="Guardar" [rounded]="true" [text]="true" [raised]="true"
-                    (click)="crearNuevaEvaluacionCab()"></p-button>
-                <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
-                    severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
-            </div>
-
-        </section> -->
 
     </body>
 

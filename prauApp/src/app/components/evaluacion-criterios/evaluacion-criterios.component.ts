@@ -26,7 +26,7 @@ export class EvaluacionCriteriosComponent {
   $odd: any;
   Delete: string | undefined;
 
-  status: string="";
+  status: string = "";
 
   dt: any;
 
@@ -46,12 +46,15 @@ export class EvaluacionCriteriosComponent {
   docenteSeleccionado: number | null = null; // Almacenará el ID del docente seleccionado
   cursoSeleccionado: number = 0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
-//nro evaluacion
-nroEvaluacion: number = 0;
-  estado: number=1;// este es el estado establecido
+  //nro evaluacion
+  nroEvaluacion: number = 0;
+  estado: number = 1;// este es el estado establecido
   customers: any
   selectedCustomers: any
   loading: any
+
+  estadoBTN: number = 0;
+  //
 
   constructor(private evaluacionCABService: EvaluacionCabService,
     private usuarioService: UsuarioService,
@@ -60,10 +63,11 @@ nroEvaluacion: number = 0;
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
     private carreraService: CarreraService,
-    ) {}
+  ) { }
 
 
   ngOnInit(): void {
+    this.estadoBTN = 1;
     this.getEvaluacionesCAB(1);
     this.listarevalu();
 
@@ -122,20 +126,20 @@ nroEvaluacion: number = 0;
   }
 
 
-async listarcursos(docenteId: number) {
-  await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
-    this.cursos = aulas.map((doc) => ({
-      label: doc.aulaNombre,
-      value: doc.aulaId,
-    }));
-  });
-}
-onCursoSeleccionado(selectedCurso: any) {
-  // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
-  console.log('Docente seleccionado:', selectedCurso);
-  this.evaluacionCa.aulaEva!.aulaId=selectedCurso;
-  //console.log('Este es el mensaje',this.evaluacionCa.aula)
-}
+  async listarcursos(docenteId: number) {
+    await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
+      this.cursos = aulas.map((doc) => ({
+        label: doc.aulaNombre,
+        value: doc.aulaId,
+      }));
+    });
+  }
+  onCursoSeleccionado(selectedCurso: any) {
+    // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
+    console.log('Docente seleccionado:', selectedCurso);
+    this.evaluacionCa.aulaEva!.aulaId = selectedCurso;
+    //console.log('Este es el mensaje',this.evaluacionCa.aula)
+  }
 
   cargarInformacionCurso(): void {
     // Verificar que haya un curso seleccionado
@@ -149,6 +153,7 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   getEvaluacionesCAB(est: number): void {
+    this.estadoBTN = est;
     this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
       //this.generarPDF();
@@ -164,14 +169,12 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   crearNuevoDato(status: string) {
-    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion',this.status]);
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', this.status]);
 
   }
 
   actualizarCriterio(id: number, status: string) {
-  
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', status, id]);
-    alert(status);
   }
 
   // Método para eliminar un criterio

@@ -20,11 +20,12 @@ import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
 import { CarreraService } from '../../services/carrera.service';
 import { Carrera } from '../../models/carrera';
-import { IAsignaturaXCarrera, IConsultarAula, IConsultarCarrera, IDocenteXAsignatura } from '../../interface/IConsultasBD';
+import { IAsignaturaXCarrera, IConsultarAula, IConsultarAulaObj, IConsultarCarrera, IDocenteXAsignatura } from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -69,6 +70,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   docentes: IDocenteXAsignatura[] = [];
   usuario: Usuario[] = [];
   aulas: IConsultarAula[] = [];
+  // aulas: IConsultarAulaObj[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
   //
   evaluacionDets: EvaluacionDet[] = [];
@@ -88,6 +90,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   // docentes: any[] = [];
   cursos: any[] = [];
   criterios: any[] = [];
+  //aula seleccionada
+  aula: Aula = new Aula;
 
   listCriterios: Criterios[] = [];
   calificacion: Calificacion[] = [];
@@ -98,6 +102,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   evaluacionCab: EvaluacionCab = new EvaluacionCab(); // Objeto para almacenar la evaluación detallada
   evaluacionDet: EvaluacionDet = new EvaluacionDet(); // Objeto para almacenar la evaluación detallada
   carrera: Carrera = new Carrera();
+
+  ///grafica cumplimiento
+  cumplimiento: { label: string, color: string, value: number, icon: string }[] = [];
 
   constructor(
     private http: HttpClient,
@@ -116,6 +123,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
+    private toastr: ToastrService
 
   ) { }
 
@@ -141,13 +149,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       if (this.id) {
         this.cargarEvaluacion(this.id);
         this.cargarDetalle(this.id);
-        this.contarCalificaciones();
+
       }
     } else {
       this.obtenerNroEva();
       this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
-
     }
+    this.contarCalificaciones();
 
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
@@ -157,12 +165,14 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
       response => {
         this.evaluacionCab = response;
+        this.aula = this.evaluacionCab.aulaEva;
+
         this.nroEvaluacion = this.evaluacionCab.nroEvaluacion;
         this.contarC = this.evaluacionCab.totalC;
         this.contarCM = this.evaluacionCab.totalCm;
         this.contarNC = this.evaluacionCab.totalNc;
         this.progreso = this.evaluacionCab.progreso;
-
+        this.actualizarPorcentajes();
 
       },
       error => {
@@ -174,9 +184,18 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   cargarDetalle(id: number) {
     this.evaluacionDetService.detalleEvaluacion(id).subscribe(
       response => {
-        this.evaluacionDets = response;
-        const correctCriterions = this.evaluacionDets.filter(det => det.criterio?.idCriterio !== null); // Assuming criterioId is the property for the criterion ID.
-        this.evaluacionDeta = correctCriterions;
+        for (let res of response) {
+          let det: EvaluacionDet = new EvaluacionDet();
+          det.secCalificacion = res.secCalificacion;
+          det.evaluacionCab = res.evaluacionCab;
+          det.calificacion = res.calificacion || '';
+          det.criterio = res.criterio;
+          this.evaluacionDets.push(det);
+        }
+
+        // this.evaluacionDets = response;
+        // const correctCriterions = this.evaluacionDets.filter(det => det.criterio?.idCriterio !== null); // Assuming criterioId is the property for the criterion ID.
+        // this.evaluacionDeta = correctCriterions;
       },
       error => {
         console.error('Error al cargar el detalle:', error);
@@ -231,19 +250,31 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.selectedDocente?.usuId ?? 0
     ).subscribe(response => {
       this.aulas = response;
+
     })
-    this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
 
+    // this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
   }
 
-  cargarNombres() {
-    if (this.selectedAula && this.selectedAula) {
-      console.log('Docente seleccionado:', this.selectedDocente);
-      console.log('Aula seleccionado:', this.selectedAula);
+
+  aulaFindById(): void {
+    if (this.selectedAula) {
+      this.aulaService.aulaFindById(
+        this.selectedAula.aulaId ?? 0,
+      ).subscribe(response => {
+        this.aula = response;
+
+      })
     } else {
-      console.log('Ningún docente seleccionado');
+      this.aula = new Aula();
     }
+
+
+    // this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
   }
+
+
+
 
   obtenerCursos(): void {
     this.aulaService.getAulas().subscribe(cursos => {
@@ -360,37 +391,53 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionDets.forEach(item => {
       if (item.calificacion.codCalificacion === 'C') {
         this.contarC++;
+        this.progreso++;
       } else if (item.calificacion.codCalificacion === 'CM') {
         this.contarCM++;
+        this.progreso++;
       } else if (item.calificacion.codCalificacion === 'NC') {
         this.contarNC++;
+        this.progreso++;
       }
-      this.progreso++;
+
     });
   }
 
   contarCalificaciones() {
 
     const totalCriterios = this.evaluacionDets.length;
-
-    this.evaluacionCab.progreso = ((this.contarC || 0 + this.contarCM || 0 + this.contarNC || 0) / totalCriterios) * 100;
+    this.evaluacionCab.progreso = (this.progreso / totalCriterios) * 100;
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
 
     this.evaluacionCab.porcTotalC = (this.contarC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
+
+    this.actualizarPorcentajes();
   }
 
+  actualizarPorcentajes() {
+    this.cumplimiento = [
+      { label: 'Cumple', color: '#34d399', value: this.evaluacionCab.porcTotalC, icon: 'pi pi-check-circle' },
+      { label: 'Cumple a Medias', color: '#60a5fa', value: this.evaluacionCab.porcTotalCm, icon: 'pi pi-exclamation-triangle' },
+      { label: 'No Cumple', color: '#fbbf24', value: this.evaluacionCab.porcTotalNc, icon: 'pi pi-exclamation-circle' },
+    ];
+  }
   crearNuevaEvaluacionCab() {
 
-    if (!this.selectedAula || !this.evaluacionCab.evaluador) {
-      console.log('Por favor, seleccione un aula y un evaluador.');
+    if (!this.selectedAula) {
+      this.toastr.error(
+        'Por favor, seleccione el aula que desea evaluar',
+        'Formulario Incompleto',
+        {
+          timeOut: 4000,
+        }
+      );
       return; // Detener la ejecución del método si no se han seleccionado el aula y el evaluador
     }
-
-    //asignar aula
-    this.evaluacionCab.aulaEva = this.selectedAula;
+    this.evaluacionCab.estado = 1;    //asignar aula
+    this.evaluacionCab.aulaEva.aulaId = this.selectedAula.aulaId;
     //evaluador
     const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
     if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
@@ -406,13 +453,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / this.evaluacionCab.progreso) * 100;
-    this.evaluacionCab.estado = 1;
+
 
     // Determinar las observaciones
     if (this.evaluacionCab.progreso == 100) {
-      this.evaluacionCab.observaciones = 'El formulario está completo.';
+      this.evaluacionCab.observaciones = 'Formulario Completo.';
     } else {
-      this.evaluacionCab.observaciones = 'Por favor, complete el formulario.';
+      this.evaluacionCab.observaciones = 'Formulario Incompleto.';
     }
 
     this.evaluacionCab.fechaRegistro = new Date();
@@ -424,7 +471,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
         // La EvaluacionCab se ha actualizado correctamente
         console.log('EvaluacionCab creada correctamente.');
-        console.log(cab);
+        // console.log(cab);
 
         this.evaluacionDets.forEach(det => {
           det.evaluacionCab.nroEvaluacion = cab.nroEvaluacion;
@@ -434,17 +481,17 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
           console.log('EvaluacioDet Creada correctamente.');
           console.log(det);
 
-          this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
-            console.log('EvaluacionCab agregada correctamente.');
-            console.log(det);
-            Swal.fire({
-              title: '¡Registro Exitoso!',
-              text: 'La evaluacion fue agregada correctamente',
-              icon: 'success',
-              confirmButtonText: 'Confirmar',
-              showCancelButton: false, // No mostrar el botón de cancelar
-            });
-          })
+          // this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
+          //   console.log('EvaluacionCab agregada correctamente.');
+          //   // console.log(det);
+          //   Swal.fire({
+          //     title: '¡Registro Exitoso!',
+          //     text: 'La evaluacion fue agregada correctamente',
+          //     icon: 'success',
+          //     confirmButtonText: 'Confirmar',
+          //     showCancelButton: false, // No mostrar el botón de cancelar
+          //   });
+          // })
 
           this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
 
@@ -464,7 +511,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   updateNuevaEvaluacionCab() {
 
     //asignar aula
-    this.evaluacionCab.aulaEva = this.selectedAula;
+    this.evaluacionCab.aulaEva.aulaId = this.selectedAula.aulaId;
     //evaluador
     const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
     if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
@@ -498,13 +545,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
         // La EvaluacionCab se ha actualizado correctamente
         console.log('EvaluacionCab actualizada correctamente.');
-        console.log(cab);
+        // console.log(cab);
 
 
 
         this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
           console.log('EvaluacionCab actualizada correctamente.');
-          console.log(det);
+          // console.log(det);
           Swal.fire({
             title: '¡Registro Exitoso!',
             text: 'La evaluacion fue actualizada correctamente',
