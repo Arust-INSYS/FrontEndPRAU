@@ -123,7 +123,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.status = params['status'];
-      console.log(this.id, this.status);
     });
     //cargar filtros;
     this.loadPeriodos();
@@ -366,6 +365,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       } else if (item.calificacion.codCalificacion === 'NC') {
         this.contarNC++;
       }
+      this.progreso++;
     });
   }
 

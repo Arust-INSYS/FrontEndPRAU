@@ -2,74 +2,86 @@
 
     <body>
         <section class="subconten2">
+            <!-- <p-card header="Title"> -->
+            <p-card header="Evaluación N° {{ nroEvaluacion }}">
+                <ng-container *ngIf="status !== 'edit'">
+                    <p-divider align="left" type="solid">
+                        <div className="inline-flex align-items-center">
+                            <i class="pi pi-filter" style="padding-right: 0.5rem;"></i>
+                            <b>Buscar Aula por Evaluar</b>
+                        </div>
 
-            <div class="evaluation-details">
-                <ng-container *ngIf="id; else normal">
-                    <label for="lblNumeroEvaluacion">N° Evaluación: {{ id }}</label>
+                    </p-divider>
+                    <div class="layout" *ngIf="status !== 'edit'">
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="periodosAc" [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo"
+                                [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
+                                placeholder="Selecionar Periodo Academico" (onChange)="consultarAula(); loadCarreras()">
+
+                            </p-dropdown>
+                        </div>
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="carreras" [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera"
+                                [filter]="true" filterBy="nombreCarrera" [showClear]="true"
+                                placeholder="Selecionar Carrera" (onChange)="loadAsignaturas(); consultarAula()">
+
+                            </p-dropdown>
+                        </div>
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
+                                [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                                placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
+
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="layout-criterio" *ngIf="status !== 'edit'">
+                        <div class="">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="docentes" [(ngModel)]="selectedDocente" optionLabel="nombreCompleto"
+                                [filter]="true" filterBy="nombreCompleto" [showClear]="true"
+                                placeholder="Selecionar Docente">
+
+                            </p-dropdown>
+                        </div>
+                        <div class="grow1-criterio">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="aulas" [(ngModel)]="selectedAula" optionLabel="nombre" [filter]="true"
+                                filterBy="nombre" [showClear]="true" placeholder="Selecionar Aula">
+
+                            </p-dropdown>
+                        </div>
+                    </div>
                 </ng-container>
-                <ng-template #normal>
-                    <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label>
-                </ng-template>
-                <!-- <label for="lblNumeroEvaluacion">N° Evaluación: {{ nroEvaluacion }}</label> -->
-            </div>
+                <ng-container>
 
-            <div class="layout" *ngIf="status !== 'edit'">
-                <div class="filter">
-                    <p-dropdown class="element-filter"
-                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="periodosAc"
-                        [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo" [filter]="true"
-                        filterBy="nombrePeriodo" [showClear]="true" placeholder="Selecionar Periodo Academico"
-                        (onChange)="consultarAula(); loadCarreras()">
+                </ng-container>
+            </p-card>
 
-                    </p-dropdown>
-                </div>
-                <div class="filter">
-                    <p-dropdown class="element-filter"
-                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="carreras"
-                        [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera" [filter]="true"
-                        filterBy="nombreCarrera" [showClear]="true" placeholder="Selecionar Carrera"
-                        (onChange)="loadAsignaturas(); consultarAula()">
 
-                    </p-dropdown>
-                </div>
-                <div class="filter">
-                    <p-dropdown class="element-filter"
-                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
-                        [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
-                        [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
-                        placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
-
-                    </p-dropdown>
-                </div>
-            </div>
-            <div class="layout-criterio" *ngIf="status !== 'edit'">
-                <div class="">
-                    <p-dropdown class="element-filter"
-                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="docentes"
-                        [(ngModel)]="selectedDocente" optionLabel="nombreCompleto" [filter]="true"
-                        filterBy="nombreCompleto" [showClear]="true" placeholder="Selecionar Docente">
-
-                    </p-dropdown>
-                </div>
-                <div class="grow1-criterio">
-                    <p-dropdown class="element-filter"
-                        [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="aulas"
-                        [(ngModel)]="selectedAula" optionLabel="nombre" [filter]="true" filterBy="nombre"
-                        [showClear]="true" placeholder="Selecionar Aula">
-
-                    </p-dropdown>
-                </div>
-            </div>
 
         </section>
         <section>
-            <div>
+            <p-chip styleClass="pl-0 pr-3">
+                <span
+                    class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">P</span>
+                <span class="ml-2 font-medium"><b>Aula Seleccionada:</b> {{selectedAula?.nombre}}</span>
+            </p-chip>
+            <!-- <div>
                 <label for="selectedAula" class="titulo-criterios">Aula Seleccionada: {{selectedAula?.nombre}}</label>
             </div>
             <div>
                 <label for="selectedDocente" class="titulo-criterio">Docente a cargo:
                     {{selectedDocente?.nombreCompleto}}</label>
-            </div>
+            </div> -->
         </section>
 
         <section class="layoutnum">
