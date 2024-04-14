@@ -174,7 +174,7 @@ export class RegistrarPersonaComponent {
         Swal.fire('Actualizado!', 'La persona ha sido actualizado.', 'success');
         this.usuarioService
           .update(this.IdEditar, this.usuario)
-          .subscribe(() => {});
+          .subscribe(() => { });
       });
       this.cargarTabla();
 

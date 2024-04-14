@@ -17,7 +17,8 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="periodosAc" [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo"
                                 [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
-                                placeholder="Selecionar Periodo Academico" (onChange)="consultarAula(); loadCarreras()">
+                                placeholder="Selecionar Periodo Academico"
+                                (onChange)="loadCarreras();  loadAsignaturas(); loadDocentes(); consultarAula();   ">
 
                             </p-dropdown>
                         </div>
@@ -26,7 +27,8 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="carreras" [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera"
                                 [filter]="true" filterBy="nombreCarrera" [showClear]="true"
-                                placeholder="Selecionar Carrera" (onChange)="loadAsignaturas(); consultarAula()">
+                                placeholder="Selecionar Carrera"
+                                (onChange)="loadAsignaturas(); loadDocentes(); consultarAula();  ">
 
                             </p-dropdown>
                         </div>
@@ -35,7 +37,7 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
                                 [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
-                                placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula()">
+                                placeholder="Selecionar Asignatura" (onChange)="loadDocentes(); consultarAula();">
 
                             </p-dropdown>
                         </div>
