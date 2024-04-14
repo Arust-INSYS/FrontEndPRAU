@@ -24,15 +24,17 @@
                     (click)="crearNuevoDato(status='create')"></button></div>
             <div class="radio-inputs">
                 <label class="radio">
-                    <input type="radio" name="radio" value=1 (change)="getEvaluacionesCAB(1)">
+                    <input type="radio" name="radio" [value]="1" [(ngModel)]="estadoBTN"
+                        (change)="getEvaluacionesCAB(1)" [checked]="estadoBTN === 1">
                     <span class="name">Activo</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="radio" value=0 (change)="getEvaluacionesCAB(0)">
+                    <input type="radio" name="radio" [value]="0" [(ngModel)]="estadoBTN"
+                        (change)="getEvaluacionesCAB(0)" [checked]="estadoBTN === 0">
                     <span class="name">Inactivo</span>
                 </label>
-
             </div>
+
 
         </section>
 
@@ -54,11 +56,12 @@
                 [responsive]="true">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>n° Evaluación</th>
+                        <th>N°</th>
                         <th>Aula</th>
                         <th>Docente</th>
+                        <th>Asignatura</th>
                         <th>Observaciones</th>
-                        <th>Porcentaje Cumplido</th>
+                        <th>Progreso</th>
                         <th>Editar</th>
                         <th>Acción</th>
                     </tr>
@@ -67,16 +70,26 @@
                     <tr>
                         <td>{{ evaluacionCab.nroEvaluacion }}</td>
                         <td>{{ evaluacionCab.aulaEva?.aulaNombre }}</td>
-                        <td>{{ evaluacionCab.aulaEva?.docente.usuPerId.perNombre1 }}</td>
+                        <td>{{(evaluacionCab.aulaEva?.docente?.usuPerId?.perApellido1 ??'') + ' ' +
+                            (evaluacionCab.aulaEva?.docente?.usuPerId?.perApellido2 ?? '') + ' ' +
+                            (evaluacionCab.aulaEva?.docente?.usuPerId?.perNombre1 ?? '') + ' ' +
+                            (evaluacionCab.aulaEva?.docente?.usuPerId?.perNombre2 ?? '')}}
+                        </td>
+                        <td>{{ evaluacionCab.aulaEva?.asignatura?.nombreAsignatura }}</td>
                         <td>{{ evaluacionCab.observaciones }}</td>
-                        <td>{{ evaluacionCab.porcTotalC }}</td>
+                        <td>
+                            <div class="stats" style=" ">
+                                <p-knob [(ngModel)]="evaluacionCab.progreso"
+                                    valueTemplate="{{ evaluacionCab.progreso }}%" [readonly]="true" [strokeWidth]="8"
+                                    [size]="50" valueColor="#004f9f"></p-knob>
+                            </div>
+                        </td>
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-success mr-2"
                                 (click)="actualizarCriterio(evaluacionCab.nroEvaluacion, status='edit')"></button>
                         </td>
                         <td>
-                            <button role="button" class="button-name2"
-                                *ngIf="evaluacionCab.estado ===1"
+                            <button role="button" class="button-name2" *ngIf="evaluacionCab.estado ===1"
                                 (click)="eliminarCriterio(evaluacionCab.nroEvaluacion, 0)"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="svgTbl" viewBox="0 0 16 16">
@@ -85,8 +98,7 @@
                                 </svg>
                             </button>
 
-                            <button role="button" class="button-name3"
-                                *ngIf="evaluacionCab.estado ===0"
+                            <button role="button" class="button-name3" *ngIf="evaluacionCab.estado ===0"
                                 (click)="eliminarCriterio(evaluacionCab.nroEvaluacion, 1)"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="svgTbl" viewBox="0 0 16 16">

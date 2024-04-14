@@ -4,7 +4,7 @@ import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
 import { Observable, map } from 'rxjs';
 import { Aula } from '../models/aula';
-import { IConsultarAula } from '../interface/IConsultasBD';
+import { IConsultarAula, IConsultarAulaObj } from '../interface/IConsultasBD';
 
 @Injectable({
   providedIn: 'root',
@@ -86,6 +86,17 @@ export class AulaService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
     return this.http.get<IConsultarAula[]>(`${this.url}/aulaConsultar?asignaturaId=${asignaturaId}&carreraId=${carreraId}&periodoId=${periodoId}&usuId=${usuId}`, {
+      headers,
+    });
+
+  }
+
+  aulaFindById(aulaId: number): Observable<Aula> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<Aula>(`${this.url}/aulaFindById?aulaId=${aulaId}`, {
       headers,
     });
 
