@@ -439,13 +439,13 @@ export class EvaluacionCriteriosComponent {
       ciclo: item.aulaEva.cicloPertenece,
       carrera: item.aulaEva.asignatura.carrera?.nombreCarrera || '',
       per: item.aulaEva.periodoAc.nombrePeriodo,
-      progreso: item.progreso + '%' || '0%',
+      progreso: Number((item.progreso).toFixed(2)) + '%' || '0%',
       cc: item.totalC || 0,
-      porcCC: item.porcTotalC + '%' || '0%',
-      cm: item.porcTotalCm,
-      porcCM: item.porcTotalCm + '%' || '0%',
+      porcCC: Number((item.porcTotalC).toFixed(2)) + '%' || '0%',
+      cm: item.totalCm,
+      porcCM: Number((item.porcTotalCm ).toFixed(2))+ '%' || '0%',
       nc: item.totalNc,
-      porcNC: item.porcTotalNc + '%' || '0%'
+      porcNC: Number((item.porcTotalNc ).toFixed(2))+ '%' || '0%'
     }));
 
     if (this.excelReportData) {
