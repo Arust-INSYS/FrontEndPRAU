@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Rol } from '../../../models/rol';
 import { RolService } from '../../../services/rol.service';
+import { AuthRolService } from '../../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listar-rol',
@@ -8,6 +10,8 @@ import { RolService } from '../../../services/rol.service';
   styleUrls: ['./listar-rol.component.css']
 })
 export class ListarRolComponent {
+  rolAuth: string = '';
+  private subscription!: Subscription;
   rol: Rol = new Rol();
 
   roles: Rol[] = [];
@@ -16,10 +20,17 @@ export class ListarRolComponent {
   displayModal: boolean = false;
   displayModalEdit: boolean = false;
 
-  constructor(private rolService: RolService) { }
+  constructor(private rolService: RolService, private authRolService: AuthRolService) { }
 
   ngOnInit(): void {
     this.getAllRoles();
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rolAuth = rol;
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   showModalEditar(rol: Rol): void {

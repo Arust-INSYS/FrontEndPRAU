@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthRolService } from '../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 import { NgForm } from '@angular/forms';
 import { Criterios } from '../../models/criterios';
@@ -13,6 +15,8 @@ import { ClasificacionCriteriosService } from '../../services/clasificacion-crit
   styleUrls: ['./criterios.component.css'],
 })
 export class CriteriosComponent {
+  rol: string = '';
+  private subscription!: Subscription;
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
@@ -20,11 +24,19 @@ export class CriteriosComponent {
     private criteriosService: CriteriosService,
     private router: Router,
     private toastr: ToastrService,
-    private clasificacionCriteriosService: ClasificacionCriteriosService
+    private clasificacionCriteriosService: ClasificacionCriteriosService,
+    private  authRolService: AuthRolService
   ) {}
   ngOnInit(): void {
     this.obtenercriterios();
     this.obtenerClasificaciones();
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   obtenercriterios() {
