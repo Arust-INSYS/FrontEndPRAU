@@ -151,15 +151,12 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
 import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
-<<<<<<<<< Temporary merge branch 1
-import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
-=========
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { TokenExpirationInterceptor } from './env/TokenExpirationInterceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
->>>>>>>>> Temporary merge branch 2
+import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
 
 
 

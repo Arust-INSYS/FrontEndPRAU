@@ -125,8 +125,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
+
     private toastr: ToastrService,
+
     private authRolService: AuthRolService
+
 
   ) { }
 
@@ -165,10 +168,10 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
+  // ngOnDestroy(): void{
+  //   this.subscription.unsubscribe();
+  // }
+  
   cargarEvaluacion(id: number) {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
       response => {

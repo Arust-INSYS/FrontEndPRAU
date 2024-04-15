@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Rol } from '../../../models/rol';
 import { RolService } from '../../../services/rol.service';
+import { Subscription } from 'rxjs';
+import { AuthRolService } from '../../../services/authRolService.service';
 
 @Component({
   selector: 'app-listar-rol',
