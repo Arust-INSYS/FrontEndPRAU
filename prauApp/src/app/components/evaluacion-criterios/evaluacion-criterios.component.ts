@@ -13,6 +13,8 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CarreraService } from '../../services/carrera.service';
 import Swal from 'sweetalert2';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -54,8 +56,10 @@ export class EvaluacionCriteriosComponent {
   selectedCustomers: any
   loading: any
 
-  estadoBTN: number = 0;
+  estadoBTN: number = 1;
   //
+  excelReportData: IExcelReportParams | null = null;
+
 
   constructor(private evaluacionCABService: EvaluacionCabService,
     private usuarioService: UsuarioService,
@@ -64,13 +68,14 @@ export class EvaluacionCriteriosComponent {
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
     private carreraService: CarreraService,
+    private excelService: ExcelService
   ) { }
 
 
   ngOnInit(): void {
     this.estadoBTN = 1;
-    this.getEvaluacionesCAB(1);
-    this.listarevalu();
+    this.getFiltroEvaCap();
+    // this.listarevalu();
 
 
   }
@@ -171,7 +176,8 @@ export class EvaluacionCriteriosComponent {
     //  = this.estadoBTN;
     this.evaluacionCABService.getFiltroEvaCap(this.estadoBTN, this.searchTerm).subscribe((dato) => {
       this.evaluacionCab = dato;
-      console.log(dato)
+      // console.log(dato)
+      this.loadExcelReportData(this.evaluacionCab);
       //this.generarPDF();
     },
       error => {
@@ -386,6 +392,85 @@ export class EvaluacionCriteriosComponent {
     const url = URL.createObjectURL(blob);
 
     window.open(url, '_blank');
+  }
+
+
+  loadExcelReportData(data: EvaluacionCab[]) {
+    //NOMBRE DEL REPORTE
+    const reportName = 'Evaluaciones';
+
+    //TAMAÑO DEL LOGO
+    const logo = 'G1:J1';
+
+    //ENCABEZADOS
+    const headerItems: IHeaderItem[] = [
+      { header: '№' },
+      { header: 'FECHA' },
+      { header: 'IDENT. EVALUADOR' },
+      { header: 'EVALUADOR' },
+      { header: 'AULA' },
+      { header: 'IDENT. DOCENTE' },
+      { header: 'DOCENTE' },
+      { header: 'ASIGANTURA' },
+      { header: 'CICLO' },
+      { header: 'CARRERA' },
+      { header: 'PERIODO ACADEMICO' },
+      { header: '% PROGRESO' },
+      { header: 'CUMPLE' },
+      { header: '% CUMPLE' },
+      { header: 'CUMPLE MEDIANAMENTE' },
+      { header: '% CUMPLE MEDIANAMENTE' },
+      { header: 'NO CUMPLE' },
+      { header: '% NO CUMPLE' },
+    ];
+
+    //DATOS DEL REPORTE
+    const rowData = data.map((item) => ({
+      nro: item.nroEvaluacion || 0,
+      fecha: item.fechaRegistro
+        ? new Date(new Date(item.fechaRegistro).getTime() + new Date(item.fechaRegistro).getTimezoneOffset() * 60000).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')
+        : '' || '',
+      identEva: item.evaluador?.usuPerId.perCedula || '',
+      evaluador: `${item.evaluador?.usuPerId.perApellido1 || ''} ${item.evaluador?.usuPerId.perApellido2 || ''} ${item.evaluador?.usuPerId.perNombre1 || ''} ${item.evaluador?.usuPerId.perNombre2 || ''}`.trim(),
+      aula: item.aulaEva.aulaNombre,
+      identDoc: item.aulaEva.docente.usuPerId.perCedula || '',
+      docente: `${item.aulaEva.docente?.usuPerId.perApellido1 || ''} ${item.aulaEva.docente?.usuPerId.perApellido2 || ''} ${item.aulaEva.docente?.usuPerId.perNombre1 || ''} ${item.aulaEva.docente?.usuPerId.perNombre2 || ''}`.trim(),
+      asig: item.aulaEva.asignatura.nombreAsignatura || '',
+      ciclo: item.aulaEva.cicloPertenece,
+      carrera: item.aulaEva.asignatura.carrera?.nombreCarrera || '',
+      per: item.aulaEva.periodoAc.nombrePeriodo,
+      progreso: item.progreso + '%' || '0%',
+      cc: item.totalC || 0,
+      porcCC: item.porcTotalC + '%' || '0%',
+      cm: item.porcTotalCm,
+      porcCM: item.porcTotalCm + '%' || '0%',
+      nc: item.totalNc,
+      porcNC: item.porcTotalNc + '%' || '0%'
+    }));
+
+    if (this.excelReportData) {
+      this.excelReportData.logo = logo;
+      this.excelReportData.rowData = rowData;
+      this.excelReportData.headerItems = headerItems;
+      this.excelReportData.reportName = reportName;
+    } else {
+      this.excelReportData = {
+        logo,
+        rowData,
+        headerItems,
+        reportName,
+      };
+    }
+  }
+
+  //PASO 3
+  //metodo para el boton dew descarga
+  downloadExcel(): void {
+    if (this.excelReportData) {
+      this.excelService.dowloadExcel(this.excelReportData);
+    }
+    //PASO 4 colocar metodo listar objeto
+    this.getFiltroEvaCap();
   }
 
 }
