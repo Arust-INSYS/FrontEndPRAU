@@ -27,7 +27,7 @@ export class EvaluacionCriteriosComponent {
   $odd: any;
   Delete: string | undefined;
 
-  status: string="";
+  status: string = "";
 
   dt: any;
 
@@ -47,12 +47,15 @@ export class EvaluacionCriteriosComponent {
   docenteSeleccionado: number | null = null; // Almacenará el ID del docente seleccionado
   cursoSeleccionado: number = 0; // Almacenará el ID del curso seleccionado
   idAulaSeleccionada: number | null = null;
-//nro evaluacion
-nroEvaluacion: number = 0;
-  estado: number=1;// este es el estado establecido
+  //nro evaluacion
+  nroEvaluacion: number = 0;
+  estado: number = 1;// este es el estado establecido
   customers: any
   selectedCustomers: any
   loading: any
+
+  estadoBTN: number = 0;
+  //
 
   constructor(private evaluacionCABService: EvaluacionCabService,
     private usuarioService: UsuarioService,
@@ -61,10 +64,11 @@ nroEvaluacion: number = 0;
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
     private carreraService: CarreraService,
-    ) {}
+  ) { }
 
 
   ngOnInit(): void {
+    this.estadoBTN = 1;
     this.getEvaluacionesCAB(1);
     this.listarevalu();
 
@@ -123,20 +127,20 @@ nroEvaluacion: number = 0;
   }
 
 
-async listarcursos(docenteId: number) {
-  await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
-    this.cursos = aulas.map((doc) => ({
-      label: doc.aulaNombre,
-      value: doc.aulaId,
-    }));
-  });
-}
-onCursoSeleccionado(selectedCurso: any) {
-  // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
-  console.log('Docente seleccionado:', selectedCurso);
-  this.evaluacionCa.aulaEva!.aulaId=selectedCurso;
-  //console.log('Este es el mensaje',this.evaluacionCa.aula)
-}
+  async listarcursos(docenteId: number) {
+    await this.aulaService.getAulasPorUsuario(docenteId).subscribe((aulas: any[]) => {
+      this.cursos = aulas.map((doc) => ({
+        label: doc.aulaNombre,
+        value: doc.aulaId,
+      }));
+    });
+  }
+  onCursoSeleccionado(selectedCurso: any) {
+    // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
+    console.log('Docente seleccionado:', selectedCurso);
+    this.evaluacionCa.aulaEva!.aulaId = selectedCurso;
+    //console.log('Este es el mensaje',this.evaluacionCa.aula)
+  }
 
   cargarInformacionCurso(): void {
     // Verificar que haya un curso seleccionado
@@ -150,6 +154,7 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   getEvaluacionesCAB(est: number): void {
+    this.estadoBTN = est;
     this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
       //this.generarPDF();
@@ -165,14 +170,12 @@ onCursoSeleccionado(selectedCurso: any) {
   }
 
   crearNuevoDato(status: string) {
-    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion',this.status]);
+    this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', this.status]);
 
   }
 
   actualizarCriterio(id: number, status: string) {
-  
     this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion-calificacion', status, id]);
-    
   }
 
   // Método para eliminar un criterio
@@ -225,18 +228,18 @@ onCursoSeleccionado(selectedCurso: any) {
       const width = this.getTextWidth(currentLine + word, fontSize); // Calcular el ancho del texto actual
 
       if (width <= maxWidth) {
-          // Si la palabra cabe en la línea actual, añádela
-          currentLine += (currentLine ? ' ' : '') + word;
+        // Si la palabra cabe en la línea actual, añádela
+        currentLine += (currentLine ? ' ' : '') + word;
       } else {
-          // Si la palabra no cabe, añade la línea actual al array de líneas y comienza una nueva línea
-          lines.push(currentLine);
-          currentLine = word;
-      }
-  }
-
-      // Añadir la última línea
-      if (currentLine !== '') {
+        // Si la palabra no cabe, añade la línea actual al array de líneas y comienza una nueva línea
         lines.push(currentLine);
+        currentLine = word;
+      }
+    }
+
+    // Añadir la última línea
+    if (currentLine !== '') {
+      lines.push(currentLine);
     }
 
     return lines;
@@ -245,7 +248,7 @@ onCursoSeleccionado(selectedCurso: any) {
   getTextWidth(text: string, fontSize: number): number {
     // Calcular el ancho del texto según su longitud y el tamaño de la fuente
     return text.length * (fontSize * 0.5); // Ajusta según sea necesario
-}
+  }
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
@@ -255,18 +258,18 @@ onCursoSeleccionado(selectedCurso: any) {
     const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
     const image = await pdfDoc.embedPng(imageBytes);
     page.drawImage(image, {
-        x: 210, // Posición x de la imagen
-        y: 780, // Posición y de la imagen
-        width: 180, // Ancho de la imagen
-        height: 40 // Alto de la imagen
+      x: 210, // Posición x de la imagen
+      y: 780, // Posición y de la imagen
+      width: 180, // Ancho de la imagen
+      height: 40 // Alto de la imagen
     });
 
     // Título de la tabla
     page.drawText('Lista de Evaluaciones', {
-        x: 250,
-        y: 750,
-        size: 15,
-        color: rgb(0, 0, 0),
+      x: 250,
+      y: 750,
+      size: 15,
+      color: rgb(0, 0, 0),
     });
 
     // Definir el tamaño y la posición de la tabla
@@ -288,82 +291,82 @@ onCursoSeleccionado(selectedCurso: any) {
 
     // Dibujar encabezados y líneas horizontales
     for (let i = 0; i < headers.length; i++) {
-        page.drawText(headers[i], {
-            x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
-            y: startY + tableHeight - rowHeight - 20 + cellPadding,
-            size: fontSize,
-            color: colorencabezado,
-        });
+      page.drawText(headers[i], {
+        x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
+        y: startY + tableHeight - rowHeight - 20 + cellPadding,
+        size: fontSize,
+        color: colorencabezado,
+      });
     }
 
     const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
     // Llenar la tabla con los datos
     for (let i = 0; i < this.evaluacionCab.length; i++) {
-        const dato = this.evaluacionCab[i];
-        const rowData = [
-          dato.nroEvaluacion?.toString() || '', // Manejar valores null
-          dato.aulaEva?.aulaNombre || '',
-          dato.aulaEva?.docente.usuPerId.perNombre1 || '',
-          dato.aulaEva?.observaciones || '',
-          dato.porcTotalC?.toString() || '',
-        ];
-        // Calcular la altura máxima de la fila
-        let maxHeight = 0;
-        for (let j = 0; j < rowData.length; j++) {
-          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
-          const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
-          maxHeight = Math.max(maxHeight, textHeight);
-          
-        }
-    // Dibujar los datos de la fila y las líneas horizontales
-    for (let j = 0; j < rowData.length; j++) {
-      const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
-      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
-      const cellWidth = dataCellWidths[j] - 2 * cellPadding;
+      const dato = this.evaluacionCab[i];
+      const rowData = [
+        dato.nroEvaluacion?.toString() || '', // Manejar valores null
+        dato.aulaEva?.aulaNombre || '',
+        dato.aulaEva?.docente.usuPerId.perNombre1 || '',
+        dato.aulaEva?.observaciones || '',
+        dato.porcTotalC?.toString() || '',
+      ];
+      // Calcular la altura máxima de la fila
+      let maxHeight = 0;
+      for (let j = 0; j < rowData.length; j++) {
+        const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
+        const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
+        maxHeight = Math.max(maxHeight, textHeight);
 
-      // Dibujar texto
-      if (j < 7) { // Si es la celda de descripción
-        const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
-        for (let k = 0; k < descriptionLines.length; k++) {
+      }
+      // Dibujar los datos de la fila y las líneas horizontales
+      for (let j = 0; j < rowData.length; j++) {
+        const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
+        const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
+        const cellWidth = dataCellWidths[j] - 2 * cellPadding;
+
+        // Dibujar texto
+        if (j < 7) { // Si es la celda de descripción
+          const descriptionLines = this.splitDescriptionIntoLines(rowData[j], cellWidth, fontSize);
+          for (let k = 0; k < descriptionLines.length; k++) {
             page.drawText(descriptionLines[k], {
-                x: cellX,
-                y: cellY - k * (fontSize * 0.95),
-                size: fontSize,
-                color: rgb(0, 0, 0),
-                maxWidth: cellWidth,
+              x: cellX,
+              y: cellY - k * (fontSize * 0.95),
+              size: fontSize,
+              color: rgb(0, 0, 0),
+              maxWidth: cellWidth,
             });
-        }
-    } else { // Para otras celdas
-        page.drawText(rowData[j], {
+          }
+        } else { // Para otras celdas
+          page.drawText(rowData[j], {
             x: cellX,
             y: cellY,
             size: fontSize,
             color: rgb(0, 0, 0),
             maxWidth: cellWidth,
-        });
-    }
+          });
+        }
 
-    // Dibujar líneas verticales entre las columnas
-    if (j < rowData.length - 1) {
-      const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
-      const lineYStart = cellY + 30;
-      const lineYEnd = cellY - maxHeight - 30;
-      page.drawLine({
-          start: { x: nextCellX, y: lineYStart },
-          end: { x: nextCellX, y: lineYEnd },
-          thickness: 1,
-          color: colorlineas
-      });
-  }
-}
-        // Dibujar líneas horizontales entre las filas
-        page.drawLine({
-            start: { x: startX, y: startY - (i - 8) * rowHeight },
-            end: { x: startX  + 60+ dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight },
-            thickness: 1.5,
+        // Dibujar líneas verticales entre las columnas
+        if (j < rowData.length - 1) {
+          const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
+          const lineYStart = cellY + 30;
+          const lineYEnd = cellY - maxHeight - 30;
+          page.drawLine({
+            start: { x: nextCellX, y: lineYStart },
+            end: { x: nextCellX, y: lineYEnd },
+            thickness: 1,
             color: colorlineas
-        });
-        startY -= maxHeight + cellPadding;
+          });
+        }
+      }
+      // Dibujar líneas horizontales entre las filas
+      page.drawLine({
+        start: { x: startX, y: startY - (i - 8) * rowHeight },
+        end: { x: startX + 60 + dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight },
+        thickness: 1.5,
+        color: colorlineas
+      });
+      startY -= maxHeight + cellPadding;
     }
 
     const pdfBytes = await pdfDoc.save();

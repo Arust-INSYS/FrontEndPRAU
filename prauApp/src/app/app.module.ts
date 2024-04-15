@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CriteriosComponent } from './components/criterios/criterios.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CriteriosActualizarComponent } from './components/criterios-actualizar/criterios-actualizar.component';
 import { PasswordModule } from 'primeng/password';
 import { ClasificacionCriteriosComponent } from './components/clasificacion-criterios/clasificacion-criterios.component';
@@ -152,7 +152,9 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
-import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+import { TokenExpirationInterceptor } from './env/TokenExpirationInterceptor';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 
 
 
@@ -203,8 +205,8 @@ import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-r
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
     AnalisisGraficaDocenteComponent,
-    ActualizarRolComponent
-    
+
+    AnalisisUsoCarreraComponent,
   ],
   imports: [
     RouterModule,
@@ -328,7 +330,19 @@ import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-r
     //CalendarModule,
     //MatSelectModule,
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenExpirationInterceptor,
+      multi: true,
+    },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
+
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

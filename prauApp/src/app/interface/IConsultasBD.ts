@@ -1,3 +1,5 @@
+import { Aula } from "../models/aula";
+
 export interface IAsignaturaXCarrera {
     idAsignatura?: number;
     nombreAsignatura: string;
@@ -10,7 +12,12 @@ export interface IDocenteXAsignatura {
 }
 
 export interface IConsultarAula {
-    aulaId?: number;
+    aulaId: number;
+    nombre: string;
+}
+
+export interface IConsultarAulaObj {
+    aulaId?: Aula;
     nombre: string;
 }
 

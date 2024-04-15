@@ -24,6 +24,35 @@ body {
   /* min-width: 300px; */
 }
 
+.layout-estats {
+  width: 100%;
+
+  display: flex;
+  /* gap: 16px; */
+}
+
+.stats {
+  width: 40%;
+  display: grid;
+  justify-content: center;
+
+  /* align-items: center; */
+
+  /* padding-left: 5rem; */
+}
+
+.obs {
+  width: 100%;
+}
+
+.grow1-estats {
+  flex-grow: 1;
+  width: 100%;
+  display: grid;
+  place-items: center;
+
+}
+
 .element-filter {
   /* width: 100%; */
 }
@@ -59,6 +88,16 @@ body {
   border-radius: 5px;
 }
 
+.clasificacion {
+  margin: 0 0 0.1rem;
+  text-decoration: underline;
+}
+
+.drop-calificacion {
+  display: flex;
+  align-items: center;
+}
+
 .layout-criterio {
   width: 100%;
 
@@ -68,8 +107,53 @@ body {
   padding-bottom: 0.5rem;
 }
 
+
+
 .grow1-criterio {
   flex-grow: 1;
+}
+
+.layout-equals {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+}
+
+.grow1-equals {
+  flex-grow: 1;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.layout-data {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+
+  padding-top: 0.1em;
+  padding-bottom: 0.1rem;
+  /* align-items: center; */
+}
+
+.grow1-data {
+  flex-grow: 1;
+  display: grid;
+  align-items: center;
+  justify-content: left;
+  text-align: justify;
+  width: 100%;
+  /* /// */
+  background-color: #e5e7eb;
+  color: #4b5563;
+  border-radius: 16px;
+  /* padding: 0 0.75rem; */
+
+  /* justify-content: center;
+  align-items: center; */
 }
 
 .custome_drop {
@@ -95,6 +179,9 @@ body {
 .button-container {
   text-align: center;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
 }
 
 .progress-container {
@@ -146,10 +233,10 @@ select:focus {
 }
 
 .grupo-preguntas {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   /* Borde sólido de 1px de grosor y color gris claro */
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   /* Espacio entre cada grupo de preguntas */
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   /* Espacio interno dentro de cada grupo de preguntas */
 }

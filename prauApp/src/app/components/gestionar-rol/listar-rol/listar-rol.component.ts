@@ -2,20 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Rol } from '../../../models/rol';
 import { RolService } from '../../../services/rol.service';
+import { AuthRolService } from '../../../services/authRolService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listar-rol',
   templateUrl: './listar-rol.component.html',
   styleUrls: ['./listar-rol.component.css']
 })
-export class ListarRolComponent implements OnInit {
+export class ListarRolComponent {
+  rolAuth: string = '';
+  private subscription!: Subscription;
+  rol: Rol = new Rol();
+
   roles: Rol[] = [];
   selectedRol: Rol = { rolId: 0, rolNombre: '', rolDescripcion: '' };
 
-  constructor(private router: Router, private rolService: RolService) {}
+  constructor(private router: Router, private rolService: RolService, private authRolService: AuthRolService) { }
 
   ngOnInit(): void {
     this.getAllRoles();
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rolAuth = rol;
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   selectRol(rol: Rol) {
