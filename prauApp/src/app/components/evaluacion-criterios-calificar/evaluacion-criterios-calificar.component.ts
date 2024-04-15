@@ -201,7 +201,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
           let det: EvaluacionDet = new EvaluacionDet();
           det.secCalificacion = res.secCalificacion;
           det.evaluacionCab = res.evaluacionCab;
-          det.calificacion = res.calificacion;
+          det.calificacion = res.calificacion || new Calificacion();
           det.criterio = res.criterio;
           this.evaluacionDets.push(det);
         }
@@ -363,11 +363,17 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.calificacion = res
     });
   }
-  onCalificacionSeleccionado() {
 
+  // Método para manejar el cambio en la selección del dropdown
+  onCalificacionSeleccionado(det: EvaluacionDet): void {
     this.actualizarContadores();
 
     this.contarCalificaciones();
+    // Verificar si el valor seleccionado es null o undefined
+    if (!det.calificacion.codCalificacion) {
+      // Si es null o undefined, establecerlo como una cadena vacía
+      det.calificacion.codCalificacion = '';
+    }
   }
 
   actualizarContadores() {
@@ -448,11 +454,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
 
     // Determinar las observaciones
-    if (this.evaluacionCab.progreso == 100) {
-      this.evaluacionCab.observaciones = 'Formulario Completo.';
-    } else {
-      this.evaluacionCab.observaciones = 'Formulario Incompleto.';
-    }
 
     this.evaluacionCab.fechaRegistro = new Date();
 
@@ -506,6 +507,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.evaluacionCab.estado = 1;    //asignar aula
     // // this.evaluacionCab.aulaEva.aulaId;
     //evaluador
+
     const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
 
     if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
@@ -515,6 +517,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
+
     // this.evaluacionCab.estado = 1;
 
     // Calcular los porcentajes totales
@@ -523,12 +526,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / totalCriterios) * 100;
     this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / totalCriterios) * 100;
 
-    // Determinar las observaciones
-    if (this.evaluacionCab.progreso == 100) {
-      this.evaluacionCab.observaciones = 'El formulario está completo.';
-    } else {
-      this.evaluacionCab.observaciones = 'Por favor, complete el formulario.';
-    }
+
 
     this.evaluacionCab.fechaRegistro = new Date();
 
@@ -539,7 +537,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
         // La EvaluacionCab se ha actualizado correctamente
         console.log('EvaluacionCab actualizada correctamente.');
-        // console.log(cab);
+        console.log(this.evaluacionCab);
 
 
 
@@ -564,6 +562,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     );
     // this.guardarCalificaciones();
   }
+
+
 
   // updateCalificaciones() {
   //   this.calificacionesPorCriterio.forEach(calificacion => {

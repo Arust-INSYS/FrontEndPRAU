@@ -182,14 +182,13 @@
                                             det.criterio?.descripcion}}:</label>
                                     </div>
 
-
                                     <div class="drop-calificacion">
                                         <p-dropdown id="dropdown1" class="custome_drop"
                                             [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
                                             [options]="calificacion" optionLabel="descripcion"
                                             optionValue="codCalificacion" placeholder="Selecionar Calificacion"
                                             [(ngModel)]="det.calificacion.codCalificacion"
-                                            (onChange)="onCalificacionSeleccionado()" [showClear]="true">
+                                            (ngModelChange)="onCalificacionSeleccionado(det)" [showClear]="true">
 
                                         </p-dropdown>
                                     </div>
@@ -198,6 +197,16 @@
                             </div>
                             <p-divider type="solid"></p-divider>
                         </div>
+                    </div>
+                    <p-divider align="left" type="solid" [style]="{ 'margin-top': 0 }">
+                        <div className="inline-flex align-items-center">
+                            <i class="pi pi-eye" style="padding-right: 0.5rem;"></i>
+                            <b>Observaciones</b>
+                        </div>
+                    </p-divider>
+                    <div>
+                        <textarea rows="4" cols="30" pInputTextarea class="obs"
+                            [(ngModel)]="evaluacionCab.observaciones"></textarea>
                     </div>
 
                     <div class="button-container">

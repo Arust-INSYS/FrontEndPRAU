@@ -41,6 +41,10 @@ body {
   /* padding-left: 5rem; */
 }
 
+.obs {
+  width: 100%;
+}
+
 .grow1-estats {
   flex-grow: 1;
   width: 100%;
@@ -231,8 +235,8 @@ select:focus {
 .grupo-preguntas {
   /* border: 1px solid #ccc; */
   /* Borde sólido de 1px de grosor y color gris claro */
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   /* Espacio entre cada grupo de preguntas */
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   /* Espacio interno dentro de cada grupo de preguntas */
 }
