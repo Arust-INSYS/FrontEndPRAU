@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { PersonaService } from '../../../services/persona.service';
 import { Router } from '@angular/router';
 import { Persona } from '../../../models/persona';
@@ -14,13 +20,14 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { Subscription } from 'rxjs';
 import { AuthRolService } from '../../../services/authRolService.service';
 import { RegistrarPersonaComponent } from '../registrar-persona/registrar-persona.component';
+import { RolService } from '../../../services/rol.service';
+import { Rol } from '../../../models/rol';
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
   styleUrl: './listar-persona.component.scss',
 })
-export class ListarPersonaComponent implements OnInit{
-
+export class ListarPersonaComponent implements OnInit {
   rol: string = '';
   private subscription!: Subscription;
 
@@ -47,52 +54,50 @@ export class ListarPersonaComponent implements OnInit{
   constructor(
     private personaService: PersonaService,
     private usuarioService: UsuarioService,
+    private rolService: RolService,
     private excelService: ExcelService,
-    private  authRolService: AuthRolService,
+    private authRolService: AuthRolService
   ) {
     this.listarPersona();
-    
   }
   ngOnInit(): void {
-    this.subscription = this.authRolService.nombreRol$.subscribe((rol) =>
-    this.rol = rol);
+    this.subscription = this.authRolService.nombreRol$.subscribe(
+      (rol) => (this.rol = rol)
+    );
   }
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  nombreEditar:string="";
-  idUsuario:number=0;
-  showModal(guardarComo:string,id: number) {
-    this.nombreEditar=guardarComo;
-    
-  
+  nombreEditar: string = '';
+  idUsuario: number = 0;
+  showModal(guardarComo: string, id: number) {
+    this.nombreEditar = guardarComo;
 
-    if(this.nombreEditar=="EDITAR"){
-      this.idUsuario=id;
+    if (this.nombreEditar == 'EDITAR') {
+      this.idUsuario = id;
       this.displayModal = true;
-      this.enviarDatos(); 
-
-    }if(this.nombreEditar=="REGISTRAR"){
-      this.displayModal = true;
-
+      this.enviarDatos();
     }
-    
-    
-  } 
-  
+    if (this.nombreEditar == 'REGISTRAR') {
+      this.displayModal = true;
+    }if(this.nombreEditar == 'ELIMINAR'){
+      this.idUsuario = id;
+      this.enviarDatos()
+      
+    }
+  }
+
   @ViewChild(RegistrarPersonaComponent)
   registrarPersonaComponent!: RegistrarPersonaComponent;
   enviarDatos() {
     // Envía los datos al componente RegistrarPersonaComponent
     this.registrarPersonaComponent.encontrarUsuario(this.idUsuario);
   }
-  cerrar_Limpiar(){
-    this.displayModal=false
-    
+  cerrar_Limpiar() {
+    this.displayModal = false;
   }
-  
- 
+
   /*
   async listarPersona() {
     await this.personaService.getAllPersonas().subscribe((res) => {
@@ -102,38 +107,18 @@ export class ListarPersonaComponent implements OnInit{
 
   listarPersona() {
     this.usuarioService.getAllUsuarios().subscribe((res) => {
-      this.userList = res;
+      this.userList = res.filter((usuario) => usuario.usuEstado !== 0);
       //PASO 5 colocar metodo de generar excel no el de descargar
       this.loadExcelReportData(this.userList);
     });
   }
-
-  eliminarPersona(id: number) {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¡No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //this.usuarioService.
-
-        this.personaService.delete(id).subscribe(() => {
-          Swal.fire('¡Eliminado!', 'La persona ha sido eliminada.', 'success');
-          // Actualiza la lista de personas después de eliminar
-          //this.actualizarListaPersonas();
-          this.listarPersona();
-        });
-      }
-    });
-  }
+  //persona: Persona = new Persona();
+  roles: Rol = new Rol();
+  
+ 
   actualizarListaPersonas() {
     window.location.reload();
   }
-
 
   //EXCEL
   ///cargar data en el excel

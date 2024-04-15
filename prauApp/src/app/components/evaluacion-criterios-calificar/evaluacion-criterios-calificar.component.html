@@ -19,7 +19,7 @@
                         [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }" [options]="periodosAc"
                         [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo" [filter]="true"
                         filterBy="nombrePeriodo" [showClear]="true" placeholder="Selecionar Periodo Academico"
-                        (onChange)="consultarAula()">
+                        (onChange)="consultarAula(); loadCarreras()">
 
                     </p-dropdown>
                 </div>
@@ -64,13 +64,14 @@
         </section>
         <section *ngIf="status !== 'edit'">
             <div>
-                <label for="selectedAula" class="titulo-criterios">Aula Seleccionada:  {{selectedAula?.nombre}}</label>
+                <label for="selectedAula" class="titulo-criterios">Aula Seleccionada: {{selectedAula?.nombre}}</label>
             </div>
             <div>
-                <label for="selectedDocente" class="titulo-criterio">Docente a cargo:  {{selectedDocente?.nombreCompleto}}</label>
+                <label for="selectedDocente" class="titulo-criterio">Docente a cargo:
+                    {{selectedDocente?.nombreCompleto}}</label>
             </div>
-          </section>
-          
+        </section>
+
         <section class="layoutnum">
             <div><label for="porcentajeCumplimiento">Porcentaje de cumplimiento Cumple:</label></div>
             <div class="col1Last1">
@@ -100,11 +101,12 @@
                         <div *ngFor="let det of criteriosPorClasificacion(clasificacion.idClasificacion)">
                             <div class="layout-criterio">
                                 <div class="grow1-criterio ">
-                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
+                                    <label for="pregunta{{det.criterio?.idCriterio}}">{{
+                                        det.criterio?.descripcion}}:</label>
                                 </div>
                                 <div>
 
-<!--</div> *ngIf="status !== 'edit'; else normal">
+                                    <!--</div> *ngIf="status !== 'edit'; else normal">
                     <label for="pregunta{{det.criterio?.idCriterio}}">{{ det.criterio?.descripcion}}:</label>
                 </div>
                 <ng-template #normal>
@@ -116,7 +118,8 @@
                                         [style]="{ 'width.%': 100, 'height.px': 30, 'display': 'flex', 'align-items': 'center', 'min-width.px': 275,'max-width.px': 275 }"
                                         [options]="calificacion" optionLabel="descripcion" optionValue="codCalificacion"
                                         placeholder="Selecionar Calificacion"
-                                        [(ngModel)]="det.calificacion.codCalificacion" (onChange)="onCalificacionSeleccionado()">
+                                        [(ngModel)]="det.calificacion.codCalificacion"
+                                        (onChange)="onCalificacionSeleccionado()">
 
                                     </p-dropdown>
                                 </div>
@@ -128,8 +131,9 @@
             </div>
 
             <div class="button-container">
-                <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true" 
-                [text]="true" [raised]="true"(click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
+                <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true"
+                    [text]="true" [raised]="true"
+                    (click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
                 <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
                     severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
             </div>

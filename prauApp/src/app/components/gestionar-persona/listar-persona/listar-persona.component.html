@@ -31,13 +31,7 @@
           iconPos="right"
         ></p-button>
       </div>
-      <div class="p-toolbar-group-end">
-        <p-splitButton *ngIf="rol === 'Administrador'"
-          label="Save"
-          icon="pi pi-check"
-          [model]="items"
-        ></p-splitButton>
-      </div>
+      
     </p-toolbar>
   </div>
   <div class="subconten2" style="max-height: 400px; overflow-y: auto;">
@@ -51,6 +45,8 @@
           <th>Dirección</th>
           <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Rol</th>
           <th *ngIf="rol === 'Administrador'">Acciones</th>
         </tr>
       </ng-template>
@@ -63,6 +59,8 @@
           <td>{{ usu.usuPerId.perDireccion }}</td>
           <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
           <td>{{ usu.usuPerId.perTelefono }}</td>
+          <td>{{ usu.usuEstado }}</td>
+          <td>{{ usu.rolId.rolNombre }}</td>
           <td *ngIf="rol === 'Administrador'">
             <button
               pButton
@@ -74,7 +72,7 @@
               pButton
               icon="pi pi-trash"
               class="p-button-danger"
-              (click)="eliminarPersona(usu.usuId)"
+              (click)="showModal('ELIMINAR',usu.usuId)"
             ></button>
           </td>
         </tr>
@@ -89,6 +87,7 @@ class="ventana"
   [responsive]="true"
 >
 <div class="modal">
+  
   <p-button (onClick)="cerrar_Limpiar()">Cerrar</p-button>
 <app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" #registrarPersonaComponents></app-registrar-persona>
 </div>
