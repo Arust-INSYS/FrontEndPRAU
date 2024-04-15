@@ -44,8 +44,6 @@ import { PrincipalDirectorComponent } from './components/principal-director/prin
 import { loginGuard } from './guards/login.guard';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
-
-import { loginGuard } from './guards/login.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-director', component: MainDirectorComponent},
