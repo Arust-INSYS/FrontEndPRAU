@@ -10,14 +10,13 @@
 
         <section class="layout">
             <div class="botones-container">
-                
+
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText [(ngModel)]="searchTerm" placeholder="Search" (input)="filtrar()" />
-                  </span>
+                    <input pInputText [(ngModel)]="searchTerm" placeholder="Search" (input)="getFiltroEvaCap()" />
+                </span>
             </div>
-            <p-button  [rounded]="true" class=" mb-3" 
-                (click)="generarPDFtable()">
+            <p-button [rounded]="true" class=" mb-3" (click)="generarPDFtable()">
                 <i class="pi pi-file-pdf">
                 </i>PDF</p-button>
             <div class="marginLeft"><button pButton icon="pi pi-plus" class="p-button-rounded p-button-info ml-2"
@@ -58,6 +57,7 @@
                     <tr>
                         <th>N°</th>
                         <th>Aula</th>
+                        <th>Identificación</th>
                         <th>Docente</th>
                         <th>Asignatura</th>
                         <th>Observaciones</th>
@@ -70,6 +70,7 @@
                     <tr>
                         <td>{{ evaluacionCab.nroEvaluacion }}</td>
                         <td>{{ evaluacionCab.aulaEva?.aulaNombre }}</td>
+                        <td>{{ evaluacionCab.aulaEva?.docente.usuPerId?.perCedula }}</td>
                         <td>{{(evaluacionCab.aulaEva?.docente?.usuPerId?.perApellido1 ??'') + ' ' +
                             (evaluacionCab.aulaEva?.docente?.usuPerId?.perApellido2 ?? '') + ' ' +
                             (evaluacionCab.aulaEva?.docente?.usuPerId?.perNombre1 ?? '') + ' ' +

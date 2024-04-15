@@ -154,9 +154,24 @@ export class EvaluacionCriteriosComponent {
   }
 
   getEvaluacionesCAB(est: number): void {
+    this.searchTerm = '';
     this.estadoBTN = est;
     this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
+      //this.generarPDF();
+    },
+      error => {
+        console.error('Error al obtener los criterios: ', error);
+      }
+    );
+  }
+
+
+  getFiltroEvaCap(): void {
+    //  = this.estadoBTN;
+    this.evaluacionCABService.getFiltroEvaCap(this.estadoBTN, this.searchTerm).subscribe((dato) => {
+      this.evaluacionCab = dato;
+      console.log(dato)
       //this.generarPDF();
     },
       error => {
