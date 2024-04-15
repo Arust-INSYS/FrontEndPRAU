@@ -27,7 +27,7 @@ export class EvaluacionDetService {
   }
 
   createList(detalle: EvaluacionDet[]): Observable<EvaluacionDet[]> {
-    console.log(detalle)
+    // console.log(detalle)
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
@@ -70,7 +70,7 @@ export class EvaluacionDetService {
 
     return this.http.put<EvaluacionDet[]>(`${this.url}/updateList`, evaluacionDets, { headers });
   }
-//Busca al detalle
+  //Busca al detalle
   detalleEvaluacion(nroEvaluacion: number): Observable<EvaluacionDet[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`
