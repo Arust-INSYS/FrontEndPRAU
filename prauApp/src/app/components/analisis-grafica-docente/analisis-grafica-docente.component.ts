@@ -3,6 +3,8 @@ import { DocenteService } from '../../services/docente.service';
 import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
 import { GraficaDocente } from '../../models/GraficaDocente';
+import { CarreraService } from '../../services/carrera.service';
+import { IConsultarCarrera } from '../../interface/IConsultasBD';
 
 
 @Component({
@@ -14,11 +16,16 @@ export class AnalisisGraficaDocenteComponent implements OnInit {
   data: any;
   options: any;
 
-  periodosAcademicos: any[] | undefined;
-  selectedPeriodoAc: string | undefined;
+  periodosAcademicos: any | undefined;
+  selectedPeriodoAc: any | undefined;
+  carreraLista: any[] | undefined;
+  //selectedCarrera:string | undefined;
+  carreras: IConsultarCarrera[] = [];
+  selectedCarrera: any | undefined;
   constructor(
     private docenteService: DocenteService,
     private periodoAcService: PeriodoAcService,
+    private carreraService: CarreraService,
     
   ) {}
   ngOnInit() {
@@ -42,6 +49,28 @@ export class AnalisisGraficaDocenteComponent implements OnInit {
         
       });
     }
+    /*
+    loadCarreras(): void {
+
+      this.carreraService.carreraXperiodo(this.selectedPeriodoAc?.idPeriodoAc ?? 0).subscribe(response => {
+        
+      })
+    }*/
+    //CARGAR LISTADO DE CARRERA: 
+    cargarCarreras(): void {
+      this.carreraService.carreraXperiodo(this.selectedPeriodoAc?.idPeriodoAc ?? 0).subscribe((response) => {
+        this.carreras = response;
+        console.log("FILTROS", response)
+        // Limpiar el array antes de agregar nuevos elementos
+      this.carreraLista = [];
+
+      // Iterar sobre los periodos y agregarlos a periodosAcademicos
+      for (const carr of this.carreras) {
+        this.carreraLista.push({ name: carr.nombreCarrera, code:carr?.carreraId });
+      }
+        
+      });
+    }
     codigoPeriodoAc:number=0;
     cambioValor(event: any){
         if (event && event.code) {
@@ -53,6 +82,17 @@ export class AnalisisGraficaDocenteComponent implements OnInit {
             console.log("Evento indefinido. Asignando valor cero.",this.codigoPeriodoAc);
           }
     }
+    codigoCarrera:number=0;
+    obtenerCarrerId(event: any){
+      if (event && event.code) {
+          console.log("Cambié de valor:", event.code);
+          this.codigoCarrera = event.code;
+        } else {
+          
+          this.codigoCarrera = 0;
+          console.log("Evento indefinido. Asignando valor cero.",this.codigoCarrera);
+        }
+  }
 dataDocente:any=[];
 
   mostrarDocente() {

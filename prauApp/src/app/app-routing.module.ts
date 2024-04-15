@@ -45,6 +45,8 @@ import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-d
 import { loginGuard } from './guards/login.guard';
 
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
+import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-director', component: MainDirectorComponent },
@@ -62,7 +64,9 @@ const routes: Routes = [
               { path: 'listar-rol', component: ListarRolComponent, canActivate: [loginGuard] },
               { path: 'registrar-rol', component: RegistrarRolComponent, canActivate: [loginGuard] },
               { path: 'listar-usuarios', component: ListarUsuarioComponent, canActivate: [loginGuard] },
-            ],
+              { path: 'actualizar-rol/:id', component: ActualizarRolComponent}
+
+        ],
         },
 
         {

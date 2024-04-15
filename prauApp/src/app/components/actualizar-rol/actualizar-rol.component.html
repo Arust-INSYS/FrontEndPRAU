@@ -1,0 +1,31 @@
+<form (ngSubmit)="actualizar(f)" #f="ngForm">
+  <div id="formulario">
+    <h1> Formulario  Actuializar Periodo Academico </h1>
+  </div>
+
+  
+
+     
+
+  <div>
+
+    <label for="nombrerol">Nombre rol</label>
+    <textarea [(ngModel)]="selectedRol.rolNombre" rows="5" cols="10" class="entradas" pInputTextarea placeholder="Escriba la descripcion" name="descripcion" id="tabla" required></textarea>
+  </div>
+   
+<div>
+
+    <label for="descripcionrol">Descripcion del rol</label>
+    <textarea [(ngModel)]="selectedRol.rolDescripcion" rows="5" cols="10" class="entradas" pInputTextarea placeholder="Escriba la descripcion" name="descripcion" id="tabla" required></textarea>
+  </div>
+
+
+  <div id="botones-container">
+    <p-button type="submit" id="button"> ¡Actualizar rol! </p-button>
+    <p-button icon="pi pi-times" severity="danger" label="Cancelar" (click)="resetForm()" [routerLink]="['/menu/contenido-persona/listar-rol']"></p-button>
+</div>
+
+
+</form>
+
+

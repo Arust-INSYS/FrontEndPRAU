@@ -155,6 +155,7 @@ import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-d
 import { TokenExpirationInterceptor } from './env/TokenExpirationInterceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
+import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 
 
 
@@ -205,7 +206,7 @@ import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/a
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
     AnalisisGraficaDocenteComponent,
-
+    ActualizarRolComponent,
     AnalisisUsoCarreraComponent,
   ],
   imports: [
