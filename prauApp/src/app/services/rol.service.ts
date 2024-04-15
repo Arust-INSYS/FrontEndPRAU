@@ -98,4 +98,18 @@ export class RolService {
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.get<Rol>(`${this.url}/find/${id}`, { headers });
   }
+  obtenerListaRol(): Observable<Rol[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+  
+    const options = { headers: headers };
+
+    return this.http.get<Rol[]>(this.url + '/read', options).pipe(
+      catchError(error => {
+        console.error('Error obteniendo Rol Ac:', error);
+        throw error;
+      })
+    );
+  }
 }

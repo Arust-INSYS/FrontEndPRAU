@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { entorno } from '../env/entorno';
 import { PeriodoAc } from '../models/periodoAc';
 import { Observable, catchError, map } from 'rxjs';
+import { GraficaPeriodoAc } from '../models/GraficaPeriodoAc';
 
 @Injectable({
   providedIn: 'root',
@@ -83,5 +84,15 @@ export class PeriodoAcService {
     return this.http.delete<void>(`${this.url}/delete?id=${id}`, {
       headers,
     });
+  }
+  obtenerGraficaPeriodoAc(periodoId: number): Observable<GraficaPeriodoAc[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+
+    const params = new HttpParams()
+      .set('periodoId', periodoId.toString());
+
+    return this.http.get<GraficaPeriodoAc[]>(`${this.url}/graficaPeriodoAC`, { headers, params });
   }
 }

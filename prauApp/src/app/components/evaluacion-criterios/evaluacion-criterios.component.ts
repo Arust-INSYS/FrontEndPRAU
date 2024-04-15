@@ -215,9 +215,6 @@ export class EvaluacionCriteriosComponent {
       }
     });
   }
-
-
-
   // Método para dividir la descripción en líneas más cortas
   splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
     const words = description.split(' ');
@@ -375,7 +372,5 @@ export class EvaluacionCriteriosComponent {
 
     window.open(url, '_blank');
   }
-
-
 
 }

@@ -41,87 +41,85 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { MainDirectorComponent } from './modules/main-director/main-director.component';
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
-import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { loginGuard } from './guards/login.guard';
-
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
+import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'main-director', component: MainDirectorComponent },
+  { path: 'main-director', component: MainDirectorComponent},
   { path: 'use-director', component: UseDirectorComponent },
   {
     path: 'menu', component: MenuComponent, canActivate: [loginGuard],
-    children:
-      [
-        {
-          path: 'contenido-persona', component: ContenidoPersonaComponent,
-          children:
-            [
-              { path: 'registrar-persona', component: RegistrarPersonaComponent, canActivate: [loginGuard] },
-              { path: 'listar-persona', component: ListarPersonaComponent, canActivate: [loginGuard] },
-              { path: 'listar-rol', component: ListarRolComponent, canActivate: [loginGuard] },
-              { path: 'registrar-rol', component: RegistrarRolComponent, canActivate: [loginGuard] },
-              { path: 'listar-usuarios', component: ListarUsuarioComponent, canActivate: [loginGuard] },
-              { path: 'actualizar-rol/:id', component: ActualizarRolComponent}
+    children: 
+    [
+      {
+        path: 'contenido-persona', component: ContenidoPersonaComponent,
+        children: 
+        [
+          { path: 'registrar-persona', component: RegistrarPersonaComponent, canActivate: [loginGuard] },
+          { path: 'listar-persona', component: ListarPersonaComponent, canActivate: [loginGuard] },
+          { path: 'listar-rol', component: ListarRolComponent, canActivate: [loginGuard] },
+          { path: 'registrar-rol', component: RegistrarRolComponent, canActivate: [loginGuard] },
+          { path: 'listar-usuarios', component: ListarUsuarioComponent, canActivate: [loginGuard] },
+          { path: 'actualizar-rol/:id', component: ActualizarRolComponent}
 
         ],
-        },
+      },
 
-        {
-          path: 'contenido-criterios', component: ContenidoCriteriosComponent, canActivate: [loginGuard],
-          children:
-            [
-              { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent, canActivate: [loginGuard] },
-              { path: 'clasificacion-actualizar/:id', component: ClasificacionCriteriosActualizarComponent, canActivate: [loginGuard] },
-              { path: 'clasificacion-listar', component: ClasificacionCriteriosListarComponent, canActivate: [loginGuard] },
-              { path: 'criterios', component: CriteriosComponent, canActivate: [loginGuard] },
-              { path: 'criterios-actualizar/:id', component: CriteriosActualizarComponent, canActivate: [loginGuard] },
-              { path: 'criterios-listar', component: CriteriosListarComponent, canActivate: [loginGuard] },
-              { path: 'criterios-evaluacion', component: EvaluacionCriteriosComponent, canActivate: [loginGuard] },
-              { path: 'criterios-evaluacion-calificacion/:status', component: EvaluacionCriteriosCalificarComponent, canActivate: [loginGuard] },
-              { path: 'criterios-evaluacion-calificacion/:status/:id', component: EvaluacionCriteriosCalificarComponent, canActivate: [loginGuard] },
-              { path: 'listar-calificacion', component: CalificacionListarComponent, canActivate: [loginGuard] },
-              { path: 'calificacion', component: CalificacionComponent, canActivate: [loginGuard] },
-              { path: 'calificacion-actualizar/:id', component: CalificacionActualizarComponent, canActivate: [loginGuard] },
-            ],
-        },
+      {
+        path: 'contenido-criterios', component: ContenidoCriteriosComponent, canActivate: [loginGuard],
+        children: 
+        [
+          { path: 'clasificacion-criterios', component: ClasificacionCriteriosComponent, canActivate: [loginGuard] },
+          { path: 'clasificacion-actualizar/:id', component: ClasificacionCriteriosActualizarComponent, canActivate: [loginGuard] },
+          { path: 'clasificacion-listar', component: ClasificacionCriteriosListarComponent, canActivate: [loginGuard] },
+          { path: 'criterios', component: CriteriosComponent, canActivate: [loginGuard] },
+          { path: 'criterios-actualizar/:id', component: CriteriosActualizarComponent, canActivate: [loginGuard] },
+          { path: 'criterios-listar', component: CriteriosListarComponent, canActivate: [loginGuard] },
+          { path: 'criterios-evaluacion', component: EvaluacionCriteriosComponent, canActivate: [loginGuard] },
+          { path: 'criterios-evaluacion-calificacion/:status', component: EvaluacionCriteriosCalificarComponent, canActivate: [loginGuard] },
+          { path: 'criterios-evaluacion-calificacion/:status/:id', component: EvaluacionCriteriosCalificarComponent, canActivate: [loginGuard] },
+          { path: 'listar-calificacion', component: CalificacionListarComponent, canActivate: [loginGuard] },
+          { path: 'calificacion', component: CalificacionComponent, canActivate: [loginGuard] },
+          { path: 'calificacion-actualizar/:id', component: CalificacionActualizarComponent, canActivate: [loginGuard] },
+        ],
+      },
 
-        {
-          path: 'contenido-virtual', component: ContenidoVirtualComponent, canActivate: [loginGuard],
-          children:
-            [
-              { path: 'carrera', component: CarreraComponent, canActivate: [loginGuard] },
-              { path: 'carrera-listar', component: CarreraListarComponent, canActivate: [loginGuard] },
-              { path: 'carrera-actualizar/:id', component: CarreraActualizarComponent, canActivate: [loginGuard] },
-              { path: 'asignatura', component: AsignaturaComponent, canActivate: [loginGuard] },
-              { path: 'asignatura-listar', component: AsignaturaListarComponent, canActivate: [loginGuard] },
-              { path: 'asignatura-actualizar/:id', component: AsignaturaActualizarComponent, canActivate: [loginGuard] },
-              { path: 'listar-periodo', component: ListarPeriodosAcComponent, canActivate: [loginGuard] },
-              { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent, canActivate: [loginGuard] },
-              { path: 'actualizar-periodo/:id', component: ActualizarPeriodoAcComponent, canActivate: [loginGuard] },
-              { path: 'listar-aulas', component: ListarAulasComponent, canActivate: [loginGuard] },
-              { path: 'principal-director', component: PrincipalDirectorComponent, canActivate: [loginGuard] },
-              { path: 'registrar-aula', component: RegistrarAulaComponent, canActivate: [loginGuard] },
-              { path: 'actualizar-aula/:id', component: ActualizarAulaComponent, canActivate: [loginGuard] },
-            ],
-        },
+      {
+        path: 'contenido-virtual', component: ContenidoVirtualComponent, canActivate: [loginGuard],
+        children: 
+        [
+          { path: 'carrera', component: CarreraComponent, canActivate: [loginGuard] },
+          { path: 'carrera-listar', component: CarreraListarComponent, canActivate: [loginGuard] },
+          { path: 'carrera-actualizar/:id', component: CarreraActualizarComponent, canActivate: [loginGuard] },
+          { path: 'asignatura', component: AsignaturaComponent, canActivate: [loginGuard] },
+          { path: 'asignatura-listar', component: AsignaturaListarComponent, canActivate: [loginGuard] },
+          { path: 'asignatura-actualizar/:id', component: AsignaturaActualizarComponent, canActivate: [loginGuard] },
+          { path: 'listar-periodo', component: ListarPeriodosAcComponent, canActivate: [loginGuard] },
+          { path: 'registrar-periodo', component: RegistrarPeriodoAcComponent, canActivate: [loginGuard] },
+          { path: 'actualizar-periodo/:id', component: ActualizarPeriodoAcComponent, canActivate: [loginGuard] },
+          { path: 'listar-aulas', component: ListarAulasComponent, canActivate: [loginGuard] },
+          { path: 'principal-director', component: PrincipalDirectorComponent, canActivate: [loginGuard] },
+          { path: 'registrar-aula', component: RegistrarAulaComponent, canActivate: [loginGuard] },
+          { path: 'actualizar-aula/:id', component: ActualizarAulaComponent, canActivate: [loginGuard] },
+        ],
+      },
 
-        {
-          path: 'contenido-analitics', component: ContenidoAnaliticsComponent, canActivate: [loginGuard],
-          children:
-            [
-              { path: 'analisis-uso', component: AnalisisUsoComponent },
-              //{ path: 'analisis-uso-carrera', component: AnalisisUsoComponent},
-              { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent },
-              { path: 'analisis-uso-docente', component: AnalisisGraficaDocenteComponent },
-              //{ path: 'analisis-uso-asignatura', component: AnalisisUsoComponent},
-              { path: 'analisis-uso', component: AnalisisUsoComponent, canActivate: [loginGuard] },
+      {
+        path: 'contenido-analitics', component: ContenidoAnaliticsComponent, canActivate: [loginGuard],
+        children: 
+        [
+          { path: 'analisis-grafica-periodoac', component: AnalisisUsoComponent, canActivate: [loginGuard]},
+          { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent},
+          { path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent},
+          { path: 'analisis-uso-asignatura', component: AnalisisUsoAsignaturaComponent},
 
-            ],
-        },
-      ],
+        ],
+      },
+    ],
   },
 
   ///AGREGAR RUTAS SOBRE ESTO
@@ -133,4 +131,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

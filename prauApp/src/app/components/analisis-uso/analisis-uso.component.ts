@@ -20,6 +20,7 @@ import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
 import { DataMoodleService } from '../../services/dataMoodle.service';
 import { GraficosService } from '../../services/graficos.service';
+import { GraficaPeriodoAc } from '../../models/GraficaPeriodoAc';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -39,215 +40,102 @@ data: any;
 options: any;
 
 
-///
-opcines: string[] | undefined;
-selectedOpcines: string | undefined;
-graficas: any[] = [];
-//datos consumidos 
-listacriterios: Criterios[] = [];
-docentes: UsuarioPorRolDTO[] = [];
-carreras: Carrera[] = [];
-periodos: PeriodoAc[] = [];
 
-//saber cual opcion esta seleccionado para poder trabajr on el filtro
-selectedCarrera: any;
-filteredCarrera: any[] = [];
-selectedPerido: any;
-filteredPerido: any[] = [];
-selectedDocente: any;
-filteredDocentes: any[] = [];
-selectedOption: string = '';
-/////
 
 constructor(
-  private criteriosService: CriteriosService,
-  private router: Router,
-  private dataMoodleService: DataMoodleService,
-  private graficosservice: GraficosService,
-  private carreraService: CarreraService,
-  private usuarioService: UsuarioService,
   private periodoAcService: PeriodoAcService,
 
 ) {
 
-  this.getListargrafico()
+  
 }
 
-
-////////////////////////////// metodos de consumo////
-obtenereDocentes() {
-
-  this.usuarioService.findUsuariosByRolId(4).subscribe((dato) => {
-    this.docentes = dato;
-    console.log(this.docentes);
-  });
-}
-obtenerCarrera() {
-  this.carreraService.obtenerListaCarreras().subscribe(dato => {
-    this.carreras = dato;
-    console.log(this.carreras);
-  });
-}
-obtenerPerodosAc() {
-  this.periodoAcService.getPeriodosAcs().subscribe((dato) => {
-    this.periodos = dato;
-    console.log(this.periodos)
-  });
-}
-
-obtenerCriterios() {
-  this.criteriosService.obtenerListacriterios().subscribe(dato => {
-    this.listacriterios = dato;
-    console.log(this.listacriterios)
-
-    this.generarGrafica();
-
-  },
-    error => {
-      console.error('Error al obtener los criterios: ', error);
-    }
-  );
-}
-
-
-
-getListargrafico() {
-  this.graficosservice.getAllGrafica().subscribe((data) => {
-    this.graficas = data; // Asigna los datos recibidos al arreglo de graficas
-    console.log(this.graficas); // Muestra el listado en la consola
-
-    // Llama al método para generar la gráfica después de obtener los datos
-    this.generarGrafica();
-  });
-}
-
-////////////////////////////// fin metodos de consumo ///////////////////////
-
-///saber que opcion esta selecionada 
-onOpcionSeleccionada(opcion: string) {
-  this.selectedOption = opcion;
-  this.selectedCarrera = null; // Limpiar la selección en el p-autoComplete
-  this.filteredCarrera = []; // Limpiar las sugerencias filtradas
-  this.filteredPerido = []; // Limpiar las sugerencias filtradas
-  this.filteredDocentes = []; // Limpiar las sugerencias filtradas
-
-  switch (opcion) {
-    case 'Periodo Academico':
-      this.obtenerPerodosAc();
-      break;
-    case 'Docente':
-      this.obtenereDocentes();
-      break;
-    case 'Carrera':
-      this.obtenerCarrera();
-      break;
-    default:
-      console.log('Opción no reconocida');
-      break;
-  }
-}
-
-////
-
-///grafica
 
 ngOnInit(): void {
-  this.obtenerCriterios();
+  this.cargarPeriodos();
+  //this.generarGrafica(0)
 
-  this.opcines = ['Periodo Academico', 'Docente', 'Carrera'];  
+}
+//DROPDOWN PERIODOACADEMICO
+periodosAcademicos: any | undefined;
+selectedPeriodoAc: any | undefined;
+ //ARRAYS FILTROS
+ periodosAc: PeriodoAc[] = [];
+cargarPeriodos(): void {
+  this.periodoAcService.getPeriodosAcs().subscribe((response) => {
+    this.periodosAc = response;
+    console.log("FILTROS", response)
+    // Limpiar el array antes de agregar nuevos elementos
+  this.periodosAcademicos = [];
+
+  // Iterar sobre los periodos y agregarlos a periodosAcademicos
+  for (const periodo of this.periodosAc) {
+    this.periodosAcademicos.push({ name: periodo.nombrePeriodo, code:periodo?.idPeriodoAc });
+  }
+    
+  });
+}
+codigoPeriodoAc:number=0;
+cambioValor(event: any){
+    if (event && event.code) {
+        console.log("Cambié de valor:", event.code);
+        this.codigoPeriodoAc = event.code;
+        this.generarGrafica(this.codigoPeriodoAc)
+        if(this.codigoPeriodoAc==null){
+          this.generarGrafica(0)
+        }
+      } else {
+        
+        this.codigoPeriodoAc = 0;
+        console.log("Evento indefinido. Asignando valor cero.",this.codigoPeriodoAc);
+        this.generarGrafica(0)
+      }
 }
 
+
 // metod generacion de grafica chart
-generarGrafica() {
+dataPeriodo:any=[];
+generarGrafica(id:number) {
     // Verifica que this.graficas esté correctamente inicializado y tenga los datos necesarios
-    console.log(this.graficas);
+    this.periodoAcService.obtenerGraficaPeriodoAc(id).subscribe((data) => {
+      this.dataPeriodo=data;
+      console.log("HOLAA MI REY",data);
+      this.dataPeriodo.forEach((periodo:GraficaPeriodoAc) => {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
 
-    if (this.graficas && this.graficas.length > 0) {
-      const labels = this.graficas.map(c => `${c.PeriodoAcademico} - ${c.totalCm}`); // Utiliza la propiedad correcta para el nombre del criterio
-      const dataValues = this.graficas.map(c => `${c.totalC} `); // Utiliza la propiedad correcta para la cantidad (valor) del criterio
+        this.data = {
+            labels: ['C','CM','NC'],
+            datasets: [
+                {
+                    data: [periodo.porc_C, periodo.porc_CM, periodo.porc_NC],
+                    backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+                }
+            ]
+        };
 
-      const backgroundColors = Array.from({ length: labels.length }, () => '#' + (Math.random().toString(16) + '000000').substring(2, 8));
-
-      this.data = {
-        labels: labels,
-        datasets: [
-          {
-            data: dataValues,
-            backgroundColor: backgroundColors,
-            hoverBackgroundColor: backgroundColors.map(color => color + '100') // Agrega más colores aquí
-          }
-        ]
-      };
-
-      // Otras configuraciones para la gráfica, como opciones y estilos
-      this.options = {
-        plugins: {
-          legend: {
-            labels: {
-              usePointStyle: true,
-
+        this.options = {
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                        color: textColor
+                    }
+                }
             }
-          }
-        },
-        responsive: true,
-        maintainAspectRatio: false
-      };
-    }
+        };
+
+      });
+      
+
+    });
+    
+    
   }
 
 
-  ///////////////metodos  de filtrado //
-  filterCarrera(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < this.carreras.length; i++) {
-      let carrera = this.carreras[i];
-      if (carrera.nombreCarrera.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push({ id: carrera.idCarrera, nombre: carrera.nombreCarrera } + carrera.nombreCarrera);
-      }
-    }
-
-    this.filteredCarrera = filtered;
-  }
-
-  filterPerido(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < this.periodos.length; i++) {
-      let periodo = this.periodos[i];
-      if (periodo.nombrePeriodo.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push({ id: periodo.idPeriodoAc, nombre: periodo.nombrePeriodo });
-      }
-    }
-
-    this.filteredPerido = filtered;
-  }
-
-  filterDocente(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < this.docentes.length; i++) {
-      let docente = this.docentes[i];
-      if (docente.perNombre1.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push({ id: docente.usuId, nombre: docente.perNombre1 + " " + docente.perApellido1 });
-      }
-    }
-
-    this.filteredDocentes = filtered;
-  }
-
-  ///// fin metodos para filtrar ///
-
-  ///obtener id selecciondo ya sea de  carrea,periodo o docente ////
-  onSelectItem(event: any) {
-    console.log("Objeto seleccionado:", event);
-    //  event.id y event.nombre para obtener el ID y el nombre respectivamente
-  }
-
-  ///
+  
 
 
 

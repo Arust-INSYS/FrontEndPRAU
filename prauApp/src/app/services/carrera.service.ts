@@ -5,6 +5,8 @@ import { catchError } from 'rxjs/operators';
 import { Carrera } from '../models/carrera';
 import { entorno } from '../env/entorno';
 import { LocalStorageService } from './local-storage.service';
+import { graficaCarrera } from '../models/graficaCarrera';
+
 import { IConsultarCarrera } from '../interface/IConsultasBD';
 import { graficaCarrera } from '../models/graficaCarrera';
 
@@ -34,7 +36,7 @@ export class CarreraService {
   }*/
   cargarCarrera(): Observable<Carrera[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     const options = { headers: headers };
@@ -129,5 +131,18 @@ export class CarreraService {
       })
     );
   }
+
+
+  carreraXperiodo(periodoId: number): Observable<IConsultarCarrera[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<IConsultarCarrera[]>(`${this.url}/carreraXperiodo?periodoId=${periodoId}`, {
+      headers,
+    });
+
+  }
+
 
 }

@@ -8,11 +8,15 @@ import { RolService } from '../../../services/rol.service';
   templateUrl: './listar-rol.component.html',
   styleUrls: ['./listar-rol.component.css']
 })
-export class ListarRolComponent implements OnInit {
+export class ListarRolComponent {
+  rolAuth: string = '';
+  private subscription!: Subscription;
+  rol: Rol = new Rol();
+
   roles: Rol[] = [];
   selectedRol: Rol = { rolId: 0, rolNombre: '', rolDescripcion: '' };
 
-  constructor(private router: Router, private rolService: RolService) {}
+  constructor(private router: Router, private rolService: RolService, private authRolService: AuthRolService) {}
 
   ngOnInit(): void {
     this.getAllRoles();
