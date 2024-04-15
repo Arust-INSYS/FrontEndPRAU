@@ -20,7 +20,7 @@
       id="cedula"
       name="perCedula"
       pInputText
-      [(ngModel)]="persona.perCedula"
+      [(ngModel)]="usuario.usuPerId.perCedula"
       required
     />
   </div>
@@ -31,7 +31,7 @@
       id="nombre"
       name="nombre"
       pInputText
-      [(ngModel)]="persona.perNombre1"
+      [(ngModel)]="usuario.usuPerId.perNombre1"
       required
     />
   </div>
@@ -42,7 +42,7 @@
       id="apellido"
       name="apellido"
       pInputText
-      [(ngModel)]="persona.perApellido1"
+      [(ngModel)]="usuario.usuPerId.perApellido1"
     />
   </div>
   <div class="input-group">
@@ -52,7 +52,7 @@
       id="direccion"
       name="direccion"
       pInputText
-      [(ngModel)]="persona.perDireccion"
+      [(ngModel)]="usuario.usuPerId.perDireccion"
     />
   </div>
   <div class="input-group">
@@ -62,7 +62,7 @@
       id="telefono"
       name="telefono"
       pInputText
-      [(ngModel)]="persona.perTelefono"
+      [(ngModel)]="usuario.usuPerId.perTelefono"
     />
   </div>
   <div class="input-group">
@@ -70,7 +70,7 @@
     <p-calendar
       id="fecha"
       name="fecha"
-      [(ngModel)]="persona.perFechaNacimiento"
+      [(ngModel)]="usuario.usuPerId.perFechaNacimiento"
       dateFormat="dd/mm/yy"
       [showIcon]="true"
     ></p-calendar>
