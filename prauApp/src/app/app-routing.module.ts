@@ -42,6 +42,7 @@ import { MainDirectorComponent } from './modules/main-director/main-director.com
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { loginGuard } from './guards/login.guard';
+import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-director', component: MainDirectorComponent},
@@ -106,6 +107,7 @@ const routes: Routes = [
         children: 
         [
           { path: 'analisis-uso', component: AnalisisUsoComponent, canActivate: [loginGuard]},
+          {path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent, canActivate: [loginGuard]}
 
         ],
       },
