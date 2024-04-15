@@ -109,7 +109,7 @@ const routes: Routes = [
         path: 'contenido-analitics', component: ContenidoAnaliticsComponent, canActivate: [loginGuard],
         children: 
         [
-          { path: 'analisis-uso', component: AnalisisUsoComponent, canActivate: [loginGuard]},
+          { path: 'analisis-grafica-periodoac', component: AnalisisUsoComponent, canActivate: [loginGuard]},
           {path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent, canActivate: [loginGuard]}
 
         ],
