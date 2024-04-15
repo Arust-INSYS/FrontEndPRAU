@@ -201,7 +201,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
           let det: EvaluacionDet = new EvaluacionDet();
           det.secCalificacion = res.secCalificacion;
           det.evaluacionCab = res.evaluacionCab;
-          det.calificacion = res.calificacion || '';
+          det.calificacion = res.calificacion;
           det.criterio = res.criterio;
           this.evaluacionDets.push(det);
         }
@@ -364,32 +364,10 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     });
   }
   onCalificacionSeleccionado() {
-    // Aquí puedes realizar el cálculo o cualquier otra acción necesaria
 
-    // console.log('Calificacion seleccionado:', selectedCalificacion, cri);
     this.actualizarContadores();
 
     this.contarCalificaciones();
-
-    // if (selectedCalificacion === 'C' || selectedCalificacion === 'CM' || selectedCalificacion === 'NC') {
-
-    //const index = this.calificacionesPorCriterio.findIndex(item => item.idCriterio === cri);
-
-    //if (index !== -1) {
-    // Si ya existe, actualizar la calificación
-    //this.calificacionesPorCriterio[index].calificacion = selectedCalificacion;
-    //} else {
-    // Si no existe, agregarla al array
-    // this.calificacionesPorCriterio.push({ idCriterio: cri, calificacion: selectedCalificacion });
-    // }
-
-    // Actualizar los contadores y calcular los porcentajes
-
-    // } else {
-    //   // Si la calificación no es válida, no hacer nada
-    //   console.log('Calificacion no valida');
-    // }
-
   }
 
   actualizarContadores() {
@@ -418,8 +396,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   contarCalificaciones() {
 
+
     const totalCriterios = this.evaluacionDets.length;
-    this.evaluacionCab.progreso = (this.progreso / totalCriterios) * 100;
+    this.evaluacionCab.progreso = Number(((this.progreso / totalCriterios) * 100).toFixed(2));
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
 
@@ -524,9 +503,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   updateNuevaEvaluacionCab() {
 
     //asignar aula
-    this.evaluacionCab.aulaEva.aulaId = this.selectedAula.aulaId;
+    // this.evaluacionCab.estado = 1;    //asignar aula
+    // // this.evaluacionCab.aulaEva.aulaId;
     //evaluador
     const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
+
     if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
       this.evaluacionCab.evaluador.usuId = idString;
     }
@@ -534,7 +515,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
-    this.evaluacionCab.estado = 1;
+    // this.evaluacionCab.estado = 1;
 
     // Calcular los porcentajes totales
     const totalCriterios = this.criterios.length;

@@ -140,7 +140,7 @@
                 <section class="layout-estats ">
                     <div class="stats">
                         <p-knob [(ngModel)]="evaluacionCab.progreso" valueTemplate="{{ evaluacionCab.progreso }}%"
-                            [readonly]="true" [strokeWidth]="8" [size]="70" valueColor="#004f9f"></p-knob>
+                            [readonly]="true" [strokeWidth]="8" [size]="75" valueColor="#004f9f"></p-knob>
                         <label>Progreso</label>
                     </div>
                     <div class="grow1-estats">
@@ -201,11 +201,16 @@
                     </div>
 
                     <div class="button-container">
-                        <p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'" [rounded]="true"
-                            [text]="true" [raised]="true"
-                            (click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
-                        <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
-                            severity="danger" routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+                        <div><p-button icon="pi pi-check" [label]="status !== 'edit' ? 'Guardar' : 'Editar'"
+                                [rounded]="true" [text]="true" [raised]="true"
+                                (click)="status!== 'edit' ? crearNuevaEvaluacionCab() : updateNuevaEvaluacionCab()"></p-button>
+                        </div>
+                        <div>
+                            <p-button icon="pi pi-times" label="Cancelar" [rounded]="true" [text]="true" [raised]="true"
+                                severity="danger"
+                                routerLink="/menu/contenido-criterios/criterios-evaluacion"></p-button>
+                        </div>
+
                     </div>
 
                 </section>
