@@ -270,14 +270,14 @@ export class EvaluacionCriteriosComponent {
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
+    const page = pdfDoc.addPage([700,400]);
 
     // Agregar imagen
     const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
     const image = await pdfDoc.embedPng(imageBytes);
     page.drawImage(image, {
       x: 210, // Posición x de la imagen
-      y: 780, // Posición y de la imagen
+      y: 350, // Posición y de la imagen
       width: 180, // Ancho de la imagen
       height: 40 // Alto de la imagen
     });
@@ -285,24 +285,24 @@ export class EvaluacionCriteriosComponent {
     // Título de la tabla
     page.drawText('Lista de Evaluaciones', {
       x: 250,
-      y: 750,
+      y: 335,
       size: 15,
       color: rgb(0, 0, 0),
     });
 
     // Definir el tamaño y la posición de la tabla
     const startX = 30;
-    let startY = 550;
+    let startY = 150;
     const cellPadding = 8;
 
     // Definir las propiedades de las celdas
     const fontSize = 9;
-    const SizeColumn = [80, 70, 100, 150, 70];
+    const SizeColumn = [20, 150, 100, 150,50];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
 
     // Encabezados de la tabla
-    const headers = ['No. Evaluacion', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
+    const headers = ['No.', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
     const headersCellWidth = SizeColumn;
     const rowHeight = 20;
     const tableHeight = 200;
