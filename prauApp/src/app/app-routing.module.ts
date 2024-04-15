@@ -44,6 +44,7 @@ import { PrincipalDirectorComponent } from './components/principal-director/prin
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
 
 
 const routes: Routes = [
@@ -114,7 +115,7 @@ const routes: Routes = [
           { path: 'analisis-uso', component: AnalisisUsoComponent},
           { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent},
           //{ path: 'analisis-uso-docente', component: AnalisisUsoComponent},
-          //{ path: 'analisis-uso-carrera', component: AnalisisUsoComponent},
+          { path: 'analisis-uso-asignatura', component: AnalisisUsoAsignaturaComponent},
           { path: 'analisis-uso-docente', component: AnalisisGraficaDocenteComponent},
 
           //{ path: 'analisis-uso-asignatura', component: AnalisisUsoComponent},
