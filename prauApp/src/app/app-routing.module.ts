@@ -45,6 +45,7 @@ import { loginGuard } from './guards/login.guard';
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -113,7 +114,8 @@ const routes: Routes = [
         [
           { path: 'analisis-grafica-periodoac', component: AnalisisUsoComponent, canActivate: [loginGuard]},
           { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent},
-          {path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent, canActivate: [loginGuard]}
+          { path: 'analisis-uso-docente', component: AnalisisGraficaDocenteComponent},
+          { path: 'analisis-uso-asignatura', component: AnalisisUsoAsignaturaComponent},
 
         ],
       },

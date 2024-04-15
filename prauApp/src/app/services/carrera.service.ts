@@ -35,7 +35,7 @@ export class CarreraService {
   }*/
   cargarCarrera(): Observable<Carrera[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`,
     });
 
     const options = { headers: headers };
