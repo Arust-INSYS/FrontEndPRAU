@@ -151,9 +151,9 @@ import { ListarUsuarioComponent } from './components/listar-usuario/listar-usuar
 import { AsignaturaActualizarComponent } from './components/asignatura-actualizar/asignatura-actualizar.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
+import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
-
 
 
 @NgModule({
@@ -202,9 +202,11 @@ import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-r
     ListarUsuarioComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
+    AnalisisUsoCarreraComponent,
     AnalisisGraficaDocenteComponent,
     ActualizarRolComponent
     
+
   ],
   imports: [
     RouterModule,
