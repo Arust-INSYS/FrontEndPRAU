@@ -152,6 +152,7 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { GraficaDirectorComponent } from './components/grafica-director/grafica-director.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
+import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 
 
 
@@ -201,7 +202,8 @@ import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-d
     ListarUsuarioComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
-    AnalisisGraficaDocenteComponent
+    AnalisisGraficaDocenteComponent,
+    ActualizarRolComponent
     
   ],
   imports: [

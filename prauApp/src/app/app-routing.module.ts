@@ -42,6 +42,8 @@ import { MainDirectorComponent } from './modules/main-director/main-director.com
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
+import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-director', component: MainDirectorComponent},
@@ -59,6 +61,8 @@ const routes: Routes = [
           { path: 'listar-rol', component: ListarRolComponent },
           { path: 'registrar-rol', component: RegistrarRolComponent },
           { path: 'listar-usuarios', component: ListarUsuarioComponent },
+          { path: 'actualizar-rol/:id', component: ActualizarRolComponent}
+
         ],
       },
 
