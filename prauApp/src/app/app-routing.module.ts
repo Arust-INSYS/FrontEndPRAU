@@ -41,6 +41,7 @@ import { AsignaturaActualizarComponent } from './components/asignatura-actualiza
 import { MainDirectorComponent } from './modules/main-director/main-director.component';
 import { UseDirectorComponent } from './modules/use-director/use-director.component';
 import { PrincipalDirectorComponent } from './components/principal-director/principal-director.component';
+import { loginGuard } from './guards/login.guard';
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 
@@ -111,6 +112,7 @@ const routes: Routes = [
         children: 
         [
           { path: 'analisis-uso', component: AnalisisUsoComponent, canActivate: [loginGuard]},
+          {path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent, canActivate: [loginGuard]}
 
         ],
       },

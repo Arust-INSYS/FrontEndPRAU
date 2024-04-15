@@ -13,18 +13,19 @@
                 <span class="nav-item">Criterios</span>
             </a>
         </li>
+        <li *ngIf="rol === 'Administrador'">
+            <a [routerLink]="['/menu/contenido-criterios/listar-calificacion']" routerLinkActive="router-link-active" class="no-underline menu">
+                <i class="pi pi-book"></i>
+                <span class="nav-item">Calificación</span>
+            </a>
+        </li>
         <li *ngIf="rol === 'Administrador' || rol==='Responsable'">
             <a [routerLink]="['/menu/contenido-criterios/criterios-evaluacion']" routerLinkActive="router-link-active" class="no-underline menu">
                 <i class="pi pi-check-circle"></i>
                 <span class="nav-item">Evaluacion</span>
             </a>
         </li>
-        <li *ngIf="rol === 'Administrador'">
-            <a [routerLink]="['/menu/contenido-criterios/listar-calificacion']" routerLinkActive="router-link-active" class="no-underline menu">
-                <i class="pi pi-book"></i>
-                <span class="nav-item">Listar Calificacion</span>
-            </a>
-        </li>
+       
     </ul>
 </div>
 

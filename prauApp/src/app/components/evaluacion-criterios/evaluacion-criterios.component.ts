@@ -276,12 +276,12 @@ onCursoSeleccionado(selectedCurso: any) {
 
     // Definir las propiedades de las celdas
     const fontSize = 9;
-    const SizeColumn = [80, 70, 100, 150, 70];
+    const SizeColumn = [20, 150, 100, 150, 30];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
 
     // Encabezados de la tabla
-    const headers = ['No. Evaluacion', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
+    const headers = ['No.', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
     const headersCellWidth = SizeColumn;
     const rowHeight = 20;
     const tableHeight = 200;

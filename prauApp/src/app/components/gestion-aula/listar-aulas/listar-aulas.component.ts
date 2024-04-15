@@ -163,39 +163,39 @@ eliminarAulaConfirmado(id: number) {
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
+    const page = pdfDoc.addPage([700,400]);
 
     // Agregar imagen
     const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
     const image = await pdfDoc.embedPng(imageBytes);
     page.drawImage(image, {
-        x: 210, // Posición x de la imagen
-        y: 780, // Posición y de la imagen
+        x: 250, // Posición x de la imagen
+        y: 350, // Posición y de la imagen
         width: 180, // Ancho de la imagen
         height: 40 // Alto de la imagen
     });
 
     // Título de la tabla
     page.drawText('Lista de Aulas', {
-        x: 250,
-        y: 750,
+        x: 300,
+        y: 330,
         size: 15,
         color: rgb(0, 0, 0),
     });
 
     // Definir el tamaño y la posición de la tabla
     const startX = 30;
-    let startY = 550;
+    let startY = 125;
     const cellPadding = 8;
 
     // Definir las propiedades de las celdas
     const fontSize = 9;
-    const SizeColumn = [20, 40, 40, 100, 100, 100, 100];
+    const SizeColumn = [15, 150, 40, 60, 100, 100, 100];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
 
     // Encabezados de la tabla
-    const headers = ['ID', 'Aula', 'Ciclo', 'Periodo Academico', 'Docente', 'Asignatura', 'Observaciones'];
+    const headers = ['ID', 'Aula', 'Ciclo', 'Periodo AC', 'Docente', 'Asignatura', 'Observaciones'];
     const headersCellWidth = SizeColumn;
     const rowHeight = 20;
     const tableHeight = 200;
