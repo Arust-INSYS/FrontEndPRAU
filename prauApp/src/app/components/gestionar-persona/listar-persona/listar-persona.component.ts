@@ -81,6 +81,10 @@ export class ListarPersonaComponent implements OnInit {
     }
     if (this.nombreEditar == 'REGISTRAR') {
       this.displayModal = true;
+    }if(this.nombreEditar == 'ELIMINAR'){
+      this.idUsuario = id;
+      this.enviarDatos()
+      
     }
   }
 
@@ -108,36 +112,10 @@ export class ListarPersonaComponent implements OnInit {
       this.loadExcelReportData(this.userList);
     });
   }
-  persona: Persona = new Persona();
+  //persona: Persona = new Persona();
   roles: Rol = new Rol();
-  eliminarPersona(idUser: number, idPer: number, idRol: number) {
-    console.log("SOY EL ROL:",idRol)
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¡No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.usuario.usuEstado = 0;
-        this.usuario.usuNombreUsuario = '';
-        this.usuario.usuContrasena = '';
-        this.usuario.rolId.rolId=idRol
-        this.usuarioService.update(idUser, this.usuario).subscribe(() => {
-          Swal.fire(
-            '¡Eliminado!',
-            'La persona ha sido eliminada.',
-            'success'
-          );
-          this.listarPersona();
-          
-        });
-      }
-    });
-  }
+  
+ 
   actualizarListaPersonas() {
     window.location.reload();
   }
