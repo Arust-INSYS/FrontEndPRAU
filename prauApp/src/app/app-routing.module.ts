@@ -114,7 +114,7 @@ const routes: Routes = [
         [
           { path: 'analisis-grafica-periodoac', component: AnalisisUsoComponent, canActivate: [loginGuard]},
           { path: 'analisis-uso-carrera', component: AnalisisUsoCarreraComponent},
-          { path: 'analisis-uso-docente', component: AnalisisGraficaDocenteComponent},
+          { path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent},
           { path: 'analisis-uso-asignatura', component: AnalisisUsoAsignaturaComponent},
 
         ],
