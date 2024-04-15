@@ -14,6 +14,8 @@ export class ActualizarRolComponent implements OnInit {
   selectedRol: Rol = new Rol();
   rolId: number = 0;
   f!: NgForm;
+  roles: Rol = new Rol();
+
   rol: Rol = { rolId: 0, rolNombre: '', rolDescripcion: '' };
 
   constructor(
@@ -28,6 +30,8 @@ export class ActualizarRolComponent implements OnInit {
     const rolId = this.route.snapshot.params['id'];
     this.rolService.getRolById(rolId).subscribe(
       (rol) => {
+        rol.rolNombre = rol.rolNombre.toString();
+        rol.rolDescripcion = rol.rolDescripcion.toString();
         this.selectedRol = rol; // Asignar el rol obtenido al rol seleccionado
       },
       (error) => {
