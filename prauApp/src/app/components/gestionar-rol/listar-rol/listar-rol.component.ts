@@ -22,6 +22,13 @@ export class ListarRolComponent {
 
   ngOnInit(): void {
     this.getAllRoles();
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rolAuth = rol;
+    });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
   selectRol(rol: Rol) {

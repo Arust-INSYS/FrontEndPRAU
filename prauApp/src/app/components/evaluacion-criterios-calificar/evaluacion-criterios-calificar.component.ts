@@ -37,6 +37,8 @@ import { Subscription } from 'rxjs';
 
 export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
+  rol: string = '';
+  private subscription!: Subscription;
   cursoSeleccionado: Aula | null = null;
   profesorSeleccionado: Usuario | null = null;
   clasificacionSeleccionada: ClasificacionCriterios | null = null;
@@ -125,10 +127,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
-
     private toastr: ToastrService,
-
-    private authRolService: AuthRolService
+    private authRolService: AuthRolService,
+    
 
 
   ) { }
@@ -161,6 +162,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.obtenerNroEva();
       this.listarCriterios(); // Llamar a la función para obtener los criterios al inicializar el componente
     }
+    this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
+      this.rol = rol;
+    });
     this.contarCalificaciones();
 
     // this.obtenerCursos();
@@ -168,9 +172,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   }
 
-  // ngOnDestroy(): void{
-  //   this.subscription.unsubscribe();
-  // }
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
+  }
   
   cargarEvaluacion(id: number) {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
