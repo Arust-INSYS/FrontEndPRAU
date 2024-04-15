@@ -26,6 +26,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { DocenteService } from '../../services/docente.service';
 
 @Component({
   selector: 'app-evaluacion-criterios-calificar',
@@ -123,7 +124,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private periodoAcService: PeriodoAcService,
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private docenteService: DocenteService
 
   ) { }
 
@@ -227,18 +229,26 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
     this.carreraService.carreraXperiodo(this.selectedPeriodo?.idPeriodoAc ?? 0).subscribe(response => {
       this.carreras = response;
+      if (this.selectedPeriodo?.idPeriodoAc === undefined) {
+        console.error("No se pudo obtener idPeriodoAc porque selectedObj es nulo o indefinido.");
+    }else{
+      console.log("ID Periodo: " + this.selectedPeriodo.idPeriodoAc);
+    }
+      
     })
   }
 
   loadAsignaturas(): void {
     this.asignaturaService.asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0).subscribe(response => {
       this.asignaturas = response;
+      console.log("ID Carrera: " + this.selectedCarrera?.idCarrera);
     })
   }
 
   loadDocentes(): void {
     this.usuarioService.docenteXAsignatura(this.selectedAsignatura?.idAsignatura ?? 0).subscribe(response => {
       this.docentes = response;
+      console.log("ID Asignatura: " + this.selectedAsignatura?.idAsignatura);
     })
   }
 
@@ -250,7 +260,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.selectedDocente?.usuId ?? 0
     ).subscribe(response => {
       this.aulas = response;
-
     })
 
     // this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
