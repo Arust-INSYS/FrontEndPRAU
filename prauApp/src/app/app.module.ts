@@ -157,6 +157,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
+import { GenerarReportesComponent } from './components/generar-reportes/generar-reportes.component';
 
 
 
@@ -209,7 +210,8 @@ import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asigna
     AnalisisUsoCarreraComponent,
     AnalisisGraficaDocenteComponent,
     ActualizarRolComponent,
-    AnalisisUsoAsignaturaComponent
+    AnalisisUsoAsignaturaComponent,
+    GenerarReportesComponent
     
 
   ],
