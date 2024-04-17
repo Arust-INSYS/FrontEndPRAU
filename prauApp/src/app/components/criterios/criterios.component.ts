@@ -20,6 +20,8 @@ export class CriteriosComponent {
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
+  // Inicializado con una cadena vacía
+
   estadoSelecion: any[] = [
     { nombreEstado: 'Opcional' },
     { nombreEstado: 'Obligatorio' },
@@ -54,7 +56,7 @@ console.log();
   }
   mostrar() {
     console.log("hola mundo")
-    console.log("estado",this.criterio.estado);
+    console.log("ESTADO",this.criterio.estado);
     
   }
   obtenerClasificaciones() {
@@ -74,8 +76,7 @@ console.log();
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
-    /*this.criterio.estado = this.estadoSelecion;*/
-
+    const estadoSelecionado = this.criterio.estado;
     const clasificacionSeleccionada = this.criterio.clasificacion;
     this.criteriosService.registrarcriterios(this.criterio).subscribe(
       () => {
@@ -85,6 +86,7 @@ console.log();
         this.criterio.nombreCriterio = '';
         this.criterio.descripcion = '';
         this.criterio.clasificacion = clasificacionSeleccionada;
+        this.criterio.estado=estadoSelecionado;
       },
       (error) => {
         if (error.error === 'El criterio ya ha sido registrado previamente.') {
