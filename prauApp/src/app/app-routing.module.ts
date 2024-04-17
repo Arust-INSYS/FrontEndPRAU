@@ -46,6 +46,8 @@ import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/a
 import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-docente/analisis-grafica-docente.component';
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
+import { ContenidoReportesComponent } from './components/contenido-reportes/contenido-reportes.component';
+import { GenerarReportesComponent } from './components/generar-reportes/generar-reportes.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -117,6 +119,14 @@ const routes: Routes = [
           { path: 'analisis-grafica-docente', component: AnalisisGraficaDocenteComponent},
           { path: 'analisis-uso-asignatura', component: AnalisisUsoAsignaturaComponent},
 
+        ],
+      },
+
+      {
+        path: 'contenido-reportes', component: ContenidoReportesComponent, canActivate: [loginGuard],
+        children: 
+        [
+          { path: 'generar-reportes', component: GenerarReportesComponent, canActivate: [loginGuard]},
         ],
       },
     ],

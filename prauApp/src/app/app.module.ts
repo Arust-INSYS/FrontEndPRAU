@@ -158,11 +158,13 @@ import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/a
 import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
 import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
 import { GenerarReportesComponent } from './components/generar-reportes/generar-reportes.component';
+import { ContenidoReportesComponent } from './components/contenido-reportes/contenido-reportes.component';
 
 
 
 @NgModule({
   declarations: [
+    ContenidoReportesComponent,
     CarreraActualizarComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
