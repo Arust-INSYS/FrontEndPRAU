@@ -417,6 +417,7 @@ applyFilter() {
       { header: 'NOMBRE CRITERIO' },
       { header: 'DESCRIPCION ' },
       { header: 'CLASIFICACION ' },
+      { header: 'ESTADO ' },
       
      
     ];
@@ -428,6 +429,7 @@ applyFilter() {
       nomCRITERIO: item?.nombreCriterio,
       desCRITERIO: item?.descripcion,
       clasCRITERIO: item?.clasificacion?.nombreClasificacion,
+      estCriterio: item?.estado,
       
     
     }));

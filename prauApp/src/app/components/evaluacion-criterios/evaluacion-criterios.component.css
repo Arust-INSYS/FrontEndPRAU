@@ -160,3 +160,15 @@
     box-shadow: #22990d 0 3px 7px inset;
     transform: translateY(2px);
 }
+.bg-danger {
+    background-color: red;
+  }
+  
+  .bg-warning {
+    background-color: yellow;
+  }
+  
+  .bg-success {
+    background-color: green;
+  }
+  

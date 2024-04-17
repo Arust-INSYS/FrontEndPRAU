@@ -179,7 +179,12 @@
                                 <div class="layout-criterio">
                                     <div class="grow1-criterio ">
                                         <label for="pregunta{{det.criterio?.idCriterio}}">{{
-                                            det.criterio?.descripcion}}:</label>
+                                            det.criterio?.descripcion}}|
+                                            <p-tag [severity]="det.criterio?.estado === 'Obligatorio' ? 'danger' : (det.criterio?.estado === 'Al menos uno' ? 'info' : 'success')" value="{{ det.criterio?.estado }}"></p-tag>
+
+                                           :</label>
+
+                                            
                                     </div>
 
                                     <div class="drop-calificacion">

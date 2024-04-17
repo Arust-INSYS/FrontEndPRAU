@@ -15,6 +15,11 @@ export class CriteriosActualizarComponent {
   id!: number;
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
+  estadoSeleccion: { label: string, value: string }[] = [
+    { label: 'Opcional', value: 'Opcional' },
+    { label: 'Obligatorio', value: 'Obligatorio' },
+    { label: 'Al menos uno', value: 'Al menos uno' }
+  ];
   
   clasificaciones: ClasificacionCriterios[] = [];
   constructor(

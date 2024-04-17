@@ -54,6 +54,7 @@ export class CriteriosComponent {
       this.criterios = dato;
     });
   }
+ 
   obtenerClasificaciones() {
     this.clasificacionCriteriosService
       .obtenerListacriterios()
@@ -66,12 +67,13 @@ export class CriteriosComponent {
     if (
       !this.criterio.nombreCriterio ||
       !this.criterio.descripcion ||
+      
       !this.criterio.clasificacion?.idClasificacion
     ) {
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
-    
+ 
     const clasificacionSeleccionada = this.criterio.clasificacion;
     this.criteriosService.registrarcriterios(this.criterio).subscribe(
       () => {
@@ -82,7 +84,7 @@ export class CriteriosComponent {
         this.criterio.descripcion = '';
         this.criterio.clasificacion = clasificacionSeleccionada;
         
-
+        
         
       },
       (error) => {
