@@ -20,6 +20,12 @@ export class CriteriosComponent {
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
+  estadoSelecion: any[] = [
+    { nombreEstado: 'Opcional' },
+    { nombreEstado: 'Obligatorio' },
+    { nombreEstado: 'Al menos uno' }
+  ];
+  
   constructor(
     private criteriosService: CriteriosService,
     private router: Router,
@@ -32,7 +38,9 @@ export class CriteriosComponent {
     this.obtenerClasificaciones();
     this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
       this.rol = rol;
-    });
+  });
+
+console.log();
   }
 
   ngOnDestroy(): void{
@@ -44,7 +52,11 @@ export class CriteriosComponent {
       this.criterios = dato;
     });
   }
-
+  mostrar() {
+    console.log("hola mundo")
+    console.log("estado",this.criterio.estado);
+    
+  }
   obtenerClasificaciones() {
     this.clasificacionCriteriosService
       .obtenerListacriterios()
@@ -62,6 +74,8 @@ export class CriteriosComponent {
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
+    /*this.criterio.estado = this.estadoSelecion;*/
+
     const clasificacionSeleccionada = this.criterio.clasificacion;
     this.criteriosService.registrarcriterios(this.criterio).subscribe(
       () => {
