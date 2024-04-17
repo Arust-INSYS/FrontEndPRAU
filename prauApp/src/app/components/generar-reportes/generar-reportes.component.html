@@ -1,1 +1,128 @@
-<p>generar-reportes works!</p>
+<div class="formulario">
+
+    <body>
+        <section class="subconten2">
+            <!-- <p-card header="Title"> -->
+            <p-card header="Evaluación N° ">
+                <ng-container>
+                    <p-divider align="left" type="solid" [style]="{ 'margin-top': 0 }">
+                        <div className="inline-flex align-items-center">
+                            <i class="pi pi-filter" style="padding-right: 0.5rem;"></i>
+                            <b>Ingrese parametros</b>
+                        </div>
+                    </p-divider>
+                    <div class="layout">
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="periodosAc" [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo"
+                                [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
+                                placeholder="Selecionar Periodo Academico"
+                                (onChange)="loadCarreras();  loadAsignaturas();     ">
+
+                            </p-dropdown>
+                        </div>
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="carreras" [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera"
+                                [filter]="true" filterBy="nombreCarrera" [showClear]="true"
+                                placeholder="Selecionar Carrera" (onChange)="loadAsignaturas();   ">
+
+                            </p-dropdown>
+                        </div>
+                        <div class="filter">
+                            <p-dropdown class="element-filter"
+                                [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
+                                [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
+                                [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                                placeholder="Selecionar Asignatura">
+
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div id="botones-container">
+                        <p-button (click)="reportGeneral()">Reporte General</p-button>
+                    </div>
+
+                </ng-container>
+                <!-- <ng-container> -->
+
+                <!-- </ng-container> -->
+                <p-divider align="left" type="solid">
+                    <div className="inline-flex align-items-center">
+                        <i class="pi pi-chart-line" style="padding-right: 0.5rem;"></i>
+                        <b>Reporte General</b>
+                    </div>
+                </p-divider>
+
+
+
+
+                <table class="custom-table" id="chart">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="table-header">TECNOLOGÍA SUPERIOR EN {{selectedCarrera?.nombreCarrera}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="first-third">Actividad del POA <br> operativo 3</td>
+                            <td>Fomentar el uso de la Plataforma Moodle por parte de los Docentes de la carrera</td>
+                        </tr>
+                        <tr>
+                            <td class="first-third">Indicador Núm. 3</td>
+                            <td>Comunicar el uso continuo de la Plataforma Moodle</td>
+                        </tr>
+                        <tr>
+                            <td class="first-third">Realizado por:</td>
+                            <td> {{infoUser[0][1]}}</td>
+                        </tr>
+                        <tr>
+                            <td class="first-third">Fecha:</td>
+                            <td>{{fecha}}</td>
+                        </tr>
+                        <tr>
+                            <td class="first-third">Periodo:</td>
+                            <td>{{selectedPeriodo?.descripcion}}</td>
+                        </tr>
+                        <!-- Agrega más filas según sea necesario -->
+                    </tbody>
+                </table>
+
+                <h2 style="margin-top: 5px;">1. Criterio de Evaluación</h2>
+                <table class="custom-table" id="chart" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="table-header" style="text-align: left;">Criterio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let crite of criterios; let i = index">
+                            <td colspan="2" style="text-align: left;">{{i+1}}.{{crite.nombreCriterio}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 style="margin-top: 5px;">2. Resultados del cumplimiento por Ciclos</h2>
+
+
+                <p-divider align="left" type="solid">
+                    <div className="inline-flex align-items-center">
+                        <i class="pi pi-file-edit" style="padding-right: 0.5rem;"></i>
+                        <b>Evaluacion</b>
+                    </div>
+                </p-divider>
+
+
+
+            </p-card>
+        </section>
+
+
+
+
+
+
+    </body>
+
+</div>
