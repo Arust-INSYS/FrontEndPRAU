@@ -16,7 +16,7 @@ import { AulaService } from '../../services/aula.service';
 import { HttpClient } from '@angular/common/http';
 import { DocenteService } from '../../services/docente.service';
 import { GraficaDocente } from '../../models/GraficaDocente';
-
+import 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-generar-reportes',
   templateUrl: './generar-reportes.component.html',
@@ -194,9 +194,8 @@ data: any;
       }
     };
   }
-
+////////////////////////////////////////////////////////////////////////
   codigoPeriodoAc: number = 0;
-
   fetchChartData() {
     this.docenteService.obtenerDatos(0, 0, 0, this.codigoPeriodoAc).subscribe((dataDocente: GraficaDocente[]) => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -204,28 +203,33 @@ data: any;
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
+        // Inicializar los datos de las barras
+        const datasets: { label: string, backgroundColor: string, data: { x: number, y: string }[] }[] = [];
+
+        // Iterar sobre los datos de los docentes
+        for (let i = 0; i < dataDocente.length; i++) {
+            const docente = dataDocente[i];
+            const data: { x: number, y: string }[] = [
+                { x: docente.porc_C, y: docente.docente.usuPerId.perNombre1 },
+                { x: docente.porc_CM, y: docente.docente.usuPerId.perNombre1 },
+                { x: docente.porc_NC, y: docente.docente.usuPerId.perNombre1 }
+            ];
+
+            const dataset: { label: string, backgroundColor: string, data: { x: number, y: string }[] } = {
+                label: docente.docente.usuPerId.perNombre1,
+                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                data: data
+            };
+
+            datasets.push(dataset);
+        }
+
         this.data = {
-            labels: ['Cumple', 'Cumple Medio', 'No Cumple'],
-            datasets: [
-                {
-                    label: 'C',
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: dataDocente.map(docente => docente.porc_C)
-                },
-                {
-                    label: 'CM',
-                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
-                    data: dataDocente.map(docente => docente.porc_CM)
-                },
-                {
-                    label: 'NC',
-                    backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-                    data: dataDocente.map(docente => docente.porc_NC)
-                }
-            ]
+            datasets: datasets
         };
 
         this.options = {
+            indexAxis: 'y', // Establece el eje Y como el eje de las categorías
             maintainAspectRatio: false,
             aspectRatio: 0.8,
             plugins: {
@@ -261,9 +265,22 @@ data: any;
                     },
                 },
             },
+            elements: {
+                bar: {
+                    borderWidth: 1, // Hace las barras más delgadas
+                    borderColor: 'rgba(0, 0, 0, 0.1)' // Cambia el color del borde de las barras
+                }
+            }
         };
     });
-  }
+}
+
+
+
+
+
+
+
   grafiCM() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
