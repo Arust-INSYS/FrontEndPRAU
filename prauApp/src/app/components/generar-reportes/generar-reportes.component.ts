@@ -38,7 +38,7 @@ export class GenerarReportesComponent {
   optionsCM: any;
 
   constructor(private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi:CriteriosService,private aulaServi: AulaService) {
-
+//
   }
 
   ngOnInit(): void {
