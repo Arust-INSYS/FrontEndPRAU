@@ -5,6 +5,7 @@ import { entorno } from '../env/entorno';
 import { Observable, map } from 'rxjs';
 import { Aula } from '../models/aula';
 import { IConsultarAula, IConsultarAulaObj } from '../interface/IConsultasBD';
+import { graficaAula } from '../models/graficaAula';
 
 @Injectable({
   providedIn: 'root',
@@ -101,4 +102,14 @@ export class AulaService {
     });
 
   }
+
+  graficaAula(aulaId:number,docenteId: number,asignaturaId:number,carreraId:number,periodoId:number):Observable<graficaAula[]>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<graficaAula []>(`${this.url}/graficaAula?aulaId=${aulaId}&docenteId=${docenteId}&asignaturaId=${asignaturaId}&carreraId=${carreraId}&periodoId=${periodoId}`, {
+      headers,
+    });
+  }
+
 }

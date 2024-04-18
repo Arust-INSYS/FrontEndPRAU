@@ -11,6 +11,8 @@ import { Criterios } from '../../models/criterios';
 import jsPDF from 'jspdf';
 import { Chart } from 'chart.js';
 import html2canvas from 'html2canvas';
+import { graficaAula } from '../../models/graficaAula';
+import { AulaService } from '../../services/aula.service';
 
 @Component({
   selector: 'app-generar-reportes',
@@ -25,12 +27,17 @@ export class GenerarReportesComponent {
   periodosAc: PeriodoAc[] = [];
   carreras: IConsultarCarrera[] = [];
   asignaturas: IAsignaturaXCarrera[] = [];
+  grafiCiclos: graficaAula[] = [];
   userId!: bigint;
   infoUser: any;
   ahora = new Date();
   fecha:string=""
+  basicData: any;
+  basicOptions: any;
+  dataCM: any;
+  optionsCM: any;
 
-  constructor(private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi:CriteriosService) {
+  constructor(private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi:CriteriosService,private aulaServi: AulaService) {
 
   }
 
@@ -79,15 +86,6 @@ export class GenerarReportesComponent {
     })
   }
 
-  reportGeneral() {
-    if (this.selectedCarrera?.idCarrera !== undefined && this.selectedPeriodo?.idPeriodoAc !== undefined && this.selectedAsignatura?.idAsignatura !== undefined) {
-
-    } else {
-      return
-    }
-
-
-  }
 
   formatoFecha() {
     if (this.selectedPeriodo?.idPeriodoAc !== undefined) {
@@ -100,11 +98,155 @@ export class GenerarReportesComponent {
       
       this.criterios=datos;
 
-
     });
 
   }
-  
+
+  reportGeneral() {
+    if (this.selectedCarrera?.idCarrera !== undefined && this.selectedPeriodo?.idPeriodoAc !== undefined && this.selectedAsignatura?.idAsignatura !== undefined) {
+      this.aulaServi.graficaAula(0, 0, 0, this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((datos) => {
+        this.grafiCiclos = datos
+        this.initChart();
+        this.grafiCM();
+      });
+    } else {
+      return
+    }
+
+
+  }
+
+  initChart() {
+    let labelCiclo: string[] = [];
+    for (let index = 0; index < this.grafiCiclos.length; index++) {
+      let cicloName = ""
+      cicloName = this.grafiCiclos[index].aula.cicloPertenece
+      labelCiclo.push(cicloName);
+    }
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    // Inicializa completeData antes de agregar elementos a datasets
+    this.basicData = {
+      labels: [this.selectedCarrera?.nombreCarrera],
+      datasets: []
+    };
+
+    for (let index = 0; index < this.grafiCiclos.length; index++) {
+      let labelData: number[] = [];
+      //color aleatorio
+      let r = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);
+      //recuperar datos 
+      labelData.push(this.grafiCiclos[index].total_c);
+
+      let chartDataArray = {
+        label: this.grafiCiclos[index].aula.cicloPertenece,
+        data: labelData,
+        backgroundColor: Array(4).fill(`rgba(${r}, ${g}, ${b}, 0.2)`),
+        borderColor: Array(4).fill(`rgb(${r}, ${g}, ${b})`),
+        borderWidth: 1
+      };
+
+      this.basicData.datasets.push(chartDataArray)
+    }
+
+    this.basicOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
+  }
+
+
+  grafiCM() {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.dataCM = {
+      labels: ['January', 'February'],
+      datasets: [
+        {
+          label: 'Ciclo1',
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label: 'Ciclo2',
+          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+          borderColor: documentStyle.getPropertyValue('--pink-500'),
+          data: [28, 48, 40, 19, 86, 27, 90]
+        }
+      ]
+    };
+
+    this.optionsCM = {
+      indexAxis: 'y',
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+            font: {
+              weight: 500
+            }
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
+  }
  
   @ViewChild('contenidoPDF', { static: false }) contenidoPDF: ElementRef<any> | undefined;
 

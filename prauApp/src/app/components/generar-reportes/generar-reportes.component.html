@@ -63,7 +63,6 @@
                 </p-divider>
 
 
-<!-- ||||||||||||||||||||||||||||||||||||||||||||||-->
 <div #contenidoPDF>
 
                 <table class="custom-table" id="chart">
@@ -83,7 +82,7 @@
                         </tr>
                         <tr>
                             <td class="first-third">Realizado por:</td>
-                            <td> {{infoUser[0][1]}}</td>
+                            <td> {{infoUser?.[0][1]}}</td>
                         </tr>
                         <tr>
                             <td class="first-third">Fecha:</td>
@@ -111,6 +110,17 @@
                     </tbody>
                 </table>
                 <h2 style="margin-top: 5px;">2. Resultados del cumplimiento por Ciclos</h2>
+
+                <div style="width: 60%; margin: 0 auto;">
+                    <div class="card">
+                        <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+                    </div>
+                </div>
+                <h2 style="margin-top: 5px;">3.Resultados del cumplimiento por ciclos y asignaturas </h2>
+                <div class="card">
+                    <p-chart type="bar" [data]="dataCM" [options]="optionsCM"></p-chart>
+                </div>
+                
 
 
                 <p-divider align="left" type="solid">
