@@ -277,7 +277,9 @@ export class GenerarReportesComponent {
 
       // Añadir la imagen al documento PDF
       doc.addImage(imgData, 'PNG', margin.left, margin.top, imgWidth, imgHeight);
-
+      doc.addPage();   
+       doc.addPage(); 
+      doc.addPage();
       // Guardar el documento PDF
       doc.save('documento.pdf');
     });
