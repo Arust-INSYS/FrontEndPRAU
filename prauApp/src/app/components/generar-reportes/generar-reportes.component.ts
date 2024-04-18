@@ -13,6 +13,9 @@ import { Chart } from 'chart.js';
 import html2canvas from 'html2canvas';
 import { graficaAula } from '../../models/graficaAula';
 import { AulaService } from '../../services/aula.service';
+import { HttpClient } from '@angular/common/http';
+import { DocenteService } from '../../services/docente.service';
+import { GraficaDocente } from '../../models/GraficaDocente';
 
 @Component({
   selector: 'app-generar-reportes',
@@ -36,10 +39,13 @@ export class GenerarReportesComponent {
   basicOptions: any;
   dataCM: any;
   optionsCM: any;
-
-  constructor(private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi:CriteriosService,private aulaServi: AulaService) {
+data: any; 
+  options: any;
+  constructor(private http: HttpClient,private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi:CriteriosService,private aulaServi: AulaService) {
 //
   }
+ 
+
 
   ngOnInit(): void {
     let dia = this.ahora.getDate();
@@ -57,6 +63,9 @@ export class GenerarReportesComponent {
     this.loadCarreras();
     this.loadAsignaturas();
     this.loadCriterios();
+    this.fetchChartData();
+
+    
   }
 
   loadCarreras(): void {
@@ -186,7 +195,75 @@ export class GenerarReportesComponent {
     };
   }
 
+  codigoPeriodoAc: number = 0;
 
+  fetchChartData() {
+    this.docenteService.obtenerDatos(0, 0, 0, this.codigoPeriodoAc).subscribe((dataDocente: GraficaDocente[]) => {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        this.data = {
+            labels: ['Cumple', 'Cumple Medio', 'No Cumple'],
+            datasets: [
+                {
+                    label: 'C',
+                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                    data: dataDocente.map(docente => docente.porc_C)
+                },
+                {
+                    label: 'CM',
+                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                    data: dataDocente.map(docente => docente.porc_CM)
+                },
+                {
+                    label: 'NC',
+                    backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+                    data: dataDocente.map(docente => docente.porc_NC)
+                }
+            ]
+        };
+
+        this.options = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.8,
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                legend: {
+                    labels: {
+                        color: textColor,
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: {
+                        color: textColorSecondary,
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false,
+                    },
+                },
+                y: {
+                    stacked: true,
+                    ticks: {
+                        color: textColorSecondary,
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false,
+                    },
+                },
+            },
+        };
+    });
+  }
   grafiCM() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
