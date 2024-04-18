@@ -223,61 +223,10 @@ applyFilter() {
     //PASO 4 colocar metodo listar objeto
     this.obtenerCriterios();
   }
-  
-  // async generarPDF() {
-  //   const pdfDoc = await PDFDocument.create();
-  //   const page = pdfDoc.addPage([400, 600]);
-
-  //   page.drawText('Lista de Criterios:', {
-  //     x: 50,
-  //     y: 500,
-  //     size: 24,
-  //     color: rgb(0, 0, 0),
-  //   });
-
-  //   let yPosition = 450;
-  //   this.criterio.forEach((dato: any) => {
-  //     const keys = Object.keys(dato);
-  //     page.drawLine({ start: { x: 50, y: yPosition-5 }, end: { x: 250, y: yPosition-5 }, color: rgb(0, 0, 0) });
-  //     keys.forEach(key => {
-  //       const value = dato[key];
-  //       if (key === 'clasificacion' && typeof value === 'object') {
-  //         //propiedades de clasificacion
-  //         const clasificacionKeys = Object.keys(value);
-  //         clasificacionKeys.forEach(clave => {
-  //           const clasificacionValue = value[clave];
-  //           page.drawText(`${key}.${clave}: ${clasificacionValue}`, {
-  //             x: 50,
-  //             y: yPosition,
-  //             size: 12,
-  //             color: rgb(0, 0, 0),
-  //           });
-  //           yPosition -= 20;
-  //         });
-  //       } else {
-  //         page.drawText(`${key}: ${value}`, {
-  //           x: 50,
-  //           y: yPosition,
-  //           size: 12,
-  //           color: rgb(0, 0, 0),
-  //         });
-  //         yPosition -= 20;
-  //       }
-  //     });
-  //   });
-
-  //   const pdfBytes = await pdfDoc.save();
-
-  //   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  //   const url = URL.createObjectURL(blob);
-
-  //   window.open(url, '_blank');
-  // }
-
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
+    let page = pdfDoc.addPage([600, 850]);
 
         // Agregar imagen
         const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
@@ -299,11 +248,11 @@ applyFilter() {
   
     // Definir el tamaño y la posición de la tabla
     const startX = 50;
-    let startY = 550;
+    let startY = 700;
     const cellPadding = 8;
   
     // Definir las propiedades de las celdas
-    const fontSize = 9;
+    const fontSize = 10;
     const SizeColumn = [20, 100, 280, 100];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
@@ -311,20 +260,24 @@ applyFilter() {
     // Encabezados de la tabla
     const headers = ['ID', 'Nombre', 'Descripción', 'Clasificación'];
     const headersCellWidth = SizeColumn;
-    const rowHeight = 20;
-    const tableHeight = 200;
+    const rowHeight = 0;
+    //const tableHeight = 200;
+    //const pageHeight = 200; // Ajustar según la altura deseada para la página
+    //let accumulatedContentHeight = 0; 
 
     // Dibujar encabezados y líneas horizontales
     for (let i = 0; i < headers.length; i++) {
       page.drawText(headers[i], {
           x: startX + headersCellWidth.slice(0, i).reduce((acc, width) => acc + width + cellPadding, 2),
-          y: startY + tableHeight - rowHeight - 20 + cellPadding,
-          size: fontSize,
+          y: startY + rowHeight,
+          size: 12,
           color: colorencabezado,
       });
     }
   
-    const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
+    // Altura máxima que se puede usar en la página
+    const maxPageHeight = 60; // Ajustar según el diseño de la página
+    //const dataCellWidths = SizeColumn; // Ancho de las celdas de datos
     // Llenar la tabla con los datos
     for (let i = 0; i < this.criterio.length; i++) {
       const dato = this.criterio[i];
@@ -339,16 +292,24 @@ applyFilter() {
         // Calcular la altura máxima de la fila
         let maxHeight = 0;
         for (let j = 0; j < rowData.length; j++) {
-          const lines = rowData[j].length / (dataCellWidths[j] / (fontSize * 0.55));
-          const textHeight = lines * (fontSize * 0.30); // Ajustar según sea necesario
+          const lines = Math.ceil(rowData[j].length / (SizeColumn[j] / fontSize));
+          const textHeight = lines * fontSize;
           maxHeight = Math.max(maxHeight, textHeight);
           
         }
+
+        // Verificar si se necesita una nueva página
+        if (startY - maxHeight - cellPadding < maxPageHeight) {
+          page = pdfDoc.addPage([600, 850]);
+          startY = 800;
+      }
+
+
     // Dibujar los datos de la fila y las líneas horizontales
     for (let j = 0; j < rowData.length; j++) {
-      const cellX = startX + dataCellWidths.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 2);
-      const cellY = startY + tableHeight - (i + 2.8) * rowHeight + cellPadding + maxHeight - fontSize * 0.85;
-      const cellWidth = dataCellWidths[j] - 2 * cellPadding;
+      const cellX = startX + headersCellWidth.slice(0, j).reduce((acc, width) => acc + width + cellPadding, 0);
+      const cellWidth = headersCellWidth[j];
+      const cellY = startY - maxHeight;
 
       // Dibujar texto
       if (j === 1 || j === 2  || j === 3) { // Si es la celda de descripción
@@ -356,10 +317,10 @@ applyFilter() {
         for (let k = 0; k < descriptionLines.length; k++) {
             page.drawText(descriptionLines[k], {
                 x: cellX,
-                y: cellY - k * (fontSize * 0.95),
+                y: cellY - k * (fontSize),
                 size: fontSize,
                 color: rgb(0, 0, 0),
-                maxWidth: cellWidth,
+                maxWidth: cellWidth+4,
             });
         }
     } else { // Para otras celdas
@@ -374,7 +335,7 @@ applyFilter() {
 
         // Dibujar líneas verticales entre las columnas
         if (j < rowData.length - 1) {
-          const nextCellX = startX + dataCellWidths.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
+          const nextCellX = startX + headersCellWidth.slice(0, j + 1).reduce((acc, width) => acc + width + cellPadding, - 8);
           const lineYStart = cellY + 30;
           const lineYEnd = cellY - maxHeight - 30;
           page.drawLine({
@@ -387,9 +348,9 @@ applyFilter() {
   }
     // Dibujar líneas horizontales entre las filas
     page.drawLine({
-      start: { x: startX, y: startY - (i - 8) * rowHeight},
-      end: { x: startX + dataCellWidths.reduce((acc, width) => acc + width, 0), y: startY - (i - 8) * rowHeight},
-      thickness: 1.5,
+      start: { x: startX, y: startY - (i - 8) * rowHeight + 25},
+      end: { x: startX + headersCellWidth.reduce((acc, width) => acc + width, 0), y: startY + 25},
+      thickness: 1,
       color: colorlineas
   });
       startY -= maxHeight + cellPadding;
@@ -402,6 +363,9 @@ applyFilter() {
     window.open(url, '_blank');
   }
   
+
+
+
   loadExcelReportData(data: Criterios[]) {
     //NOMBRE DEL REPORTE
     const reportName = 'CRITERIO';
@@ -446,13 +410,6 @@ applyFilter() {
       };
     }
   }
-
-
-
-
-
-
-
 
 }
 
