@@ -1,4 +1,5 @@
 <div *ngIf="rolAuth === 'Administrador'" class="container">
+  
   <h1>Listado de Roles</h1>
   <p-table [value]="roles" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
@@ -6,7 +7,6 @@
         <th>ID Rol</th>
         <th>Nombre</th>
         <th>Descripción</th>
-        <th>Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rol>
@@ -14,10 +14,8 @@
         <td>{{ rol.rolId }}</td>
         <td>{{ rol.rolNombre }}</td>
         <td>{{ rol.rolDescripcion }}</td>
-        <td> <p-button icon="pi pi-pencil" severity="success" (click)="selectRol(rol)" ></p-button></td>  
         <!-- [routerLink]="['/menu/contenido-virtual/actualizar-periodo']" -->
       </tr>
     </ng-template>
   </p-table>
 </div>
-

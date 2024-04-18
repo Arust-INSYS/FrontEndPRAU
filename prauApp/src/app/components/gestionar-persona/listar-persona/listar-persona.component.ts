@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
   Output,
@@ -22,6 +23,12 @@ import { AuthRolService } from '../../../services/authRolService.service';
 import { RegistrarPersonaComponent } from '../registrar-persona/registrar-persona.component';
 import { RolService } from '../../../services/rol.service';
 import { Rol } from '../../../models/rol';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { Chart } from 'chart.js';
+import html2canvas from 'html2canvas';
+
+
 @Component({
   selector: 'app-listar-persona',
   templateUrl: './listar-persona.component.html',
@@ -56,7 +63,8 @@ export class ListarPersonaComponent implements OnInit {
     private usuarioService: UsuarioService,
     private rolService: RolService,
     private excelService: ExcelService,
-    private authRolService: AuthRolService
+    private authRolService: AuthRolService,
+    
   ) {
     this.listarPersona();
   }
@@ -81,6 +89,10 @@ export class ListarPersonaComponent implements OnInit {
     }
     if (this.nombreEditar == 'REGISTRAR') {
       this.displayModal = true;
+    }if(this.nombreEditar == 'ELIMINAR'){
+      this.idUsuario = id;
+      this.enviarDatos()
+      
     }
   }
 
@@ -108,36 +120,10 @@ export class ListarPersonaComponent implements OnInit {
       this.loadExcelReportData(this.userList);
     });
   }
-  persona: Persona = new Persona();
+  //persona: Persona = new Persona();
   roles: Rol = new Rol();
-  eliminarPersona(idUser: number, idPer: number, idRol: number) {
-    console.log("SOY EL ROL:",idRol)
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¡No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.usuario.usuEstado = 0;
-        this.usuario.usuNombreUsuario = '';
-        this.usuario.usuContrasena = '';
-        this.usuario.rolId.rolId=idRol
-        this.usuarioService.update(idUser, this.usuario).subscribe(() => {
-          Swal.fire(
-            '¡Eliminado!',
-            'La persona ha sido eliminada.',
-            'success'
-          );
-          this.listarPersona();
-          
-        });
-      }
-    });
-  }
+  
+ 
   actualizarListaPersonas() {
     window.location.reload();
   }
@@ -408,4 +394,62 @@ export class ListarPersonaComponent implements OnInit {
 
     window.open(url, '_blank');
   }
+
+  @ViewChild('content', { static: false }) content: ElementRef<any> | undefined;
+  @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined;
+
+  data: any[] = [];
+  chart: Chart | undefined;
+
+  
+ 
+  generatePDF() {
+     // Datos de ejemplo para la tabla
+  this.data = [
+    { id: 1, name: 'John Doe', age: 30 },
+    { id: 2, name: 'Jane Smith', age: 25 },
+    { id: 3, name: 'Bob Johnson', age: 40 }
+  ];
+    const doc = new jsPDF();
+
+    // Título del documento
+    doc.text('Tabla Personalizada en PDF', 10, 10);
+
+    // Generar la tabla utilizando jsPDF-AutoTable
+    (doc as any).autoTable({
+      head: [['ID', 'Nombre', 'Edad']],
+      body: this.data.map(row => [row.id, row.name, row.age]),
+      startY: 20
+    });
+     
+     // Añadir gráfica
+     if (this.chart) {
+       const chartDataUrl = this.chart.toBase64Image();
+       doc.addImage(chartDataUrl, 'PNG', 10, 100, 180, 100);
+     }
+
+    // Guardar el documento
+    doc.save('tabla_y_grafica.pdf');
+  
+  }
+  
+  
+   ngAfterViewInit() {
+      //Generar gráfica de ejemplo
+     if (this.canvas) {
+       this.chart = new Chart(this.canvas.nativeElement, {
+         type: 'bar',
+         data: {
+           labels: ['John Doe', 'Jane Smith', 'Bob Johnson'],
+           datasets: [{
+             label: 'Edad',
+             data: [30, 25, 40],
+             backgroundColor: ['red', 'green', 'blue']
+           }]
+         }
+       });
+     }
+   }
+  
+
 }

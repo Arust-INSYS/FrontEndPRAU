@@ -16,6 +16,13 @@
           class="mr-2"
           (click)="generarPDFtable()"
         ></button>
+        <!-- <button
+          label="Reporte"
+          pButton
+          icon="pi pi-file-pdf"
+          class="mr-2"
+          (click)="generarPDF()"
+        ></button> -->
       </div>
       <div class="p-toolbar-group-center">
         <span class="p-input-icon-left">
@@ -31,13 +38,7 @@
           iconPos="right"
         ></p-button>
       </div>
-      <div class="p-toolbar-group-end">
-        <p-splitButton *ngIf="rol === 'Administrador'"
-          label="Save"
-          icon="pi pi-check"
-          [model]="items"
-        ></p-splitButton>
-      </div>
+      
     </p-toolbar>
   </div>
   <div class="subconten2" style="max-height: 400px; overflow-y: auto;">
@@ -52,6 +53,7 @@
           <th>Fecha de Nacimiento</th>
           <th>Teléfono</th>
           <th>Estado</th>
+          <th>Rol</th>
           <th *ngIf="rol === 'Administrador'">Acciones</th>
         </tr>
       </ng-template>
@@ -65,6 +67,7 @@
           <td>{{ usu.usuPerId.perFechaNacimiento }}</td>
           <td>{{ usu.usuPerId.perTelefono }}</td>
           <td>{{ usu.usuEstado }}</td>
+          <td>{{ usu.rolId.rolNombre }}</td>
           <td *ngIf="rol === 'Administrador'">
             <button
               pButton
@@ -76,9 +79,29 @@
               pButton
               icon="pi pi-trash"
               class="p-button-danger"
-              (click)="eliminarPersona(usu.usuId,usu.usuPerId.perId,usu.rolId.rolId)"
+              (click)="showModal('ELIMINAR',usu.usuId)"
             ></button>
           </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div #content>
+    <canvas #canvas></canvas>
+    <p-button label="Generar PDF" (onClick)="generatePDF()"></p-button>
+    <p-table [value]="data">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td>{{ row.id }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.age }}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -91,7 +114,7 @@ class="ventana"
   [responsive]="true"
 >
 <div class="modal">
-  <p>Actualizacion</p>
+  
   <p-button (onClick)="cerrar_Limpiar()">Cerrar</p-button>
 <app-registrar-persona [nombre]="nombreEditar" [IdEditar]="idUsuario" #registrarPersonaComponents></app-registrar-persona>
 </div>

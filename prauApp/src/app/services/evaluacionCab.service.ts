@@ -56,7 +56,7 @@ export class EvaluacionCabService {
       headers,
     });
   }
-  
+
   //Actualiza el estado
 
   updateEstado(id: number, estado: number): Observable<void> {
@@ -65,10 +65,10 @@ export class EvaluacionCabService {
     });
 
     return this.http.put<void>(`${this.url}/updateEst?id=${id}&estado=${estado}`,
-    null,
-    { headers }
-  );
-   
+      null,
+      { headers }
+    );
+
   }
 
   ///sacar el numero de la nueva evaluacion para mostrar 
@@ -92,4 +92,12 @@ export class EvaluacionCabService {
     return this.http.get<EvaluacionCab>(`${this.url}/findNroEvaluacion?nroEvaluacion=${nroEvaluacion}`, { headers });
   }
 
+  getFiltroEvaCap(est: number, search: string): Observable<EvaluacionCab[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+    });
+    return this.http.get<EvaluacionCab[]>(`${this.url}/buscarCabecera?est=${est}&search=${search}`, {
+      headers,
+    });
+  }
 }

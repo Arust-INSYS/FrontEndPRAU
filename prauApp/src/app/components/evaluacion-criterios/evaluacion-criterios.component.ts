@@ -13,6 +13,8 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CarreraService } from '../../services/carrera.service';
 import Swal from 'sweetalert2';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { IExcelReportParams, IHeaderItem } from '../../interface/IExcelReportParams';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-evaluacion-criterios',
@@ -54,8 +56,10 @@ export class EvaluacionCriteriosComponent {
   selectedCustomers: any
   loading: any
 
-  estadoBTN: number = 0;
+  estadoBTN: number = 1;
   //
+  excelReportData: IExcelReportParams | null = null;
+
 
   constructor(private evaluacionCABService: EvaluacionCabService,
     private usuarioService: UsuarioService,
@@ -64,13 +68,14 @@ export class EvaluacionCriteriosComponent {
     private toastr: ToastrService,
     private sharedDataService: SharedDataService,
     private carreraService: CarreraService,
+    private excelService: ExcelService
   ) { }
 
 
   ngOnInit(): void {
     this.estadoBTN = 1;
-    this.getEvaluacionesCAB(1);
-    this.listarevalu();
+    this.getFiltroEvaCap();
+    // this.listarevalu();
 
 
   }
@@ -154,9 +159,25 @@ export class EvaluacionCriteriosComponent {
   }
 
   getEvaluacionesCAB(est: number): void {
+    this.searchTerm = '';
     this.estadoBTN = est;
     this.evaluacionCABService.getEvaluacionCAB(est).subscribe((dato) => {
       this.evaluacionCab = dato;
+      //this.generarPDF();
+    },
+      error => {
+        console.error('Error al obtener los criterios: ', error);
+      }
+    );
+  }
+
+
+  getFiltroEvaCap(): void {
+    //  = this.estadoBTN;
+    this.evaluacionCABService.getFiltroEvaCap(this.estadoBTN, this.searchTerm).subscribe((dato) => {
+      this.evaluacionCab = dato;
+      // console.log(dato)
+      this.loadExcelReportData(this.evaluacionCab);
       //this.generarPDF();
     },
       error => {
@@ -215,9 +236,6 @@ export class EvaluacionCriteriosComponent {
       }
     });
   }
-
-
-
   // Método para dividir la descripción en líneas más cortas
   splitDescriptionIntoLines(description: string, maxWidth: number, fontSize: number): string[] {
     const words = description.split(' ');
@@ -252,14 +270,14 @@ export class EvaluacionCriteriosComponent {
 
   async generarPDFtable() {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
+    const page = pdfDoc.addPage([700,400]);
 
     // Agregar imagen
     const imageBytes = await fetch('../../../assets/LOGO-RECTANGULAR.png').then(res => res.arrayBuffer());
     const image = await pdfDoc.embedPng(imageBytes);
     page.drawImage(image, {
       x: 210, // Posición x de la imagen
-      y: 780, // Posición y de la imagen
+      y: 350, // Posición y de la imagen
       width: 180, // Ancho de la imagen
       height: 40 // Alto de la imagen
     });
@@ -267,24 +285,24 @@ export class EvaluacionCriteriosComponent {
     // Título de la tabla
     page.drawText('Lista de Evaluaciones', {
       x: 250,
-      y: 750,
+      y: 335,
       size: 15,
       color: rgb(0, 0, 0),
     });
 
     // Definir el tamaño y la posición de la tabla
     const startX = 30;
-    let startY = 550;
+    let startY = 150;
     const cellPadding = 8;
 
     // Definir las propiedades de las celdas
     const fontSize = 9;
-    const SizeColumn = [80, 70, 100, 150, 70];
+    const SizeColumn = [20, 150, 100, 150,50];
     const colorlineas = rgb(0.5, 0.5, 0.5);
     const colorencabezado = rgb(0, 0.1, 1);
 
     // Encabezados de la tabla
-    const headers = ['No. Evaluacion', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
+    const headers = ['No.', 'Aula', 'Docente', 'Observaciones', '% Cumplido'];
     const headersCellWidth = SizeColumn;
     const rowHeight = 20;
     const tableHeight = 200;
@@ -377,5 +395,82 @@ export class EvaluacionCriteriosComponent {
   }
 
 
+  loadExcelReportData(data: EvaluacionCab[]) {
+    //NOMBRE DEL REPORTE
+    const reportName = 'Evaluaciones';
+
+    //TAMAÑO DEL LOGO
+    const logo = 'G1:J1';
+
+    //ENCABEZADOS
+    const headerItems: IHeaderItem[] = [
+      { header: '№' },
+      { header: 'FECHA' },
+      { header: 'IDENT. EVALUADOR' },
+      { header: 'EVALUADOR' },
+      { header: 'AULA' },
+      { header: 'IDENT. DOCENTE' },
+      { header: 'DOCENTE' },
+      { header: 'ASIGANTURA' },
+      { header: 'CICLO' },
+      { header: 'CARRERA' },
+      { header: 'PERIODO ACADEMICO' },
+      { header: '% PROGRESO' },
+      { header: 'CUMPLE' },
+      { header: '% CUMPLE' },
+      { header: 'CUMPLE MEDIANAMENTE' },
+      { header: '% CUMPLE MEDIANAMENTE' },
+      { header: 'NO CUMPLE' },
+      { header: '% NO CUMPLE' },
+    ];
+
+    //DATOS DEL REPORTE
+    const rowData = data.map((item) => ({
+      nro: item.nroEvaluacion || 0,
+      fecha: item.fechaRegistro
+        ? new Date(new Date(item.fechaRegistro).getTime() + new Date(item.fechaRegistro).getTimezoneOffset() * 60000).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')
+        : '' || '',
+      identEva: item.evaluador?.usuPerId.perCedula || '',
+      evaluador: `${item.evaluador?.usuPerId.perApellido1 || ''} ${item.evaluador?.usuPerId.perApellido2 || ''} ${item.evaluador?.usuPerId.perNombre1 || ''} ${item.evaluador?.usuPerId.perNombre2 || ''}`.trim(),
+      aula: item.aulaEva.aulaNombre,
+      identDoc: item.aulaEva.docente.usuPerId.perCedula || '',
+      docente: `${item.aulaEva.docente?.usuPerId.perApellido1 || ''} ${item.aulaEva.docente?.usuPerId.perApellido2 || ''} ${item.aulaEva.docente?.usuPerId.perNombre1 || ''} ${item.aulaEva.docente?.usuPerId.perNombre2 || ''}`.trim(),
+      asig: item.aulaEva.asignatura.nombreAsignatura || '',
+      ciclo: item.aulaEva.cicloPertenece,
+      carrera: item.aulaEva.asignatura.carrera?.nombreCarrera || '',
+      per: item.aulaEva.periodoAc.nombrePeriodo,
+      progreso: Number((item.progreso).toFixed(2)) + '%' || '0%',
+      cc: item.totalC || 0,
+      porcCC: Number((item.porcTotalC).toFixed(2)) + '%' || '0%',
+      cm: item.totalCm,
+      porcCM: Number((item.porcTotalCm ).toFixed(2))+ '%' || '0%',
+      nc: item.totalNc,
+      porcNC: Number((item.porcTotalNc ).toFixed(2))+ '%' || '0%'
+    }));
+
+    if (this.excelReportData) {
+      this.excelReportData.logo = logo;
+      this.excelReportData.rowData = rowData;
+      this.excelReportData.headerItems = headerItems;
+      this.excelReportData.reportName = reportName;
+    } else {
+      this.excelReportData = {
+        logo,
+        rowData,
+        headerItems,
+        reportName,
+      };
+    }
+  }
+
+  //PASO 3
+  //metodo para el boton dew descarga
+  downloadExcel(): void {
+    if (this.excelReportData) {
+      this.excelService.dowloadExcel(this.excelReportData);
+    }
+    //PASO 4 colocar metodo listar objeto
+    this.getFiltroEvaCap();
+  }
 
 }

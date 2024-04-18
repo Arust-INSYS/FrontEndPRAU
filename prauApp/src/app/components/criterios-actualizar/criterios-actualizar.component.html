@@ -20,7 +20,13 @@
                     ></textarea>
                 <small id="descripcion">Ingrese la  descripción .</small>
               </div>
-
+              
+              <div class="flex flex-column gap-2">
+                <label for="estado">Clasificación de Estado:</label>
+                <p-dropdown [options]="estadoSeleccion" optionValue="value" [(ngModel)]="criterio.estado" optionLabel="label" [showClear]="true" placeholder="Seleccione un estado"></p-dropdown>
+               
+    
+            </div>
               <div class="flex flex-column gap-2">
                 <label for="clasificacion">Clasificación de Criterio:</label>
                 <p-dropdown [options]="clasificaciones" [(ngModel)]="criterio.clasificacion" optionLabel="nombreClasificacion" [showClear]="true" placeholder="Seleccione una clasificación"></p-dropdown>

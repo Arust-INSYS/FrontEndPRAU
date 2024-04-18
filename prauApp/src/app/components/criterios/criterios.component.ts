@@ -20,6 +20,14 @@ export class CriteriosComponent {
   criterio: Criterios = new Criterios();
   criterios: Criterios[] = [];
   clasificaciones: ClasificacionCriterios[] = [];
+  // Inicializado con una cadena vacía
+
+  estadoSeleccion: { label: string, value: string }[] = [
+    { label: 'Opcional', value: 'Opcional' },
+    { label: 'Obligatorio', value: 'Obligatorio' },
+    { label: 'Al menos uno', value: 'Al menos uno' }
+  ];
+  
   constructor(
     private criteriosService: CriteriosService,
     private router: Router,
@@ -32,7 +40,9 @@ export class CriteriosComponent {
     this.obtenerClasificaciones();
     this.subscription = this.authRolService.nombreRol$.subscribe((rol) => {
       this.rol = rol;
-    });
+  });
+
+
   }
 
   ngOnDestroy(): void{
@@ -44,7 +54,7 @@ export class CriteriosComponent {
       this.criterios = dato;
     });
   }
-
+ 
   obtenerClasificaciones() {
     this.clasificacionCriteriosService
       .obtenerListacriterios()
@@ -57,11 +67,13 @@ export class CriteriosComponent {
     if (
       !this.criterio.nombreCriterio ||
       !this.criterio.descripcion ||
+      
       !this.criterio.clasificacion?.idClasificacion
     ) {
       this.toastr.error('Por favor, complete todos los campos.', 'Error');
       return;
     }
+ 
     const clasificacionSeleccionada = this.criterio.clasificacion;
     this.criteriosService.registrarcriterios(this.criterio).subscribe(
       () => {
@@ -71,6 +83,9 @@ export class CriteriosComponent {
         this.criterio.nombreCriterio = '';
         this.criterio.descripcion = '';
         this.criterio.clasificacion = clasificacionSeleccionada;
+        
+        
+        
       },
       (error) => {
         if (error.error === 'El criterio ya ha sido registrado previamente.') {

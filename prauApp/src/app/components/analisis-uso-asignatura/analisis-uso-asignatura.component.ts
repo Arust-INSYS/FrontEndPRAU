@@ -1,54 +1,57 @@
 import { Component } from '@angular/core';
-import { Carrera } from '../../models/carrera';
 import { CarreraService } from '../../services/carrera.service';
-import { PeriodoAcService } from '../../services/periodo-ac.service';
-import { PeriodoAc } from '../../models/periodoAc';
-import { periodoDto } from '../../models/periodoDto';
-import { graficaCarrera } from '../../models/graficaCarrera';
+import { AsignaturaService } from '../../services/asignatura.service';
+import { Carrera } from '../../models/carrera';
+import { Asignatura } from '../../models/asignatura';
+import { IAsignaturaXCarrera } from '../../interface/IConsultasBD';
+import { asignaturaDto } from '../../models/asignaturaDto';
+import { graficaAsignatura } from '../../models/graficaAsignatura';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 @Component({
-  selector: 'app-analisis-uso-carrera',
-  templateUrl: './analisis-uso-carrera.component.html',
-  styleUrl: './analisis-uso-carrera.component.css'
+  selector: 'app-analisis-uso-asignatura',
+  templateUrl: './analisis-uso-asignatura.component.html',
+  styleUrl: './analisis-uso-asignatura.component.css'
 })
-export class AnalisisUsoCarreraComponent {
-  carreras: Carrera[] = [];
-  carrera: Carrera = new Carrera();
-  periodos: periodoDto[] = [];
-  periDto: periodoDto = new periodoDto();
+export class AnalisisUsoAsignaturaComponent {
   basicData: any;
+  basicOptions: any;
   completeData: any;
   completeOptions: any;
-  chartCarr: graficaCarrera[] = [];
+  carreras: Carrera[] = [];
+  carrera: Carrera = new Carrera();
+  graficaAsig:graficaAsignatura[] = [];
+  asignaturas: IAsignaturaXCarrera[] = [];
+  asignatura: asignaturaDto = new asignaturaDto();
   banderaDatos: boolean = false;
   inidicaInit: boolean = true;
-  basicOptions: any;
-  constructor(private carreraService: CarreraService, private periodosService: PeriodoAcService) {
+  constructor(private carreServi: CarreraService, private asigService: AsignaturaService) {
+
   }
 
-  ngOnInit() {
-    this.obtenercarreras();
+  ngOnInit(): void {
+
+    this.cargarCarreras();
     this.cargarAllData();
   }
-
-  cargarAllData(){
+  private cargarAllData(){
     this.banderaDatos= false;
-  this.inidicaInit= true;
-    this.carreraService.graficaCarrera(0, 0).subscribe((dato) => {
-   
-      if (dato === null) {
+    this.inidicaInit= true;
+    this.asigService.graficaAsignatura(0,0,0).subscribe((dato)=>{
 
-      } else {
-        this.chartCarr = dato;
-       this.cargarDatosGeneralesGrafica()
+      if(dato ===null){
+
+      }else{
+
+        this.graficaAsig=dato;
+        this.cargarDatosGeneralesGrafica()
       }
+
     });
   }
 
-  cargarDatosGeneralesGrafica() {
-
+  cargarDatosGeneralesGrafica(){
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -60,23 +63,23 @@ export class AnalisisUsoCarreraComponent {
       datasets: []
     };
 
-    for (let index = 0; index < this.chartCarr.length; index++) {
+    for (let index = 0; index < this.graficaAsig.length; index++) {
       let labelData: number[] = [];
       //color aleatorio
       let r=Math.floor(Math.random() * 256);
       let g=Math.floor(Math.random() * 256);
       let b=Math.floor(Math.random() * 256);
       //recuperar datos 
-      labelData.push(this.chartCarr[index].total_c);
-      labelData.push(this.chartCarr[index].total_cm);
-      labelData.push(this.chartCarr[index].total_nc);
-      labelData.push(this.chartCarr[index].porc_C);
-      labelData.push(this.chartCarr[index].porc_CM);
-      labelData.push(this.chartCarr[index].porc_NC);
-      labelData.push(this.chartCarr[index].total_criterios);
-      console.log(this.chartCarr[index].porc_NC)
+      labelData.push(this.graficaAsig[index].total_c);
+      labelData.push(this.graficaAsig[index].total_cm);
+      labelData.push(this.graficaAsig[index].total_nc);
+      labelData.push(this.graficaAsig[index].porc_C);
+      labelData.push(this.graficaAsig[index].porc_CM);
+      labelData.push(this.graficaAsig[index].porc_NC);
+      labelData.push(this.graficaAsig[index].total_criterios);
+      console.log(this.graficaAsig[index].porc_NC)
       let chartDataArray = {
-        label: this.chartCarr[index].carrera.nombreCarrera,
+        label: this.graficaAsig[index].asignatura.nombreAsignatura,
         data:labelData,
         backgroundColor: Array(4).fill(`rgba(${r}, ${g}, ${b}, 0.2)`),
         borderColor: Array(4).fill(`rgb(${r}, ${g}, ${b})`),
@@ -119,58 +122,43 @@ export class AnalisisUsoCarreraComponent {
   }
 
 
-  obtenercarreras() {
-    this.carreraService.obtenerListaCarreras().subscribe((dato) => {
+
+
+  private cargarCarreras() {
+    this.carreServi.cargarCarrera().subscribe((dato) => {
       this.carreras = dato;
+
     });
   }
 
+  private cargarAsignaturas() {
+    this.asigService.asignaturaXCarreara(this.carrera.idCarrera).subscribe((dato) => {
+
+      this.asignaturas = dato;
+
+    });
+  }
+  onOpcionSeleccionada() {
+    this.cargarAsignaturas();
+  }
+
+
   buscarChart() {
-
-    if (this.carrera.idCarrera === 0 || this.periDto.idPeriodoAc === 0) {
-      // No hagas nada si carrera.idCarrera o periDto.idPeriodoAc son 0
-
+    if (this.asignatura.idAsignatura === 0 || this.carrera.idCarrera === 0) {
       return;
     }
-    this.carreraService.graficaCarrera(this.carrera.idCarrera, this.periDto.idPeriodoAc).subscribe((dato) => {
 
-      if (dato === null) {
-
+    this.asigService.graficaAsignatura(this.carrera.idCarrera,this.asignatura.idAsignatura,0).subscribe((dato)=>{
+      if(dato===null){
         this.cargarAllData();
-      } else {
-
-        this.chartCarr = dato;
+      }else{
+        this.graficaAsig=dato
         this.initChart();
         this.banderaDatos= true;
         this.inidicaInit= false;
       }
     });
 
-  }
-
-
-  obtenerPeriodos() {
-    this.cargarDatosGeneralesGrafica();
-    this.periodosService.getPeriodosAcs().subscribe((dato) => {
-      //parsero para mostrar datos 
-
-      let arrayPerio: periodoDto[] = [];
-
-      dato.forEach(peri => {
-        let perio: periodoDto = new periodoDto();
-        perio.nombrePeriodo = peri.fechaInicio.toString().slice(0, 10) + " - " + peri.fechaFin.toString().slice(0, 10)
-        perio.idPeriodoAc = peri.idPeriodoAc
-        arrayPerio.push(perio)
-      });
-      this.periodos = arrayPerio
-
-    });
-
-  }
-
-  onOpcionSeleccionada() {
-
-    this.obtenerPeriodos();
   }
 
   initChart() {
@@ -180,18 +168,18 @@ export class AnalisisUsoCarreraComponent {
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-    labelData.push(this.chartCarr[0].total_c);
-    labelData.push(this.chartCarr[0].total_cm);
-    labelData.push(this.chartCarr[0].total_nc);
-    labelData.push(this.chartCarr[0].porc_C);
-    labelData.push(this.chartCarr[0].porc_CM);
-    labelData.push(this.chartCarr[0].porc_NC);
-    labelData.push(this.chartCarr[0].total_criterios);
+    labelData.push(this.graficaAsig[0].porc_C);
+    labelData.push(this.graficaAsig[0].total_cm);
+    labelData.push(this.graficaAsig[0].total_nc);
+    labelData.push(this.graficaAsig[0].porc_C);
+    labelData.push(this.graficaAsig[0].porc_CM);
+    labelData.push(this.graficaAsig[0].porc_NC);
+    labelData.push(this.graficaAsig[0].total_criterios);
     this.basicData = {
       labels: ['Total C', 'Total CM', 'Total NC', 'Proc C', 'Proc CM', 'Porc NC', 'Total Criterios'],
       datasets: [
         {
-          label: this.chartCarr[0].carrera.nombreCarrera,
+          label: this.graficaAsig[0].asignatura.nombreAsignatura,
           data: labelData,
           backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 159, 64, 0.2)'],
           borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
@@ -233,15 +221,14 @@ export class AnalisisUsoCarreraComponent {
     };
   }
 
-
-
+  
   crearPDF() {
     const doc = new jsPDF();
     doc.setFont('tahoma');
     doc.setFontSize(14);
     const imageUrl = 'assets/LOGO-TECAZUAY.png';
     doc.addImage(imageUrl, 'JPEG', 70, 0, 65, 30);
-    doc.text('Informe de ' + this.chartCarr[0].carrera.nombreCarrera, 80, 40);
+    doc.text('Informe de ' + this.graficaAsig[0].asignatura.nombreAsignatura, 80, 40);
     doc.setFontSize(12);
     const maxWidth = doc.internal.pageSize.getWidth() - 20;
 
@@ -254,8 +241,8 @@ export class AnalisisUsoCarreraComponent {
 
 
 
-      doc.save('infrome' + this.chartCarr[0].carrera.nombreCarrera + '.pdf');
+
+      doc.save('infrome' + this.graficaAsig[0].asignatura.nombreAsignatura + '.pdf');
     });
   }
-
 }

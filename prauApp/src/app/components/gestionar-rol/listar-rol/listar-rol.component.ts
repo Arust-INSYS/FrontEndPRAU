@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Rol } from '../../../models/rol';
 import { RolService } from '../../../services/rol.service';
-import { AuthRolService } from '../../../services/authRolService.service';
 import { Subscription } from 'rxjs';
+import { AuthRolService } from '../../../services/authRolService.service';
 
 @Component({
   selector: 'app-listar-rol',
@@ -18,7 +18,7 @@ export class ListarRolComponent {
   roles: Rol[] = [];
   selectedRol: Rol = { rolId: 0, rolNombre: '', rolDescripcion: '' };
 
-  constructor(private router: Router, private rolService: RolService, private authRolService: AuthRolService) { }
+  constructor(private router: Router, private rolService: RolService, private authRolService: AuthRolService) {}
 
   ngOnInit(): void {
     this.getAllRoles();

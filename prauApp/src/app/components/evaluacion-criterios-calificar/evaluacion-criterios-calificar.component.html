@@ -1,4 +1,4 @@
-<div *ngIf="rol === 'Administrador' || rol === 'Responsable'" class="formulario">
+<div class="formulario" *ngIf="rol === 'Administrador' || rol === 'Responsable'" >
 
     <body>
         <section class="subconten2">
@@ -48,7 +48,7 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="docentes" [(ngModel)]="selectedDocente" optionLabel="nombreCompleto"
                                 [filter]="true" filterBy="nombreCompleto" [showClear]="true"
-                                placeholder="Selecionar Docente" (onChange)="consultarAula()">
+                                placeholder="Selecionar Docente" (onChange)=" consultarAula()">
 
                             </p-dropdown>
                         </div>
@@ -179,7 +179,12 @@
                                 <div class="layout-criterio">
                                     <div class="grow1-criterio ">
                                         <label for="pregunta{{det.criterio?.idCriterio}}">{{
-                                            det.criterio?.descripcion}}:</label>
+                                            det.criterio?.descripcion}}|
+                                            <p-tag [severity]="det.criterio?.estado === 'Obligatorio' ? 'danger' : (det.criterio?.estado === 'Al menos uno' ? 'info' : 'success')" value="{{ det.criterio?.estado }}"></p-tag>
+
+                                           :</label>
+
+                                            
                                     </div>
 
                                     <div class="drop-calificacion">

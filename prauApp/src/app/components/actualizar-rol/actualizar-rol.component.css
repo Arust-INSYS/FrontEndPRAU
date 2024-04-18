@@ -1,0 +1,95 @@
+/* TITULO -------------------------------------------------------- */
+#formulario{
+    font-family: sans-serif;
+    background: #14376d;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    border-top-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom: 5px solid #205ab4;
+    margin-bottom:5px; 
+  }
+  /* --------------------------------------------------------------- */
+  /* --------------------------------------------------------------- */
+  /* FORMULARIO: fondo blanco y casillas --------------------------- */
+  form{
+    background-color: white;
+    margin:10px;
+    margin:0 auto;
+    border-radius:19px;
+    width: 60%;
+    /* SECUENCIA: para centrar formulario */
+    /* position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* LINEA ALREDEDOR DEL FORMULARIO */
+    border: 1px solid #000;
+  }
+    /* TAMAÑO LETRA: nombre, apellido, e-mail, etc ----- */
+      label{
+        margin-left: 8px;
+        font-size: 18px;
+        padding: 5px;
+        display:block;
+        width: 100%;
+        font-family: sans-serif;
+      }
+    /* -------------------------------------------------- */
+    /* EDICION CADA INPUT: diseño ----------------------- */
+      .entradas {
+        margin-bottom:10px; 
+        width: 95%;
+        padding: 2%;
+        margin-left: 10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        font-style: normal; 
+      }
+      
+      /* Cuando da click dentro de un input --------------- */
+        .entradas:focus{
+          background-color: #F2F2F2;
+        }
+
+        .calendar-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .calendar-item {
+            width: 45%; /* Ajusta este valor según tus necesidades */
+        }
+        
+      /* -------------------------------------------------- */
+  /* --------------------------------------------------------------- */
+  /* C U E R P O  -------------------------------------------------- */ 
+  body{
+    background-image: linear-gradient(-90deg,#6ABBF7, #BD7CFA);
+  }
+  /* --------------------------------------------------------------- */
+  /* FUNCION DEL BOTON REGISTRARSE --------- */
+
+  #button:hover{
+    background-color: #7FACDE;
+  }
+
+#botones-container {
+  text-align: center; /* Centra los botones horizontalmente */
+  margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+}
+
+
+#button,
+p-button {
+  margin-right: 10px; /* Ajusta el margen entre los botones */
+}
+
+.help-text {
+  font-size: 12px; /* Tamaño de fuente más pequeño para el texto de ayuda */
+  color: #999; /* Color de texto gris para el texto de ayuda */
+}
+

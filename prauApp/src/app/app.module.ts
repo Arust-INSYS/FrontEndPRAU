@@ -155,11 +155,16 @@ import { AnalisisGraficaDocenteComponent } from './components/analisis-grafica-d
 import { TokenExpirationInterceptor } from './env/TokenExpirationInterceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/analisis-uso-carrera.component';
+import { ActualizarRolComponent } from './components/actualizar-rol/actualizar-rol.component';
+import { AnalisisUsoAsignaturaComponent } from './components/analisis-uso-asignatura/analisis-uso-asignatura.component';
+import { GenerarReportesComponent } from './components/generar-reportes/generar-reportes.component';
+import { ContenidoReportesComponent } from './components/contenido-reportes/contenido-reportes.component';
 
 
 
 @NgModule({
   declarations: [
+    ContenidoReportesComponent,
     CarreraActualizarComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
@@ -204,9 +209,13 @@ import { AnalisisUsoCarreraComponent } from './components/analisis-uso-carrera/a
     ListarUsuarioComponent,
     PrincipalDirectorComponent,
     GraficaDirectorComponent,
-    AnalisisGraficaDocenteComponent,
-
     AnalisisUsoCarreraComponent,
+    AnalisisGraficaDocenteComponent,
+    ActualizarRolComponent,
+    AnalisisUsoAsignaturaComponent,
+    GenerarReportesComponent
+    
+
   ],
   imports: [
     RouterModule,

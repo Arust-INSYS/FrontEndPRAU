@@ -52,6 +52,8 @@
             <th>Nombre Criterio</th>
             <th>Descripción</th>
             <th>Clasificación de criterio</th>
+            <th>Estado</th>
+            
             <th *ngIf="rol === 'Administrador' || rol === 'Responsable'">Editar</th>
             <th *ngIf="rol === 'Administrador'">Eliminar</th>
           </tr>
@@ -62,6 +64,7 @@
             <td>{{ criterio.nombreCriterio }}</td>
             <td class="descripcion-criterio">{{ criterio.descripcion }}</td>
             <td>{{ criterio.clasificacion?.nombreClasificacion }}</td>
+            <td>{{ criterio.estado }}</td>
             <td *ngIf="rol === 'Administrador' || rol === 'Responsable'">
               <button
                 pButton
