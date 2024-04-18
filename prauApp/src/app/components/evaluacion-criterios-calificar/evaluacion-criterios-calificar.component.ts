@@ -58,7 +58,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   contarCM: number = 0; // Variable para contar las calificaciones hechas
   contarNC: number = 0; // Variable para contar las calificaciones hechas
   progreso: number = 0; // Variable para contar las calificaciones hechas
-  progresoObligatorio:number=0;
   contarCObUno:number=0;
   progresoCObUno:number=0;
 
@@ -194,6 +193,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.contarCM = this.evaluacionCab.totalCm;
         this.contarNC = this.evaluacionCab.totalNc;
         this.progreso = this.evaluacionCab.progreso;
+        this.contarCObUno = this.evaluacionCab.totalC_Ob_Uno;
+        this.progresoCObUno=this.evaluacionCab.progreso_Ob_Uno;
         this.actualizarPorcentajes();
       },
       (error) => {
@@ -429,7 +430,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
           det.criterio?.estado == 'Al menos uno'
         ) {
           this.contarCObUno++;
+          console.log("CONTADOR OBLIGATORIO",this.contarCObUno)
           this.progresoCObUno++;
+          console.log("PROGRESO OBLIGATORIO",this.progresoCObUno)
           this.progreso++;
         }
       } else if (item.calificacion.codCalificacion === 'CM') {
@@ -458,11 +461,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   contarCalificaciones() {
     const totalCriterios = this.evaluacionDets.length;
-    const totalCriteriosObligatorios = Math.min(this.evaluacionDets.length, 12);
+    const totalCriteriosObligatorios = 12;
     this.evaluacionCab.progreso = Number(
       ((this.progreso / totalCriterios) * 100).toFixed(2)
     );
-    this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoObligatorio/totalCriteriosObligatorios)*100).toFixed(2))
+    this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoCObUno/totalCriteriosObligatorios)*100).toFixed(2))
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
 
@@ -470,6 +473,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalC_Ob_Uno=(this.contarCObUno*100)/totalCriteriosObligatorios;
+    console.log("PORVENTAJE OBLIGATORIO",  this.evaluacionCab.progreso_Ob_Uno)
 
     this.actualizarPorcentajes();
   }
@@ -602,15 +606,15 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
     // Calcular los porcentajes totales
     const totalCriterios = this.criterios.length;
-    const totalCriteriosObligatorios = Math.min(this.evaluacionDets.length, 12);
+    const totalCriteriosObligatorios = 12;
     this.evaluacionCab.porcTotalC =
       (this.evaluacionCab.totalC / totalCriterios) * 100;
     this.evaluacionCab.porcTotalCm =
       (this.evaluacionCab.totalCm / totalCriterios) * 100;
     this.evaluacionCab.porcTotalNc =
       (this.evaluacionCab.totalNc / totalCriterios) * 100;
-      this.evaluacionCab.porcTotalNc =
-      (this.evaluacionCab.porcTotalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+    this.evaluacionCab.porcTotalC_Ob_Uno =
+      (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
 
     this.evaluacionCab.fechaRegistro = new Date();
 
