@@ -59,6 +59,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   contarNC: number = 0; // Variable para contar las calificaciones hechas
   progreso: number = 0; // Variable para contar las calificaciones hechas
   contarCObUno:number=0;
+  contarCMObUno:number=0;
   progresoCObUno:number=0;
 
   TotalCMCNC: number = 0;
@@ -146,6 +147,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.status = params['status'];
+      
     });
     //cargar filtros;
     this.loadPeriodos();
@@ -381,8 +383,9 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   // Método para manejar el cambio en la selección del dropdown
   onCalificacionSeleccionado(det: EvaluacionDet): void {
-    this.actualizarContadores();
-    this.actualizarObligatorio(det);
+    this.actualizarContadores(det);
+    
+    
     this.contarCalificaciones();
     // Verificar si el valor seleccionado es null o undefined
     if (!det.calificacion.codCalificacion) {
@@ -391,70 +394,82 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     }
   }
 
-  actualizarContadores() {
+  actualizarContadores(det:EvaluacionDet) {
     // Reiniciar los contadores
     this.contarC = 0;
     this.contarCM = 0;
     this.contarNC = 0;
     this.progreso = 0;
+    
+
+    if(det.criterio?.estado == 'Obligatorio' ||
+    det.criterio?.estado == 'Al menos uno')
+     { // Reiniciar los contadores
+     this.contarCObUno = 0;
+     this.progresoCObUno = 0;
+   }
 
     // Calcular los contadores según las calificaciones almacenadas
     //this.calificacionesPorCriterio.forEach(item => {
-    this.evaluacionDets.forEach((item) => {
-      if (item.calificacion.codCalificacion === 'C') {
-        this.contarC++;
-        this.progreso++;
-      } else if (item.calificacion.codCalificacion === 'CM') {
-        this.contarCM++;
-        this.progreso++;
-      } else if (item.calificacion.codCalificacion === 'NC') {
-        this.contarNC++;
-        this.progreso++;
-      }
-    });
-  }
-  actualizarObligatorio(det: EvaluacionDet) {
-    // Reiniciar los contadores
-    this.contarCObUno = 0;
-    this.contarCM = 0;
-    this.contarNC = 0;
-    this.progresoCObUno = 0;
-    this.progreso = 0;
+      this.evaluacionDets.forEach((item) => {
+        if (item.calificacion.codCalificacion === 'C') {
+          this.contarC++;
+          
+          this.progreso++;
+      
+          if (this.progresoCObUno < 100.00) {
+            
+      
+          // Verificar si el criterio es obligatorio o al menos uno
+          if (det.criterio?.estado === 'Obligatorio' || det.criterio?.estado === 'Al menos uno') {
+            //this.contarCObUno++;
+          
 
-    // Calcular los contadores según las calificaciones almacenadas
-    //this.calificacionesPorCriterio.forEach(item => {
-    this.evaluacionDets.forEach((item) => {
-      if (item.calificacion.codCalificacion === 'C') {
-        if (
-          det.criterio?.estado == 'Obligatorio' ||
-          det.criterio?.estado == 'Al menos uno'
-        ) {
-          this.contarCObUno++;
-          console.log("CONTADOR OBLIGATORIO",this.contarCObUno)
-          this.progresoCObUno++;
-          console.log("PROGRESO OBLIGATORIO",this.progresoCObUno)
-          this.progreso++;
+          
+            this.progresoCObUno < 100.00
+            this.progresoCObUno++;
+          }
         }
-      } else if (item.calificacion.codCalificacion === 'CM') {
-        if (
-          det.criterio?.estado == 'Obligatorio' ||
-          det.criterio?.estado == 'Al menos uno'
-        ) {
-          this.contarCM++;
-          this.progreso++;
+        } else if (item.calificacion.codCalificacion === 'CM') {
+          this.contarCM--;
+           this.progreso++;
+          // Incrementar el progreso solo si no excede el límite del 100%
+          if (this.contarCM < -100) {
+            
+      
+            // Disminuir el progreso solo si todos los campos no cumplen
+            if (det.criterio?.estado === 'Obligatorio' || det.criterio?.estado === 'Al menos uno') {
+              //this.contarCObUno--;
+             //this.progresoCObUno--;
+            }
+          }
+        } else if (item.calificacion.codCalificacion === 'NC') {
+          this.contarNC--;
+      
+          // Incrementar el progreso solo si no excede el límite del 100%
+          if (this.progreso < 100) {
+            this.progreso++;
+      
+            // Disminuir el progreso solo si todos los campos no cumplen
+            if (det.criterio?.estado === 'Obligatorio' || det.criterio?.estado === 'Al menos uno') {
+              if (this.contarCObUno !== this.progresoCObUno) {
+                this.progresoCObUno--;
+              }
+            }
+          }
         }
-      } else if (item.calificacion.codCalificacion === 'NC') {
-        if (
-          det.criterio?.estado == 'Obligatorio' ||
-          det.criterio?.estado == 'Al menos uno'
-        ) {
-          this.contarNC++;
-          this.progreso++;
-        }
-      }
-    });
+      });
+      
+      
+      
+      
   }
- 
+
+  mostrarC(){
+    console.log(this.contarCObUno)
+  }
+
+  
 
   contarCalificaciones() {
     const totalCriterios = this.evaluacionDets.length;
@@ -462,14 +477,20 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.progreso = Number(
       ((this.progreso / totalCriterios) * 100).toFixed(2)
     );
-    this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoCObUno/totalCriteriosObligatorios)*100).toFixed(2))
+    this.evaluacionCab.progreso_Ob_Uno=Number(
+      ((this.progresoCObUno/totalCriteriosObligatorios)*100).toFixed(2))
 
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
+
+    
+
 
     this.evaluacionCab.porcTotalC = (this.contarC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalC_Ob_Uno=(this.contarCObUno*100)/totalCriteriosObligatorios;
+    
+  
 
     this.actualizarPorcentajes();
   }
