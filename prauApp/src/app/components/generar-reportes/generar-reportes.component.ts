@@ -543,8 +543,10 @@ export class GenerarReportesComponent {
           }
         });
         
-        doc.text("texto",2,2)
-        doc.rect(40, 250, 150, 30);
+        doc.rect(46, 240, 130, 45);
+        doc.line(46,247,176,247);
+        doc.line(46,278,176,278);
+        doc.line(90,247,90,278)
         // Guardar el documento PDF
         doc.save('documento.pdf');
       });
