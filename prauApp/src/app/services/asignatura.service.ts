@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { Asignatura } from '../models/asignatura';
 import { IAsignaturaXCarrera } from '../interface/IConsultasBD';
 import { graficaAsignatura } from '../models/graficaAsignatura';
+import { GraficaAsignaturaCiclo } from '../models/GraficaAsignaturaPorCiclo';
 @Injectable({
   providedIn: 'root'
 })
@@ -92,6 +93,16 @@ export class AsignaturaService {
       Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
     });
     return this.http.get<graficaAsignatura[]>(`${this.url}/graficaAsignatura?carreraId=${carreId}&asignaturaId=${asiId}&periodoId=${perioId}`, {
+      headers,
+    });
+  }
+
+
+  graficaAsignaturaCiclo(asiId:number, carreId:number, perioId:number){
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<GraficaAsignaturaCiclo[]>(`${this.url}/graficaAsignaturaCiclo?carreraId=${carreId}&asignaturaId=${asiId}&periodoId=${perioId}`, {
       headers,
     });
   }

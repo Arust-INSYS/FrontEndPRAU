@@ -9,7 +9,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CriteriosService } from '../../services/criterios.service';
 import { Criterios } from '../../models/criterios';
 import jsPDF from 'jspdf';
-import { Chart } from 'chart.js';
+import { Chart, ChartOptions } from 'chart.js';
 import html2canvas from 'html2canvas';
 import { graficaAula } from '../../models/graficaAula';
 import { AulaService } from '../../services/aula.service';
@@ -21,6 +21,7 @@ import { EvaluacionCabService } from '../../services/evaluacionCab.service';
 import { EvaluacionCab } from '../../models/evaluacionCab';
 import { EvaluacionDetService } from '../../services/evaluacionDet.service';
 import { EvaluacionDet } from '../../models/evaluacionDet';
+import { GraficaAsignaturaCiclo } from '../../models/GraficaAsignaturaPorCiclo';
 
 
 @Component({
@@ -51,6 +52,10 @@ export class GenerarReportesComponent {
   options: any;
   dataCrite: any;
   optionsCrite: any;
+
+
+
+
   constructor(private http: HttpClient, private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi: CriteriosService, private aulaServi: AulaService, private detServi: EvaluacionDetService) {
     //
   }
@@ -579,4 +584,36 @@ export class GenerarReportesComponent {
       console.error('Uno o ambos elementos no fueron encontrados.');
     }
   }
+
+
+
+
+
+  ////////////////////////// asignaturas por ciclos 
+  allDataasiganturaporciclo: GraficaAsignaturaCiclo[] = [];
+  
+
+  loadGrafica() {
+    // Verifica si los objetos seleccionados están definidos
+    const asignaturaId = this.selectedAsignatura ? this.selectedAsignatura.idAsignatura : 0;
+    const carreraId = this.selectedCarrera ? this.selectedCarrera.idCarrera : 0;
+    const periodoId = this.selectedPeriodo ? this.selectedPeriodo.idPeriodoAc : 0;
+  
+    // Llama al servicio para obtener los datos de la gráfica
+    this.asignaturaService.graficaAsignaturaCiclo(
+      asignaturaId,
+      carreraId,
+      periodoId
+    ).subscribe((data: GraficaAsignaturaCiclo[]) => {
+      this.allDataasiganturaporciclo = data;
+    });
+
+
+  }
+  
+
+    ////////////////////////// fin asignaturas por ciclos 
+
+
+
 }
