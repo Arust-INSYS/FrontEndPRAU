@@ -10,11 +10,13 @@
         <input [(ngModel)]="actualizadaAula.aulaNombre" type="text" class="entradas" pInputText
             placeholder="Ingrese el  nombre del Aula..." name="fnombre" type="text" id="tabla" required>
      
-        <label for="apellido">Ciclo que Pertenece</label>
-        <!-- <input [(ngModel)]="actualizadaAula.cicloPertenece" placeholder="Ingrese  el ciclo al que pertenece..." name="fapellido" type="text" id="tabla"> -->
-        <input [(ngModel)]="actualizadaAula.cicloPertenece" type="text" pInputText
-            placeholder="Ingrese  el ciclo al que pertenece..." name="fcliclopertenece" type="text" id="tabla" required>
-       
+        
+    
+            <div class="flex flex-column gap-2">
+                <label for="ciclo">Ciclo que Pertenece</label>
+                <p-dropdown name="selectedCiclo" [options]="cicloSeleccion" optionValue="value" [(ngModel)]="actualizadaAula.cicloPertenece" optionLabel="label" [showClear]="true" placeholder="Seleccione un ciclo"></p-dropdown>
+               
+            </div>
 
         <!-- Para Docentes -->
         <label for="docente">Docente:</label>
