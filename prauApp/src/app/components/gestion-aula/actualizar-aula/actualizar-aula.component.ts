@@ -35,6 +35,15 @@ export class ActualizarAulaComponent  implements OnInit{
   selectedAsignatura:Asignatura | undefined;
 
   docente:Usuario = new Usuario;
+  //DROPDOWN AULA
+cicloSeleccion: { label: string, value: string }[] = [
+  { label: 'Ciclo 1', value: 'Ciclo 1' },
+  { label: 'Ciclo 2', value: 'Ciclo 2' },
+  { label: 'Ciclo 3', value: 'Ciclo 3' },
+  { label: 'Ciclo 4', value: 'Ciclo 4' },
+  { label: 'Ciclo 5', value: 'Ciclo 5' },
+  { label: 'Ciclo 6', value: 'Ciclo 6' }
+];
 
   actualizadaAula:Aula = new Aula;
   constructor(private periodoAcService: PeriodoAcService,
