@@ -82,7 +82,7 @@ export class GenerarReportesComponent {
   loadevaDet() {
     this.detServi.getEvaluacionDET().subscribe((datos) => {
       this.evaDet = datos;
-      console.log("datos antes de filtrar",datos)
+      console.log("datos antes de filtrar", datos)
     });
   }
 
@@ -390,12 +390,12 @@ export class GenerarReportesComponent {
       ]
     };
 
-  
+
     let evaDetTem: EvaluacionDet[] = [];
     let porcentajeTem: number[] = [];
-    let numDivPorcen:1;
-    let numDiviBande:number[]=[];
-    console.log(this.filterIdCriterio,"criterio para filtrar")
+    let numDivPorcen: 1;
+    let numDiviBande: number[] = [];
+    console.log(this.filterIdCriterio, "criterio para filtrar")
     for (let index = 0; index < this.evaDet.length; index++) {
 
       //filtro los criterios que solo pertencen a este periodo y carrera
@@ -414,34 +414,34 @@ export class GenerarReportesComponent {
       }
     }
 
-  
+
     //juntar los nombres iguales 
     for (let j = 0; j < labelDataString.length; j++) {
 
       for (let index = 0; index < evaDetTem.length; index++) {
 
-        if(labelDataString[j]===evaDetTem[index].criterio?.clasificacion?.nombreClasificacion){
-         
-          if(evaDetTem[index].calificacion.codCalificacion==='CM'){
+        if (labelDataString[j] === evaDetTem[index].criterio?.clasificacion?.nombreClasificacion) {
 
-            porcentajeTem[j]+=50
-            numDiviBande[j]+=1
-          }else if(evaDetTem[index].calificacion.codCalificacion==='C'){
-            porcentajeTem[j]+=100
-            numDiviBande[j]+=1
-          }else{
-            porcentajeTem[j]+=0
-            numDiviBande[j]+=1
+          if (evaDetTem[index].calificacion.codCalificacion === 'CM') {
+
+            porcentajeTem[j] += 50
+            numDiviBande[j] += 1
+          } else if (evaDetTem[index].calificacion.codCalificacion === 'C') {
+            porcentajeTem[j] += 100
+            numDiviBande[j] += 1
+          } else {
+            porcentajeTem[j] += 0
+            numDiviBande[j] += 1
           }
         }
       }
     }
-    console.log(porcentajeTem,"total para dividir")
-    console.log(numDiviBande,"porque debe dividir")
+    console.log(porcentajeTem, "total para dividir")
+    console.log(numDiviBande, "porque debe dividir")
 
     for (let index = 0; index < porcentajeTem.length; index++) {
-      labelDataNumber.push(porcentajeTem[index]/numDiviBande[index])
-      
+      labelDataNumber.push(porcentajeTem[index] / numDiviBande[index])
+
     }
     /*numDivPorcen=evaDetTem.length/labelDataString.length 
     if(numDivPorcen!==1){
@@ -498,10 +498,15 @@ export class GenerarReportesComponent {
   }
 
   @ViewChild('contenidoPDF', { static: false }) contenidoPDF: ElementRef<any> | undefined;
- 
 
-  
+
+
   generatePDF() {
+    const today = new Date();
+    let anio = today.getFullYear();
+    let mes = today.getMonth() + 1;
+    let dia = today.getDate();
+    let numberCanvas = 0;
     // Obtener los elementos HTML que deseas convertir en imágenes de lienzo
     const contentElement1 = document.getElementById('contenidoPDF');
     const grafiTres = document.getElementById('grafiTres');
@@ -510,7 +515,8 @@ export class GenerarReportesComponent {
     if (contentElement1 && grafiTres && grafiFour) {
       // Crear un objeto jsPDF con formato A4 y márgenes
       const doc = new jsPDF('p', 'mm', 'a4'); // 'p' para orientación de retrato, 'a4' para tamaño A4
-  
+      const imageUrl = 'assets/LOGO-RECTANGULAR.png';
+      doc.addImage(imageUrl, 'JPEG', 10, 2, 50, 15);
       // Definir los márgenes
       const margin = {
         top: 20,
@@ -518,7 +524,7 @@ export class GenerarReportesComponent {
         left: 20,
         right: 20
       };
-  
+
       // Capturar el contenido de los elementos HTML en imágenes de lienzo
       Promise.all([
         html2canvas(contentElement1),
@@ -527,26 +533,45 @@ export class GenerarReportesComponent {
       ]).then(canvases => {
         // Procesar cada imagen de lienzo capturada
         canvases.forEach((canvas, index) => {
-          // Obtener la URL de la imagen generada
-          const imgData = canvas.toDataURL('image/png');
-  
-          // Calcular la altura de la imagen para que se ajuste al ancho del documento con los márgenes
-          const imgWidth = doc.internal.pageSize.getWidth() - margin.left - margin.right;
-          const imgHeight = canvas.height * imgWidth / canvas.width;
-  
-          // Añadir la imagen al documento PDF
-          doc.addImage(imgData, 'PNG', margin.left, margin.top, imgWidth, imgHeight);
-  
+          if (numberCanvas<2) {
+            // Obtener la URL de la imagen generada
+            const imgData = canvas.toDataURL('image/png');
+
+            // Calcular la altura de la imagen para que se ajuste al ancho del documento con los márgenes
+            const imgWidth = doc.internal.pageSize.getWidth() - margin.left - margin.right;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+
+            // Añadir la imagen al documento PDF
+            doc.addImage(imgData, 'PNG', margin.left, margin.top, imgWidth, imgHeight);
+            numberCanvas+=1
+          } else {
+            // Obtener la URL de la imagen generada
+            const imgData = canvas.toDataURL('image/png');
+
+            // Calcular la altura de la imagen para que se ajuste al ancho del documento con los márgenes
+            const imgWidth = doc.internal.pageSize.getWidth() - margin.left - margin.right;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+
+            // Añadir la imagen al documento PDF
+            doc.addImage(imgData, 'PNG', margin.left, margin.top, 180, 210);
+          }
           // Agregar una nueva página si no es la última imagen
           if (index < canvases.length - 1) {
             doc.addPage();
           }
         });
-        
+
+        doc.setFontSize(11);
         doc.rect(46, 240, 130, 45);
-        doc.line(46,247,176,247);
-        doc.line(46,278,176,278);
-        doc.line(90,247,90,278)
+        doc.line(46, 247, 176, 247);
+        doc.line(46, 278, 176, 278);
+        doc.line(111, 240, 111, 285)
+        doc.text("Realizado por:", 47, 245)
+        doc.text("Aprobado por:", 112, 245)
+        doc.text("Fecha " + dia + "/" + mes + "/" + anio, 47, 284)
+        doc.setFontSize(9);
+        doc.text(this.infoUser?.[0][1], 49, 275)
+        doc.text("Mgtr.María Verónica Segarra Vanegas", 113, 275)
         // Guardar el documento PDF
         doc.save('documento.pdf');
       });
