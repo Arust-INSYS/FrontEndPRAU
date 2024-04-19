@@ -21,9 +21,11 @@
         <div class="flex flex-column gap-2">
             <label for="estado">Clasificación de Estado:</label>
             <p-dropdown [options]="estadoSeleccion" optionValue="value" [(ngModel)]="criterio.estado" optionLabel="label" [showClear]="true" placeholder="Seleccione un estado"></p-dropdown>
-           
 
         </div>
+        <p-button (click)="mostrarSelecccion()">
+            Mostrar
+        </p-button>
 
 
     <div class="flex flex-column gap-2">

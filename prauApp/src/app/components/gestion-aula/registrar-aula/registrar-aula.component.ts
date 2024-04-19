@@ -37,6 +37,15 @@ export class RegistrarAulaComponent implements OnInit {
  // asiganturaSeleccionado: boolean = false;
   periodoSeleccionado: boolean = false;
 asignaturaSeleccionado: boolean = false;
+//DROPDOWN AULA
+cicloSeleccion= [
+  { label: 'Ciclo 1', value: 'Ciclo 1' },
+  { label: 'Ciclo 2', value: 'Ciclo 2' },
+  { label: 'Ciclo 3', value: 'Ciclo 3' },
+  { label: 'Ciclo 4', value: 'Ciclo 4' },
+  { label: 'Ciclo 5', value: 'Ciclo 5' },
+  { label: 'Ciclo 6', value: 'Ciclo 6' }
+];
 
   constructor(
     private periodoAcService: PeriodoAcService,
@@ -118,6 +127,9 @@ asignaturaSeleccionado: boolean = false;
       this.nuevaAula.asignatura = this.selectedAsignatura;
       this.cdr.detectChanges(); // Forzar la detección de cambios
     }
+  }
+  mostrarSelecccion(){
+    console.log("SOY EL CICLO:",this.nuevaAula.cicloPertenece);
   }
 
   //crea aula
