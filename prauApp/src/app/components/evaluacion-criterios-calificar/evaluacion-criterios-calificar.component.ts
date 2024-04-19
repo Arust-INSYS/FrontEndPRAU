@@ -454,10 +454,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       }
     });
   }
-  resultadoTOTAL: any;
-  mostrarResultado() {
-    console.log('RESULTADO AQUI:', this.resultadoTOTAL);
-  }
+ 
 
   contarCalificaciones() {
     const totalCriterios = this.evaluacionDets.length;
@@ -473,7 +470,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalC_Ob_Uno=(this.contarCObUno*100)/totalCriteriosObligatorios;
-    console.log("PORVENTAJE OBLIGATORIO",  this.evaluacionCab.progreso_Ob_Uno)
 
     this.actualizarPorcentajes();
   }
