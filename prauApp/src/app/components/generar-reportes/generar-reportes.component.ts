@@ -51,6 +51,7 @@ export class GenerarReportesComponent {
   options: any;
   dataCrite: any;
   optionsCrite: any;
+  
   constructor(private http: HttpClient, private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi: CriteriosService, private aulaServi: AulaService, private detServi: EvaluacionDetService) {
     //
   }
@@ -76,6 +77,28 @@ export class GenerarReportesComponent {
     this.fetchChartData();
     this.loadevaDet();
 
+    const carreraId = 1; // Reemplaza con el ID de la carrera
+    const periodoId = 1; // Reemplaza con el ID del periodo
+    this.detServi.obtenerDatos(carreraId, periodoId).subscribe(data => {
+      this.data = data;
+      this.renderGraph();
+    });
+  }
+
+  renderGraph() {
+    this.data = {
+      labels: this.data.map((item: any) => item.nombre_asignatura),
+      datasets: [
+        {
+          label: 'Calificación',
+          data: this.data.map((item: any) => item.totalc), // Suponiendo que 'totalc' es el campo que contiene la calificación
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }
+      ]
+    };
+  
   }
 
 

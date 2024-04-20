@@ -78,7 +78,9 @@ export class EvaluacionDetService {
 
     return this.http.get(`${this.url}/idReportCrite?idCarre=${idCarre}&idPerio=${idPerio}`,{headers}).pipe(map((response) => response as number[]));
   }
-
+  obtenerDatos(carreraId: number, periodoId: number): Observable<any> {
+    return this.http.get<any>(`/graficaCiclo?carreraId=${carreraId}&periodoId=${periodoId}`);
+  }
   updateList(evaluacionDets: EvaluacionDet[]): Observable<EvaluacionDet[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.localStorage.getItem('token')}`,
@@ -94,6 +96,8 @@ export class EvaluacionDetService {
 
     return this.http.get<EvaluacionDet[]>(`${this.url}/detalleEvaluacion?nroEvaluacion=${nroEvaluacion}`, { headers });
   }
-
+  obtenerDatosCM(carreraId: number, periodoId: number): Observable<any> {
+    return this.http.get<any>(`/graficaCiclo?carreraId=${carreraId}&periodoId=${periodoId}`);
+  }
 
 }
