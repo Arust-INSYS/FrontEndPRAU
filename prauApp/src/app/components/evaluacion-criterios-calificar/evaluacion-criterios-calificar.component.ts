@@ -58,14 +58,20 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   contarCM: number = 0; // Variable para contar las calificaciones hechas
   contarNC: number = 0; // Variable para contar las calificaciones hechas
   progreso: number = 0; // Variable para contar las calificaciones hechas
-  contarCObUno:number=0;
-  progresoCObUno:number=0;
+
+  contarC_Ob_Uno:number=0;
+  contarCM_Ob_Uno:number=0;
+  contarNC_Ob_Uno:number=0;
+  progresoOb_Uno:number=0;
 
   TotalCMCNC: number = 0;
   porcentajeCumplimientoC: number = 0;
   porcentajeCumplimientoM: number = 0;
   porcentajeCumplimientoN: number = 0;
-  porcentajeCumplimientoObUno: number=0;
+
+  porcentajeCumplimientoCObUno: number=0;
+  porcentajeCumplimientoCMObUno: number=0;
+  porcentajeCumplimientoNCObUno: number=0;
 
   //////////////////////////BRYAN///////////////////////////////////////////
   //nro evaluacion
@@ -173,7 +179,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.rol = rol;
     });
     this.contarCalificaciones();
-
+    this.contarObligatorio();
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
   }
@@ -193,8 +199,8 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.contarCM = this.evaluacionCab.totalCm;
         this.contarNC = this.evaluacionCab.totalNc;
         this.progreso = this.evaluacionCab.progreso;
-        this.contarCObUno = this.evaluacionCab.totalC_Ob_Uno;
-        this.progresoCObUno=this.evaluacionCab.progreso_Ob_Uno;
+        this.contarC_Ob_Uno = this.evaluacionCab.totalC_Ob_Uno;
+        this.progresoOb_Uno=this.evaluacionCab.progreso_Ob_Uno;
         this.actualizarPorcentajes();
       },
       (error) => {
@@ -383,8 +389,12 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   onCalificacionSeleccionado(det: EvaluacionDet): void {
     this.actualizarContadores();
     this.contarCalificaciones();
-    this.actualizarObligatorio(det);
-    this.calcularObligatorio(det);
+    if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
+      this.actualizarObligatorio(det);
+      this.contarObligatorio();
+      console.log("SOY OBLIGATORIO MEN !!");
+    }
+    
     // Verificar si el valor seleccionado es null o undefined
     if (!det.calificacion.codCalificacion) {
       // Si es null o undefined, establecerlo como una cadena vacía
@@ -414,60 +424,60 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       }
     });
   }
-  actualizarObligatorio(det: EvaluacionDet) {
-    // Reiniciar los contadores
-    if(det.criterio?.estado==='Obligatorio'||det.criterio?.estado==='Al menos uno'){
-      this.contarCObUno = 0;
-      this.progresoCObUno = 0;
-    }
-    this.progreso = 0;
+  
+  Uno:number=8.33;
+  cinCuenta:number=0;
+  actualizarObligatorio(det:EvaluacionDet) {
+    
+    this.contarC_Ob_Uno=0;
+    this.contarCM_Ob_Uno=0;
+    this.contarNC_Ob_Uno=0;
+    this.progresoOb_Uno=0
+    
+    //this.progreso = 0;
 
     // Calcular los contadores según las calificaciones almacenadas
     //this.calificacionesPorCriterio.forEach(item => {
     this.evaluacionDets.forEach((item) => {
       if (item.calificacion.codCalificacion === 'C') {
-        if (
-          det.criterio?.estado === 'Obligatorio' ||
-          det.criterio?.estado === 'Al menos uno'
-        ) {
-          if(this.contarCObUno<12&&this.progresoCObUno<12){
-            this.contarCObUno++;
-          console.log("CONTADOR OBLIGATORIO",this.contarCObUno)
-          this.progresoCObUno++;
-          console.log("PROGRESO OBLIGATORIO",this.progresoCObUno)
-          this.progreso++;
-          }
-        }
-      } else if (item.calificacion.codCalificacion === 'CM') {
-        this.contarCM++;
-          this.progreso++;
-        if (
-          det.criterio?.estado === 'Obligatorio' ||
-          det.criterio?.estado === 'Al menos uno'
-        ) {
+
+        if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
           
-          if(this.contarCObUno>0&&this.progresoCObUno>0){
-            this.contarCObUno--;
-            this.progresoCObUno--;
-          }
+        this.contarC_Ob_Uno++;
+        this.progresoOb_Uno++;
         }
+
+        
+        //this.progreso++;
+      } else if (item.calificacion.codCalificacion === 'CM') {
+        
+        this.contarCM_Ob_Uno++;
+        if(this.progresoOb_Uno>0){
+          
+          this.progresoOb_Uno-this.Uno;
+          
+        }
+        
       } else if (item.calificacion.codCalificacion === 'NC') {
-        if (
-          det.criterio?.estado === 'Obligatorio' ||
-          det.criterio?.estado === 'Al menos uno'
-        ) {
-          this.contarNC++;
-          this.progreso++;
-        }
+        this.contarNC_Ob_Uno++;
+        this.progresoOb_Uno++;
+        
       }
     });
   }
-  calcularObligatorio(det:EvaluacionDet){
-    if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado === 'Al menos uno'){
-      const totalCriteriosObligatorios = 12;
-      this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoCObUno/totalCriteriosObligatorios)*100).toFixed(2))
-      this.evaluacionCab.porcTotalC_Ob_Uno=(this.contarCObUno*100)/totalCriteriosObligatorios;
+  
+  contarObligatorio(){
+    if(this.contarCM_Ob_Uno==12){
+      this.progresoOb_Uno=this.contarCM_Ob_Uno/2;
     }
+      const totalCriteriosObligatorios = 12;
+      this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoOb_Uno/totalCriteriosObligatorios)*100).toFixed(2))
+     
+    this.evaluacionCab.porcTotalC_Ob_Uno = (this.contarC_Ob_Uno * 100) / totalCriteriosObligatorios;
+    this.evaluacionCab.porcTotalCM_Ob_Uno = (this.contarCM_Ob_Uno * 100) / totalCriteriosObligatorios;
+    this.evaluacionCab.porcTotalNC_Ob_Uno = (this.contarNC_Ob_Uno * 100) / totalCriteriosObligatorios;
+
+    
    
   }
 
@@ -538,7 +548,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
-    this.evaluacionCab.totalC_Ob_Uno=this.contarCObUno;
+
+  
+    this.evaluacionCab.totalC_Ob_Uno = this.contarC_Ob_Uno;
+    this.evaluacionCab.totalCM_Ob_Uno = this.contarCM_Ob_Uno;
+    this.evaluacionCab.totalNC_Ob_Uno = this.contarNC_Ob_Uno;
+
+  
 
     // // Calcular los porcentajes totales
     // this.evaluacionCab.progreso = this.criterios.length;
@@ -612,7 +628,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
-    this.evaluacionCab.totalC_Ob_Uno=this.contarCObUno;
     // this.evaluacionCab.estado = 1;
 
     // Calcular los porcentajes totales
@@ -624,9 +639,20 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       (this.evaluacionCab.totalCm / totalCriterios) * 100;
     this.evaluacionCab.porcTotalNc =
       (this.evaluacionCab.totalNc / totalCriterios) * 100;
-      const totalCriteriosObligatorios = 12;
-    this.evaluacionCab.porcTotalC_Ob_Uno =
-      (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+      
+      
+      // Obtener la suma total de cada tipo de calificación
+    this.evaluacionCab.totalC_Ob_Uno = this.contarC_Ob_Uno;
+    this.evaluacionCab.totalCM_Ob_Uno = this.contarCM_Ob_Uno;
+    this.evaluacionCab.totalNC_Ob_Uno = this.contarNC_Ob_Uno;
+        ///SUMA OBLIGATORIOS
+        const totalCriteriosObligatorios = 12;
+        this.evaluacionCab.porcTotalC_Ob_Uno =
+        (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+      this.evaluacionCab.porcTotalCM_Ob_Uno =
+        (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+      this.evaluacionCab.porcTotalNC_Ob_Uno =
+        (this.evaluacionCab.totalNC_Ob_Uno / totalCriteriosObligatorios) * 100;
 
     this.evaluacionCab.fechaRegistro = new Date();
 
