@@ -35,6 +35,8 @@ export class EvaluacionDetService {
     return this.http.post<EvaluacionDet[]>(`${this.url}/detalleEva`, detalle, { headers });
   }
 
+  
+
   update(id: number, evaluacionDet: EvaluacionDet): Observable<EvaluacionDet> {
     // Construir el encabezado de autorización con el token JWT
     const headers = new HttpHeaders({
@@ -57,10 +59,24 @@ export class EvaluacionDetService {
 
   getEvaluacionDET(): Observable<EvaluacionDet[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.localStorage.getItem('token')}`, // Agrega el token JWT aquí
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
     });
+  
+    const options = { headers: headers };
 
-    return this.http.get(this.url + '/read').pipe(map((response) => response as EvaluacionDet[]));
+
+    return this.http.get(this.url + '/read',options).pipe(map((response) => response as EvaluacionDet[]));
+  }
+
+  idReportCrite(idCarre:number,idPerio:number): Observable<number[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}`
+    });
+  
+
+
+
+    return this.http.get(`${this.url}/idReportCrite?idCarre=${idCarre}&idPerio=${idPerio}`,{headers}).pipe(map((response) => response as number[]));
   }
 
   updateList(evaluacionDets: EvaluacionDet[]): Observable<EvaluacionDet[]> {

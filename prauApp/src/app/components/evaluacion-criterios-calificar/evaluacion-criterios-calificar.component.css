@@ -30,15 +30,23 @@ body {
   display: flex;
   /* gap: 16px; */
 }
+.division_barras{
+  
+}
 
 .stats {
-  width: 40%;
+  width: 20%;
   display: grid;
   justify-content: center;
+
 
   /* align-items: center; */
 
   /* padding-left: 5rem; */
+}
+
+.stats2 {
+  padding-left: 25rem;
 }
 
 .obs {

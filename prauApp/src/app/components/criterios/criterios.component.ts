@@ -44,6 +44,9 @@ export class CriteriosComponent {
 
 
   }
+  mostrarSelecccion(){
+    console.log("SOY ESTADO:",this.criterio.estado);
+  }
 
   ngOnDestroy(): void{
     this.subscription.unsubscribe();

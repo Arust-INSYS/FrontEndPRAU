@@ -64,6 +64,7 @@
                         <th>Asignatura</th>
                         <th>Observaciones</th>
                         <th>Progreso</th>
+                        <th>Progreso Obligatorio</th>
                         <th>Editar</th>
                         <th>Acción</th>
                     </tr>
@@ -84,6 +85,13 @@
                             <div class="stats" style=" ">
                                 <p-knob [(ngModel)]="evaluacionCab.progreso"
                                     valueTemplate="{{ evaluacionCab.progreso }}%" [readonly]="true" [strokeWidth]="8"
+                                    [size]="50" valueColor="#004f9f"></p-knob>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="stats" style=" ">
+                                <p-knob [(ngModel)]="evaluacionCab.progreso_Ob_Uno"
+                                    valueTemplate="{{ evaluacionCab.progreso_Ob_Uno }}%" [readonly]="true" [strokeWidth]="8"
                                     [size]="50" valueColor="#004f9f"></p-knob>
                             </div>
                         </td>

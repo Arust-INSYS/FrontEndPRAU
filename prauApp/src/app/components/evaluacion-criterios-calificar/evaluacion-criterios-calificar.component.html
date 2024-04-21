@@ -138,14 +138,25 @@
                     </div>
                 </p-divider>
                 <section class="layout-estats ">
-                    <div class="stats">
+                    <div class="stats stats2">
                         <p-knob [(ngModel)]="evaluacionCab.progreso" valueTemplate="{{ evaluacionCab.progreso }}%"
                             [readonly]="true" [strokeWidth]="8" [size]="75" valueColor="#004f9f"></p-knob>
                         <label>Progreso</label>
                     </div>
-                    <div class="grow1-estats">
-                        <p-meterGroup [value]="cumplimiento"></p-meterGroup>
+                    <div class="stats">
+                        <p-knob [(ngModel)]="evaluacionCab.progreso_Ob_Uno" valueTemplate="{{ evaluacionCab.progreso_Ob_Uno }}%"
+                            [readonly]="true" [strokeWidth]="8" [size]="75" valueColor="#004f9f"></p-knob>
+                        <label>Obligatorio</label>
                     </div>
+                    <div class="division_barras">
+                       
+                        <div class="grow1-estats">
+                            <p-meterGroup [value]="cumplimiento"></p-meterGroup>
+                        </div>
+                        
+                        
+                    </div>
+                    
                     <!-- <div class="grow1-equals">
                         <p-knob [(ngModel)]="evaluacionCab.porcTotalC" valueTemplate="{{ evaluacionCab.porcTotalC }}%"
                             [readonly]="true" [strokeWidth]="5" [size]="65" valueColor="#004f9f"></p-knob>
@@ -168,6 +179,7 @@
                         <i class="pi pi-file-edit" style="padding-right: 0.5rem;"></i>
                         <b>Evaluacion</b>
                     </div>
+                   
                 </p-divider>
 
 
@@ -196,6 +208,7 @@
                                             (ngModelChange)="onCalificacionSeleccionado(det)" [showClear]="true">
 
                                         </p-dropdown>
+                                       
                                     </div>
                                 </div>
                                 <p-divider type="dashed" [style]="{ 'margin': 0 }"></p-divider>
