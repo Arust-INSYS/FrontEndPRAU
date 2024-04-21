@@ -6,6 +6,8 @@ import { Observable, map } from 'rxjs';
 import { Aula } from '../models/aula';
 import { IConsultarAula, IConsultarAulaObj } from '../interface/IConsultasBD';
 import { graficaAula } from '../models/graficaAula';
+import { graficaCiclo } from '../models/graficaCiclo';
+import { graficaResumenCiclo } from '../models/graficaResumenCiclo';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +94,27 @@ export class AulaService {
 
   }
 
+  graficaCiclo(carreraId: number, periodoId: number): Observable<graficaCiclo[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<graficaCiclo[]>(`${this.url}/graficaCiclo?carreraId=${carreraId}&periodoId=${periodoId}`, {
+      headers,
+    });
+
+  }
+
+  resumenGraficoCiclo(carreraId: number, periodoId: number): Observable<graficaResumenCiclo[]> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<graficaResumenCiclo[]>(`${this.url}/resumenGraficoCiclo?carreraId=${carreraId}&periodoId=${periodoId}`, {
+      headers,
+    });
+
+  }
   aulaFindById(aulaId: number): Observable<Aula> {
 
     const headers = new HttpHeaders({

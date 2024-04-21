@@ -123,8 +123,8 @@
 
                 <div id="grafiTres">
                     <h2 style="margin-top: 5px;">3.Resultados del cumplimiento por ciclos y asignaturas </h2>
-                    <div class="card">
-                        <p-chart type="bar" [data]="dataCM" [options]="optionsCM"></p-chart>
+                    <div class="card" *ngFor="let name of nameCicle let i =index">
+                        <p-chart type="bar" [data]="dataCM[i]" [options]="optionsCM[i]"></p-chart>
                     </div>
                 </div>
                 <div id="grafiFour">
