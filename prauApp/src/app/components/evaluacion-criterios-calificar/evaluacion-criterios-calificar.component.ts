@@ -20,7 +20,13 @@ import { PeriodoAcService } from '../../services/periodo-ac.service';
 import { PeriodoAc } from '../../models/periodoAc';
 import { CarreraService } from '../../services/carrera.service';
 import { Carrera } from '../../models/carrera';
-import { IAsignaturaXCarrera, IConsultarAula, IConsultarAulaObj, IConsultarCarrera, IDocenteXAsignatura } from '../../interface/IConsultasBD';
+import {
+  IAsignaturaXCarrera,
+  IConsultarAula,
+  IConsultarAulaObj,
+  IConsultarCarrera,
+  IDocenteXAsignatura,
+} from '../../interface/IConsultasBD';
 import { AsignaturaService } from '../../services/asignatura.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,9 +40,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './evaluacion-criterios-calificar.component.html',
   styleUrl: './evaluacion-criterios-calificar.component.css',
 })
-
 export class EvaluacionCriteriosCalificarComponent implements OnInit {
-
   rol: string = '';
   private subscription!: Subscription;
   cursoSeleccionado: Aula | null = null;
@@ -55,11 +59,19 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   contarNC: number = 0; // Variable para contar las calificaciones hechas
   progreso: number = 0; // Variable para contar las calificaciones hechas
 
+  contarC_Ob_Uno:number=0;
+  contarCM_Ob_Uno:number=0;
+  contarNC_Ob_Uno:number=0;
+  progresoOb_Uno:number=0;
+
   TotalCMCNC: number = 0;
   porcentajeCumplimientoC: number = 0;
   porcentajeCumplimientoM: number = 0;
   porcentajeCumplimientoN: number = 0;
 
+  porcentajeCumplimientoCObUno: number=0;
+  porcentajeCumplimientoCMObUno: number=0;
+  porcentajeCumplimientoNCObUno: number=0;
 
   //////////////////////////BRYAN///////////////////////////////////////////
   //nro evaluacion
@@ -95,7 +107,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   cursos: any[] = [];
   criterios: any[] = [];
   //aula seleccionada
-  aula: Aula = new Aula;
+  aula: Aula = new Aula();
 
   listCriterios: Criterios[] = [];
   calificacion: Calificacion[] = [];
@@ -108,7 +120,12 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   carrera: Carrera = new Carrera();
 
   ///grafica cumplimiento
-  cumplimiento: { label: string, color: string, value: number, icon: string }[] = [];
+  cumplimiento: {
+    label: string;
+    color: string;
+    value: number;
+    icon: string;
+  }[] = [];
 
   constructor(
     private http: HttpClient,
@@ -128,14 +145,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     private carreraService: CarreraService,
     private asignaturaService: AsignaturaService,
     private toastr: ToastrService,
-    private authRolService: AuthRolService,
-    
-
-
-  ) { }
+    private authRolService: AuthRolService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.status = params['status'];
     });
@@ -156,7 +170,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       if (this.id) {
         this.cargarEvaluacion(this.id);
         this.cargarDetalle(this.id);
-
       }
     } else {
       this.obtenerNroEva();
@@ -166,19 +179,18 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.rol = rol;
     });
     this.contarCalificaciones();
-
+    this.contarObligatorio();
     // this.obtenerCursos();
     // this.crearEvaluacionesDetVacias();
-
   }
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  
+
   cargarEvaluacion(id: number) {
     this.evaluacionCabService.findNroEvaluacion(id).subscribe(
-      response => {
+      (response) => {
         this.evaluacionCab = response;
         this.aula = this.evaluacionCab.aulaEva;
 
@@ -187,10 +199,11 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.contarCM = this.evaluacionCab.totalCm;
         this.contarNC = this.evaluacionCab.totalNc;
         this.progreso = this.evaluacionCab.progreso;
+        this.contarC_Ob_Uno = this.evaluacionCab.totalC_Ob_Uno;
+        this.progresoOb_Uno=this.evaluacionCab.progreso_Ob_Uno;
         this.actualizarPorcentajes();
-
       },
-      error => {
+      (error) => {
         console.error('Error al cargar la calificacion:', error);
       }
     );
@@ -198,7 +211,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
   cargarDetalle(id: number) {
     this.evaluacionDetService.detalleEvaluacion(id).subscribe(
-      response => {
+      (response) => {
         for (let res of response) {
           let det: EvaluacionDet = new EvaluacionDet();
           det.secCalificacion = res.secCalificacion;
@@ -212,24 +225,22 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         // const correctCriterions = this.evaluacionDets.filter(det => det.criterio?.idCriterio !== null); // Assuming criterioId is the property for the criterion ID.
         // this.evaluacionDeta = correctCriterions;
       },
-      error => {
+      (error) => {
         console.error('Error al cargar el detalle:', error);
       }
     );
   }
 
   obtenerNroEva(): void {
-    this.evaluacionCabService.nroEvaluacionNew().subscribe(eva => {
+    this.evaluacionCabService.nroEvaluacionNew().subscribe((eva) => {
       this.nroEvaluacion = eva;
-    })
+    });
   }
 
-
-
   loadPeriodos(): void {
-    this.periodoAcService.getPeriodosAcs().subscribe(response => {
+    this.periodoAcService.getPeriodosAcs().subscribe((response) => {
       this.periodosAc = response;
-    })
+    });
   }
 
   // loadCarreras(): void {
@@ -239,80 +250,78 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   // }
 
   loadCarreras(): void {
-
-    this.carreraService.carreraXperiodo(this.selectedPeriodo?.idPeriodoAc ?? 0).subscribe(response => {
-      this.carreras = response;
-      if (this.selectedPeriodo?.idPeriodoAc === undefined) {
-        console.error("No se pudo obtener idPeriodoAc porque selectedObj es nulo o indefinido.");
-    }else{
-      console.log("ID Periodo: " + this.selectedPeriodo.idPeriodoAc);
-    }
-      
-    })
+    this.carreraService
+      .carreraXperiodo(this.selectedPeriodo?.idPeriodoAc ?? 0)
+      .subscribe((response) => {
+        this.carreras = response;
+        if (this.selectedPeriodo?.idPeriodoAc === undefined) {
+          console.error(
+            'No se pudo obtener idPeriodoAc porque selectedObj es nulo o indefinido.'
+          );
+        } else {
+          console.log('ID Periodo: ' + this.selectedPeriodo.idPeriodoAc);
+        }
+      });
   }
 
   loadAsignaturas(): void {
-    this.asignaturaService.asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0).subscribe(response => {
-      this.asignaturas = response;
-      console.log("ID Carrera: " + this.selectedCarrera?.idCarrera);
-    })
+    this.asignaturaService
+      .asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0)
+      .subscribe((response) => {
+        this.asignaturas = response;
+        console.log('ID Carrera: ' + this.selectedCarrera?.idCarrera);
+      });
   }
 
   loadDocentes(): void {
-    this.usuarioService.docenteXAsignatura(this.selectedAsignatura?.idAsignatura ?? 0).subscribe(response => {
-      this.docentes = response;
-      console.log("ID Asignatura: " + this.selectedAsignatura?.idAsignatura);
-    })
+    this.usuarioService
+      .docenteXAsignatura(this.selectedAsignatura?.idAsignatura ?? 0)
+      .subscribe((response) => {
+        this.docentes = response;
+        console.log('ID Asignatura: ' + this.selectedAsignatura?.idAsignatura);
+      });
   }
 
   consultarAula(): void {
-    this.aulaService.aulaConsultar(
-      this.selectedAsignatura?.idAsignatura ?? 0,
-      this.selectedCarrera?.idCarrera ?? 0,
-      this.selectedPeriodo?.idPeriodoAc ?? 0,
-      this.selectedDocente?.usuId ?? 0
-    ).subscribe(response => {
-      this.aulas = response;
-    })
+    this.aulaService
+      .aulaConsultar(
+        this.selectedAsignatura?.idAsignatura ?? 0,
+        this.selectedCarrera?.idCarrera ?? 0,
+        this.selectedPeriodo?.idPeriodoAc ?? 0,
+        this.selectedDocente?.usuId ?? 0
+      )
+      .subscribe((response) => {
+        this.aulas = response;
+      });
 
     // this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
   }
 
-
   aulaFindById(): void {
     if (this.selectedAula) {
-      this.aulaService.aulaFindById(
-        this.selectedAula.aulaId ?? 0,
-      ).subscribe(response => {
-        this.aula = response;
-
-      })
+      this.aulaService
+        .aulaFindById(this.selectedAula.aulaId ?? 0)
+        .subscribe((response) => {
+          this.aula = response;
+        });
     } else {
       this.aula = new Aula();
     }
 
-
     // this.evaluacionCab.aulaEva!.aulaId = this.selectedCarrera;
   }
 
-
-
-
   obtenerCursos(): void {
-    this.aulaService.getAulas().subscribe(cursos => {
+    this.aulaService.getAulas().subscribe((cursos) => {
       this.cursos = cursos;
     });
-
   }
-
-
 
   getClasificaciones(): void {
     this.clasificacionService
       .obtenerListacriterios()
       .subscribe((clasificaciones) => {
         this.clasificaciones = clasificaciones;
-
       });
   }
 
@@ -321,7 +330,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       this.criterios = criterios;
 
       // Almacena los IDs de los criterios
-      this.criteriosIds = criterios.map(criterio => criterio.idCriterio);
+      this.criteriosIds = criterios.map((criterio) => criterio.idCriterio);
     });
   }
 
@@ -331,7 +340,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   //     this.loadExcelReportData(this.userList);
   //   });
   // }
-
 
   async listarCriterios() {
     if (this.status !== 'edit') {
@@ -348,7 +356,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       let det = new EvaluacionDet();
       det.criterio = criterio;
       this.evaluacionDets.push(det);
-
     }
   }
 
@@ -357,32 +364,56 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   // }
 
   criteriosPorClasificacion(idClasificacion: number): EvaluacionDet[] {
-    return this.evaluacionDets.filter(det => det?.criterio?.clasificacion?.idClasificacion === idClasificacion);
-
+    return this.evaluacionDets.filter(
+      (det) => det?.criterio?.clasificacion?.idClasificacion === idClasificacion
+    );
   }
 
   getCalificaciones() {
-    this.calificacionService.obtenerListacriterios().subscribe(calificaciones => {
-      this.calificaciones = calificaciones;
-    });
+    this.calificacionService
+      .obtenerListacriterios()
+      .subscribe((calificaciones) => {
+        this.calificaciones = calificaciones;
+      });
   }
 
   async listarcalifi() {
-    await this.calificacionService.obtenerListacriterios().subscribe((res: any[]) => {
-      this.calificacion = res
-    });
+    await this.calificacionService
+      .obtenerListacriterios()
+      .subscribe((res: any[]) => {
+        this.calificacion = res;
+      });
   }
 
   // Método para manejar el cambio en la selección del dropdown
   onCalificacionSeleccionado(det: EvaluacionDet): void {
     this.actualizarContadores();
-
     this.contarCalificaciones();
+
+    if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
+      this.actualizarObligatorio(det);
+      this.contarObligatorio();
+      
+    }
+    
+ // Validar que no sea "Opcional" antes de actualizar los contadores
+ if (det.criterio?.estado !== 'Opcional') {
+  this.actualizarContadores();
+  this.contarCalificaciones();
+}
+  
+
+
+    
     // Verificar si el valor seleccionado es null o undefined
     if (!det.calificacion.codCalificacion) {
       // Si es null o undefined, establecerlo como una cadena vacía
       det.calificacion.codCalificacion = '';
     }
+   
+   
+
+
   }
 
   actualizarContadores() {
@@ -394,7 +425,7 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
 
     // Calcular los contadores según las calificaciones almacenadas
     //this.calificacionesPorCriterio.forEach(item => {
-    this.evaluacionDets.forEach(item => {
+    this.evaluacionDets.forEach((item) => {
       if (item.calificacion.codCalificacion === 'C') {
         this.contarC++;
         this.progreso++;
@@ -405,34 +436,123 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
         this.contarNC++;
         this.progreso++;
       }
-
     });
   }
+  
+  actualizarObligatorio(det:EvaluacionDet) {
+    
+    this.contarC_Ob_Uno=0;
+    this.contarCM_Ob_Uno=0;
+    this.contarNC_Ob_Uno=0;
+    this.progresoOb_Uno=0
+
+    //this.progreso = 0;
+
+    // Calcular los contadores según las calificaciones almacenadas
+    //this.calificacionesPorCriterio.forEach(item => {
+    this.evaluacionDets.forEach((item) => {
+      if (item.calificacion.codCalificacion === 'C') {
+
+     
+
+        if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
+         
+          
+          this.contarC_Ob_Uno++
+       
+        }
+       
+
+        
+         
+        
+        //this.progreso++;
+      } else if (item.calificacion.codCalificacion === 'CM') {
+        
+        if(det.criterio?.estado==='Obligatorio'||det.criterio?.estado==='Al menos uno'){
+          this.contarCM_Ob_Uno++;
+         
+        }
+        
+      } else if (item.calificacion.codCalificacion === 'NC') {
+        this.contarNC_Ob_Uno++;
+        
+        
+      }
+    });
+  }
+  
+  contarObligatorio() {
+    let contadorObligatorio = 0;
+    const totalCriteriosObligatorios = 12;
+  
+    this.evaluacionDets.forEach((item) => {
+      if (item.calificacion.codCalificacion === 'C' && item.criterio?.estado !== 'Opcional') {
+        contadorObligatorio++;
+      }
+    });
+  
+    if (contadorObligatorio == totalCriteriosObligatorios) {
+      this.progresoOb_Uno = 100;
+    } else if (contadorObligatorio == 0 && this.contarCM_Ob_Uno > 0) {
+      this.progresoOb_Uno = Number(((this.contarCM_Ob_Uno / totalCriteriosObligatorios) * 50 ).toFixed(2)
+    );
+      if (this.progresoOb_Uno >= 50.00) {
+        this.contarC_Ob_Uno = 0;
+      }
+    } else {
+      this.progresoOb_Uno  = Number(((contadorObligatorio / totalCriteriosObligatorios) * 100).toFixed(2)
+    );
+    }
+  
+    this.evaluacionCab.progreso_Ob_Uno = this.progresoOb_Uno;
+    this.evaluacionCab.porcTotalC_Ob_Uno = (this.contarC_Ob_Uno * 100) / totalCriteriosObligatorios;
+    this.evaluacionCab.porcTotalCM_Ob_Uno = (this.contarCM_Ob_Uno * 100) / totalCriteriosObligatorios;
+    this.evaluacionCab.porcTotalNC_Ob_Uno = (this.contarNC_Ob_Uno * 100) / totalCriteriosObligatorios;
+  }
+  
+
 
   contarCalificaciones() {
-
-
     const totalCriterios = this.evaluacionDets.length;
-    this.evaluacionCab.progreso = Number(((this.progreso / totalCriterios) * 100).toFixed(2));
-
+    
+    this.evaluacionCab.progreso = Number(
+      ((this.progreso / totalCriterios) * 100).toFixed(2)
+    );
     // Calcular los porcentajes de cumplimiento para cada tipo de calificación
 
     this.evaluacionCab.porcTotalC = (this.contarC * 100) / totalCriterios;
     this.evaluacionCab.porcTotalCm = (this.contarCM * 100) / totalCriterios;
     this.evaluacionCab.porcTotalNc = (this.contarNC * 100) / totalCriterios;
 
+    
+
     this.actualizarPorcentajes();
   }
 
   actualizarPorcentajes() {
     this.cumplimiento = [
-      { label: 'Cumple', color: '#34d399', value: this.evaluacionCab.porcTotalC, icon: 'pi pi-check-circle' },
-      { label: 'Cumple a Medias', color: '#60a5fa', value: this.evaluacionCab.porcTotalCm, icon: 'pi pi-exclamation-triangle' },
-      { label: 'No Cumple', color: '#fbbf24', value: this.evaluacionCab.porcTotalNc, icon: 'pi pi-exclamation-circle' },
+      {
+        label: 'Cumple',
+        color: '#34d399',
+        value: this.evaluacionCab.porcTotalC,
+        icon: 'pi pi-check-circle',
+      },
+      {
+        label: 'Cumple a Medias',
+        color: '#60a5fa',
+        value: this.evaluacionCab.porcTotalCm,
+        icon: 'pi pi-exclamation-triangle',
+      },
+      {
+        label: 'No Cumple',
+        color: '#fbbf24',
+        value: this.evaluacionCab.porcTotalNc,
+        icon: 'pi pi-exclamation-circle',
+      },
     ];
   }
   crearNuevaEvaluacionCab() {
-
     if (!this.selectedAula) {
       this.toastr.error(
         'Por favor, seleccione el aula que desea evaluar',
@@ -443,17 +563,29 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
       );
       return; // Detener la ejecución del método si no se han seleccionado el aula y el evaluador
     }
-    this.evaluacionCab.estado = 1;    //asignar aula
+    this.evaluacionCab.estado = 1; //asignar aula
     this.evaluacionCab.aulaEva.aulaId = this.selectedAula.aulaId;
     //evaluador
-    const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
-    if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
+    const idString: number = parseInt(
+      this.localStorage.getItem('userId') || '0'
+    );
+    if (
+      this.evaluacionCab.evaluador !== undefined &&
+      this.evaluacionCab.evaluador !== null
+    ) {
       this.evaluacionCab.evaluador.usuId = idString;
     }
     // Obtener la suma total de cada tipo de calificación
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
+
+  
+    this.evaluacionCab.totalC_Ob_Uno = this.contarC_Ob_Uno;
+    this.evaluacionCab.totalCM_Ob_Uno = this.contarCM_Ob_Uno;
+    this.evaluacionCab.totalNC_Ob_Uno = this.contarNC_Ob_Uno;
+
+  
 
     // // Calcular los porcentajes totales
     // this.evaluacionCab.progreso = this.criterios.length;
@@ -461,45 +593,45 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / this.evaluacionCab.progreso) * 100;
     // this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / this.evaluacionCab.progreso) * 100;
 
-
     // Determinar las observaciones
 
     this.evaluacionCab.fechaRegistro = new Date();
 
-
     // Llamamos al servicio para crear la EvaluacionCab
     this.evaluacionCabService.CrearEvaluacionCab(this.evaluacionCab).subscribe(
-      cab => {
-
+      (cab) => {
         // La EvaluacionCab se ha actualizado correctamente
         console.log('EvaluacionCab creada correctamente.');
         // console.log(cab);
 
-        this.evaluacionDets.forEach(det => {
+        this.evaluacionDets.forEach((det) => {
           det.evaluacionCab.nroEvaluacion = cab.nroEvaluacion;
         });
 
-        this.evaluacionDetService.createList(this.evaluacionDets).subscribe(det => {
-          console.log('EvaluacioDet Creada correctamente.');
-          console.log(det);
+        this.evaluacionDetService
+          .createList(this.evaluacionDets)
+          .subscribe((det) => {
+            console.log('EvaluacioDet Creada correctamente.');
+            console.log(det);
 
-          // this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
-          //   console.log('EvaluacionCab agregada correctamente.');
-          //   // console.log(det);
-          //   Swal.fire({
-          //     title: '¡Registro Exitoso!',
-          //     text: 'La evaluacion fue agregada correctamente',
-          //     icon: 'success',
-          //     confirmButtonText: 'Confirmar',
-          //     showCancelButton: false, // No mostrar el botón de cancelar
-          //   });
-          // })
+            // this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
+            //   console.log('EvaluacionCab agregada correctamente.');
+            //   // console.log(det);
+            //   Swal.fire({
+            //     title: '¡Registro Exitoso!',
+            //     text: 'La evaluacion fue agregada correctamente',
+            //     icon: 'success',
+            //     confirmButtonText: 'Confirmar',
+            //     showCancelButton: false, // No mostrar el botón de cancelar
+            //   });
+            // })
 
-          this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
-
-        })
-
-      }, error => {
+            this.router.navigate([
+              '/menu/contenido-criterios/criterios-evaluacion',
+            ]);
+          });
+      },
+      (error) => {
         // Error al guardar la EvaluacionCab
         console.error('Error al crear la EvaluacionCab: ', error);
       }
@@ -507,72 +639,86 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     // this.guardarCalificaciones();
   }
 
-
-
-
   updateNuevaEvaluacionCab() {
-
     //asignar aula
     // this.evaluacionCab.estado = 1;    //asignar aula
     // // this.evaluacionCab.aulaEva.aulaId;
     //evaluador
 
-    const idString: number = parseInt(this.localStorage.getItem('userId') || '0');
+    const idString: number = parseInt(
+      this.localStorage.getItem('userId') || '0'
+    );
 
-    if (this.evaluacionCab.evaluador !== undefined && this.evaluacionCab.evaluador !== null) {
+    if (
+      this.evaluacionCab.evaluador !== undefined &&
+      this.evaluacionCab.evaluador !== null
+    ) {
       this.evaluacionCab.evaluador.usuId = idString;
     }
     // Obtener la suma total de cada tipo de calificación
     this.evaluacionCab.totalC = this.contarC;
     this.evaluacionCab.totalCm = this.contarCM;
     this.evaluacionCab.totalNc = this.contarNC;
-
     // this.evaluacionCab.estado = 1;
 
     // Calcular los porcentajes totales
     const totalCriterios = this.criterios.length;
-    this.evaluacionCab.porcTotalC = (this.evaluacionCab.totalC / totalCriterios) * 100;
-    this.evaluacionCab.porcTotalCm = (this.evaluacionCab.totalCm / totalCriterios) * 100;
-    this.evaluacionCab.porcTotalNc = (this.evaluacionCab.totalNc / totalCriterios) * 100;
-
-
+    
+    this.evaluacionCab.porcTotalC =
+      (this.evaluacionCab.totalC / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalCm =
+      (this.evaluacionCab.totalCm / totalCriterios) * 100;
+    this.evaluacionCab.porcTotalNc =
+      (this.evaluacionCab.totalNc / totalCriterios) * 100;
+      
+      
+      // Obtener la suma total de cada tipo de calificación
+    this.evaluacionCab.totalC_Ob_Uno = this.contarC_Ob_Uno;
+    this.evaluacionCab.totalCM_Ob_Uno = this.contarCM_Ob_Uno;
+    this.evaluacionCab.totalNC_Ob_Uno = this.contarNC_Ob_Uno;
+        ///SUMA OBLIGATORIOS
+        const totalCriteriosObligatorios = 12;
+        this.evaluacionCab.porcTotalC_Ob_Uno =
+        (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+      this.evaluacionCab.porcTotalCM_Ob_Uno =
+        (this.evaluacionCab.totalC_Ob_Uno / totalCriteriosObligatorios) * 100;
+      this.evaluacionCab.porcTotalNC_Ob_Uno =
+        (this.evaluacionCab.totalNC_Ob_Uno / totalCriteriosObligatorios) * 100;
 
     this.evaluacionCab.fechaRegistro = new Date();
 
-
     // Llamamos al servicio para crear la EvaluacionCab
     this.evaluacionCabService.update(this.id, this.evaluacionCab).subscribe(
-      cab => {
-
+      (cab) => {
         // La EvaluacionCab se ha actualizado correctamente
         console.log('EvaluacionCab actualizada correctamente.');
         console.log(this.evaluacionCab);
 
-
-
-        this.evaluacionDetService.updateList(this.evaluacionDets).subscribe(det => {
-          console.log('EvaluacionCab actualizada correctamente.');
-          // console.log(det);
-          Swal.fire({
-            title: '¡Registro Exitoso!',
-            text: 'La evaluacion fue actualizada correctamente',
-            icon: 'success',
-            confirmButtonText: 'Confirmar',
-            showCancelButton: false, // No mostrar el botón de cancelar
+        this.evaluacionDetService
+          .updateList(this.evaluacionDets)
+          .subscribe((det) => {
+            console.log('EvaluacionCab actualizada correctamente.');
+            // console.log(det);
+            Swal.fire({
+              title: '¡Registro Exitoso!',
+              text: 'La evaluacion fue actualizada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Confirmar',
+              showCancelButton: false, // No mostrar el botón de cancelar
+            });
           });
-        })
 
-        this.router.navigate(['/menu/contenido-criterios/criterios-evaluacion']);
-
-      }, error => {
+        this.router.navigate([
+          '/menu/contenido-criterios/criterios-evaluacion',
+        ]);
+      },
+      (error) => {
         // Error al actualizar la EvaluacionCab
         console.error('Error al crear la EvaluacionCab: ', error);
       }
     );
     // this.guardarCalificaciones();
   }
-
-
 
   // updateCalificaciones() {
   //   this.calificacionesPorCriterio.forEach(calificacion => {
@@ -600,8 +746,6 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   //   });
   // }
 
-
-
   // formularioCompleto(): boolean {
   //   // Verificamos si se han seleccionado todos los criterios
   //   const criteriosSeleccionados = this.calificacionesPorCriterio.length === this.criterios.length;
@@ -612,5 +756,4 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   //   // El formulario está completo si se han seleccionado todos los criterios y se han asignado calificaciones a cada uno
   //   return criteriosSeleccionados && calificacionesAsignadas;
   // }
-
 }

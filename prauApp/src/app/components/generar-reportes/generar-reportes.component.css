@@ -1,0 +1,51 @@
+.layout {
+    display: flex;
+    justify-content: center;
+}
+
+.filter-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Espacio entre los filtros */
+}
+
+.filter {
+    width: calc(33.33% - 10px); /* Ancho de cada filtro */
+    flex: 1; /* Distribuye el espacio restante igualmente entre los filtros */
+    min-width: 200px; /* Ancho mínimo de cada filtro */
+    margin: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .filter {
+        width: calc(50% - 10px); /* Cambia a 2 filtros por fila en pantallas pequeñas */
+    }
+}
+
+
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    font-size: 20px;
+  }
+
+  .custom-table th {
+    text-align: center;
+  }
+
+  .first-third {
+    width: 33.33%;
+  }
+
+  .table-header {
+    border: 2px solid #000;
+    color: rgb(30, 77, 187);
+    font-size: 20px;
+  }

@@ -394,62 +394,6 @@ export class ListarPersonaComponent implements OnInit {
 
     window.open(url, '_blank');
   }
-
-  @ViewChild('content', { static: false }) content: ElementRef<any> | undefined;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef | undefined;
-
-  data: any[] = [];
-  chart: Chart | undefined;
-
-  
- 
-  generatePDF() {
-     // Datos de ejemplo para la tabla
-  this.data = [
-    { id: 1, name: 'John Doe', age: 30 },
-    { id: 2, name: 'Jane Smith', age: 25 },
-    { id: 3, name: 'Bob Johnson', age: 40 }
-  ];
-    const doc = new jsPDF();
-
-    // Título del documento
-    doc.text('Tabla Personalizada en PDF', 10, 10);
-
-    // Generar la tabla utilizando jsPDF-AutoTable
-    (doc as any).autoTable({
-      head: [['ID', 'Nombre', 'Edad']],
-      body: this.data.map(row => [row.id, row.name, row.age]),
-      startY: 20
-    });
-     
-     // Añadir gráfica
-     if (this.chart) {
-       const chartDataUrl = this.chart.toBase64Image();
-       doc.addImage(chartDataUrl, 'PNG', 10, 100, 180, 100);
-     }
-
-    // Guardar el documento
-    doc.save('tabla_y_grafica.pdf');
-  
-  }
-  
-  
-   ngAfterViewInit() {
-      //Generar gráfica de ejemplo
-     if (this.canvas) {
-       this.chart = new Chart(this.canvas.nativeElement, {
-         type: 'bar',
-         data: {
-           labels: ['John Doe', 'Jane Smith', 'Bob Johnson'],
-           datasets: [{
-             label: 'Edad',
-             data: [30, 25, 40],
-             backgroundColor: ['red', 'green', 'blue']
-           }]
-         }
-       });
-     }
-   }
   
 
 }
