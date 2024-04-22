@@ -38,7 +38,7 @@
         </a>
       </li>
 
-      <li routerLinkActive="router-link-active">
+      <li routerLinkActive="router-link-active" *ngIf="nombredeRol === 'Administrador' || nombredeRol === 'Responsable'">
         <a [routerLink]="['/menu/contenido-reportes/generar-reportes']">
           <i class="pi pi-file"></i>
           <span class="nav-item">Reportes</span>
