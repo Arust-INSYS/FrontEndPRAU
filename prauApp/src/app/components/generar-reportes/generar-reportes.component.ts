@@ -21,6 +21,8 @@ import { EvaluacionCabService } from '../../services/evaluacionCab.service';
 import { EvaluacionCab } from '../../models/evaluacionCab';
 import { EvaluacionDetService } from '../../services/evaluacionDet.service';
 import { EvaluacionDet } from '../../models/evaluacionDet';
+import { graficaCiclo } from '../../models/graficaCiclo';
+import { graficaResumenCiclo } from '../../models/graficaResumenCiclo';
 
 
 @Component({
@@ -36,23 +38,27 @@ export class GenerarReportesComponent {
   periodosAc: PeriodoAc[] = [];
   carreras: IConsultarCarrera[] = [];
   asignaturas: IAsignaturaXCarrera[] = [];
-  grafiCiclos: graficaAula[] = [];
+  grafiCiclos: graficaResumenCiclo[] = [];
   evaDet: EvaluacionDet[] = [];
-  filterIdCriterio: number[] = []
+  filterIdCriterio: number[] = [];
+  grafCiclo: graficaCiclo[] = []
   userId!: bigint;
   infoUser: any;
   ahora = new Date();
   fecha: string = ""
   basicData: any;
   basicOptions: any;
-  dataCM: any;
-  optionsCM: any;
+  dataCM: any[] = [];
+  optionsCM: any[] = [];
   data: any;
   options: any;
   dataCrite: any;
   optionsCrite: any;
+  nameCicle: string[] = []
+  nameOfMaterias:string[]=[]
+  percentOfMaterias:string[]=[]
   constructor(private http: HttpClient, private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi: CriteriosService, private aulaServi: AulaService, private detServi: EvaluacionDetService) {
-    //
+    //;
   }
 
 
@@ -82,7 +88,6 @@ export class GenerarReportesComponent {
   loadevaDet() {
     this.detServi.getEvaluacionDET().subscribe((datos) => {
       this.evaDet = datos;
-      console.log("datos antes de filtrar", datos)
     });
   }
 
@@ -104,7 +109,7 @@ export class GenerarReportesComponent {
     this.formatoFecha();
     this.asignaturaService.asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0).subscribe(response => {
       this.asignaturas = response;
-      console.log("ID Carrera: " + this.selectedCarrera?.idCarrera);
+   
     })
   }
 
@@ -132,8 +137,9 @@ export class GenerarReportesComponent {
 
   reportGeneral() {
     if (this.selectedCarrera?.idCarrera !== undefined && this.selectedPeriodo?.idPeriodoAc !== undefined && this.selectedAsignatura?.idAsignatura !== undefined) {
-      this.aulaServi.graficaAula(0, 0, 0, this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((datos) => {
+      this.aulaServi.resumenGraficoCiclo( this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((datos) => {
         this.grafiCiclos = datos
+    
         this.initChart();
         this.grafiCM();
         //cargar id para filtrar el los criterios 
@@ -141,6 +147,26 @@ export class GenerarReportesComponent {
 
           this.filterIdCriterio = datos;
           this.grafiCrite();
+
+          this.aulaServi.graficaCiclo(this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((dataCli) => {
+            this.grafCiclo = dataCli
+        
+
+
+            for (let index = 0; index < this.grafCiclo.length; index++) {
+              if (!this.nameCicle.includes(this.grafCiclo[index].ciclo_pertenece)) {
+                this.nameCicle.push(this.grafCiclo[index].ciclo_pertenece)
+              }
+            }
+            
+            //crear inicializar el numero de materias para despues no aparesca undefined
+            for (let index = 0; index < this.nameCicle.length; index++) {
+              this.nameOfMaterias[index]=""
+              this.percentOfMaterias[index]=""
+            }
+            this.grafiCM();
+          });
+
         });
       });
     } else {
@@ -154,7 +180,7 @@ export class GenerarReportesComponent {
     let labelCiclo: string[] = [];
     for (let index = 0; index < this.grafiCiclos.length; index++) {
       let cicloName = ""
-      cicloName = this.grafiCiclos[index].aula.cicloPertenece
+      cicloName = this.grafiCiclos[index].ciclo_pertenece
       labelCiclo.push(cicloName);
     }
     const documentStyle = getComputedStyle(document.documentElement);
@@ -175,10 +201,10 @@ export class GenerarReportesComponent {
       let g = Math.floor(Math.random() * 256);
       let b = Math.floor(Math.random() * 256);
       //recuperar datos 
-      labelData.push(this.grafiCiclos[index].total_c);
+      labelData.push(this.grafiCiclos[index].total);
 
       let chartDataArray = {
-        label: this.grafiCiclos[index].aula.cicloPertenece,
+        label: this.grafiCiclos[index].ciclo_pertenece,
         data: labelData,
         backgroundColor: Array(4).fill(`rgba(${r}, ${g}, ${b}, 0.2)`),
         borderColor: Array(4).fill(`rgb(${r}, ${g}, ${b})`),
@@ -302,72 +328,6 @@ export class GenerarReportesComponent {
 
 
 
-
-
-
-
-  grafiCM() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.dataCM = {
-      labels: ['January', 'February'],
-      datasets: [
-        {
-          label: 'Ciclo1',
-          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-          label: 'Ciclo2',
-          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          data: [28, 48, 40, 19, 86, 27, 90]
-        }
-      ]
-    };
-
-    this.optionsCM = {
-      indexAxis: 'y',
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-            font: {
-              weight: 500
-            }
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        }
-      }
-    };
-  }
-
-
   grafiCrite() {
 
     let labelDataNumber: number[] = []
@@ -393,9 +353,8 @@ export class GenerarReportesComponent {
 
     let evaDetTem: EvaluacionDet[] = [];
     let porcentajeTem: number[] = [];
-    let numDivPorcen: 1;
     let numDiviBande: number[] = [];
-    console.log(this.filterIdCriterio, "criterio para filtrar")
+   // console.log(this.filterIdCriterio, "criterio para filtrar")
     for (let index = 0; index < this.evaDet.length; index++) {
 
       //filtro los criterios que solo pertencen a este periodo y carrera
@@ -436,8 +395,8 @@ export class GenerarReportesComponent {
         }
       }
     }
-    console.log(porcentajeTem, "total para dividir")
-    console.log(numDiviBande, "porque debe dividir")
+    //console.log(porcentajeTem, "total para dividir")
+    //console.log(numDiviBande, "porque debe dividir")
 
     for (let index = 0; index < porcentajeTem.length; index++) {
       labelDataNumber.push(porcentajeTem[index] / numDiviBande[index])
@@ -533,7 +492,7 @@ export class GenerarReportesComponent {
       ]).then(canvases => {
         // Procesar cada imagen de lienzo capturada
         canvases.forEach((canvas, index) => {
-          if (numberCanvas<2) {
+          if (numberCanvas < 2) {
             // Obtener la URL de la imagen generada
             const imgData = canvas.toDataURL('image/png');
 
@@ -543,7 +502,7 @@ export class GenerarReportesComponent {
 
             // Añadir la imagen al documento PDF
             doc.addImage(imgData, 'PNG', margin.left, margin.top, imgWidth, imgHeight);
-            numberCanvas+=1
+            numberCanvas += 1
           } else {
             // Obtener la URL de la imagen generada
             const imgData = canvas.toDataURL('image/png');
@@ -578,5 +537,102 @@ export class GenerarReportesComponent {
     } else {
       console.error('Uno o ambos elementos no fueron encontrados.');
     }
+  }
+
+  //graficos finales clasificacion por ciclo y juntacion de las asignaturas
+
+
+
+  grafiCM() {
+
+    //procesar las materias y clasificar por ciclo
+    for (let index = 0; index < this.nameCicle.length; index++) {
+      
+      for (let i = 0; i < this.grafCiclo.length; i++) {
+        //verificar si el nombre el ciclo de la materia es igual clasificando la data 
+        if(this.nameCicle[index]===this.grafCiclo[i].ciclo_pertenece){
+  
+          //juntar las materias para despues ser divididas con un splite porque no hay luz para usar matrices :v
+          this.nameOfMaterias[index]+=this.grafCiclo[i].nombre_asignatura+"/"
+          this.percentOfMaterias[index]+=this.grafCiclo[i].total+"/"
+        }
+        
+      }
+      
+    }
+
+
+    for (let index = 0; index < this.nameCicle.length; index++) {
+      //divido lo que junte antes 
+      let materiasLabel:string[]=this.nameOfMaterias[index].split("/")
+      let materiasLabelPercentString:string[]=this.percentOfMaterias[index].split("/")
+      //elimino el ultimo elemnto porque me genera un "" vacio
+      materiasLabel.pop()
+      materiasLabelPercentString.pop()
+      let materiasLabelPercentNumber:number[]=[]
+
+      for (let index = 0; index < materiasLabelPercentString.length; index++) {
+        
+        materiasLabelPercentNumber[index]=parseFloat(materiasLabelPercentString[index])
+        
+      }
+
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue('--text-color');
+      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+      let r = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);
+
+      this.dataCM[index] = {
+        labels: materiasLabel,
+        datasets: [
+          {
+            label: this.nameCicle[index],
+            backgroundColor: Array(4).fill(`rgba(${r}, ${g}, ${b}, 0.2)`),
+            borderColor:  Array(4).fill(`rgb(${r}, ${g}, ${b})`),
+            data: materiasLabelPercentNumber
+          }
+        ]
+      };
+
+      this.optionsCM[index] = {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        aspectRatio: 0.8,
+        plugins: {
+          legend: {
+            labels: {
+              color: textColor
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary,
+              font: {
+                weight: 500
+              }
+            },
+            grid: {
+              color: surfaceBorder,
+              drawBorder: false
+            }
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder,
+              drawBorder: false
+            }
+          }
+        }
+      };
+    }
+
   }
 }
