@@ -389,17 +389,31 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
   onCalificacionSeleccionado(det: EvaluacionDet): void {
     this.actualizarContadores();
     this.contarCalificaciones();
+
     if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
       this.actualizarObligatorio(det);
       this.contarObligatorio();
-      console.log("SOY OBLIGATORIO MEN !!");
+      
     }
+    
+ // Validar que no sea "Opcional" antes de actualizar los contadores
+ if (det.criterio?.estado !== 'Opcional') {
+  this.actualizarContadores();
+  this.contarCalificaciones();
+}
+  
+
+
     
     // Verificar si el valor seleccionado es null o undefined
     if (!det.calificacion.codCalificacion) {
       // Si es null o undefined, establecerlo como una cadena vacía
       det.calificacion.codCalificacion = '';
     }
+   
+   
+
+
   }
 
   actualizarContadores() {
@@ -425,15 +439,13 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     });
   }
   
-  Uno:number=8.33;
-  cinCuenta:number=0;
   actualizarObligatorio(det:EvaluacionDet) {
     
     this.contarC_Ob_Uno=0;
     this.contarCM_Ob_Uno=0;
     this.contarNC_Ob_Uno=0;
     this.progresoOb_Uno=0
-    
+
     //this.progreso = 0;
 
     // Calcular los contadores según las calificaciones almacenadas
@@ -441,45 +453,64 @@ export class EvaluacionCriteriosCalificarComponent implements OnInit {
     this.evaluacionDets.forEach((item) => {
       if (item.calificacion.codCalificacion === 'C') {
 
-        if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
-          
-        this.contarC_Ob_Uno++;
-        this.progresoOb_Uno++;
-        }
+     
 
+        if(det.criterio?.estado==="Obligatorio"||det.criterio?.estado==='Al menos uno'){
+         
+          
+          this.contarC_Ob_Uno++
+       
+        }
+       
+
+        
+         
         
         //this.progreso++;
       } else if (item.calificacion.codCalificacion === 'CM') {
         
-        this.contarCM_Ob_Uno++;
-        if(this.progresoOb_Uno>0){
-          
-          this.progresoOb_Uno-this.Uno;
-          
+        if(det.criterio?.estado==='Obligatorio'||det.criterio?.estado==='Al menos uno'){
+          this.contarCM_Ob_Uno++;
+         
         }
         
       } else if (item.calificacion.codCalificacion === 'NC') {
         this.contarNC_Ob_Uno++;
-        this.progresoOb_Uno++;
+        
         
       }
     });
   }
   
-  contarObligatorio(){
-    if(this.contarCM_Ob_Uno==12){
-      this.progresoOb_Uno=this.contarCM_Ob_Uno/2;
+  contarObligatorio() {
+    let contadorObligatorio = 0;
+    const totalCriteriosObligatorios = 12;
+  
+    this.evaluacionDets.forEach((item) => {
+      if (item.calificacion.codCalificacion === 'C' && item.criterio?.estado !== 'Opcional') {
+        contadorObligatorio++;
+      }
+    });
+  
+    if (contadorObligatorio == totalCriteriosObligatorios) {
+      this.progresoOb_Uno = 100;
+    } else if (contadorObligatorio == 0 && this.contarCM_Ob_Uno > 0) {
+      this.progresoOb_Uno = Number(((this.contarCM_Ob_Uno / totalCriteriosObligatorios) * 50 ).toFixed(2)
+    );
+      if (this.progresoOb_Uno >= 50.00) {
+        this.contarC_Ob_Uno = 0;
+      }
+    } else {
+      this.progresoOb_Uno  = Number(((contadorObligatorio / totalCriteriosObligatorios) * 100).toFixed(2)
+    );
     }
-      const totalCriteriosObligatorios = 12;
-      this.evaluacionCab.progreso_Ob_Uno=Number(((this.progresoOb_Uno/totalCriteriosObligatorios)*100).toFixed(2))
-     
+  
+    this.evaluacionCab.progreso_Ob_Uno = this.progresoOb_Uno;
     this.evaluacionCab.porcTotalC_Ob_Uno = (this.contarC_Ob_Uno * 100) / totalCriteriosObligatorios;
     this.evaluacionCab.porcTotalCM_Ob_Uno = (this.contarCM_Ob_Uno * 100) / totalCriteriosObligatorios;
     this.evaluacionCab.porcTotalNC_Ob_Uno = (this.contarNC_Ob_Uno * 100) / totalCriteriosObligatorios;
-
-    
-   
   }
+  
 
 
   contarCalificaciones() {
