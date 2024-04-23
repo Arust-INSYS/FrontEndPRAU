@@ -18,7 +18,7 @@
                                 [options]="periodosAc" [(ngModel)]="selectedPeriodo" optionLabel="nombrePeriodo"
                                 [filter]="true" filterBy="nombrePeriodo" [showClear]="true"
                                 placeholder="Selecionar Periodo Academico"
-                                (onChange)="loadCarreras();  loadAsignaturas();     ">
+                                (onChange)="loadCarreras();     ">
 
                             </p-dropdown>
                         </div>
@@ -27,15 +27,15 @@
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
                                 [options]="carreras" [(ngModel)]="selectedCarrera" optionLabel="nombreCarrera"
                                 [filter]="true" filterBy="nombreCarrera" [showClear]="true"
-                                placeholder="Selecionar Carrera" (onChange)="loadAsignaturas();   ">
+                                placeholder="Selecionar Carrera">
 
                             </p-dropdown>
                         </div>
                         <div class="filter">
                             <p-dropdown class="element-filter"
                                 [style]="{ 'width.%': 100, 'display': 'flex', 'align-items': 'center', }"
-                                [options]="asignaturas" [(ngModel)]="selectedAsignatura" optionLabel="nombreAsignatura"
-                                [filter]="true" filterBy="nombreAsignatura" [showClear]="true"
+                                [options]="academicTitle" [(ngModel)]="optionAcada" 
+                                [filter]="true" filterBy="nombreAsignatura" 
                                 placeholder="Selecionar Asignatura">
 
                             </p-dropdown>

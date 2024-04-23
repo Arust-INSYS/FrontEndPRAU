@@ -23,6 +23,8 @@ import { EvaluacionDetService } from '../../services/evaluacionDet.service';
 import { EvaluacionDet } from '../../models/evaluacionDet';
 import { graficaCiclo } from '../../models/graficaCiclo';
 import { graficaResumenCiclo } from '../../models/graficaResumenCiclo';
+import { PersonaService } from '../../services/persona.service';
+import { directorDto } from '../../models/directorDto';
 
 
 @Component({
@@ -33,11 +35,11 @@ import { graficaResumenCiclo } from '../../models/graficaResumenCiclo';
 export class GenerarReportesComponent {
   selectedPeriodo: any;
   selectedCarrera: any;
-  selectedAsignatura: any;
+
   criterios: Criterios[] = [];
   periodosAc: PeriodoAc[] = [];
   carreras: IConsultarCarrera[] = [];
-  asignaturas: IAsignaturaXCarrera[] = [];
+
   grafiCiclos: graficaResumenCiclo[] = [];
   evaDet: EvaluacionDet[] = [];
   filterIdCriterio: number[] = [];
@@ -57,7 +59,10 @@ export class GenerarReportesComponent {
   nameCicle: string[] = []
   nameOfMaterias:string[]=[]
   percentOfMaterias:string[]=[]
-  constructor(private http: HttpClient, private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi: CriteriosService, private aulaServi: AulaService, private detServi: EvaluacionDetService) {
+  director= new directorDto()
+  academicTitle =["Lic.","Ing.","Dr","PhD","MSc"]
+  optionAcada="Ing."
+  constructor(private http: HttpClient, private docenteService: DocenteService, private periodoAcService: PeriodoAcService, private carreraService: CarreraService, private asignaturaService: AsignaturaService, private localStorage: LocalStorageService, private usurioService: UsuarioService, private criteServi: CriteriosService, private aulaServi: AulaService, private detServi: EvaluacionDetService,private perService:PersonaService) {
     //;
   }
 
@@ -77,7 +82,7 @@ export class GenerarReportesComponent {
     });
     this.loadPeriodos();
     this.loadCarreras();
-    this.loadAsignaturas();
+
     this.loadCriterios();
     this.fetchChartData();
     this.loadevaDet();
@@ -105,13 +110,6 @@ export class GenerarReportesComponent {
     })
   }
 
-  loadAsignaturas(): void {
-    this.formatoFecha();
-    this.asignaturaService.asignaturaXCarreara(this.selectedCarrera?.idCarrera ?? 0).subscribe(response => {
-      this.asignaturas = response;
-   
-    })
-  }
 
   loadPeriodos(): void {
     this.periodoAcService.getPeriodosAcs().subscribe(response => {
@@ -136,10 +134,9 @@ export class GenerarReportesComponent {
   }
 
   reportGeneral() {
-    if (this.selectedCarrera?.idCarrera !== undefined && this.selectedPeriodo?.idPeriodoAc !== undefined && this.selectedAsignatura?.idAsignatura !== undefined) {
+    if (this.selectedCarrera?.idCarrera !== undefined && this.selectedPeriodo?.idPeriodoAc !== undefined ) {
       this.aulaServi.resumenGraficoCiclo( this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((datos) => {
         this.grafiCiclos = datos
-    
         this.initChart();
         this.grafiCM();
         //cargar id para filtrar el los criterios 
@@ -168,7 +165,18 @@ export class GenerarReportesComponent {
           });
 
         });
+
+
+        //consultar director de carrera 
+        this.perService.getDirectorCarrera(this.selectedCarrera?.idCarrera, this.selectedPeriodo?.idPeriodoAc).subscribe((dataDirec)=>{
+
+          this.director=dataDirec
+
+
+        });
       });
+
+
     } else {
       return
     }
@@ -530,7 +538,7 @@ export class GenerarReportesComponent {
         doc.text("Fecha " + dia + "/" + mes + "/" + anio, 47, 284)
         doc.setFontSize(9);
         doc.text(this.infoUser?.[0][1], 49, 275)
-        doc.text("Mgtr.María Verónica Segarra Vanegas", 113, 275)
+        doc.text(this.optionAcada+this.director.per_nombre1+" "+this.director.per_nombre2+" "+this.director.per_apellido1+" "+this.director.per_apellido2, 113, 275)
         // Guardar el documento PDF
         doc.save('documento.pdf');
       });

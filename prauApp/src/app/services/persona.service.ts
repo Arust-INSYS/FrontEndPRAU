@@ -5,6 +5,7 @@ import { LocalStorageService } from './local-storage.service'; // Importa localS
 import { Persona } from '../models/persona';
 import { entorno } from '../env/entorno';
 import { Usuario } from '../models/usuario';
+import { directorDto } from '../models/directorDto';
 
 @Injectable({
   providedIn: 'root',
@@ -97,6 +98,18 @@ export class PersonaService {
     return this.http
       .get(this.url + '/read', { headers })
       .pipe(map((response) => response as Persona[]));
+  }
+
+
+  getDirectorCarrera(carreraId: number, periodoId: number): Observable<directorDto> {
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.localStorage.getItem('token')}` // Agrega el token JWT aquí
+    });
+    return this.http.get<directorDto>(`${this.url}/getDirectorCarrera?carreraId=${carreraId}&periodoId=${periodoId}`, {
+      headers,
+    });
+
   }
  
   /*
